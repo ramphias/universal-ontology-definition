@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Ontology Definition — Open Standard for Enterprise Ontology</title>
+  <meta name="description" content="An open, standardized three-layer enterprise ontology framework for knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.">
+  <meta property="og:title" content="Universal Ontology Definition">
+  <meta property="og:description" content="An open, standardized three-layer enterprise ontology framework.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#050a18">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ═══════════════ NAVIGATION ═══════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-icon">🌐</span>
+        <span data-i18n="nav.logo">UOD</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#architecture" data-i18n="nav.architecture">Architecture</a></li>
+        <li><a href="#core" data-i18n="nav.core">Core Ontology</a></li>
+        <li><a href="#addons" data-i18n="nav.addons">Addons</a></li>
+        <li><a href="#how-it-works" data-i18n="nav.how">How It Works</a></li>
+        <li><a href="#community" data-i18n="nav.community">Community</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" id="langToggle" title="Switch Language">EN / 中</button>
+        <a href="https://github.com/ramphias/universal-ontology-definition" target="_blank" rel="noopener" class="nav-github-btn">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <button class="nav-menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero" id="hero">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="hero-glow hero-glow--purple"></div>
+    <div class="hero-glow hero-glow--blue"></div>
+    <div class="hero-glow hero-glow--cyan"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        <span data-i18n="hero.badge">Open Source · Apache 2.0</span>
+      </div>
+
+      <h1>
+        <span data-i18n="hero.title1">The Open Standard for</span><br>
+        <span class="gradient-text" data-i18n="hero.title2">Enterprise Ontology</span>
+      </h1>
+
+      <p class="hero-subtitle" data-i18n="hero.subtitle">
+        A standardized three-layer framework for enterprise knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#architecture" class="btn btn-primary">
+          <span data-i18n="hero.cta1">Get Started</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://github.com/ramphias/universal-ontology-definition" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="18" height="18"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span data-i18n="hero.cta2">View on GitHub</span>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">25</div>
+          <div class="hero-stat-label" data-i18n="hero.stat1">Core Classes</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">16</div>
+          <div class="hero-stat-label" data-i18n="hero.stat2">Relations</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">2</div>
+          <div class="hero-stat-label" data-i18n="hero.stat3">Industry Addons</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">3</div>
+          <div class="hero-stat-label" data-i18n="hero.stat4">Layers</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PROBLEM / SOLUTION ═══════════════ -->
+  <section class="section" id="problem">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge" data-i18n="problem.badge">❓ The Problem</span>
+        <h2 data-i18n="problem.title">Enterprise Digitalization Challenges</h2>
+        <p data-i18n="problem.subtitle">Organizations worldwide face the same recurring obstacles when building knowledge systems.</p>
+      </div>
+
+      <div class="problems-grid">
+        <div class="glass-card problem-card animate-on-scroll">
+          <div class="problem-icon">🔴</div>
+          <h4 data-i18n="problem.card1.title">Inconsistent Definitions</h4>
+          <p data-i18n="problem.card1.desc">Different teams use different terms for the same objects, making cross-system reuse nearly impossible.</p>
+        </div>
+        <div class="glass-card problem-card animate-on-scroll delay-1">
+          <div class="problem-icon">🔴</div>
+          <h4 data-i18n="problem.card2.title">Industry Silos</h4>
+          <p data-i18n="problem.card2.desc">Industry-specific knowledge is scattered across organizations with no standardized extension mechanism.</p>
+        </div>
+        <div class="glass-card problem-card animate-on-scroll delay-2">
+          <div class="problem-icon">🔴</div>
+          <h4 data-i18n="problem.card3.title">Customization vs. Standard</h4>
+          <p data-i18n="problem.card3.desc">Enterprise-specific needs continuously erode the underlying standards, breaking compatibility.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ ARCHITECTURE ═══════════════ -->
+  <section class="section" id="architecture">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge" data-i18n="arch.badge">🏗️ Architecture</span>
+        <h2 data-i18n="arch.title">Three-Layer Ontology Framework</h2>
+        <p data-i18n="arch.subtitle">A balanced architecture separating universal core, industry addons, and enterprise customizations.</p>
+      </div>
+
+      <div class="architecture-visual animate-on-scroll">
+        <!-- L3 -->
+        <div class="arch-layer arch-layer--l3" id="archL3">
+          <div class="arch-layer-header">
+            <span class="arch-layer-tag">L3</span>
+            <span class="arch-layer-title" data-i18n="arch.l3.title">Enterprise Customization Layer</span>
+          </div>
+          <p class="arch-layer-desc" data-i18n="arch.l3.desc">Private extensions for company-specific objects, system mappings, and internal terminology.</p>
+          <div class="arch-layer-items">
+            <span class="arch-layer-item" data-i18n="arch.l3.item1">Company A</span>
+            <span class="arch-layer-item" data-i18n="arch.l3.item2">Company B</span>
+            <span class="arch-layer-item" data-i18n="arch.l3.item3">Company C</span>
+            <span class="arch-layer-item" data-i18n="arch.l3.item4">Custom Objects</span>
+            <span class="arch-layer-item" data-i18n="arch.l3.item5">System Mappings</span>
+          </div>
+        </div>
+
+        <div class="arch-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          <span style="margin-left: 4px;">extends</span>
+        </div>
+
+        <!-- L2 -->
+        <div class="arch-layer arch-layer--l2" id="archL2">
+          <div class="arch-layer-header">
+            <span class="arch-layer-tag">L2</span>
+            <span class="arch-layer-title" data-i18n="arch.l2.title">Industry & Domain Addons</span>
+          </div>
+          <p class="arch-layer-desc" data-i18n="arch.l2.desc">Optional, community-maintained industry-specific concept extensions.</p>
+          <div class="arch-layer-items">
+            <span class="arch-layer-item">Consulting</span>
+            <span class="arch-layer-item">Luxury Goods</span>
+            <span class="arch-layer-item" style="opacity:0.5">Finance</span>
+            <span class="arch-layer-item" style="opacity:0.5">Manufacturing</span>
+            <span class="arch-layer-item" style="opacity:0.5">Retail</span>
+            <span class="arch-layer-item" style="opacity:0.5">Healthcare</span>
+          </div>
+        </div>
+
+        <div class="arch-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          <span style="margin-left: 4px;">extends</span>
+        </div>
+
+        <!-- L1 -->
+        <div class="arch-layer arch-layer--l1" id="archL1">
+          <div class="arch-layer-header">
+            <span class="arch-layer-tag">L1</span>
+            <span class="arch-layer-title" data-i18n="arch.l1.title">Universal Enterprise Ontology Core</span>
+          </div>
+          <p class="arch-layer-desc" data-i18n="arch.l1.desc">Mandatory, stable foundation of 25 universal classes and 16 standard relations.</p>
+          <div class="arch-layer-items">
+            <span class="arch-layer-item">Party</span>
+            <span class="arch-layer-item">Organization</span>
+            <span class="arch-layer-item">Role</span>
+            <span class="arch-layer-item">Capability</span>
+            <span class="arch-layer-item">Process</span>
+            <span class="arch-layer-item">Risk</span>
+            <span class="arch-layer-item">Goal</span>
+            <span class="arch-layer-item">KPI</span>
+            <span class="arch-layer-item">Policy</span>
+            <span class="arch-layer-item">DataObject</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ CORE ONTOLOGY EXPLORER ═══════════════ -->
+  <section class="section" id="core">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge" data-i18n="core.badge">📐 L1 Core</span>
+        <h2 data-i18n="core.title">Core Ontology Explorer</h2>
+        <p data-i18n="core.subtitle">25 universal entity classes organized into 7 categories, covering all essential enterprise concepts.</p>
+      </div>
+
+      <div class="core-categories">
+        <!-- Party & Organization -->
+        <div class="glass-card category-card cat-party animate-on-scroll">
+          <div class="category-icon">👥</div>
+          <h4 data-i18n="core.cat1.title">Party & Organization</h4>
+          <div class="category-classes">
+            <span class="class-chip">Party<span class="tooltip" data-i18n="core.tip.party">Superclass of all entities participating in business relationships</span></span>
+            <span class="class-chip">Person<span class="tooltip" data-i18n="core.tip.person">A natural person entity</span></span>
+            <span class="class-chip">Organization<span class="tooltip" data-i18n="core.tip.org">A legal or non-legal organization</span></span>
+            <span class="class-chip">OrgUnit<span class="tooltip" data-i18n="core.tip.orgunit">Internal organizational units: departments, teams</span></span>
+            <span class="class-chip">Role<span class="tooltip" data-i18n="core.tip.role">An identity or responsibility in a given context</span></span>
+          </div>
+        </div>
+
+        <!-- Capability & Process -->
+        <div class="glass-card category-card cat-capability animate-on-scroll delay-1">
+          <div class="category-icon">⚙️</div>
+          <h4 data-i18n="core.cat2.title">Capability & Process</h4>
+          <div class="category-classes">
+            <span class="class-chip">Capability<span class="tooltip" data-i18n="core.tip.cap">A stable, reusable business capability</span></span>
+            <span class="class-chip">Process<span class="tooltip" data-i18n="core.tip.process">End-to-end activity sequence for business objectives</span></span>
+            <span class="class-chip">Activity<span class="tooltip" data-i18n="core.tip.activity">An executable step within a process</span></span>
+          </div>
+        </div>
+
+        <!-- Business Objects -->
+        <div class="glass-card category-card cat-business animate-on-scroll delay-2">
+          <div class="category-icon">📦</div>
+          <h4 data-i18n="core.cat3.title">Business Objects</h4>
+          <div class="category-classes">
+            <span class="class-chip">BusinessObject<span class="tooltip" data-i18n="core.tip.bobj">Objects created or managed by business processes</span></span>
+            <span class="class-chip">ProductService<span class="tooltip" data-i18n="core.tip.product">Products and services provided by an enterprise</span></span>
+            <span class="class-chip">Asset<span class="tooltip" data-i18n="core.tip.asset">Financial, physical, knowledge, and data assets</span></span>
+          </div>
+        </div>
+
+        <!-- Data & Systems -->
+        <div class="glass-card category-card cat-data animate-on-scroll delay-3">
+          <div class="category-icon">💾</div>
+          <h4 data-i18n="core.cat4.title">Data & Systems</h4>
+          <div class="category-classes">
+            <span class="class-chip">DataObject<span class="tooltip" data-i18n="core.tip.data">Structured or unstructured data entity</span></span>
+            <span class="class-chip">DocumentRecord<span class="tooltip" data-i18n="core.tip.doc">Contracts, reports, files, and records</span></span>
+            <span class="class-chip">SystemApplication<span class="tooltip" data-i18n="core.tip.sys">Software systems supporting processes and decisions</span></span>
+          </div>
+        </div>
+
+        <!-- Governance -->
+        <div class="glass-card category-card cat-governance animate-on-scroll delay-4">
+          <div class="category-icon">🛡️</div>
+          <h4 data-i18n="core.cat5.title">Governance & Compliance</h4>
+          <div class="category-classes">
+            <span class="class-chip">Policy<span class="tooltip" data-i18n="core.tip.policy">Management principles and constraints</span></span>
+            <span class="class-chip">Rule<span class="tooltip" data-i18n="core.tip.rule">Executable business or control rules</span></span>
+            <span class="class-chip">Control<span class="tooltip" data-i18n="core.tip.control">Measures to reduce risk and ensure compliance</span></span>
+            <span class="class-chip">Risk<span class="tooltip" data-i18n="core.tip.risk">Uncertain events that may affect goals</span></span>
+          </div>
+        </div>
+
+        <!-- Decision & Measurement -->
+        <div class="glass-card category-card cat-decision animate-on-scroll delay-5">
+          <div class="category-icon">📊</div>
+          <h4 data-i18n="core.cat6.title">Decision & Measurement</h4>
+          <div class="category-classes">
+            <span class="class-chip">Event<span class="tooltip" data-i18n="core.tip.event">State change in business or technical environment</span></span>
+            <span class="class-chip">Decision<span class="tooltip" data-i18n="core.tip.decision">Choices and approvals regarding events or goals</span></span>
+            <span class="class-chip">Goal<span class="tooltip" data-i18n="core.tip.goal">Outcomes an organization aims to achieve</span></span>
+            <span class="class-chip">KPI<span class="tooltip" data-i18n="core.tip.kpi">Metrics measuring goal achievement</span></span>
+          </div>
+        </div>
+
+        <!-- Market & Channel -->
+        <div class="glass-card category-card cat-market animate-on-scroll">
+          <div class="category-icon">🌍</div>
+          <h4 data-i18n="core.cat7.title">Market & Channel</h4>
+          <div class="category-classes">
+            <span class="class-chip">Location<span class="tooltip" data-i18n="core.tip.location">Places where operations or transactions occur</span></span>
+            <span class="class-chip">Channel<span class="tooltip" data-i18n="core.tip.channel">Interaction channels with customers and partners</span></span>
+            <span class="class-chip">MarketSegment<span class="tooltip" data-i18n="core.tip.market">Classification dimensions for customers or markets</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ ADDONS ═══════════════ -->
+  <section class="section" id="addons">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge" data-i18n="addons.badge">🧩 L2 Addons</span>
+        <h2 data-i18n="addons.title">Industry Addon Marketplace</h2>
+        <p data-i18n="addons.subtitle">Pluggable industry extensions built on top of the universal core. Community-driven and growing.</p>
+      </div>
+
+      <div class="addons-grid">
+        <!-- Consulting -->
+        <div class="glass-card addon-card animate-on-scroll">
+          <div class="addon-header">
+            <div class="addon-icon" style="background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.2)">💼</div>
+            <span class="addon-status addon-status--ready">v1.0.0</span>
+          </div>
+          <h4 data-i18n="addons.consulting.title">Consulting Industry</h4>
+          <p data-i18n="addons.consulting.desc">Complete ontology for consulting firms — engagements, deliverables, methodologies, frameworks, practice lines, and more.</p>
+          <div class="addon-stats">
+            <div class="addon-stat">
+              <div class="addon-stat-value">40+</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.classes">Classes</div>
+            </div>
+            <div class="addon-stat">
+              <div class="addon-stat-value">34</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.relations">Relations</div>
+            </div>
+            <div class="addon-stat">
+              <div class="addon-stat-value">25+</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.instances">Instances</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Luxury Goods -->
+        <div class="glass-card addon-card animate-on-scroll delay-1">
+          <div class="addon-header">
+            <div class="addon-icon" style="background:rgba(236,72,153,0.12);border:1px solid rgba(236,72,153,0.2)">💎</div>
+            <span class="addon-status addon-status--ready">v1.0.0</span>
+          </div>
+          <h4 data-i18n="addons.luxury.title">Luxury Goods Industry</h4>
+          <p data-i18n="addons.luxury.desc">Ontology for luxury brands — brand heritage, collections, SKUs, boutiques, artisan craftsmanship, and exclusivity management.</p>
+          <div class="addon-stats">
+            <div class="addon-stat">
+              <div class="addon-stat-value">21</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.classes">Classes</div>
+            </div>
+            <div class="addon-stat">
+              <div class="addon-stat-value">10</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.relations">Relations</div>
+            </div>
+            <div class="addon-stat">
+              <div class="addon-stat-value">8</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.instances">Instances</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coming Soon — Finance -->
+        <div class="glass-card addon-card addon-card--coming-soon animate-on-scroll delay-2">
+          <div class="addon-header">
+            <div class="addon-icon" style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.2)">🏦</div>
+            <span class="addon-status addon-status--coming" data-i18n="addons.coming">Coming Soon</span>
+          </div>
+          <h4 data-i18n="addons.finance.title">Financial Services</h4>
+          <p data-i18n="addons.finance.desc">Banking, insurance, investment management — accounts, instruments, compliance frameworks, and regulatory entities.</p>
+          <div class="addon-stats">
+            <div class="addon-stat">
+              <div class="addon-stat-value">—</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.classes">Classes</div>
+            </div>
+            <div class="addon-stat">
+              <div class="addon-stat-value">—</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.relations">Relations</div>
+            </div>
+            <div class="addon-stat">
+              <div class="addon-stat-value">—</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.instances">Instances</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coming Soon — Manufacturing -->
+        <div class="glass-card addon-card addon-card--coming-soon animate-on-scroll delay-3">
+          <div class="addon-header">
+            <div class="addon-icon" style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.2)">🏭</div>
+            <span class="addon-status addon-status--coming" data-i18n="addons.coming">Coming Soon</span>
+          </div>
+          <h4 data-i18n="addons.mfg.title">Manufacturing</h4>
+          <p data-i18n="addons.mfg.desc">Production lines, BOM, quality control, supply chain entities, and lean manufacturing concepts.</p>
+          <div class="addon-stats">
+            <div class="addon-stat">
+              <div class="addon-stat-value">—</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.classes">Classes</div>
+            </div>
+            <div class="addon-stat">
+              <div class="addon-stat-value">—</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.relations">Relations</div>
+            </div>
+            <div class="addon-stat">
+              <div class="addon-stat-value">—</div>
+              <div class="addon-stat-label" data-i18n="addons.stat.instances">Instances</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+  <section class="section" id="how-it-works">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge" data-i18n="how.badge">🚀 Quick Start</span>
+        <h2 data-i18n="how.title">How It Works</h2>
+        <p data-i18n="how.subtitle">Three simple steps to integrate Universal Ontology Definition into your enterprise.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="glass-card step-card animate-on-scroll">
+          <div class="step-number">1</div>
+          <h4 data-i18n="how.step1.title">Inherit the Core</h4>
+          <p data-i18n="how.step1.desc">Start with L1 — 25 universal classes and 16 relations provide your structural foundation.</p>
+        </div>
+        <div class="glass-card step-card animate-on-scroll delay-1">
+          <div class="step-number">2</div>
+          <h4 data-i18n="how.step2.title">Extend with Addons</h4>
+          <p data-i18n="how.step2.desc">Pick L2 industry addons — or contribute your own. Each addon seamlessly inherits from the core.</p>
+        </div>
+        <div class="glass-card step-card animate-on-scroll delay-2">
+          <div class="step-number">3</div>
+          <h4 data-i18n="how.step3.title">Customize for You</h4>
+          <p data-i18n="how.step3.desc">Build L3 private extensions — company-specific objects, system mappings, internal policies.</p>
+        </div>
+      </div>
+
+      <!-- Code Example -->
+      <div class="code-example animate-on-scroll">
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-dot code-dot--red"></span>
+            <span class="code-dot code-dot--yellow"></span>
+            <span class="code-dot code-dot--green"></span>
+            <span class="code-filename">consulting_addon_v1.json</span>
+          </div>
+          <div class="code-body">
+<pre><span class="code-bracket">{</span>
+  <span class="code-key">"layer"</span>: <span class="code-string">"L2_consulting_industry_addon"</span>,
+  <span class="code-key">"version"</span>: <span class="code-string">"1.0.0"</span>,
+  <span class="code-key">"extends"</span>: <span class="code-string">"L1_universal_organization_ontology"</span>,
+  <span class="code-key">"classes"</span>: <span class="code-bracket">[</span>
+    <span class="code-bracket">{</span>
+      <span class="code-key">"id"</span>: <span class="code-string">"ConsultingFirm"</span>,
+      <span class="code-key">"label_zh"</span>: <span class="code-string">"咨询公司"</span>,
+      <span class="code-key">"parent"</span>: <span class="code-string">"Organization"</span>,  <span class="code-comment">// ← inherits from L1</span>
+      <span class="code-key">"definition"</span>: <span class="code-string">"An enterprise providing professional consulting"</span>
+    <span class="code-bracket">}</span>
+  <span class="code-bracket">]</span>
+<span class="code-bracket">}</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ COMMUNITY ═══════════════ -->
+  <section class="section" id="community">
+    <div class="bg-grid"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge" data-i18n="comm.badge">🤝 Community</span>
+        <h2 data-i18n="comm.title">Join the Community</h2>
+        <p data-i18n="comm.subtitle">We welcome contributions of all kinds — from bug reports to new industry addons.</p>
+      </div>
+
+      <div class="community-grid">
+        <div class="glass-card contrib-card animate-on-scroll">
+          <div class="contrib-icon">🐛</div>
+          <h4 data-i18n="comm.type1.title">Bug Reports</h4>
+          <p data-i18n="comm.type1.desc">Found a definition error or JSON format issue? Let us know.</p>
+          <div class="contrib-difficulty">
+            <span class="star">⭐</span>
+            <span class="star empty">⭐</span>
+            <span class="star empty">⭐</span>
+            <span class="star empty">⭐</span>
+          </div>
+        </div>
+
+        <div class="glass-card contrib-card animate-on-scroll delay-1">
+          <div class="contrib-icon">💡</div>
+          <h4 data-i18n="comm.type2.title">Suggestions</h4>
+          <p data-i18n="comm.type2.desc">Ideas for improving the Core Ontology definitions or structure.</p>
+          <div class="contrib-difficulty">
+            <span class="star">⭐</span>
+            <span class="star empty">⭐</span>
+            <span class="star empty">⭐</span>
+            <span class="star empty">⭐</span>
+          </div>
+        </div>
+
+        <div class="glass-card contrib-card animate-on-scroll delay-2">
+          <div class="contrib-icon">📝</div>
+          <h4 data-i18n="comm.type3.title">Documentation</h4>
+          <p data-i18n="comm.type3.desc">Improve docs, fix translations, add usage examples.</p>
+          <div class="contrib-difficulty">
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star empty">⭐</span>
+            <span class="star empty">⭐</span>
+          </div>
+        </div>
+
+        <div class="glass-card contrib-card animate-on-scroll delay-3">
+          <div class="contrib-icon">🌐</div>
+          <h4 data-i18n="comm.type4.title">Industry Addons</h4>
+          <p data-i18n="comm.type4.desc">Contribute new industry or domain extension packages.</p>
+          <div class="contrib-difficulty">
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star empty">⭐</span>
+          </div>
+        </div>
+
+        <div class="glass-card contrib-card animate-on-scroll delay-4">
+          <div class="contrib-icon">🏗️</div>
+          <h4 data-i18n="comm.type5.title">Core Modifications</h4>
+          <p data-i18n="comm.type5.desc">Structural changes to L1 — requires discussion and review.</p>
+          <div class="contrib-difficulty">
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="community-cta animate-on-scroll">
+        <h3 data-i18n="comm.cta.title">Ready to Contribute?</h3>
+        <p data-i18n="comm.cta.desc">Read our Contributing Guide to learn how to propose changes, submit addons, and join the conversation.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <a href="https://github.com/ramphias/universal-ontology-definition/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" class="btn btn-primary">
+            <span data-i18n="comm.cta.btn1">Contributing Guide</span>
+          </a>
+          <a href="https://github.com/ramphias/universal-ontology-definition/issues" target="_blank" rel="noopener" class="btn btn-outline">
+            <span data-i18n="comm.cta.btn2">Open an Issue</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ ACKNOWLEDGMENTS ═══════════════ -->
+  <section class="section" id="acknowledgments" style="padding-bottom: var(--space-3xl);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge" data-i18n="ack.badge">🙏 Acknowledgments</span>
+        <h2 data-i18n="ack.title">Inspired By</h2>
+        <p data-i18n="ack.subtitle">The ontology design draws from leading standards and frameworks.</p>
+      </div>
+
+      <div class="ack-grid">
+        <a href="https://www.w3.org/TR/owl2-overview/" target="_blank" rel="noopener" class="glass-card ack-card animate-on-scroll">
+          <div class="ack-icon">🦉</div>
+          <div>
+            <h4>OWL 2</h4>
+            <p>Web Ontology Language</p>
+          </div>
+        </a>
+        <a href="https://www.w3.org/TR/rdf11-concepts/" target="_blank" rel="noopener" class="glass-card ack-card animate-on-scroll delay-1">
+          <div class="ack-icon">📊</div>
+          <div>
+            <h4>RDF 1.1</h4>
+            <p>Concepts & Abstract Syntax</p>
+          </div>
+        </a>
+        <a href="https://schema.org/" target="_blank" rel="noopener" class="glass-card ack-card animate-on-scroll delay-2">
+          <div class="ack-icon">🏷️</div>
+          <div>
+            <h4>Schema.org</h4>
+            <p>Shared Vocabulary</p>
+          </div>
+        </a>
+        <a href="https://www.opengroup.org/archimate-forum/archimate-overview" target="_blank" rel="noopener" class="glass-card ack-card animate-on-scroll delay-3">
+          <div class="ack-icon">🏛️</div>
+          <div>
+            <h4>ArchiMate</h4>
+            <p>Enterprise Architecture</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <div class="footer-logo">
+            <span class="footer-logo-icon">🌐</span>
+            Universal Ontology Definition
+          </div>
+          <span class="footer-text" data-i18n="footer.license">Licensed under Apache License 2.0</span>
+        </div>
+        <ul class="footer-links">
+          <li><a href="https://github.com/ramphias/universal-ontology-definition" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/ramphias/universal-ontology-definition/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" data-i18n="footer.contributing">Contributing</a></li>
+          <li><a href="https://github.com/ramphias/universal-ontology-definition/blob/main/LICENSE" target="_blank" rel="noopener" data-i18n="footer.licenseLink">License</a></li>
+          <li><a href="https://github.com/ramphias/universal-ontology-definition/blob/main/CHANGELOG.md" target="_blank" rel="noopener" data-i18n="footer.changelog">Changelog</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
