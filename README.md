@@ -2,89 +2,91 @@
 
 # 🌐 Universal Ontology Definition
 
-**开放、标准化的三层企业本体定义框架**
+**An Open, Standardized Three-Layer Enterprise Ontology Framework**
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
-[English](./README_EN.md) | **中文**
+[中文](./README_CN.md) | **English**
 
 </div>
 
 ---
 
-## 📖 什么是 Universal Ontology Definition？
+## 📖 What is Universal Ontology Definition?
 
-Universal Ontology Definition (UOD) 是一个**开放、标准化的三层企业本体定义框架**，旨在为企业知识图谱、语义层、主数据管理和 AI Agent 知识底座提供统一的概念建模基础。
+Universal Ontology Definition (UOD) is an **open, standardized three-layer enterprise ontology framework** designed to provide a unified conceptual modeling foundation for enterprise knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.
 
-在企业数字化建设中，我们常面临以下痛点：
+### The Problem
 
-- 🔴 **概念定义不统一** — 不同团队用不同术语描述同一对象，跨系统、跨项目难以复用
-- 🔴 **行业知识难复用** — 行业特性沉淀分散，缺乏标准化的扩展机制
-- 🔴 **企业个性化与通用规范冲突** — 定制需求持续侵蚀底层结构
+Enterprise digitalization commonly faces:
 
-UOD 通过**三层继承架构**解决这些问题：
+- 🔴 **Inconsistent concept definitions** — Different teams use different terms for the same objects, making cross-system reuse difficult
+- 🔴 **Industry knowledge silos** — Industry-specific knowledge is scattered with no standardized extension mechanism
+- 🔴 **Customization vs. standardization conflicts** — Enterprise-specific needs continuously erode the underlying structure
+
+### The Solution: Three-Layer Architecture
 
 ```
 ┌─────────────────────────────────────────────────┐
-│         L3：企业个性化定制层                       │  ← 企业私有扩展
-│    （企业A定制） （企业B定制） （企业C定制）          │
+│         L3: Enterprise Customization Layer       │  ← Private extensions
+│    (Company A)    (Company B)    (Company C)      │
 ├─────────────────────────────────────────────────┤
-│         L2：行业与业务领域 Addon                   │  ← 可选加载，行业特性
-│    （咨询）（奢侈品）（金融）（制造）（零售）          │
+│         L2: Industry & Domain Addons             │  ← Optional, industry-specific
+│  (Consulting) (Luxury) (Finance) (Manufacturing) │
 ├─────────────────────────────────────────────────┤
-│         L1：通用企业 Ontology Core                │  ← 强制继承，基础规范
-│    （主体/组织/角色/能力/流程/资产/风险/目标）        │
+│         L1: Universal Enterprise Ontology Core   │  ← Mandatory inheritance
+│    (Party/Org/Role/Capability/Process/Risk/Goal) │
 └─────────────────────────────────────────────────┘
 ```
 
-## ✨ 核心特性
+## ✨ Key Features
 
-- 🏗️ **三层分离架构** — 通用底座稳定不变，行业包按需加载，企业层自由定制
-- 📐 **标准化定义格式** — 统一的 JSON Schema，支持类、关系、实例的结构化定义
-- 🔗 **继承与扩展机制** — L2 继承 L1，L3 继承 L1+L2，语义链条清晰可追溯
-- 🌍 **双语支持** — 所有概念均提供中英文标签与定义
-- 🤝 **社区驱动** — 欢迎任何人贡献行业 Addon 或完善 Core 定义
+- 🏗️ **Three-Layer Separation** — Stable universal core, pluggable industry addons, free enterprise customization
+- 📐 **Standardized Definition Format** — Unified JSON Schema for classes, relations, and instances
+- 🔗 **Inheritance & Extension** — L2 extends L1, L3 extends L1+L2, with clear semantic lineage
+- 🌍 **Bilingual Support** — All concepts include Chinese and English labels
+- 🤝 **Community-Driven** — Anyone can contribute industry addons or improve core definitions
 
-## 📁 仓库结构
+## 📁 Repository Structure
 
 ```
 universal-ontology-definition/
-├── core/                       # L1 通用企业 Ontology Core
+├── core/                       # L1 Universal Enterprise Ontology Core
 │   └── universal_ontology_v1.json
-├── addons/                     # L2 行业 & 领域 Addon
-│   ├── consulting/             #   └── 咨询行业 Addon
-│   ├── luxury-goods/           #   └── 奢侈品行业 Addon
-│   └── _template/              #   └── Addon 贡献模板
-├── docs/                       # 设计文档与规范
-│   ├── architecture.md         #   └── 三层架构详解
-│   ├── ontology-design-guide.md#   └── Ontology 设计规范
-│   └── addon-development-guide.md  # └── Addon 开发指南
-└── schema/                     # JSON Schema 校验
+├── addons/                     # L2 Industry & Domain Addons
+│   ├── consulting/             #   └── Consulting Industry Addon
+│   ├── luxury-goods/           #   └── Luxury Goods Industry Addon
+│   └── _template/              #   └── Addon Contribution Template
+├── docs/                       # Design Documentation & Specs
+│   ├── architecture.md
+│   ├── ontology-design-guide.md
+│   └── addon-development-guide.md
+└── schema/                     # JSON Schema Validation
     ├── core_schema.json
     └── addon_schema.json
 ```
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 了解 Core Ontology
+### Understanding Core Ontology
 
-L1 通用层定义了 **25 个核心类** 和 **16 种标准关系**，覆盖所有企业通用概念：
+L1 defines **25 core classes** and **16 standard relations** covering universal enterprise concepts:
 
-| 类别 | 核心类 |
+| Category | Core Classes |
 |:---|:---|
-| 主体与组织 | Party, Person, Organization, OrgUnit, Role |
-| 能力与流程 | Capability, Process, Activity |
-| 业务对象 | BusinessObject, ProductService, Asset |
-| 数据与系统 | DataObject, DocumentRecord, SystemApplication |
-| 治理与合规 | Policy, Rule, Control, Risk |
-| 决策与度量 | Event, Decision, Goal, KPI |
-| 市场与渠道 | Location, Channel, MarketSegment |
+| Party & Organization | Party, Person, Organization, OrgUnit, Role |
+| Capability & Process | Capability, Process, Activity |
+| Business Objects | BusinessObject, ProductService, Asset |
+| Data & Systems | DataObject, DocumentRecord, SystemApplication |
+| Governance & Compliance | Policy, Rule, Control, Risk |
+| Decision & Measurement | Event, Decision, Goal, KPI |
+| Market & Channel | Location, Channel, MarketSegment |
 
-### 使用行业 Addon
+### Using Industry Addons
 
-浏览 `addons/` 目录，选择适合的行业包。每个 Addon 通过 `extends` 字段声明其继承的上层定义：
+Browse the `addons/` directory and select the appropriate industry package. Each addon declares its parent through the `extends` field:
 
 ```json
 {
@@ -96,50 +98,50 @@ L1 通用层定义了 **25 个核心类** 和 **16 种标准关系**，覆盖所
       "id": "ConsultingFirm",
       "label_zh": "咨询公司",
       "parent": "Organization",
-      "definition": "提供专业咨询服务的企业主体"
+      "definition": "An enterprise entity providing professional consulting services"
     }
   ]
 }
 ```
 
-### 贡献新的行业 Addon
+### Contributing a New Industry Addon
 
-1. 复制 `addons/_template/` 作为起点
-2. 按照 [Addon 开发指南](docs/addon-development-guide.md) 填充定义
-3. 使用 `schema/addon_schema.json` 校验格式
-4. 提交 Pull Request
+1. Copy `addons/_template/` as your starting point
+2. Follow the [Addon Development Guide](docs/addon-development-guide.md)
+3. Validate against `schema/addon_schema.json`
+4. Submit a Pull Request
 
-详见 [CONTRIBUTING.md](CONTRIBUTING.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## 🗂️ 已有行业 Addon
+## 🗂️ Available Industry Addons
 
-| 行业 | 目录 | 类数量 | 关系数量 | 状态 |
+| Industry | Directory | Classes | Relations | Status |
 |:---|:---|:---:|:---:|:---|
-| 咨询行业 | [`addons/consulting/`](addons/consulting/) | 40+ | 34 | ✅ v1.0.0 |
-| 奢侈品行业 | [`addons/luxury-goods/`](addons/luxury-goods/) | 21 | 10 | ✅ v1.0.0 |
+| Consulting | [`addons/consulting/`](addons/consulting/) | 40+ | 34 | ✅ v1.0.0 |
+| Luxury Goods | [`addons/luxury-goods/`](addons/luxury-goods/) | 21 | 10 | ✅ v1.0.0 |
 
-**期待社区贡献更多行业 Addon！** 如金融、制造、零售、医疗、教育等。
+**We're looking for community contributions!** Finance, Manufacturing, Retail, Healthcare, Education, and more.
 
 ## 🤝 Contributing
 
-我们欢迎所有形式的贡献！请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解：
+We welcome all contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) to learn about:
 
-- 如何提议修改 Core Ontology
-- 如何提交新的行业 Addon
-- 代码规范与 PR 流程
+- How to propose changes to the Core Ontology
+- How to submit new Industry Addons
+- Coding standards and PR workflow
 
 ## 📄 License
 
-本项目采用 [Apache License 2.0](LICENSE) 许可证。
+This project is licensed under the [Apache License 2.0](LICENSE).
 
-您可以自由地：
-- ✅ 商业使用
-- ✅ 修改和分发
-- ✅ 基于此创建企业私有的 L3 定制层
+You are free to:
+- ✅ Use commercially
+- ✅ Modify and distribute
+- ✅ Build private L3 enterprise layers on top
 
-## 🙏 致谢
+## 🙏 Acknowledgments
 
-本项目的 Ontology 设计参考了以下标准与规范：
+The ontology design draws inspiration from:
 
 - [OWL 2 Web Ontology Language](https://www.w3.org/TR/owl2-overview/)
 - [RDF 1.1 Concepts and Abstract Syntax](https://www.w3.org/TR/rdf11-concepts/)
@@ -150,6 +152,6 @@ L1 通用层定义了 **25 个核心类** 和 **16 种标准关系**，覆盖所
 
 <div align="center">
 
-**如果这个项目对你有帮助，请给个 ⭐ Star！**
+**If this project helps you, please give it a ⭐ Star!**
 
 </div>
