@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schema/addon_schema.json",
+  "layer": "L2_your_industry_addon",
+  "version": "1.0.0",
+  "extends": "L1_universal_organization_ontology",
+  "description": "请替换为你的行业 addon 描述",
+  "classes": [
+    {
+      "id": "YourIndustryEntity",
+      "label_zh": "行业实体名称",
+      "parent": "Organization",
+      "definition": "请替换为该类的中文定义说明"
+    }
+  ],
+  "relations": [
+    {
+      "id": "your_relation",
+      "domain": "YourIndustryEntity",
+      "range": "BusinessObject",
+      "definition": "请替换为该关系的中文定义说明"
+    }
+  ],
+  "sample_instances": [
+    {
+      "id": "instance_example",
+      "type": "YourIndustryEntity",
+      "label": "Example Instance"
+    }
+  ]
+}

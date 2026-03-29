@@ -1,0 +1,232 @@
+{
+  "layer": "L2_luxury_goods_addon",
+  "version": "1.0.0",
+  "extends": "L1_universal_organization_ontology",
+  "description": "奢侈品行业 addon ontology 数据，覆盖品牌、产品、渠道、客户体验、供应链与鉴真",
+  "classes": [
+    {
+      "id": "LuxuryBrand",
+      "label_zh": "奢侈品牌",
+      "parent": "Organization",
+      "definition": "经营奢侈品品牌的企业或品牌主体"
+    },
+    {
+      "id": "Maison",
+      "label_zh": "品牌屋",
+      "parent": "OrgUnit",
+      "definition": "品牌或子品牌经营单元"
+    },
+    {
+      "id": "LuxuryProduct",
+      "label_zh": "奢侈品商品",
+      "parent": "ProductService",
+      "definition": "高端时尚、皮具、珠宝、腕表、美妆等奢侈品"
+    },
+    {
+      "id": "Collection",
+      "label_zh": "系列",
+      "parent": "BusinessObject",
+      "definition": "按季节、主题或设计语言组织的系列"
+    },
+    {
+      "id": "SKUVariant",
+      "label_zh": "SKU 变体",
+      "parent": "BusinessObject",
+      "definition": "颜色、尺寸、材质等层级的商品变体"
+    },
+    {
+      "id": "MaterialLot",
+      "label_zh": "原料批次",
+      "parent": "Asset",
+      "definition": "皮革、贵金属、宝石等原料批次"
+    },
+    {
+      "id": "CraftsmanshipCertificate",
+      "label_zh": "工艺证书",
+      "parent": "DocumentRecord",
+      "definition": "工艺、产地、手工流程证明"
+    },
+    {
+      "id": "AuthenticityCertificate",
+      "label_zh": "真伪证书",
+      "parent": "DocumentRecord",
+      "definition": "防伪、序列号、区块链或数字护照证明"
+    },
+    {
+      "id": "Boutique",
+      "label_zh": "精品店",
+      "parent": "Channel",
+      "definition": "直营门店或品牌精品店渠道"
+    },
+    {
+      "id": "DepartmentStoreCounter",
+      "label_zh": "百货专柜",
+      "parent": "Channel",
+      "definition": "百货渠道直营网点"
+    },
+    {
+      "id": "ClientAdvisorRole",
+      "label_zh": "客户顾问角色",
+      "parent": "Role",
+      "definition": "负责高净值客户服务与销售的门店角色"
+    },
+    {
+      "id": "VIPClientRole",
+      "label_zh": "VIP 客户角色",
+      "parent": "Role",
+      "definition": "具有高价值或高忠诚度的客户角色"
+    },
+    {
+      "id": "PersonalShoppingService",
+      "label_zh": "一对一私享服务",
+      "parent": "ProductService",
+      "definition": "预约制客户体验服务"
+    },
+    {
+      "id": "AfterSalesService",
+      "label_zh": "售后养护服务",
+      "parent": "ProductService",
+      "definition": "维修、保养、翻新与延保服务"
+    },
+    {
+      "id": "TraceabilityEvent",
+      "label_zh": "溯源事件",
+      "parent": "Event",
+      "definition": "原料、生产、入库、销售、转移等溯源事件"
+    },
+    {
+      "id": "CounterfeitRisk",
+      "label_zh": "假货风险",
+      "parent": "Risk",
+      "definition": "仿冒、灰市、串货和二手流转带来的风险"
+    },
+    {
+      "id": "ScarcityRule",
+      "label_zh": "稀缺性分配规则",
+      "parent": "Rule",
+      "definition": "限量商品的配货、预约与购买资格规则"
+    },
+    {
+      "id": "ClientelingCapability",
+      "label_zh": "客户经营能力",
+      "parent": "Capability",
+      "definition": "围绕高净值客群的识别、分层、触达和服务能力"
+    },
+    {
+      "id": "ProductPassportCapability",
+      "label_zh": "数字护照能力",
+      "parent": "Capability",
+      "definition": "围绕商品数字身份、真伪与售后全生命周期的能力"
+    },
+    {
+      "id": "AssortmentPlanningCapability",
+      "label_zh": "精品配货能力",
+      "parent": "Capability",
+      "definition": "围绕稀缺 SKU、门店等级和客户画像的分配能力"
+    }
+  ],
+  "relations": [
+    {
+      "id": "belongs_to_collection",
+      "domain": "LuxuryProduct",
+      "range": "Collection",
+      "definition": "商品属于某个系列"
+    },
+    {
+      "id": "has_variant",
+      "domain": "LuxuryProduct",
+      "range": "SKUVariant",
+      "definition": "商品具有 SKU 变体"
+    },
+    {
+      "id": "crafted_from",
+      "domain": "LuxuryProduct",
+      "range": "MaterialLot",
+      "definition": "商品使用原料批次"
+    },
+    {
+      "id": "authenticated_by",
+      "domain": "LuxuryProduct",
+      "range": "AuthenticityCertificate",
+      "definition": "商品由真伪证书认证"
+    },
+    {
+      "id": "served_through",
+      "domain": "ProductService",
+      "range": "Channel",
+      "definition": "服务通过渠道提供"
+    },
+    {
+      "id": "advised_by",
+      "domain": "VIPClientRole",
+      "range": "ClientAdvisorRole",
+      "definition": "VIP 客户由客户顾问服务"
+    },
+    {
+      "id": "governed_by_scarcity_rule",
+      "domain": "LuxuryProduct",
+      "range": "ScarcityRule",
+      "definition": "限量商品遵循稀缺性规则"
+    },
+    {
+      "id": "tracked_by_event",
+      "domain": "LuxuryProduct",
+      "range": "TraceabilityEvent",
+      "definition": "商品被溯源事件追踪"
+    },
+    {
+      "id": "exposed_to_counterfeit_risk",
+      "domain": "LuxuryProduct",
+      "range": "CounterfeitRisk",
+      "definition": "商品面临假货风险"
+    },
+    {
+      "id": "mitigated_by_passport",
+      "domain": "CounterfeitRisk",
+      "range": "ProductPassportCapability",
+      "definition": "假货风险通过数字护照能力缓释"
+    }
+  ],
+  "sample_instances": [
+    {
+      "id": "brand_orion_maison",
+      "type": "LuxuryBrand",
+      "label": "Orion Maison"
+    },
+    {
+      "id": "collection_fw26_aurora",
+      "type": "Collection",
+      "label": "FW26 Aurora Collection"
+    },
+    {
+      "id": "product_aurora_bag",
+      "type": "LuxuryProduct",
+      "label": "Aurora Top Handle Bag"
+    },
+    {
+      "id": "sku_aurora_black_small",
+      "type": "SKUVariant",
+      "label": "Aurora Small / Black"
+    },
+    {
+      "id": "channel_shanghai_boutique",
+      "type": "Boutique",
+      "label": "Shanghai Plaza Boutique"
+    },
+    {
+      "id": "cap_clienteling",
+      "type": "ClientelingCapability",
+      "label": "VIP Clienteling"
+    },
+    {
+      "id": "cap_digital_passport",
+      "type": "ProductPassportCapability",
+      "label": "Digital Product Passport"
+    },
+    {
+      "id": "risk_counterfeit",
+      "type": "CounterfeitRisk",
+      "label": "Cross-border Counterfeit Risk"
+    }
+  ]
+}

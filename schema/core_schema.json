@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/ramphias/universal-ontology-definition/schema/core_schema.json",
+  "title": "Universal Ontology Core Schema",
+  "description": "JSON Schema for validating L1 Universal Enterprise Ontology Core definitions",
+  "type": "object",
+  "required": ["metadata", "classes", "relations"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema file"
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["name", "layer", "version"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the ontology"
+        },
+        "layer": {
+          "type": "string",
+          "pattern": "^L1_",
+          "description": "Layer identifier, must start with L1_"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version string"
+        },
+        "license": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string",
+          "format": "uri"
+        },
+        "description": {
+          "type": "string"
+        },
+        "description_en": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date"
+        },
+        "contributors": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "label_zh", "definition"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$",
+            "description": "PascalCase class identifier"
+          },
+          "label_zh": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Chinese label"
+          },
+          "label_en": {
+            "type": "string",
+            "description": "English label"
+          },
+          "parent": {
+            "type": ["string", "null"],
+            "description": "Parent class ID or null for root classes"
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Chinese definition"
+          },
+          "definition_en": {
+            "type": "string",
+            "description": "English definition"
+          }
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "domain", "range", "definition"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "snake_case relation identifier"
+          },
+          "label_zh": {
+            "type": "string"
+          },
+          "label_en": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Source class ID"
+          },
+          "range": {
+            "type": "string",
+            "description": "Target class ID"
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "definition_en": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sample_instances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "label"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "snake_case instance identifier"
+          },
+          "type": {
+            "type": "string",
+            "description": "Class ID this instance belongs to"
+          },
+          "label": {
+            "type": "string",
+            "description": "English label"
+          },
+          "label_zh": {
+            "type": "string",
+            "description": "Chinese label"
+          }
+        }
+      }
+    }
+  }
+}

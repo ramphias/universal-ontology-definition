@@ -1,0 +1,638 @@
+{
+  "layer": "L2_consulting_industry_addon",
+  "version": "1.0.0",
+  "extends": "L1_universal_organization_ontology",
+  "description": "咨询行业 addon ontology 数据，覆盖咨询项目、业务实践、方法论、交付物、客户关系、知识管理与人才配置",
+  "classes": [
+    {
+      "id": "ConsultingFirm",
+      "label_zh": "咨询公司",
+      "parent": "Organization",
+      "definition": "提供专业咨询服务的企业主体，如管理咨询、IT咨询、战略咨询等"
+    },
+    {
+      "id": "PracticeLine",
+      "label_zh": "业务线/实践领域",
+      "parent": "OrgUnit",
+      "definition": "咨询公司按行业或职能划分的业务实践领域，如战略、运营、数字化转型、人力资源等"
+    },
+    {
+      "id": "CompetencyCenter",
+      "label_zh": "能力中心",
+      "parent": "OrgUnit",
+      "definition": "围绕特定专业能力或技术方向组建的跨项目支持中心"
+    },
+    {
+      "id": "Engagement",
+      "label_zh": "咨询项目/签约项目",
+      "parent": "BusinessObject",
+      "definition": "与客户签订合同后的咨询服务交付项目，包含范围、时间、预算和团队"
+    },
+    {
+      "id": "Proposal",
+      "label_zh": "咨询提案",
+      "parent": "DocumentRecord",
+      "definition": "面向客户的项目建议书或竞标方案，包含方法论、团队、时间表和报价"
+    },
+    {
+      "id": "StatementOfWork",
+      "label_zh": "工作说明书",
+      "parent": "DocumentRecord",
+      "definition": "定义项目范围、交付物、时间线和验收标准的正式合同附件"
+    },
+    {
+      "id": "Deliverable",
+      "label_zh": "交付物",
+      "parent": "BusinessObject",
+      "definition": "咨询项目中需交付给客户的成果物，如报告、模型、实施方案、工具包等"
+    },
+    {
+      "id": "WorkStream",
+      "label_zh": "工作流",
+      "parent": "BusinessObject",
+      "definition": "咨询项目内按主题划分的并行工作模块，各自拥有独立交付目标"
+    },
+    {
+      "id": "Methodology",
+      "label_zh": "方法论",
+      "parent": "BusinessObject",
+      "definition": "咨询公司自主研发或引用的标准化方法论框架，如设计思维、精益六西格玛、TOGAF等"
+    },
+    {
+      "id": "Framework",
+      "label_zh": "分析框架",
+      "parent": "BusinessObject",
+      "definition": "用于问题分析和战略规划的结构化工具，如波特五力、SWOT、价值链分析、BCG矩阵等"
+    },
+    {
+      "id": "KnowledgeAsset",
+      "label_zh": "知识资产",
+      "parent": "Asset",
+      "definition": "咨询公司积累的可复用知识，包括案例库、行业报告、最佳实践、工具模板等"
+    },
+    {
+      "id": "CaseStudy",
+      "label_zh": "案例研究",
+      "parent": "DocumentRecord",
+      "definition": "过往项目的结构化总结，用于知识沉淀、业务开发和品牌展示"
+    },
+    {
+      "id": "ClientAccount",
+      "label_zh": "客户账户",
+      "parent": "BusinessObject",
+      "definition": "咨询公司维护的客户主体记录，跟踪关系历史、项目记录和收入贡献"
+    },
+    {
+      "id": "ClientRelationship",
+      "label_zh": "客户关系",
+      "parent": "BusinessObject",
+      "definition": "与客户之间的长期战略合作关系，包含信任层级、接触频率和商机管道"
+    },
+    {
+      "id": "Pipeline",
+      "label_zh": "商机管道",
+      "parent": "BusinessObject",
+      "definition": "潜在咨询项目的销售漏斗，跟踪从线索识别到签约的全流程"
+    },
+    {
+      "id": "ConsultingService",
+      "label_zh": "咨询服务产品",
+      "parent": "ProductService",
+      "definition": "咨询公司对外提供的标准化或定制化服务产品，如战略评估、组织诊断、数字化路线图等"
+    },
+    {
+      "id": "PartnerRole",
+      "label_zh": "合伙人角色",
+      "parent": "Role",
+      "definition": "对客户关系、项目质量和营收目标负最终责任的高级领导角色"
+    },
+    {
+      "id": "PrincipalRole",
+      "label_zh": "总监/副合伙人角色",
+      "parent": "Role",
+      "definition": "介于合伙人和经理之间的高级顾问角色，负责项目群管理和业务拓展"
+    },
+    {
+      "id": "EngagementManagerRole",
+      "label_zh": "项目经理角色",
+      "parent": "Role",
+      "definition": "负责单个项目日常管理、团队协调和客户沟通的角色"
+    },
+    {
+      "id": "ConsultantRole",
+      "label_zh": "顾问角色",
+      "parent": "Role",
+      "definition": "执行具体分析、调研、方案设计和交付工作的专业角色"
+    },
+    {
+      "id": "AnalystRole",
+      "label_zh": "分析师角色",
+      "parent": "Role",
+      "definition": "负责数据收集、分析建模和材料准备的初级角色"
+    },
+    {
+      "id": "SubjectMatterExpertRole",
+      "label_zh": "领域专家角色",
+      "parent": "Role",
+      "definition": "在特定行业或职能领域拥有深度专长的顾问角色，提供专家意见和质量把关"
+    },
+    {
+      "id": "StaffingRequest",
+      "label_zh": "人员配置需求",
+      "parent": "BusinessObject",
+      "definition": "项目团队组建中对特定技能、经验和可用性的人力需求申请"
+    },
+    {
+      "id": "UtilizationMetric",
+      "label_zh": "利用率指标",
+      "parent": "KPI",
+      "definition": "衡量顾问可计费时间与总工时比率的核心运营指标"
+    },
+    {
+      "id": "BillableRate",
+      "label_zh": "计费费率",
+      "parent": "BusinessObject",
+      "definition": "按顾问等级、项目类型和客户协议确定的小时/天计费标准"
+    },
+    {
+      "id": "QualityReview",
+      "label_zh": "质量评审",
+      "parent": "Control",
+      "definition": "项目交付过程中的质量关口和审核机制，确保交付物达标"
+    },
+    {
+      "id": "ClientSatisfactionSurvey",
+      "label_zh": "客户满意度调查",
+      "parent": "DocumentRecord",
+      "definition": "项目结束后收集的客户反馈，衡量服务质量和客户体验"
+    },
+    {
+      "id": "ThoughtLeadership",
+      "label_zh": "思想领导力内容",
+      "parent": "Asset",
+      "definition": "咨询公司发布的行业洞察白皮书、研究报告和观点文章，用于品牌建设和客户吸引"
+    },
+    {
+      "id": "ChangeManagementPlan",
+      "label_zh": "变革管理计划",
+      "parent": "DocumentRecord",
+      "definition": "咨询项目中为客户制定的组织变革和人员转型方案"
+    },
+    {
+      "id": "BenchmarkStudy",
+      "label_zh": "对标研究",
+      "parent": "DocumentRecord",
+      "definition": "基于行业数据和最佳实践的性能对标分析报告"
+    },
+    {
+      "id": "ConflictOfInterestRisk",
+      "label_zh": "利益冲突风险",
+      "parent": "Risk",
+      "definition": "同时服务竞争客户或关联方可能导致的利益冲突和声誉风险"
+    },
+    {
+      "id": "ScopeCreepRisk",
+      "label_zh": "范围蔓延风险",
+      "parent": "Risk",
+      "definition": "项目执行过程中需求范围不断扩大但未相应调整预算和时间的风险"
+    },
+    {
+      "id": "IndependencePolicy",
+      "label_zh": "独立性政策",
+      "parent": "Policy",
+      "definition": "确保咨询建议客观中立的内部治理政策，特别适用于审计和风控领域"
+    },
+    {
+      "id": "ConfidentialityPolicy",
+      "label_zh": "保密政策",
+      "parent": "Policy",
+      "definition": "规范客户信息、项目数据和商业机密保护要求的信息安全政策"
+    },
+    {
+      "id": "BusinessDevelopmentCapability",
+      "label_zh": "业务开发能力",
+      "parent": "Capability",
+      "definition": "识别商机、建立客户关系和转化签约的市场拓展能力"
+    },
+    {
+      "id": "KnowledgeManagementCapability",
+      "label_zh": "知识管理能力",
+      "parent": "Capability",
+      "definition": "对项目经验、行业知识和方法论的系统化收集、整理、分享与复用能力"
+    },
+    {
+      "id": "TalentDevelopmentCapability",
+      "label_zh": "人才发展能力",
+      "parent": "Capability",
+      "definition": "咨询人才的选拔、培养、评估和晋升体系能力，是咨询公司核心竞争力"
+    },
+    {
+      "id": "DigitalDeliveryCapability",
+      "label_zh": "数字化交付能力",
+      "parent": "Capability",
+      "definition": "利用数据分析、AI、自动化工具提升交付效率和成果质量的能力"
+    },
+    {
+      "id": "StaffingProcess",
+      "label_zh": "人员配置流程",
+      "parent": "Process",
+      "definition": "根据项目需求匹配和调配顾问资源的流程"
+    },
+    {
+      "id": "EngagementDeliveryProcess",
+      "label_zh": "项目交付流程",
+      "parent": "Process",
+      "definition": "从项目启动、调研分析、方案设计到最终交付的端到端流程"
+    },
+    {
+      "id": "BusinessDevelopmentProcess",
+      "label_zh": "业务开发流程",
+      "parent": "Process",
+      "definition": "从市场情报、客户接洽、需求识别到提案竞标的商机转化流程"
+    },
+    {
+      "id": "KnowledgeCaptureProcess",
+      "label_zh": "知识沉淀流程",
+      "parent": "Process",
+      "definition": "项目结束后的知识提炼、案例总结和经验入库流程"
+    },
+    {
+      "id": "CRMSystem",
+      "label_zh": "客户关系管理系统",
+      "parent": "SystemApplication",
+      "definition": "管理客户信息、商机追踪和关系维护的系统平台"
+    },
+    {
+      "id": "KnowledgePortal",
+      "label_zh": "知识管理门户",
+      "parent": "SystemApplication",
+      "definition": "存储和检索方法论、案例库、行业报告和最佳实践的知识平台"
+    },
+    {
+      "id": "ResourceManagementSystem",
+      "label_zh": "资源管理系统",
+      "parent": "SystemApplication",
+      "definition": "跟踪顾问技能、可用性和项目分配的人员配置系统"
+    },
+    {
+      "id": "TimeTrackingSystem",
+      "label_zh": "工时管理系统",
+      "parent": "SystemApplication",
+      "definition": "记录顾问计费时间和费用报销的工时系统"
+    }
+  ],
+  "relations": [
+    {
+      "id": "has_practice_line",
+      "domain": "ConsultingFirm",
+      "range": "PracticeLine",
+      "definition": "咨询公司拥有业务实践领域"
+    },
+    {
+      "id": "has_competency_center",
+      "domain": "ConsultingFirm",
+      "range": "CompetencyCenter",
+      "definition": "咨询公司设立能力中心"
+    },
+    {
+      "id": "serves_client",
+      "domain": "ConsultingFirm",
+      "range": "ClientAccount",
+      "definition": "咨询公司服务客户"
+    },
+    {
+      "id": "manages_relationship",
+      "domain": "PartnerRole",
+      "range": "ClientRelationship",
+      "definition": "合伙人管理客户关系"
+    },
+    {
+      "id": "leads_engagement",
+      "domain": "PartnerRole",
+      "range": "Engagement",
+      "definition": "合伙人领导咨询项目"
+    },
+    {
+      "id": "manages_engagement",
+      "domain": "EngagementManagerRole",
+      "range": "Engagement",
+      "definition": "项目经理管理咨询项目日常"
+    },
+    {
+      "id": "staffed_on",
+      "domain": "ConsultantRole",
+      "range": "Engagement",
+      "definition": "顾问被配置到咨询项目"
+    },
+    {
+      "id": "provides_expertise",
+      "domain": "SubjectMatterExpertRole",
+      "range": "Engagement",
+      "definition": "领域专家为项目提供专业支持"
+    },
+    {
+      "id": "engaged_by",
+      "domain": "Engagement",
+      "range": "ClientAccount",
+      "definition": "咨询项目服务于客户"
+    },
+    {
+      "id": "scoped_by",
+      "domain": "Engagement",
+      "range": "StatementOfWork",
+      "definition": "项目范围由工作说明书定义"
+    },
+    {
+      "id": "proposed_through",
+      "domain": "Engagement",
+      "range": "Proposal",
+      "definition": "项目通过提案赢得"
+    },
+    {
+      "id": "has_workstream",
+      "domain": "Engagement",
+      "range": "WorkStream",
+      "definition": "项目包含工作流模块"
+    },
+    {
+      "id": "produces_deliverable",
+      "domain": "WorkStream",
+      "range": "Deliverable",
+      "definition": "工作流产出交付物"
+    },
+    {
+      "id": "applies_methodology",
+      "domain": "Engagement",
+      "range": "Methodology",
+      "definition": "项目应用方法论"
+    },
+    {
+      "id": "uses_framework",
+      "domain": "Deliverable",
+      "range": "Framework",
+      "definition": "交付物使用分析框架"
+    },
+    {
+      "id": "fulfills_staffing_request",
+      "domain": "ConsultantRole",
+      "range": "StaffingRequest",
+      "definition": "顾问满足人员配置需求"
+    },
+    {
+      "id": "generates_pipeline",
+      "domain": "ClientRelationship",
+      "range": "Pipeline",
+      "definition": "客户关系产生商机管道"
+    },
+    {
+      "id": "converts_to_engagement",
+      "domain": "Pipeline",
+      "range": "Engagement",
+      "definition": "商机转化为签约项目"
+    },
+    {
+      "id": "reviewed_by",
+      "domain": "Deliverable",
+      "range": "QualityReview",
+      "definition": "交付物经过质量评审"
+    },
+    {
+      "id": "assessed_by_survey",
+      "domain": "Engagement",
+      "range": "ClientSatisfactionSurvey",
+      "definition": "项目通过客户满意度调查评估"
+    },
+    {
+      "id": "contributes_to_knowledge",
+      "domain": "Engagement",
+      "range": "KnowledgeAsset",
+      "definition": "项目经验沉淀为知识资产"
+    },
+    {
+      "id": "documented_as_case",
+      "domain": "Engagement",
+      "range": "CaseStudy",
+      "definition": "项目记录为案例研究"
+    },
+    {
+      "id": "publishes_thought_leadership",
+      "domain": "PracticeLine",
+      "range": "ThoughtLeadership",
+      "definition": "业务线发布思想领导力内容"
+    },
+    {
+      "id": "benchmarked_against",
+      "domain": "Deliverable",
+      "range": "BenchmarkStudy",
+      "definition": "交付物使用对标研究支撑"
+    },
+    {
+      "id": "includes_change_plan",
+      "domain": "Engagement",
+      "range": "ChangeManagementPlan",
+      "definition": "项目包含变革管理计划"
+    },
+    {
+      "id": "exposed_to_conflict",
+      "domain": "Engagement",
+      "range": "ConflictOfInterestRisk",
+      "definition": "项目面临利益冲突风险"
+    },
+    {
+      "id": "exposed_to_scope_creep",
+      "domain": "Engagement",
+      "range": "ScopeCreepRisk",
+      "definition": "项目面临范围蔓延风险"
+    },
+    {
+      "id": "governed_by_independence",
+      "domain": "Engagement",
+      "range": "IndependencePolicy",
+      "definition": "项目受独立性政策治理"
+    },
+    {
+      "id": "governed_by_confidentiality",
+      "domain": "Engagement",
+      "range": "ConfidentialityPolicy",
+      "definition": "项目受保密政策治理"
+    },
+    {
+      "id": "measured_by_utilization",
+      "domain": "ConsultantRole",
+      "range": "UtilizationMetric",
+      "definition": "顾问绩效由利用率指标衡量"
+    },
+    {
+      "id": "billed_at",
+      "domain": "ConsultantRole",
+      "range": "BillableRate",
+      "definition": "顾问按照费率标准计费"
+    },
+    {
+      "id": "tracked_in_crm",
+      "domain": "ClientAccount",
+      "range": "CRMSystem",
+      "definition": "客户账户在CRM系统中管理"
+    },
+    {
+      "id": "stored_in_portal",
+      "domain": "KnowledgeAsset",
+      "range": "KnowledgePortal",
+      "definition": "知识资产存储于知识管理门户"
+    },
+    {
+      "id": "scheduled_in_rms",
+      "domain": "StaffingRequest",
+      "range": "ResourceManagementSystem",
+      "definition": "人员配置通过资源管理系统调度"
+    },
+    {
+      "id": "logged_in_timesheet",
+      "domain": "Engagement",
+      "range": "TimeTrackingSystem",
+      "definition": "项目工时在工时管理系统中记录"
+    }
+  ],
+  "sample_instances": [
+    {
+      "id": "firm_apex_consulting",
+      "type": "ConsultingFirm",
+      "label": "Apex Consulting Group"
+    },
+    {
+      "id": "practice_strategy",
+      "type": "PracticeLine",
+      "label": "Strategy & Corporate Finance"
+    },
+    {
+      "id": "practice_digital",
+      "type": "PracticeLine",
+      "label": "Digital Transformation & Technology"
+    },
+    {
+      "id": "practice_operations",
+      "type": "PracticeLine",
+      "label": "Operations & Supply Chain"
+    },
+    {
+      "id": "practice_org_hr",
+      "type": "PracticeLine",
+      "label": "Organization & Human Capital"
+    },
+    {
+      "id": "center_ai_analytics",
+      "type": "CompetencyCenter",
+      "label": "AI & Advanced Analytics Center"
+    },
+    {
+      "id": "client_fortune500_mfg",
+      "type": "ClientAccount",
+      "label": "Fortune 500 Manufacturing Co."
+    },
+    {
+      "id": "engagement_digital_roadmap",
+      "type": "Engagement",
+      "label": "Digital Transformation Roadmap for Manufacturing Co."
+    },
+    {
+      "id": "ws_current_state",
+      "type": "WorkStream",
+      "label": "Current State Assessment"
+    },
+    {
+      "id": "ws_target_architecture",
+      "type": "WorkStream",
+      "label": "Target State Architecture Design"
+    },
+    {
+      "id": "ws_implementation_plan",
+      "type": "WorkStream",
+      "label": "Implementation Roadmap & Business Case"
+    },
+    {
+      "id": "deliverable_maturity_assessment",
+      "type": "Deliverable",
+      "label": "Digital Maturity Assessment Report"
+    },
+    {
+      "id": "deliverable_roadmap_deck",
+      "type": "Deliverable",
+      "label": "3-Year Digital Transformation Roadmap"
+    },
+    {
+      "id": "deliverable_business_case",
+      "type": "Deliverable",
+      "label": "ROI Business Case & Investment Plan"
+    },
+    {
+      "id": "methodology_design_thinking",
+      "type": "Methodology",
+      "label": "Human-Centered Design Thinking"
+    },
+    {
+      "id": "framework_value_chain",
+      "type": "Framework",
+      "label": "Porter's Value Chain Analysis"
+    },
+    {
+      "id": "framework_digital_maturity",
+      "type": "Framework",
+      "label": "Digital Maturity Model (DMM)"
+    },
+    {
+      "id": "ka_industry_benchmark",
+      "type": "KnowledgeAsset",
+      "label": "Manufacturing Industry Digital Benchmark 2026"
+    },
+    {
+      "id": "pipeline_ops_improvement",
+      "type": "Pipeline",
+      "label": "Operations Improvement Opportunity - Manufacturing Co."
+    },
+    {
+      "id": "role_lead_partner",
+      "type": "PartnerRole",
+      "label": "Lead Engagement Partner"
+    },
+    {
+      "id": "role_em",
+      "type": "EngagementManagerRole",
+      "label": "Engagement Manager"
+    },
+    {
+      "id": "role_senior_consultant",
+      "type": "ConsultantRole",
+      "label": "Senior Consultant - Digital"
+    },
+    {
+      "id": "role_data_sme",
+      "type": "SubjectMatterExpertRole",
+      "label": "Data & AI Subject Matter Expert"
+    },
+    {
+      "id": "sys_salesforce_crm",
+      "type": "CRMSystem",
+      "label": "Salesforce CRM"
+    },
+    {
+      "id": "sys_knowledge_hub",
+      "type": "KnowledgePortal",
+      "label": "Internal Knowledge Hub"
+    },
+    {
+      "id": "kpi_utilization_rate",
+      "type": "UtilizationMetric",
+      "label": "Consultant Utilization Rate (Target: 75-85%)"
+    },
+    {
+      "id": "cap_biz_dev",
+      "type": "BusinessDevelopmentCapability",
+      "label": "Client Business Development"
+    },
+    {
+      "id": "cap_km",
+      "type": "KnowledgeManagementCapability",
+      "label": "Enterprise Knowledge Management"
+    }
+  ]
+}

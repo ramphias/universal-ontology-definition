@@ -1,0 +1,412 @@
+{
+  "$schema": "../schema/core_schema.json",
+  "metadata": {
+    "name": "Universal Enterprise Ontology Core",
+    "layer": "L1_universal_organization_ontology",
+    "version": "1.0.0",
+    "license": "Apache-2.0",
+    "namespace": "https://github.com/ramphias/universal-ontology-definition/core/",
+    "description": "适用于所有企业的组织通用 ontology 模板，定义了跨行业、跨企业的核心概念、关系与实例",
+    "description_en": "Universal organization ontology template applicable to all enterprises, defining cross-industry core concepts, relations, and instances",
+    "created": "2026-03-29",
+    "contributors": ["Universal Ontology Definition Contributors"]
+  },
+  "classes": [
+    {
+      "id": "Party",
+      "label_zh": "主体",
+      "label_en": "Party",
+      "parent": null,
+      "definition": "可参与业务关系与治理关系的主体总类",
+      "definition_en": "The superclass of all entities that can participate in business and governance relationships"
+    },
+    {
+      "id": "Person",
+      "label_zh": "人员",
+      "label_en": "Person",
+      "parent": "Party",
+      "definition": "自然人主体",
+      "definition_en": "A natural person entity"
+    },
+    {
+      "id": "Organization",
+      "label_zh": "组织",
+      "label_en": "Organization",
+      "parent": "Party",
+      "definition": "法人或非法人组织",
+      "definition_en": "A legal or non-legal organization entity"
+    },
+    {
+      "id": "OrgUnit",
+      "label_zh": "组织单元",
+      "label_en": "Organizational Unit",
+      "parent": "Organization",
+      "definition": "部门、团队、委员会、项目群等组织内部单元",
+      "definition_en": "Internal organizational units such as departments, teams, committees, and program groups"
+    },
+    {
+      "id": "Role",
+      "label_zh": "角色",
+      "label_en": "Role",
+      "parent": null,
+      "definition": "主体在某一上下文中承担的身份或职责",
+      "definition_en": "An identity or responsibility assumed by a party in a given context"
+    },
+    {
+      "id": "Capability",
+      "label_zh": "能力",
+      "label_en": "Capability",
+      "parent": null,
+      "definition": "组织稳定具备且可被复用的业务能力",
+      "definition_en": "A stable and reusable business capability possessed by an organization"
+    },
+    {
+      "id": "Process",
+      "label_zh": "流程",
+      "label_en": "Process",
+      "parent": null,
+      "definition": "为实现业务目标而定义的端到端活动序列",
+      "definition_en": "An end-to-end sequence of activities defined to achieve business objectives"
+    },
+    {
+      "id": "Activity",
+      "label_zh": "活动",
+      "label_en": "Activity",
+      "parent": null,
+      "definition": "流程中的可执行步骤",
+      "definition_en": "An executable step within a process"
+    },
+    {
+      "id": "BusinessObject",
+      "label_zh": "业务对象",
+      "label_en": "Business Object",
+      "parent": null,
+      "definition": "被业务过程创建、变更、管理的对象",
+      "definition_en": "An object created, modified, or managed by business processes"
+    },
+    {
+      "id": "ProductService",
+      "label_zh": "产品与服务",
+      "label_en": "Product & Service",
+      "parent": "BusinessObject",
+      "definition": "企业对外提供或内部使用的产品和服务对象",
+      "definition_en": "Products and services provided externally or used internally by an enterprise"
+    },
+    {
+      "id": "Asset",
+      "label_zh": "资产",
+      "label_en": "Asset",
+      "parent": "BusinessObject",
+      "definition": "财务、实物、知识、数据、品牌等资产",
+      "definition_en": "Financial, physical, knowledge, data, brand, and other assets"
+    },
+    {
+      "id": "DataObject",
+      "label_zh": "数据对象",
+      "label_en": "Data Object",
+      "parent": null,
+      "definition": "结构化或非结构化的数据实体",
+      "definition_en": "A structured or unstructured data entity"
+    },
+    {
+      "id": "DocumentRecord",
+      "label_zh": "文档与记录",
+      "label_en": "Document & Record",
+      "parent": "DataObject",
+      "definition": "合同、报告、文件、单据、记录",
+      "definition_en": "Contracts, reports, files, documents, and records"
+    },
+    {
+      "id": "SystemApplication",
+      "label_zh": "系统应用",
+      "label_en": "System Application",
+      "parent": null,
+      "definition": "支撑流程、数据和决策的软件系统",
+      "definition_en": "Software systems supporting processes, data, and decision-making"
+    },
+    {
+      "id": "Policy",
+      "label_zh": "政策",
+      "label_en": "Policy",
+      "parent": null,
+      "definition": "管理原则与约束要求",
+      "definition_en": "Management principles and constraint requirements"
+    },
+    {
+      "id": "Rule",
+      "label_zh": "规则",
+      "label_en": "Rule",
+      "parent": null,
+      "definition": "可执行、可判断的业务或控制规则",
+      "definition_en": "Executable and evaluable business or control rules"
+    },
+    {
+      "id": "Control",
+      "label_zh": "控制",
+      "label_en": "Control",
+      "parent": null,
+      "definition": "用于降低风险、保障合规和质量的控制措施",
+      "definition_en": "Control measures to reduce risk and ensure compliance and quality"
+    },
+    {
+      "id": "Risk",
+      "label_zh": "风险",
+      "label_en": "Risk",
+      "parent": null,
+      "definition": "可能影响目标实现的不确定事件或状态",
+      "definition_en": "Uncertain events or conditions that may affect goal achievement"
+    },
+    {
+      "id": "Event",
+      "label_zh": "事件",
+      "label_en": "Event",
+      "parent": null,
+      "definition": "发生在业务或技术环境中的状态变化",
+      "definition_en": "A state change occurring in the business or technical environment"
+    },
+    {
+      "id": "Decision",
+      "label_zh": "决策",
+      "label_en": "Decision",
+      "parent": null,
+      "definition": "对事件、规则或目标做出的选择与批准",
+      "definition_en": "Choices and approvals made regarding events, rules, or goals"
+    },
+    {
+      "id": "Goal",
+      "label_zh": "目标",
+      "label_en": "Goal",
+      "parent": null,
+      "definition": "组织希望达成的结果",
+      "definition_en": "Outcomes an organization aims to achieve"
+    },
+    {
+      "id": "KPI",
+      "label_zh": "关键指标",
+      "label_en": "Key Performance Indicator",
+      "parent": null,
+      "definition": "衡量目标达成程度的指标",
+      "definition_en": "Metrics that measure the degree of goal achievement"
+    },
+    {
+      "id": "Location",
+      "label_zh": "地点",
+      "label_en": "Location",
+      "parent": null,
+      "definition": "组织运营或交易发生的地点",
+      "definition_en": "Places where organizational operations or transactions occur"
+    },
+    {
+      "id": "Channel",
+      "label_zh": "渠道",
+      "label_en": "Channel",
+      "parent": null,
+      "definition": "与客户、伙伴或内部用户交互的渠道",
+      "definition_en": "Channels for interacting with customers, partners, or internal users"
+    },
+    {
+      "id": "MarketSegment",
+      "label_zh": "市场细分",
+      "label_en": "Market Segment",
+      "parent": null,
+      "definition": "客户或市场的分类维度",
+      "definition_en": "Classification dimensions for customers or markets"
+    }
+  ],
+  "relations": [
+    {
+      "id": "plays_role",
+      "label_zh": "扮演角色",
+      "label_en": "plays role",
+      "domain": "Party",
+      "range": "Role",
+      "definition": "主体扮演某个角色",
+      "definition_en": "A party plays a specific role"
+    },
+    {
+      "id": "belongs_to",
+      "label_zh": "隶属于",
+      "label_en": "belongs to",
+      "domain": "OrgUnit",
+      "range": "Organization",
+      "definition": "组织单元隶属于组织或上级单元",
+      "definition_en": "An organizational unit belongs to an organization or a parent unit"
+    },
+    {
+      "id": "owns",
+      "label_zh": "拥有",
+      "label_en": "owns",
+      "domain": "Party",
+      "range": "BusinessObject",
+      "definition": "主体拥有或负责业务对象",
+      "definition_en": "A party owns or is responsible for a business object"
+    },
+    {
+      "id": "is_accountable_for",
+      "label_zh": "负责",
+      "label_en": "is accountable for",
+      "domain": "Role",
+      "range": "Capability",
+      "definition": "角色对能力负责",
+      "definition_en": "A role is accountable for a capability"
+    },
+    {
+      "id": "realized_by",
+      "label_zh": "由…实现",
+      "label_en": "realized by",
+      "domain": "Capability",
+      "range": "Process",
+      "definition": "能力由流程实现",
+      "definition_en": "A capability is realized by a process"
+    },
+    {
+      "id": "composed_of",
+      "label_zh": "由…组成",
+      "label_en": "composed of",
+      "domain": "Process",
+      "range": "Activity",
+      "definition": "流程由活动组成",
+      "definition_en": "A process is composed of activities"
+    },
+    {
+      "id": "consumes",
+      "label_zh": "消费",
+      "label_en": "consumes",
+      "domain": "Process",
+      "range": "DataObject",
+      "definition": "流程消费数据对象",
+      "definition_en": "A process consumes data objects"
+    },
+    {
+      "id": "produces",
+      "label_zh": "产出",
+      "label_en": "produces",
+      "domain": "Process",
+      "range": "DataObject",
+      "definition": "流程产出数据对象",
+      "definition_en": "A process produces data objects"
+    },
+    {
+      "id": "recorded_in",
+      "label_zh": "记录于",
+      "label_en": "recorded in",
+      "domain": "DataObject",
+      "range": "SystemApplication",
+      "definition": "数据对象记录于系统",
+      "definition_en": "A data object is recorded in a system application"
+    },
+    {
+      "id": "governed_by",
+      "label_zh": "受…治理",
+      "label_en": "governed by",
+      "domain": "Process",
+      "range": "Policy",
+      "definition": "流程受政策治理",
+      "definition_en": "A process is governed by a policy"
+    },
+    {
+      "id": "constrained_by",
+      "label_zh": "受…约束",
+      "label_en": "constrained by",
+      "domain": "Process",
+      "range": "Rule",
+      "definition": "流程受规则约束",
+      "definition_en": "A process is constrained by a rule"
+    },
+    {
+      "id": "mitigated_by",
+      "label_zh": "由…缓释",
+      "label_en": "mitigated by",
+      "domain": "Risk",
+      "range": "Control",
+      "definition": "风险由控制措施缓释",
+      "definition_en": "A risk is mitigated by a control measure"
+    },
+    {
+      "id": "triggered_by",
+      "label_zh": "由…触发",
+      "label_en": "triggered by",
+      "domain": "Event",
+      "range": "Process",
+      "definition": "事件触发流程",
+      "definition_en": "An event triggers a process"
+    },
+    {
+      "id": "requires_decision",
+      "label_zh": "需要决策",
+      "label_en": "requires decision",
+      "domain": "Process",
+      "range": "Decision",
+      "definition": "流程需要决策或审批",
+      "definition_en": "A process requires a decision or approval"
+    },
+    {
+      "id": "supports",
+      "label_zh": "支持",
+      "label_en": "supports",
+      "domain": "Capability",
+      "range": "Goal",
+      "definition": "能力支持业务目标",
+      "definition_en": "A capability supports a business goal"
+    },
+    {
+      "id": "measured_by",
+      "label_zh": "由…衡量",
+      "label_en": "measured by",
+      "domain": "Goal",
+      "range": "KPI",
+      "definition": "目标由指标衡量",
+      "definition_en": "A goal is measured by a KPI"
+    }
+  ],
+  "sample_instances": [
+    {
+      "id": "org_global_retail_group",
+      "type": "Organization",
+      "label": "Global Retail Group",
+      "label_zh": "全球零售集团"
+    },
+    {
+      "id": "ou_merchandising",
+      "type": "OrgUnit",
+      "label": "Merchandising Department",
+      "label_zh": "商品部"
+    },
+    {
+      "id": "role_category_manager",
+      "type": "Role",
+      "label": "Category Manager",
+      "label_zh": "品类经理"
+    },
+    {
+      "id": "cap_product_launch",
+      "type": "Capability",
+      "label": "Product Launch Management",
+      "label_zh": "产品上市管理"
+    },
+    {
+      "id": "proc_new_product_intro",
+      "type": "Process",
+      "label": "New Product Introduction",
+      "label_zh": "新品引入流程"
+    },
+    {
+      "id": "sys_plm",
+      "type": "SystemApplication",
+      "label": "PLM Platform",
+      "label_zh": "PLM 平台"
+    },
+    {
+      "id": "goal_margin_growth",
+      "type": "Goal",
+      "label": "Gross Margin Growth",
+      "label_zh": "毛利增长"
+    },
+    {
+      "id": "kpi_launch_cycle_time",
+      "type": "KPI",
+      "label": "Launch Cycle Time",
+      "label_zh": "上市周期"
+    }
+  ]
+}

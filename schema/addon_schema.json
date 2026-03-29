@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/ramphias/universal-ontology-definition/schema/addon_schema.json",
+  "title": "Industry Addon Ontology Schema",
+  "description": "JSON Schema for validating L2 Industry Addon Ontology definitions",
+  "type": "object",
+  "required": ["layer", "version", "extends", "description", "classes", "relations"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema file"
+    },
+    "layer": {
+      "type": "string",
+      "pattern": "^L2_",
+      "description": "Layer identifier, must start with L2_"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version string"
+    },
+    "extends": {
+      "type": "string",
+      "const": "L1_universal_organization_ontology",
+      "description": "Must extend the L1 universal organization ontology"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Description of the industry addon"
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "label_zh", "parent", "definition"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$",
+            "description": "PascalCase class identifier"
+          },
+          "label_zh": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Chinese label"
+          },
+          "label_en": {
+            "type": "string",
+            "description": "English label"
+          },
+          "parent": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Parent class ID — must reference an L1 class or another addon class"
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 5,
+            "description": "Chinese definition, at least 5 characters"
+          },
+          "definition_en": {
+            "type": "string",
+            "description": "English definition"
+          }
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["id", "domain", "range", "definition"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "snake_case relation identifier"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Source class ID"
+          },
+          "range": {
+            "type": "string",
+            "description": "Target class ID"
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 5
+          }
+        }
+      }
+    },
+    "sample_instances": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "label"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "type": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
