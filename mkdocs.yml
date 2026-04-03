@@ -1,0 +1,140 @@
+site_name: Universal Ontology Definition
+site_url: https://ramphias.github.io/universal-ontology-definition/
+site_description: An open, standardized four-layer enterprise ontology framework for knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.
+site_author: Universal Ontology Definition Contributors
+repo_url: https://github.com/ramphias/universal-ontology-definition
+repo_name: ramphias/universal-ontology-definition
+edit_uri: edit/main/docs-site/
+
+docs_dir: docs-site
+
+copyright: Copyright &copy; 2026 Universal Ontology Definition Contributors
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/graph-outline
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+plugins:
+  - search:
+      lang:
+        - en
+        - zh
+      separator: '[\s\-\.]+'
+  - tags
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ramphias/universal-ontology-definition
+  generator: false
+  alternate:
+    - name: English
+      link: /universal-ontology-definition/
+      lang: en
+    - name: 中文
+      link: /universal-ontology-definition/zh/
+      lang: zh
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - getting-started/index.md
+    - Quick Start: getting-started/quick-start.md
+    - Core Concepts: getting-started/core-concepts.md
+  - Architecture:
+    - architecture/index.md
+    - Four-Layer Model: architecture/four-layer-model.md
+    - Inheritance & Extension: architecture/inheritance.md
+    - Platform Bindings (L0): architecture/platform-bindings.md
+  - Core Ontology (L1):
+    - core/index.md
+    - Classes Reference: core/classes.md
+    - Relations Reference: core/relations.md
+    - Sample Instances: core/instances.md
+  - Industry Addons (L2):
+    - addons/index.md
+    - Consulting: addons/consulting.md
+    - Luxury Goods: addons/luxury-goods.md
+    - Create Your Own: addons/create-addon.md
+  - Enterprise Layer (L3):
+    - enterprise/index.md
+  - Design Guide:
+    - guides/index.md
+    - Ontology Design Rules: guides/design-rules.md
+    - Contributing: guides/contributing.md
+  - Changelog: changelog.md
