@@ -2,10 +2,10 @@
 
 # 🌐 Universal Ontology Definition
 
-**An Open, Standardized Three-Layer Enterprise Ontology Framework**
+**An Open, Standardized Four-Layer Enterprise Ontology Framework**
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](#)
+[![Version](https://img.shields.io/badge/Version-1.1.0-green.svg)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 [中文](./README_CN.md) | **English**
@@ -16,7 +16,7 @@
 
 ## 📖 What is Universal Ontology Definition?
 
-Universal Ontology Definition (UOD) is an **open, standardized three-layer enterprise ontology framework** designed to provide a unified conceptual modeling foundation for enterprise knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.
+Universal Ontology Definition (UOD) is an **open, standardized four-layer enterprise ontology framework** designed to provide a unified conceptual modeling foundation for enterprise knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.
 
 ### The Problem
 
@@ -25,29 +25,34 @@ Enterprise digitalization commonly faces:
 - 🔴 **Inconsistent concept definitions** — Different teams use different terms for the same objects, making cross-system reuse difficult
 - 🔴 **Industry knowledge silos** — Industry-specific knowledge is scattered with no standardized extension mechanism
 - 🔴 **Customization vs. standardization conflicts** — Enterprise-specific needs continuously erode the underlying structure
+- 🔴 **Platform lock-in** — Ontology definitions tied to a single serialization format, limiting interoperability
 
-### The Solution: Three-Layer Architecture
+### The Solution: Four-Layer Architecture
 
 ```
-┌─────────────────────────────────────────────────┐
-│         L3: Enterprise Customization Layer       │  ← Private extensions
-│    (Company A)    (Company B)    (Company C)      │
-├─────────────────────────────────────────────────┤
-│         L2: Industry & Domain Addons             │  ← Optional, industry-specific
-│  (Consulting) (Luxury) (Finance) (Manufacturing) │
-├─────────────────────────────────────────────────┤
-│         L1: Universal Enterprise Ontology Core   │  ← Mandatory inheritance
-│    (Party/Org/Role/Capability/Process/Risk/Goal) │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│         L3: Enterprise Customization Layer                  │  ← Private extensions
+│    (Company A)    (Company B)    (Company C)                │
+├─────────────────────────────────────────────────────────────┤
+│         L2: Industry & Domain Addons                        │  ← Optional, industry-specific
+│  (Consulting) (Luxury) (Finance) (Manufacturing)            │
+├─────────────────────────────────────────────────────────────┤
+│         L1: Universal Enterprise Ontology Core              │  ← Mandatory inheritance
+│    (Party/Org/Role/Capability/Process/Risk/Goal/KPI)        │
+├─════════════════════════════════════════════════════════════┤
+│    L0: Platform & Syntax Bindings                           │  ← Technical serialization
+│  (OWL/RDF)  (JSON-LD)  (GraphQL)  (SQL DDL)                │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ## ✨ Key Features
 
-- 🏗️ **Three-Layer Separation** — Stable universal core, pluggable industry addons, free enterprise customization
+- 🏗️ **Four-Layer Separation** — Stable semantic core, pluggable industry addons, free enterprise customization, multi-platform bindings
 - 📐 **Standardized Definition Format** — Unified JSON Schema for classes, relations, and instances
 - 🔗 **Inheritance & Extension** — L2 extends L1, L3 extends L1+L2, with clear semantic lineage
+- ⚙️ **Platform Bindings** — L0 provides ready-to-use OWL/RDF, JSON-LD, GraphQL, and SQL mappings
 - 🌍 **Bilingual Support** — All concepts include Chinese and English labels
-- 🤝 **Community-Driven** — Anyone can contribute industry addons or improve core definitions
+- 🤝 **Community-Driven** — Anyone can contribute industry addons, platform bindings, or improve core definitions
 
 ## 📁 Repository Structure
 
@@ -59,6 +64,12 @@ universal-ontology-definition/
 │   ├── consulting/             #   └── Consulting Industry Addon
 │   ├── luxury-goods/           #   └── Luxury Goods Industry Addon
 │   └── _template/              #   └── Addon Contribution Template
+├── platform/                   # L0 Platform & Syntax Bindings
+│   ├── owl-rdf/                #   └── OWL 2 / RDF Turtle Serialization
+│   ├── json-ld/                #   └── JSON-LD Context Definition
+│   ├── graphql/                #   └── GraphQL Schema Definition
+│   ├── sql/                    #   └── PostgreSQL DDL Mapping
+│   └── _template/              #   └── Platform Binding Template
 ├── docs/                       # Design Documentation & Specs
 │   ├── architecture.md
 │   ├── ontology-design-guide.md
@@ -83,6 +94,17 @@ L1 defines **25 core classes** and **16 standard relations** covering universal 
 | Governance & Compliance | Policy, Rule, Control, Risk |
 | Decision & Measurement | Event, Decision, Goal, KPI |
 | Market & Channel | Location, Channel, MarketSegment |
+
+### Using Platform Bindings (L0)
+
+Choose the binding that matches your technology stack:
+
+| Platform | Use Case | File |
+|:---|:---|:---|
+| OWL/RDF | Knowledge graphs, SPARQL queries, Semantic Web | [`platform/owl-rdf/`](platform/owl-rdf/) |
+| JSON-LD | REST APIs, Linked Data, Web standards | [`platform/json-ld/`](platform/json-ld/) |
+| GraphQL | Modern API layers, Frontend integration | [`platform/graphql/`](platform/graphql/) |
+| SQL DDL | Relational databases, Data warehouses | [`platform/sql/`](platform/sql/) |
 
 ### Using Industry Addons
 
@@ -122,12 +144,24 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 **We're looking for community contributions!** Finance, Manufacturing, Retail, Healthcare, Education, and more.
 
+## ⚙️ Available Platform Bindings
+
+| Platform | Directory | Format | Status |
+|:---|:---|:---|:---|
+| OWL/RDF | [`platform/owl-rdf/`](platform/owl-rdf/) | Turtle (.ttl) | ✅ v1.0.0 |
+| JSON-LD | [`platform/json-ld/`](platform/json-ld/) | JSON-LD Context (.jsonld) | ✅ v1.0.0 |
+| GraphQL | [`platform/graphql/`](platform/graphql/) | GraphQL Schema (.graphql) | ✅ v1.0.0 |
+| SQL DDL | [`platform/sql/`](platform/sql/) | PostgreSQL DDL (.sql) | ✅ v1.0.0 |
+
+**Want more?** Protobuf, Avro, Neo4j Cypher, and more are welcome contributions!
+
 ## 🤝 Contributing
 
 We welcome all contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) to learn about:
 
 - How to propose changes to the Core Ontology
 - How to submit new Industry Addons
+- How to contribute new Platform Bindings
 - Coding standards and PR workflow
 
 ## 📄 License

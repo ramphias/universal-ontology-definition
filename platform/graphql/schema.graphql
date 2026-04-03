@@ -1,0 +1,336 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Universal Enterprise Ontology Core — GraphQL Schema Binding
+# L0 Platform Binding for L1 Core v1.0.0
+# ═══════════════════════════════════════════════════════════════════════════════
+
+"""
+Root Query type for accessing ontology entities.
+"""
+type Query {
+  party(id: ID!): Party
+  parties(filter: PartyFilter, limit: Int = 50): [Party!]!
+
+  organization(id: ID!): Organization
+  organizations(filter: OrgFilter, limit: Int = 50): [Organization!]!
+
+  process(id: ID!): Process
+  processes(filter: ProcessFilter, limit: Int = 50): [Process!]!
+
+  capability(id: ID!): Capability
+  capabilities(limit: Int = 50): [Capability!]!
+
+  goal(id: ID!): Goal
+  goals(limit: Int = 50): [Goal!]!
+
+  risk(id: ID!): Risk
+  risks(limit: Int = 50): [Risk!]!
+}
+
+# ─── Party & Organization ────────────────────────────────────────────────────
+
+"""
+The superclass of all entities that can participate in business
+and governance relationships (主体).
+"""
+interface Party {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  roles: [Role!]!
+  ownedObjects: [BusinessObject!]!
+}
+
+"""
+A natural person entity (人员).
+"""
+type Person implements Party {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  roles: [Role!]!
+  ownedObjects: [BusinessObject!]!
+}
+
+"""
+A legal or non-legal organization entity (组织).
+"""
+type Organization implements Party {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  roles: [Role!]!
+  ownedObjects: [BusinessObject!]!
+  units: [OrgUnit!]!
+}
+
+"""
+Internal organizational unit such as department, team, committee (组织单元).
+"""
+type OrgUnit {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  belongsTo: Organization!
+}
+
+"""
+An identity or responsibility assumed by a party in a given context (角色).
+"""
+type Role {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  accountableFor: [Capability!]!
+}
+
+# ─── Capability & Process ────────────────────────────────────────────────────
+
+"""
+A stable and reusable business capability possessed by an organization (能力).
+"""
+type Capability {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  realizedBy: [Process!]!
+  supports: [Goal!]!
+}
+
+"""
+An end-to-end sequence of activities defined to achieve business objectives (流程).
+"""
+type Process {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  activities: [Activity!]!
+  consumes: [DataObject!]!
+  produces: [DataObject!]!
+  governedBy: [Policy!]!
+  constrainedBy: [Rule!]!
+  requiresDecision: [Decision!]!
+  triggeredByEvents: [Event!]!
+}
+
+"""
+An executable step within a process (活动).
+"""
+type Activity {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+# ─── Business Objects ────────────────────────────────────────────────────────
+
+"""
+An object created, modified, or managed by business processes (业务对象).
+"""
+interface BusinessObject {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+"""
+Products and services provided externally or used internally (产品与服务).
+"""
+type ProductService implements BusinessObject {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+"""
+Financial, physical, knowledge, data, brand, and other assets (资产).
+"""
+type Asset implements BusinessObject {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+# ─── Data & Systems ──────────────────────────────────────────────────────────
+
+"""
+A structured or unstructured data entity (数据对象).
+"""
+type DataObject {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  recordedIn: [SystemApplication!]!
+}
+
+"""
+Contracts, reports, files, documents, and records (文档与记录).
+"""
+type DocumentRecord {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  recordedIn: [SystemApplication!]!
+}
+
+"""
+Software systems supporting processes, data, and decision-making (系统应用).
+"""
+type SystemApplication {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+# ─── Governance & Compliance ─────────────────────────────────────────────────
+
+"""
+Management principles and constraint requirements (政策).
+"""
+type Policy {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+"""
+Executable and evaluable business or control rules (规则).
+"""
+type Rule {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+"""
+Control measures to reduce risk and ensure compliance and quality (控制).
+"""
+type Control {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+"""
+Uncertain events or conditions that may affect goal achievement (风险).
+"""
+type Risk {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  mitigatedBy: [Control!]!
+}
+
+# ─── Decision & Measurement ──────────────────────────────────────────────────
+
+"""
+A state change occurring in the business or technical environment (事件).
+"""
+type Event {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  triggeredProcesses: [Process!]!
+}
+
+"""
+Choices and approvals made regarding events, rules, or goals (决策).
+"""
+type Decision {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+"""
+Outcomes an organization aims to achieve (目标).
+"""
+type Goal {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+  measuredBy: [KPI!]!
+}
+
+"""
+Metrics that measure the degree of goal achievement (关键指标).
+"""
+type KPI {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+# ─── Market & Channel ────────────────────────────────────────────────────────
+
+"""
+Places where organizational operations or transactions occur (地点).
+"""
+type Location {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+"""
+Channels for interacting with customers, partners, or internal users (渠道).
+"""
+type Channel {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+"""
+Classification dimensions for customers or markets (市场细分).
+"""
+type MarketSegment {
+  id: ID!
+  labelZh: String!
+  labelEn: String!
+  definition: String
+}
+
+# ─── Input Filters ───────────────────────────────────────────────────────────
+
+input PartyFilter {
+  labelContains: String
+  type: PartyType
+}
+
+input OrgFilter {
+  labelContains: String
+}
+
+input ProcessFilter {
+  labelContains: String
+  governedByPolicy: ID
+}
+
+enum PartyType {
+  PERSON
+  ORGANIZATION
+}

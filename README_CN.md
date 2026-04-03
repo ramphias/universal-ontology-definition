@@ -2,10 +2,10 @@
 
 # 🌐 Universal Ontology Definition
 
-**开放、标准化的三层企业本体定义框架**
+**开放、标准化的四层企业本体定义框架**
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](#)
+[![Version](https://img.shields.io/badge/Version-1.1.0-green.svg)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 [English](./README.md) | **中文**
@@ -16,36 +16,41 @@
 
 ## 📖 什么是 Universal Ontology Definition？
 
-Universal Ontology Definition (UOD) 是一个**开放、标准化的三层企业本体定义框架**，旨在为企业知识图谱、语义层、主数据管理和 AI Agent 知识底座提供统一的概念建模基础。
+Universal Ontology Definition (UOD) 是一个**开放、标准化的四层企业本体定义框架**，旨在为企业知识图谱、语义层、主数据管理和 AI Agent 知识底座提供统一的概念建模基础。
 
 在企业数字化建设中，我们常面临以下痛点：
 
 - 🔴 **概念定义不统一** — 不同团队用不同术语描述同一对象，跨系统、跨项目难以复用
 - 🔴 **行业知识难复用** — 行业特性沉淀分散，缺乏标准化的扩展机制
 - 🔴 **企业个性化与通用规范冲突** — 定制需求持续侵蚀底层结构
+- 🔴 **平台锁定** — 本体定义绑定在单一序列化格式，难以跨平台互操作
 
-UOD 通过**三层继承架构**解决这些问题：
+UOD 通过**四层架构**解决这些问题：
 
 ```
-┌─────────────────────────────────────────────────┐
-│         L3：企业个性化定制层                       │  ← 企业私有扩展
-│    （企业A定制） （企业B定制） （企业C定制）          │
-├─────────────────────────────────────────────────┤
-│         L2：行业与业务领域 Addon                   │  ← 可选加载，行业特性
-│    （咨询）（奢侈品）（金融）（制造）（零售）          │
-├─────────────────────────────────────────────────┤
-│         L1：通用企业 Ontology Core                │  ← 强制继承，基础规范
-│    （主体/组织/角色/能力/流程/资产/风险/目标）        │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│         L3：企业个性化定制层                                  │  ← 企业私有扩展
+│    （企业A定制） （企业B定制） （企业C定制）                    │
+├─────────────────────────────────────────────────────────────┤
+│         L2：行业与业务领域 Addon                              │  ← 可选加载，行业特性
+│    （咨询）（奢侈品）（金融）（制造）（零售）                    │
+├─────────────────────────────────────────────────────────────┤
+│         L1：通用企业 Ontology Core                           │  ← 强制继承，基础规范
+│    （主体/组织/角色/能力/流程/资产/风险/目标）                  │
+├─════════════════════════════════════════════════════════════┤
+│    L0：技术平台绑定层 (Platform & Syntax Bindings)            │  ← 技术序列化映射
+│    （OWL/RDF）（JSON-LD）（GraphQL）（SQL DDL）               │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ## ✨ 核心特性
 
-- 🏗️ **三层分离架构** — 通用底座稳定不变，行业包按需加载，企业层自由定制
+- 🏗️ **四层分离架构** — 通用底座稳定不变，行业包按需加载，企业层自由定制，多平台绑定
 - 📐 **标准化定义格式** — 统一的 JSON Schema，支持类、关系、实例的结构化定义
 - 🔗 **继承与扩展机制** — L2 继承 L1，L3 继承 L1+L2，语义链条清晰可追溯
+- ⚙️ **平台绑定层** — L0 提供即用的 OWL/RDF、JSON-LD、GraphQL 和 SQL DDL 映射
 - 🌍 **双语支持** — 所有概念均提供中英文标签与定义
-- 🤝 **社区驱动** — 欢迎任何人贡献行业 Addon 或完善 Core 定义
+- 🤝 **社区驱动** — 欢迎任何人贡献行业 Addon、平台绑定或完善 Core 定义
 
 ## 📁 仓库结构
 
@@ -57,8 +62,14 @@ universal-ontology-definition/
 │   ├── consulting/             #   └── 咨询行业 Addon
 │   ├── luxury-goods/           #   └── 奢侈品行业 Addon
 │   └── _template/              #   └── Addon 贡献模板
+├── platform/                   # L0 技术平台绑定层
+│   ├── owl-rdf/                #   └── OWL 2 / RDF Turtle 序列化
+│   ├── json-ld/                #   └── JSON-LD Context 定义
+│   ├── graphql/                #   └── GraphQL Schema 定义
+│   ├── sql/                    #   └── PostgreSQL DDL 映射
+│   └── _template/              #   └── 平台绑定贡献模板
 ├── docs/                       # 设计文档与规范
-│   ├── architecture.md         #   └── 三层架构详解
+│   ├── architecture.md         #   └── 四层架构详解
 │   ├── ontology-design-guide.md#   └── Ontology 设计规范
 │   └── addon-development-guide.md  # └── Addon 开发指南
 └── schema/                     # JSON Schema 校验
@@ -81,6 +92,17 @@ L1 通用层定义了 **25 个核心类** 和 **16 种标准关系**，覆盖所
 | 治理与合规 | Policy, Rule, Control, Risk |
 | 决策与度量 | Event, Decision, Goal, KPI |
 | 市场与渠道 | Location, Channel, MarketSegment |
+
+### 使用平台绑定 (L0)
+
+根据你的技术栈选择合适的绑定格式：
+
+| 平台 | 适用场景 | 目录 |
+|:---|:---|:---|
+| OWL/RDF | 知识图谱、SPARQL 查询、语义网 | [`platform/owl-rdf/`](platform/owl-rdf/) |
+| JSON-LD | REST API、关联数据、Web 标准 | [`platform/json-ld/`](platform/json-ld/) |
+| GraphQL | 现代 API 层、前端集成 | [`platform/graphql/`](platform/graphql/) |
+| SQL DDL | 关系型数据库、数据仓库 | [`platform/sql/`](platform/sql/) |
 
 ### 使用行业 Addon
 
@@ -120,12 +142,24 @@ L1 通用层定义了 **25 个核心类** 和 **16 种标准关系**，覆盖所
 
 **期待社区贡献更多行业 Addon！** 如金融、制造、零售、医疗、教育等。
 
+## ⚙️ 已有平台绑定
+
+| 平台 | 目录 | 格式 | 状态 |
+|:---|:---|:---|:---|
+| OWL/RDF | [`platform/owl-rdf/`](platform/owl-rdf/) | Turtle (.ttl) | ✅ v1.0.0 |
+| JSON-LD | [`platform/json-ld/`](platform/json-ld/) | JSON-LD Context (.jsonld) | ✅ v1.0.0 |
+| GraphQL | [`platform/graphql/`](platform/graphql/) | GraphQL Schema (.graphql) | ✅ v1.0.0 |
+| SQL DDL | [`platform/sql/`](platform/sql/) | PostgreSQL DDL (.sql) | ✅ v1.0.0 |
+
+**还想要更多？** 欢迎贡献 Protobuf、Avro、Neo4j Cypher 等平台绑定！
+
 ## 🤝 Contributing
 
 我们欢迎所有形式的贡献！请阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解：
 
 - 如何提议修改 Core Ontology
 - 如何提交新的行业 Addon
+- 如何贡献新的平台绑定
 - 代码规范与 PR 流程
 
 ## 📄 License

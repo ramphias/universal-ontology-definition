@@ -1,0 +1,304 @@
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod:  <https://w3id.org/uod/core/> .
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Universal Enterprise Ontology Core — OWL 2 / RDF Turtle Serialization
+# L0 Platform Binding for L1 Core v1.0.0
+# ═══════════════════════════════════════════════════════════════════════════════
+
+uod:Ontology a owl:Ontology ;
+    rdfs:label "Universal Enterprise Ontology Core"@en ;
+    rdfs:label "通用企业本体核心"@zh ;
+    rdfs:comment "Cross-industry universal enterprise ontology defining core concepts, relations, and instances"@en ;
+    owl:versionInfo "1.0.0" .
+
+# ─── Party & Organization ────────────────────────────────────────────────────
+
+uod:Party a owl:Class ;
+    rdfs:label "Party"@en ;
+    rdfs:label "主体"@zh ;
+    rdfs:comment "The superclass of all entities that can participate in business and governance relationships"@en ;
+    rdfs:comment "可参与业务关系与治理关系的主体总类"@zh .
+
+uod:Person a owl:Class ;
+    rdfs:subClassOf uod:Party ;
+    rdfs:label "Person"@en ;
+    rdfs:label "人员"@zh ;
+    rdfs:comment "A natural person entity"@en ;
+    rdfs:comment "自然人主体"@zh .
+
+uod:Organization a owl:Class ;
+    rdfs:subClassOf uod:Party ;
+    rdfs:label "Organization"@en ;
+    rdfs:label "组织"@zh ;
+    rdfs:comment "A legal or non-legal organization entity"@en ;
+    rdfs:comment "法人或非法人组织"@zh .
+
+uod:OrgUnit a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Organizational Unit"@en ;
+    rdfs:label "组织单元"@zh ;
+    rdfs:comment "Internal organizational units such as departments, teams, committees, and program groups"@en ;
+    rdfs:comment "部门、团队、委员会、项目群等组织内部单元"@zh .
+
+uod:Role a owl:Class ;
+    rdfs:label "Role"@en ;
+    rdfs:label "角色"@zh ;
+    rdfs:comment "An identity or responsibility assumed by a party in a given context"@en ;
+    rdfs:comment "主体在某一上下文中承担的身份或职责"@zh .
+
+# ─── Capability & Process ────────────────────────────────────────────────────
+
+uod:Capability a owl:Class ;
+    rdfs:label "Capability"@en ;
+    rdfs:label "能力"@zh ;
+    rdfs:comment "A stable and reusable business capability possessed by an organization"@en ;
+    rdfs:comment "组织稳定具备且可被复用的业务能力"@zh .
+
+uod:Process a owl:Class ;
+    rdfs:label "Process"@en ;
+    rdfs:label "流程"@zh ;
+    rdfs:comment "An end-to-end sequence of activities defined to achieve business objectives"@en ;
+    rdfs:comment "为实现业务目标而定义的端到端活动序列"@zh .
+
+uod:Activity a owl:Class ;
+    rdfs:label "Activity"@en ;
+    rdfs:label "活动"@zh ;
+    rdfs:comment "An executable step within a process"@en ;
+    rdfs:comment "流程中的可执行步骤"@zh .
+
+# ─── Business Objects ────────────────────────────────────────────────────────
+
+uod:BusinessObject a owl:Class ;
+    rdfs:label "Business Object"@en ;
+    rdfs:label "业务对象"@zh ;
+    rdfs:comment "An object created, modified, or managed by business processes"@en ;
+    rdfs:comment "被业务过程创建、变更、管理的对象"@zh .
+
+uod:ProductService a owl:Class ;
+    rdfs:subClassOf uod:BusinessObject ;
+    rdfs:label "Product & Service"@en ;
+    rdfs:label "产品与服务"@zh ;
+    rdfs:comment "Products and services provided externally or used internally by an enterprise"@en ;
+    rdfs:comment "企业对外提供或内部使用的产品和服务对象"@zh .
+
+uod:Asset a owl:Class ;
+    rdfs:subClassOf uod:BusinessObject ;
+    rdfs:label "Asset"@en ;
+    rdfs:label "资产"@zh ;
+    rdfs:comment "Financial, physical, knowledge, data, brand, and other assets"@en ;
+    rdfs:comment "财务、实物、知识、数据、品牌等资产"@zh .
+
+# ─── Data & Systems ──────────────────────────────────────────────────────────
+
+uod:DataObject a owl:Class ;
+    rdfs:label "Data Object"@en ;
+    rdfs:label "数据对象"@zh ;
+    rdfs:comment "A structured or unstructured data entity"@en ;
+    rdfs:comment "结构化或非结构化的数据实体"@zh .
+
+uod:DocumentRecord a owl:Class ;
+    rdfs:subClassOf uod:DataObject ;
+    rdfs:label "Document & Record"@en ;
+    rdfs:label "文档与记录"@zh ;
+    rdfs:comment "Contracts, reports, files, documents, and records"@en ;
+    rdfs:comment "合同、报告、文件、单据、记录"@zh .
+
+uod:SystemApplication a owl:Class ;
+    rdfs:label "System Application"@en ;
+    rdfs:label "系统应用"@zh ;
+    rdfs:comment "Software systems supporting processes, data, and decision-making"@en ;
+    rdfs:comment "支撑流程、数据和决策的软件系统"@zh .
+
+# ─── Governance & Compliance ─────────────────────────────────────────────────
+
+uod:Policy a owl:Class ;
+    rdfs:label "Policy"@en ;
+    rdfs:label "政策"@zh ;
+    rdfs:comment "Management principles and constraint requirements"@en ;
+    rdfs:comment "管理原则与约束要求"@zh .
+
+uod:Rule a owl:Class ;
+    rdfs:label "Rule"@en ;
+    rdfs:label "规则"@zh ;
+    rdfs:comment "Executable and evaluable business or control rules"@en ;
+    rdfs:comment "可执行、可判断的业务或控制规则"@zh .
+
+uod:Control a owl:Class ;
+    rdfs:label "Control"@en ;
+    rdfs:label "控制"@zh ;
+    rdfs:comment "Control measures to reduce risk and ensure compliance and quality"@en ;
+    rdfs:comment "用于降低风险、保障合规和质量的控制措施"@zh .
+
+uod:Risk a owl:Class ;
+    rdfs:label "Risk"@en ;
+    rdfs:label "风险"@zh ;
+    rdfs:comment "Uncertain events or conditions that may affect goal achievement"@en ;
+    rdfs:comment "可能影响目标实现的不确定事件或状态"@zh .
+
+# ─── Decision & Measurement ──────────────────────────────────────────────────
+
+uod:Event a owl:Class ;
+    rdfs:label "Event"@en ;
+    rdfs:label "事件"@zh ;
+    rdfs:comment "A state change occurring in the business or technical environment"@en ;
+    rdfs:comment "发生在业务或技术环境中的状态变化"@zh .
+
+uod:Decision a owl:Class ;
+    rdfs:label "Decision"@en ;
+    rdfs:label "决策"@zh ;
+    rdfs:comment "Choices and approvals made regarding events, rules, or goals"@en ;
+    rdfs:comment "对事件、规则或目标做出的选择与批准"@zh .
+
+uod:Goal a owl:Class ;
+    rdfs:label "Goal"@en ;
+    rdfs:label "目标"@zh ;
+    rdfs:comment "Outcomes an organization aims to achieve"@en ;
+    rdfs:comment "组织希望达成的结果"@zh .
+
+uod:KPI a owl:Class ;
+    rdfs:label "Key Performance Indicator"@en ;
+    rdfs:label "关键指标"@zh ;
+    rdfs:comment "Metrics that measure the degree of goal achievement"@en ;
+    rdfs:comment "衡量目标达成程度的指标"@zh .
+
+# ─── Market & Channel ────────────────────────────────────────────────────────
+
+uod:Location a owl:Class ;
+    rdfs:label "Location"@en ;
+    rdfs:label "地点"@zh ;
+    rdfs:comment "Places where organizational operations or transactions occur"@en ;
+    rdfs:comment "组织运营或交易发生的地点"@zh .
+
+uod:Channel a owl:Class ;
+    rdfs:label "Channel"@en ;
+    rdfs:label "渠道"@zh ;
+    rdfs:comment "Channels for interacting with customers, partners, or internal users"@en ;
+    rdfs:comment "与客户、伙伴或内部用户交互的渠道"@zh .
+
+uod:MarketSegment a owl:Class ;
+    rdfs:label "Market Segment"@en ;
+    rdfs:label "市场细分"@zh ;
+    rdfs:comment "Classification dimensions for customers or markets"@en ;
+    rdfs:comment "客户或市场的分类维度"@zh .
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# OBJECT PROPERTIES (Relations)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+uod:plays_role a owl:ObjectProperty ;
+    rdfs:label "plays role"@en ;
+    rdfs:label "扮演角色"@zh ;
+    rdfs:domain uod:Party ;
+    rdfs:range uod:Role ;
+    rdfs:comment "A party plays a specific role"@en .
+
+uod:belongs_to a owl:ObjectProperty ;
+    rdfs:label "belongs to"@en ;
+    rdfs:label "隶属于"@zh ;
+    rdfs:domain uod:OrgUnit ;
+    rdfs:range uod:Organization ;
+    rdfs:comment "An organizational unit belongs to an organization or a parent unit"@en .
+
+uod:owns a owl:ObjectProperty ;
+    rdfs:label "owns"@en ;
+    rdfs:label "拥有"@zh ;
+    rdfs:domain uod:Party ;
+    rdfs:range uod:BusinessObject ;
+    rdfs:comment "A party owns or is responsible for a business object"@en .
+
+uod:is_accountable_for a owl:ObjectProperty ;
+    rdfs:label "is accountable for"@en ;
+    rdfs:label "负责"@zh ;
+    rdfs:domain uod:Role ;
+    rdfs:range uod:Capability ;
+    rdfs:comment "A role is accountable for a capability"@en .
+
+uod:realized_by a owl:ObjectProperty ;
+    rdfs:label "realized by"@en ;
+    rdfs:label "由…实现"@zh ;
+    rdfs:domain uod:Capability ;
+    rdfs:range uod:Process ;
+    rdfs:comment "A capability is realized by a process"@en .
+
+uod:composed_of a owl:ObjectProperty ;
+    rdfs:label "composed of"@en ;
+    rdfs:label "由…组成"@zh ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod:Activity ;
+    rdfs:comment "A process is composed of activities"@en .
+
+uod:consumes a owl:ObjectProperty ;
+    rdfs:label "consumes"@en ;
+    rdfs:label "消费"@zh ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod:DataObject ;
+    rdfs:comment "A process consumes data objects"@en .
+
+uod:produces a owl:ObjectProperty ;
+    rdfs:label "produces"@en ;
+    rdfs:label "产出"@zh ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod:DataObject ;
+    rdfs:comment "A process produces data objects"@en .
+
+uod:recorded_in a owl:ObjectProperty ;
+    rdfs:label "recorded in"@en ;
+    rdfs:label "记录于"@zh ;
+    rdfs:domain uod:DataObject ;
+    rdfs:range uod:SystemApplication ;
+    rdfs:comment "A data object is recorded in a system application"@en .
+
+uod:governed_by a owl:ObjectProperty ;
+    rdfs:label "governed by"@en ;
+    rdfs:label "受…治理"@zh ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod:Policy ;
+    rdfs:comment "A process is governed by a policy"@en .
+
+uod:constrained_by a owl:ObjectProperty ;
+    rdfs:label "constrained by"@en ;
+    rdfs:label "受…约束"@zh ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod:Rule ;
+    rdfs:comment "A process is constrained by a rule"@en .
+
+uod:mitigated_by a owl:ObjectProperty ;
+    rdfs:label "mitigated by"@en ;
+    rdfs:label "由…缓释"@zh ;
+    rdfs:domain uod:Risk ;
+    rdfs:range uod:Control ;
+    rdfs:comment "A risk is mitigated by a control measure"@en .
+
+uod:triggered_by a owl:ObjectProperty ;
+    rdfs:label "triggered by"@en ;
+    rdfs:label "由…触发"@zh ;
+    rdfs:domain uod:Event ;
+    rdfs:range uod:Process ;
+    rdfs:comment "An event triggers a process"@en .
+
+uod:requires_decision a owl:ObjectProperty ;
+    rdfs:label "requires decision"@en ;
+    rdfs:label "需要决策"@zh ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod:Decision ;
+    rdfs:comment "A process requires a decision or approval"@en .
+
+uod:supports a owl:ObjectProperty ;
+    rdfs:label "supports"@en ;
+    rdfs:label "支持"@zh ;
+    rdfs:domain uod:Capability ;
+    rdfs:range uod:Goal ;
+    rdfs:comment "A capability supports a business goal"@en .
+
+uod:measured_by a owl:ObjectProperty ;
+    rdfs:label "measured by"@en ;
+    rdfs:label "由…衡量"@zh ;
+    rdfs:domain uod:Goal ;
+    rdfs:range uod:KPI ;
+    rdfs:comment "A goal is measured by a KPI"@en .

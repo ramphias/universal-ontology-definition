@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-03-30
+
+### Added
+- **L0 Platform & Syntax Bindings Layer** (`platform/`)
+  - OWL 2 / RDF Turtle serialization (`platform/owl-rdf/core_ontology.ttl`)
+  - JSON-LD Context definition (`platform/json-ld/context.jsonld`)
+  - GraphQL Schema definition (`platform/graphql/schema.graphql`)
+  - PostgreSQL DDL mapping (`platform/sql/schema.sql`)
+  - Platform binding contribution template (`platform/_template/`)
+
+### Changed
+- Architecture upgraded from three-layer to **four-layer** (L0–L3)
+- Updated README.md and README_CN.md to reflect four-layer architecture
+- Updated `docs/architecture.md` with L0 layer documentation
+- Version badge updated to 1.1.0
+
 ## [1.0.0] - 2026-03-29
 
 ### Added

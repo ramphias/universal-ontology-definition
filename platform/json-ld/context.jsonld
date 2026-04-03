@@ -1,0 +1,70 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "uod": "https://w3id.org/uod/core/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+
+    "id": "@id",
+    "type": "@type",
+
+    "Party": "uod:Party",
+    "Person": "uod:Person",
+    "Organization": "uod:Organization",
+    "OrgUnit": "uod:OrgUnit",
+    "Role": "uod:Role",
+
+    "Capability": "uod:Capability",
+    "Process": "uod:Process",
+    "Activity": "uod:Activity",
+
+    "BusinessObject": "uod:BusinessObject",
+    "ProductService": "uod:ProductService",
+    "Asset": "uod:Asset",
+
+    "DataObject": "uod:DataObject",
+    "DocumentRecord": "uod:DocumentRecord",
+    "SystemApplication": "uod:SystemApplication",
+
+    "Policy": "uod:Policy",
+    "Rule": "uod:Rule",
+    "Control": "uod:Control",
+    "Risk": "uod:Risk",
+
+    "Event": "uod:Event",
+    "Decision": "uod:Decision",
+    "Goal": "uod:Goal",
+    "KPI": "uod:KPI",
+
+    "Location": "uod:Location",
+    "Channel": "uod:Channel",
+    "MarketSegment": "uod:MarketSegment",
+
+    "label": "rdfs:label",
+    "label_zh": { "@id": "rdfs:label", "@language": "zh" },
+    "label_en": { "@id": "rdfs:label", "@language": "en" },
+    "definition": { "@id": "rdfs:comment", "@language": "zh" },
+    "definition_en": { "@id": "rdfs:comment", "@language": "en" },
+    "parent": { "@id": "rdfs:subClassOf", "@type": "@id" },
+
+    "plays_role": { "@id": "uod:plays_role", "@type": "@id" },
+    "belongs_to": { "@id": "uod:belongs_to", "@type": "@id" },
+    "owns": { "@id": "uod:owns", "@type": "@id" },
+    "is_accountable_for": { "@id": "uod:is_accountable_for", "@type": "@id" },
+    "realized_by": { "@id": "uod:realized_by", "@type": "@id" },
+    "composed_of": { "@id": "uod:composed_of", "@type": "@id" },
+    "consumes": { "@id": "uod:consumes", "@type": "@id" },
+    "produces": { "@id": "uod:produces", "@type": "@id" },
+    "recorded_in": { "@id": "uod:recorded_in", "@type": "@id" },
+    "governed_by": { "@id": "uod:governed_by", "@type": "@id" },
+    "constrained_by": { "@id": "uod:constrained_by", "@type": "@id" },
+    "mitigated_by": { "@id": "uod:mitigated_by", "@type": "@id" },
+    "triggered_by": { "@id": "uod:triggered_by", "@type": "@id" },
+    "requires_decision": { "@id": "uod:requires_decision", "@type": "@id" },
+    "supports": { "@id": "uod:supports", "@type": "@id" },
+    "measured_by": { "@id": "uod:measured_by", "@type": "@id" }
+  }
+}
