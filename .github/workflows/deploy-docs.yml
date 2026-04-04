@@ -37,6 +37,12 @@ jobs:
       - name: Build documentation
         run: mkdocs build --strict
 
+      - name: Add original static homepage
+        run: |
+          cp docs/index.html site/
+          cp -r docs/css site/
+          cp -r docs/js site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
