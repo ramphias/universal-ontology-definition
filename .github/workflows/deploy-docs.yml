@@ -6,6 +6,8 @@ on:
       - master
     paths:
       - 'docs-site/**'
+      - 'docs/**'
+      - '.github/workflows/**'
       - 'mkdocs.yml'
   workflow_dispatch:
 
@@ -42,6 +44,7 @@ jobs:
           cp docs/index.html site/
           cp -r docs/css site/
           cp -r docs/js site/
+          touch site/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
