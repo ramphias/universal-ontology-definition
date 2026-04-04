@@ -691,6 +691,18 @@ p {
   box-shadow: 0 0 40px rgba(59, 130, 246, 0.08);
 }
 
+.arch-layer--l0 {
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+}
+.arch-layer--l0::before { background: var(--gradient-orange); }
+.arch-layer--l0:hover,
+.arch-layer--l0.active {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.08);
+}
+
 .arch-layer-header {
   display: flex;
   align-items: center;
@@ -718,6 +730,10 @@ p {
 .arch-layer--l1 .arch-layer-tag {
   background: rgba(59, 130, 246, 0.2);
   color: var(--accent-blue);
+}
+.arch-layer--l0 .arch-layer-tag {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--accent-orange);
 }
 
 .arch-layer-title {

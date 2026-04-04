@@ -23,7 +23,7 @@
       </a>
 
       <ul class="nav-links" id="navLinks">
-        <li><a href="docs/" style="color: #a78bfa; font-weight: 600;">📖 Documentation</a></li>
+        <li><a href="docs/" style="color: #a78bfa; font-weight: 600;">Docs</a></li>
         <li><a href="#architecture" data-i18n="nav.architecture">Architecture</a></li>
         <li><a href="#core" data-i18n="nav.core">Core Ontology</a></li>
         <li><a href="#addons" data-i18n="nav.addons">Addons</a></li>
@@ -63,7 +63,7 @@
       </h1>
 
       <p class="hero-subtitle" data-i18n="hero.subtitle">
-        A standardized three-layer framework for enterprise knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.
+        A standardized four-layer framework for enterprise knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.
       </p>
 
       <div class="hero-actions">
@@ -94,7 +94,7 @@
           <div class="hero-stat-label" data-i18n="hero.stat3">Industry Addons</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-value">3</div>
+          <div class="hero-stat-value">4</div>
           <div class="hero-stat-label" data-i18n="hero.stat4">Layers</div>
         </div>
       </div>
@@ -139,8 +139,8 @@
     <div class="container">
       <div class="section-header">
         <span class="section-badge" data-i18n="arch.badge">🏗️ Architecture</span>
-        <h2 data-i18n="arch.title">Three-Layer Ontology Framework</h2>
-        <p data-i18n="arch.subtitle">A balanced architecture separating universal core, industry addons, and enterprise customizations.</p>
+        <h2 data-i18n="arch.title">Four-Layer Ontology Framework</h2>
+        <p data-i18n="arch.subtitle">A balanced architecture separating platform bindings, universal core, industry addons, and enterprise customizations.</p>
       </div>
 
       <div class="architecture-visual animate-on-scroll">
@@ -205,6 +205,26 @@
             <span class="arch-layer-item">KPI</span>
             <span class="arch-layer-item">Policy</span>
             <span class="arch-layer-item">DataObject</span>
+          </div>
+        </div>
+
+        <div class="arch-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          <span style="margin-left: 4px;">bound by</span>
+        </div>
+
+        <!-- L0 -->
+        <div class="arch-layer arch-layer--l0" id="archL0">
+          <div class="arch-layer-header">
+            <span class="arch-layer-tag">L0</span>
+            <span class="arch-layer-title" data-i18n="arch.l0.title">Platform Bindings</span>
+          </div>
+          <p class="arch-layer-desc" data-i18n="arch.l0.desc">Pre-built syntax mappings to concrete technical environments.</p>
+          <div class="arch-layer-items">
+            <span class="arch-layer-item">OWL/RDF</span>
+            <span class="arch-layer-item">JSON-LD</span>
+            <span class="arch-layer-item">GraphQL</span>
+            <span class="arch-layer-item">SQL DDL</span>
           </div>
         </div>
       </div>
