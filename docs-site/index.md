@@ -1,51 +1,111 @@
 ---
+title: Home
 hide:
   - navigation
   - toc
 ---
 
-<div style="text-align: center; padding: 2rem 0;">
+<div class="hero-section" markdown>
 
-# 🌐 Universal Ontology Definition
+# :globe_with_meridians: Universal Ontology Definition
 
-**An Open, Standardized Four-Layer Enterprise Ontology Framework**
+<p class="hero-subtitle">
+An Open, Standardized Four-Layer Enterprise Ontology Framework
+</p>
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Version](https://img.shields.io/badge/Version-1.2.0-green.svg)](#)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](guides/contributing.md)
+<div class="hero-badges">
+  <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Version-1.2.0-green.svg" alt="Version"></a>
+  <a href="guides/contributing.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
+</div>
 
 </div>
 
----
+<h2 class="home-section-title">⚠️ The Problem</h2>
+<p class="home-section-desc">Enterprise digitalization commonly faces these challenges:</p>
 
-## The Problem
+<div class="problem-grid" markdown>
 
-Enterprise digitalization commonly faces:
+<div class="problem-card">
+  <span class="problem-icon">🔴</span>
+  <div class="problem-text">
+    <strong>Inconsistent concept definitions</strong>
+    <span>Different teams use different terms for the same objects</span>
+  </div>
+</div>
 
-- :red_circle: **Inconsistent concept definitions** — Different teams use different terms for the same objects
-- :red_circle: **Industry knowledge silos** — Industry-specific knowledge is scattered with no standardized extension mechanism
-- :red_circle: **Customization vs. standardization conflicts** — Enterprise-specific needs continuously erode the underlying structure
-- :red_circle: **Platform lock-in** — Ontology definitions tied to a single serialization format
+<div class="problem-card">
+  <span class="problem-icon">🔴</span>
+  <div class="problem-text">
+    <strong>Industry knowledge silos</strong>
+    <span>Industry-specific knowledge is scattered with no standardized extension mechanism</span>
+  </div>
+</div>
 
-## The Solution: Four-Layer Architecture
+<div class="problem-card">
+  <span class="problem-icon">🔴</span>
+  <div class="problem-text">
+    <strong>Customization vs. standardization</strong>
+    <span>Enterprise-specific needs continuously erode the underlying structure</span>
+  </div>
+</div>
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│         L3: Enterprise Customization Layer                   │  ← Private extensions
-│    (Company A)    (Company B)    (Company C)                 │
-├──────────────────────────────────────────────────────────────┤
-│         L2: Industry & Domain Addons                         │  ← Optional, industry-specific
-│  (Consulting) (Luxury) (Finance) (Manufacturing)             │
-├──────────────────────────────────────────────────────────────┤
-│         L1: Universal Enterprise Ontology Core               │  ← Mandatory inheritance
-│    (Party/Org/Role/Capability/Process/Risk/Goal/KPI)         │
-├══════════════════════════════════════════════════════════════┤
-│    L0: Platform & Syntax Bindings                            │  ← Technical serialization
-│  (OWL/RDF)  (JSON-LD)  (GraphQL)  (SQL DDL)                 │
-└──────────────────────────────────────────────────────────────┘
-```
+<div class="problem-card">
+  <span class="problem-icon">🔴</span>
+  <div class="problem-text">
+    <strong>Platform lock-in</strong>
+    <span>Ontology definitions tied to a single serialization format</span>
+  </div>
+</div>
 
-## Key Features
+</div>
+
+<h2 class="home-section-title">📐 The Solution: Four-Layer Architecture</h2>
+<p class="home-section-desc">A clean separation of concerns across four distinct layers:</p>
+
+<div class="layer-diagram">
+
+<div class="layer-card layer-l3">
+  <span class="layer-tag">L3</span>
+  <div class="layer-info">
+    <strong>Enterprise Customization Layer</strong>
+    <span>Company A · Company B · Company C — Private extensions</span>
+  </div>
+  <span class="layer-arrow">▸</span>
+</div>
+
+<div class="layer-card layer-l2">
+  <span class="layer-tag">L2</span>
+  <div class="layer-info">
+    <strong>Industry &amp; Domain Addons</strong>
+    <span>Consulting · Luxury · Finance · Manufacturing — Optional, industry-specific</span>
+  </div>
+  <span class="layer-arrow">▸</span>
+</div>
+
+<div class="layer-card layer-l1">
+  <span class="layer-tag">L1</span>
+  <div class="layer-info">
+    <strong>Universal Enterprise Ontology Core</strong>
+    <span>Party / Org / Role / Capability / Process / Risk / Goal / KPI — Mandatory inheritance</span>
+  </div>
+  <span class="layer-arrow">▸</span>
+</div>
+
+<hr class="layer-divider">
+
+<div class="layer-card layer-l0">
+  <span class="layer-tag">L0</span>
+  <div class="layer-info">
+    <strong>Platform &amp; Syntax Bindings</strong>
+    <span>OWL/RDF · JSON-LD · GraphQL · SQL DDL — Technical serialization</span>
+  </div>
+  <span class="layer-arrow">▸</span>
+</div>
+
+</div>
+
+<h2 class="home-section-title">✨ Key Features</h2>
 
 <div class="grid cards" markdown>
 
@@ -87,13 +147,57 @@ Enterprise digitalization commonly faces:
 
 </div>
 
-## Quick Links
+<h2 class="home-section-title">🚀 Quick Links</h2>
+<p class="home-section-desc">Jump right in — everything you need to get started:</p>
 
-| Resource | Description |
-|:---|:---|
-| [Getting Started](getting-started/quick-start.md) | Start using UOD in 5 minutes |
-| [Core Classes Reference](core/classes.md) | Browse all 25 L1 core classes |
-| [Architecture Deep Dive](architecture/four-layer-model.md) | Understand the four-layer design |
-| [Industry Addons](addons/index.md) | Browse available industry packages |
-| [Create an Addon](addons/create-addon.md) | Contribute your own industry addon |
-| [Contributing Guide](guides/contributing.md) | How to contribute to this project |
+<div class="quick-links-grid">
+
+<a class="quick-link-card" href="getting-started/quick-start/">
+  <span class="ql-icon">🚀</span>
+  <div class="ql-info">
+    <strong>Getting Started</strong>
+    <span>Start using UOD in 5 minutes</span>
+  </div>
+</a>
+
+<a class="quick-link-card" href="core/classes/">
+  <span class="ql-icon">📦</span>
+  <div class="ql-info">
+    <strong>Core Classes Reference</strong>
+    <span>Browse all 25 L1 core classes</span>
+  </div>
+</a>
+
+<a class="quick-link-card" href="architecture/four-layer-model/">
+  <span class="ql-icon">🏗️</span>
+  <div class="ql-info">
+    <strong>Architecture Deep Dive</strong>
+    <span>Understand the four-layer design</span>
+  </div>
+</a>
+
+<a class="quick-link-card" href="addons/">
+  <span class="ql-icon">🧩</span>
+  <div class="ql-info">
+    <strong>Industry Addons</strong>
+    <span>Browse available industry packages</span>
+  </div>
+</a>
+
+<a class="quick-link-card" href="addons/create-addon/">
+  <span class="ql-icon">🛠️</span>
+  <div class="ql-info">
+    <strong>Create an Addon</strong>
+    <span>Contribute your own industry addon</span>
+  </div>
+</a>
+
+<a class="quick-link-card" href="guides/contributing/">
+  <span class="ql-icon">🤝</span>
+  <div class="ql-info">
+    <strong>Contributing Guide</strong>
+    <span>How to contribute to this project</span>
+  </div>
+</a>
+
+</div>
