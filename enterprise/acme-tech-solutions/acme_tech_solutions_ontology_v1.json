@@ -1,0 +1,554 @@
+{
+  "$schema": "../../schema/addon_schema.json",
+  "layer": "L3_enterprise_customization",
+  "enterprise": {
+    "name": "Acme Tech Solutions",
+    "name_zh": "极客方舟科技",
+    "id": "ENT_ACME_TECH_001",
+    "headquarters": "北京",
+    "industry": "Technology Consulting",
+    "employee_count": "500-1000",
+    "description": "A fictional mid-size technology consulting firm specializing in cloud migration, AI solutions, and enterprise digital transformation in the Greater China market.",
+    "description_zh": "一家虚构的中型科技咨询公司，专注于大中华区的云迁移、AI 解决方案和企业数字化转型"
+  },
+  "version": "1.0.0",
+  "extends": [
+    "L1_universal_organization_ontology_v2",
+    "L2_consulting_industry_addon_v1"
+  ],
+  "compatible_core_version": "2.0.0",
+  "compatible_addon_version": "1.1.0",
+  "description": "极客方舟科技 L3 企业定制 ontology — 示例虚拟企业，演示 L3 层的完整创建流程",
+  "description_en": "Acme Tech Solutions L3 enterprise ontology — sample virtual enterprise demonstrating the full L3 creation workflow",
+
+  "classes": [
+    {
+      "id": "TechConsultingDivision",
+      "label_zh": "技术咨询事业部",
+      "label_en": "Technology Consulting Division",
+      "parent": "OrgUnit",
+      "definition": "按技术领域划分的事业部，如云计算、人工智能、数据工程等",
+      "definition_en": "A division organized by technology domain, such as cloud computing, AI, and data engineering"
+    },
+    {
+      "id": "SolutionArchitectTeam",
+      "label_zh": "解决方案架构团队",
+      "label_en": "Solution Architect Team",
+      "parent": "OrgUnit",
+      "definition": "负责为客户设计端到端技术解决方案的跨领域架构团队",
+      "definition_en": "A cross-domain architecture team responsible for designing end-to-end technology solutions for clients"
+    },
+    {
+      "id": "CloudMigrationEngagement",
+      "label_zh": "云迁移项目",
+      "label_en": "Cloud Migration Engagement",
+      "parent": "Engagement",
+      "definition": "帮助客户将传统 IT 基础设施迁移到公有云、私有云或混合云的咨询项目",
+      "definition_en": "A consulting engagement helping clients migrate traditional IT infrastructure to public, private, or hybrid cloud"
+    },
+    {
+      "id": "AIPlatformEngagement",
+      "label_zh": "AI 平台建设项目",
+      "label_en": "AI Platform Engagement",
+      "parent": "Engagement",
+      "definition": "为客户构建企业级 AI/ML 平台，包含数据湖、模型训练和推理服务的全栈建设",
+      "definition_en": "Building enterprise AI/ML platforms for clients, including data lake, model training, and inference services"
+    },
+    {
+      "id": "DataGovernanceEngagement",
+      "label_zh": "数据治理项目",
+      "label_en": "Data Governance Engagement",
+      "parent": "Engagement",
+      "definition": "帮助客户建立数据标准、数据质量管理和数据资产目录的治理咨询项目",
+      "definition_en": "A governance consulting engagement helping clients establish data standards, data quality management, and data asset catalogs"
+    },
+    {
+      "id": "DevSecOpsEngagement",
+      "label_zh": "DevSecOps 转型项目",
+      "label_en": "DevSecOps Transformation Engagement",
+      "parent": "Engagement",
+      "definition": "帮助客户构建安全左移的 DevSecOps 流水线和工程文化",
+      "definition_en": "Helping clients build shift-left DevSecOps pipelines and engineering culture"
+    },
+    {
+      "id": "SolutionArchitectRole",
+      "label_zh": "解决方案架构师角色",
+      "label_en": "Solution Architect",
+      "parent": "ConsultantRole",
+      "definition": "负责技术方案设计、架构评审和技术选型的高级技术角色",
+      "definition_en": "A senior technical role responsible for solution design, architecture review, and technology selection"
+    },
+    {
+      "id": "TechLeadRole",
+      "label_zh": "技术负责人角色",
+      "label_en": "Tech Lead",
+      "parent": "ConsultantRole",
+      "definition": "在项目中负责技术团队管理和技术交付质量的角色",
+      "definition_en": "A role responsible for technical team management and technical delivery quality within an engagement"
+    },
+    {
+      "id": "DataEngineerRole",
+      "label_zh": "数据工程师角色",
+      "label_en": "Data Engineer",
+      "parent": "ConsultantRole",
+      "definition": "负责数据管道、ETL 和数据平台建设的技术角色",
+      "definition_en": "A technical role responsible for data pipelines, ETL, and data platform construction"
+    },
+    {
+      "id": "CloudEngineerRole",
+      "label_zh": "云工程师角色",
+      "label_en": "Cloud Engineer",
+      "parent": "ConsultantRole",
+      "definition": "负责云架构设计、IaC 和云原生应用部署的技术角色",
+      "definition_en": "A technical role responsible for cloud architecture, IaC, and cloud-native application deployment"
+    },
+    {
+      "id": "TechnicalAccelerator",
+      "label_zh": "技术加速器",
+      "label_en": "Technical Accelerator",
+      "parent": "KnowledgeAsset",
+      "definition": "公司自研的可复用技术组件、代码模板和自动化脚本，用于加速项目交付",
+      "definition_en": "Proprietary reusable technical components, code templates, and automation scripts for accelerating delivery"
+    },
+    {
+      "id": "TechRadarReport",
+      "label_zh": "技术雷达报告",
+      "label_en": "Tech Radar Report",
+      "parent": "ThoughtLeadership",
+      "definition": "公司定期发布的技术趋势评估报告，评估新兴技术的采纳建议",
+      "definition_en": "A periodic technology trend assessment report evaluating adoption recommendations for emerging technologies"
+    },
+    {
+      "id": "CloudReadinessAssessment",
+      "label_zh": "云就绪评估",
+      "label_en": "Cloud Readiness Assessment",
+      "parent": "Deliverable",
+      "definition": "对客户现有 IT 环境的云迁移就绪度进行全面评估的交付物",
+      "definition_en": "A comprehensive assessment deliverable evaluating the client's existing IT environment for cloud migration readiness"
+    },
+    {
+      "id": "ArchitectureBlueprint",
+      "label_zh": "架构蓝图",
+      "label_en": "Architecture Blueprint",
+      "parent": "Deliverable",
+      "definition": "目标架构的详细设计文档，包含系统拓扑、集成模式和技术选型",
+      "definition_en": "A detailed design document for the target architecture, including system topology, integration patterns, and technology selection"
+    },
+    {
+      "id": "CloudCostOptimizationPolicy",
+      "label_zh": "云成本优化策略",
+      "label_en": "Cloud Cost Optimization Policy",
+      "parent": "Policy",
+      "definition": "规范云资源使用和成本控制的内部治理策略，包括 RI 购买、Spot 实例和闲置资源清理",
+      "definition_en": "Internal governance policy for cloud resource usage and cost control, including RI purchases, Spot instances, and idle resource cleanup"
+    },
+    {
+      "id": "OpenSourceCompliancePolicy",
+      "label_zh": "开源合规策略",
+      "label_en": "Open Source Compliance Policy",
+      "parent": "Policy",
+      "definition": "规范项目中开源软件使用、许可证审核和安全漏洞管理的合规策略",
+      "definition_en": "Compliance policy governing open-source software usage, license auditing, and security vulnerability management in projects"
+    },
+    {
+      "id": "VendorLockInRisk",
+      "label_zh": "供应商锁定风险",
+      "label_en": "Vendor Lock-In Risk",
+      "parent": "Risk",
+      "definition": "过度依赖单一云厂商或技术供应商导致的迁移和谈判风险",
+      "definition_en": "Migration and negotiation risks from over-dependence on a single cloud vendor or technology supplier"
+    },
+    {
+      "id": "DataLeakageRisk",
+      "label_zh": "数据泄露风险",
+      "label_en": "Data Leakage Risk",
+      "parent": "Risk",
+      "definition": "项目交付过程中因权限配置、数据传输不当导致的客户数据泄露风险",
+      "definition_en": "Risk of client data leakage due to improper permission configuration or data transmission during engagement delivery"
+    },
+    {
+      "id": "CloudMigrationCapability",
+      "label_zh": "云迁移能力",
+      "label_en": "Cloud Migration Capability",
+      "parent": "Capability",
+      "definition": "评估、规划和执行大规模云迁移的组织能力",
+      "definition_en": "Organizational capability to assess, plan, and execute large-scale cloud migrations"
+    },
+    {
+      "id": "MLOpsCapability",
+      "label_zh": "MLOps 能力",
+      "label_en": "MLOps Capability",
+      "parent": "Capability",
+      "definition": "端到端机器学习运维能力，涵盖模型训练、部署、监控和迭代",
+      "definition_en": "End-to-end machine learning operations capability covering model training, deployment, monitoring, and iteration"
+    },
+    {
+      "id": "CertificationCompletionKPI",
+      "label_zh": "认证完成率 KPI",
+      "label_en": "Certification Completion KPI",
+      "parent": "KPI",
+      "definition": "技术顾问获取云厂商和技术认证的年度完成率",
+      "definition_en": "Annual completion rate for technical consultants obtaining cloud vendor and technology certifications"
+    },
+    {
+      "id": "CodeQualityKPI",
+      "label_zh": "代码质量 KPI",
+      "label_en": "Code Quality KPI",
+      "parent": "KPI",
+      "definition": "项目交付代码的质量指标，包含测试覆盖率、静态分析评分和技术债务比率",
+      "definition_en": "Quality metrics for delivered code, including test coverage, static analysis scores, and technical debt ratio"
+    },
+    {
+      "id": "MigrationSuccessRateKPI",
+      "label_zh": "迁移成功率 KPI",
+      "label_en": "Migration Success Rate KPI",
+      "parent": "KPI",
+      "definition": "云迁移项目中应用和数据成功迁移的比例",
+      "definition_en": "Percentage of applications and data successfully migrated in cloud migration engagements"
+    },
+    {
+      "id": "TechBlogProgram",
+      "label_zh": "技术博客计划",
+      "label_en": "Tech Blog Program",
+      "parent": "Process",
+      "definition": "鼓励顾问撰写技术博客文章进行知识分享和个人品牌建设的内部流程",
+      "definition_en": "Internal program encouraging consultants to write technical blog posts for knowledge sharing and personal branding"
+    },
+    {
+      "id": "TechCertificationProcess",
+      "label_zh": "技术认证流程",
+      "label_en": "Technical Certification Process",
+      "parent": "Process",
+      "definition": "顾问申请、学习、考试和报销技术认证的标准化流程",
+      "definition_en": "Standardized process for consultants to apply, study, take exams, and get reimbursed for technical certifications"
+    },
+    {
+      "id": "ArchitectureReviewBoard",
+      "label_zh": "架构评审委员会",
+      "label_en": "Architecture Review Board",
+      "parent": "Control",
+      "definition": "对项目技术方案进行评审和把关的内部委员会，确保方案符合最佳实践",
+      "definition_en": "Internal committee reviewing and gatekeeping project technical solutions to ensure alignment with best practices"
+    }
+  ],
+
+  "relations": [
+    {
+      "id": "has_tech_division",
+      "label_zh": "设有技术事业部",
+      "label_en": "has technology division",
+      "domain": "ConsultingFirm",
+      "range": "TechConsultingDivision",
+      "specializes": "part_of (L1) inverse",
+      "definition": "公司设有按技术方向划分的事业部",
+      "definition_en": "The firm has technology-domain-specific divisions"
+    },
+    {
+      "id": "designs_solution_for",
+      "label_zh": "为…设计解决方案",
+      "label_en": "designs solution for",
+      "domain": "SolutionArchitectRole",
+      "range": "Engagement",
+      "specializes": "staffed_on (L2)",
+      "definition": "解决方案架构师为项目设计技术方案",
+      "definition_en": "A solution architect designs technical solutions for an engagement"
+    },
+    {
+      "id": "produces_blueprint",
+      "label_zh": "产出架构蓝图",
+      "label_en": "produces blueprint",
+      "domain": "Engagement",
+      "range": "ArchitectureBlueprint",
+      "specializes": "produces (L1)",
+      "definition": "项目产出架构蓝图交付物",
+      "definition_en": "An engagement produces an architecture blueprint deliverable"
+    },
+    {
+      "id": "assessed_by_readiness",
+      "label_zh": "经云就绪评估",
+      "label_en": "assessed by cloud readiness",
+      "domain": "CloudMigrationEngagement",
+      "range": "CloudReadinessAssessment",
+      "specializes": null,
+      "definition": "云迁移项目起始阶段须经云就绪评估",
+      "definition_en": "Cloud migration engagements begin with a cloud readiness assessment"
+    },
+    {
+      "id": "reviewed_by_arb",
+      "label_zh": "经架构评审委员会审核",
+      "label_en": "reviewed by ARB",
+      "domain": "ArchitectureBlueprint",
+      "range": "ArchitectureReviewBoard",
+      "specializes": "reviewed_by (L2)",
+      "definition": "架构蓝图须经架构评审委员会审核通过",
+      "definition_en": "Architecture blueprints must be reviewed and approved by the Architecture Review Board"
+    },
+    {
+      "id": "uses_accelerator",
+      "label_zh": "使用技术加速器",
+      "label_en": "uses accelerator",
+      "domain": "Engagement",
+      "range": "TechnicalAccelerator",
+      "specializes": "contributes_to_knowledge (L2) inverse",
+      "definition": "项目使用技术加速器加速交付",
+      "definition_en": "An engagement uses technical accelerators to speed up delivery"
+    },
+    {
+      "id": "certified_through",
+      "label_zh": "通过…认证",
+      "label_en": "certified through",
+      "domain": "ConsultantRole",
+      "range": "TechCertificationProcess",
+      "specializes": null,
+      "definition": "顾问通过技术认证流程获取资质",
+      "definition_en": "Consultants obtain qualifications through the technical certification process"
+    },
+    {
+      "id": "publishes_radar",
+      "label_zh": "发布技术雷达",
+      "label_en": "publishes tech radar",
+      "domain": "TechConsultingDivision",
+      "range": "TechRadarReport",
+      "specializes": "publishes_thought_leadership (L2)",
+      "definition": "技术事业部定期发布技术雷达报告",
+      "definition_en": "Technology divisions periodically publish tech radar reports"
+    },
+    {
+      "id": "governed_by_oss_policy",
+      "label_zh": "受开源合规策略约束",
+      "label_en": "governed by OSS policy",
+      "domain": "Engagement",
+      "range": "OpenSourceCompliancePolicy",
+      "specializes": "governed_by_policy (L2)",
+      "definition": "项目须遵守开源合规策略",
+      "definition_en": "Engagements must comply with the open source compliance policy"
+    },
+    {
+      "id": "migration_measured_by",
+      "label_zh": "由迁移成功率衡量",
+      "label_en": "migration measured by",
+      "domain": "CloudMigrationEngagement",
+      "range": "MigrationSuccessRateKPI",
+      "specializes": "measured_by (L1)",
+      "definition": "云迁移项目成效由迁移成功率 KPI 衡量",
+      "definition_en": "Cloud migration engagement effectiveness is measured by migration success rate KPI"
+    }
+  ],
+
+  "sample_instances": [
+    {
+      "id": "org_acme_tech",
+      "type": "ConsultingFirm",
+      "label": "Acme Tech Solutions",
+      "label_zh": "极客方舟科技"
+    },
+    {
+      "id": "div_cloud",
+      "type": "TechConsultingDivision",
+      "label": "Cloud & Infrastructure Division",
+      "label_zh": "云与基础设施事业部"
+    },
+    {
+      "id": "div_ai_data",
+      "type": "TechConsultingDivision",
+      "label": "AI & Data Engineering Division",
+      "label_zh": "AI 与数据工程事业部"
+    },
+    {
+      "id": "div_devsecops",
+      "type": "TechConsultingDivision",
+      "label": "DevSecOps & Platform Engineering Division",
+      "label_zh": "DevSecOps 与平台工程事业部"
+    },
+    {
+      "id": "team_sa",
+      "type": "SolutionArchitectTeam",
+      "label": "Enterprise Solution Architecture Team",
+      "label_zh": "企业解决方案架构团队"
+    },
+    {
+      "id": "office_beijing",
+      "type": "ConsultingOffice",
+      "label": "Acme Tech Beijing Office",
+      "label_zh": "极客方舟北京办公室"
+    },
+    {
+      "id": "office_shanghai",
+      "type": "ConsultingOffice",
+      "label": "Acme Tech Shanghai Office",
+      "label_zh": "极客方舟上海办公室"
+    },
+    {
+      "id": "office_shenzhen",
+      "type": "ConsultingOffice",
+      "label": "Acme Tech Shenzhen Office",
+      "label_zh": "极客方舟深圳办公室"
+    },
+    {
+      "id": "practice_cloud_migration",
+      "type": "PracticeLine",
+      "label": "Cloud Migration & Modernization",
+      "label_zh": "云迁移与现代化"
+    },
+    {
+      "id": "practice_ai_ml",
+      "type": "PracticeLine",
+      "label": "AI/ML Solutions",
+      "label_zh": "AI/ML 解决方案"
+    },
+    {
+      "id": "practice_data_governance",
+      "type": "PracticeLine",
+      "label": "Data Governance & Analytics",
+      "label_zh": "数据治理与分析"
+    },
+    {
+      "id": "practice_devsecops",
+      "type": "PracticeLine",
+      "label": "DevSecOps & SRE",
+      "label_zh": "DevSecOps 与 SRE"
+    },
+    {
+      "id": "accel_terraform_modules",
+      "type": "TechnicalAccelerator",
+      "label": "Enterprise Terraform Module Library",
+      "label_zh": "企业级 Terraform 模块库"
+    },
+    {
+      "id": "accel_data_pipeline",
+      "type": "TechnicalAccelerator",
+      "label": "Data Pipeline Starter Kit",
+      "label_zh": "数据管道快速搭建工具包"
+    },
+    {
+      "id": "accel_k8s_template",
+      "type": "TechnicalAccelerator",
+      "label": "Kubernetes Deployment Template",
+      "label_zh": "Kubernetes 部署模板"
+    },
+    {
+      "id": "framework_cloud_adoption",
+      "type": "Framework",
+      "label": "Acme Cloud Adoption Framework (ACAF)",
+      "label_zh": "极客方舟云采纳框架 (ACAF)"
+    },
+    {
+      "id": "framework_data_maturity",
+      "type": "Framework",
+      "label": "Data Maturity Assessment Model",
+      "label_zh": "数据成熟度评估模型"
+    },
+    {
+      "id": "methodology_agile_consulting",
+      "type": "Methodology",
+      "label": "Acme Agile Consulting Methodology",
+      "label_zh": "极客方舟敏捷咨询方法论"
+    },
+    {
+      "id": "report_tech_radar_2026",
+      "type": "TechRadarReport",
+      "label": "Acme Tech Radar 2026 Q1",
+      "label_zh": "极客方舟技术雷达 2026 Q1"
+    },
+    {
+      "id": "engagement_bank_cloud",
+      "type": "CloudMigrationEngagement",
+      "label": "[Anonymized Bank A] Core Banking Cloud Migration",
+      "label_zh": "[匿名银行 A] 核心银行系统云迁移"
+    },
+    {
+      "id": "engagement_retail_ai",
+      "type": "AIPlatformEngagement",
+      "label": "[Anonymized Retailer B] Recommendation AI Platform",
+      "label_zh": "[匿名零售商 B] 推荐引擎 AI 平台建设"
+    },
+    {
+      "id": "engagement_mfg_data",
+      "type": "DataGovernanceEngagement",
+      "label": "[Anonymized Manufacturer C] Enterprise Data Catalog",
+      "label_zh": "[匿名制造商 C] 企业数据资产目录建设"
+    },
+    {
+      "id": "engagement_fintech_devsecops",
+      "type": "DevSecOpsEngagement",
+      "label": "[Anonymized Fintech D] DevSecOps Pipeline",
+      "label_zh": "[匿名金融科技 D] DevSecOps 流水线建设"
+    },
+    {
+      "id": "sys_jira",
+      "type": "SystemApplication",
+      "label": "Jira Project Management",
+      "label_zh": "Jira 项目管理系统"
+    },
+    {
+      "id": "sys_confluence",
+      "type": "KnowledgePortal",
+      "label": "Confluence Knowledge Base",
+      "label_zh": "Confluence 知识库"
+    },
+    {
+      "id": "sys_gitlab",
+      "type": "SystemApplication",
+      "label": "GitLab DevOps Platform",
+      "label_zh": "GitLab DevOps 平台"
+    },
+    {
+      "id": "sys_crm_hubspot",
+      "type": "CRMSystem",
+      "label": "HubSpot CRM",
+      "label_zh": "HubSpot 客户关系管理"
+    },
+    {
+      "id": "policy_oss_compliance",
+      "type": "OpenSourceCompliancePolicy",
+      "label": "Acme OSS Compliance Policy v2.0",
+      "label_zh": "极客方舟开源合规策略 v2.0"
+    },
+    {
+      "id": "policy_cloud_cost",
+      "type": "CloudCostOptimizationPolicy",
+      "label": "Cloud Cost Governance Policy",
+      "label_zh": "云成本治理策略"
+    },
+    {
+      "id": "kpi_cert_completion",
+      "type": "CertificationCompletionKPI",
+      "label": "Certification Completion Rate (Target: 90%+)",
+      "label_zh": "认证完成率（目标 90%+）"
+    },
+    {
+      "id": "kpi_code_quality",
+      "type": "CodeQualityKPI",
+      "label": "Code Quality Score (Target: A-grade)",
+      "label_zh": "代码质量评分（目标：A 级）"
+    },
+    {
+      "id": "kpi_migration_success",
+      "type": "MigrationSuccessRateKPI",
+      "label": "Migration Success Rate (Target: 99%+)",
+      "label_zh": "迁移成功率（目标 99%+）"
+    },
+    {
+      "id": "kpi_utilization",
+      "type": "UtilizationMetric",
+      "label": "Consultant Utilization Rate (Target: 75%+)",
+      "label_zh": "顾问利用率（目标 75%+）"
+    },
+    {
+      "id": "kpi_client_nps",
+      "type": "KPI",
+      "label": "Client NPS Score (Target: 65+)",
+      "label_zh": "客户 NPS 评分（目标 65+）"
+    }
+  ],
+
+  "metadata": {
+    "author": "Enterprise Architecture Team (Sample)",
+    "created": "2026-04-05",
+    "last_updated": "2026-04-05",
+    "status": "released",
+    "confidentiality": "PUBLIC — Sample / Demo Only",
+    "changelog": "v1.0.0: Initial L3 sample ontology for virtual enterprise, demonstrating full workflow",
+    "note": "This is a FICTIONAL enterprise created for demonstration purposes. All company names, engagement names, and data are entirely fictitious."
+  }
+}

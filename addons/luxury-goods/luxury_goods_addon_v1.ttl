@@ -1,0 +1,503 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix uod-lux: <https://w3id.org/uod/addon/luxury-goods/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# Luxury goods industry addon ontology covering brand manageme — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-05 00:36
+# ════════════════════════════════════════════════════════════════════════════
+
+uod-lux:Ontology a owl:Ontology ;
+    rdfs:label "Luxury goods industry addon ontology covering brand manageme"@en ;
+    rdfs:label "奢侈品行业 addon ontology 数据，覆盖品牌管理、产品生命周期、全渠道零售、客户体验、供应链溯源与鉴真、稀缺性管控与行业合规"@zh ;
+    owl:imports <https://w3id.org/uod/core/> ;
+    owl:versionInfo "2.0.0" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+uod-lux:LuxuryBrand a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Luxury Brand"@en ;
+    rdfs:label "奢侈品牌"@zh ;
+    rdfs:comment "An enterprise or brand entity operating in the luxury goods sector, with brand heritage, craftsmanship legacy, and scarcity strategy as core competitive advantages"@en ;
+    rdfs:comment "经营奢侈品品牌的企业或品牌主体，以独特的品牌遗产、工艺传承和稀缺性策略为核心竞争力"@zh .
+
+uod-lux:Maison a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Maison"@en ;
+    rdfs:label "品牌屋"@zh ;
+    rdfs:comment "An independent operating unit for a brand or sub-brand, with its own creative direction and brand positioning"@en ;
+    rdfs:comment "品牌或子品牌的独立经营单元，拥有独立的创意方向和品牌定位"@zh .
+
+uod-lux:Atelier a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Atelier"@en ;
+    rdfs:label "工坊"@zh ;
+    rdfs:comment "A craftsmanship center responsible for handcrafting, bespoke creation, and restoration; core to brand artisanal heritage"@en ;
+    rdfs:comment "承担手工制作、定制和修复工作的工艺中心，是品牌工艺传承的核心场所"@zh .
+
+uod-lux:LuxuryProduct a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Luxury Product"@en ;
+    rdfs:label "奢侈品商品"@zh ;
+    rdfs:comment "High-end products with superior craftsmanship, brand premium, and emotional connection, spanning fashion, leather goods, jewelry, watches, beauty, etc."@en ;
+    rdfs:comment "具有高工艺价值、品牌溢价和情感连接的高端商品，涵盖时装、皮具、珠宝、腕表、美妆等品类"@zh .
+
+uod-lux:Collection a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Collection"@en ;
+    rdfs:label "系列"@zh ;
+    rdfs:comment "A product series organized by season, theme, or design language, carrying the brand's creative narrative"@en ;
+    rdfs:comment "按季节、主题或设计语言组织的商品系列，承载品牌创意叙事"@zh .
+
+uod-lux:SKUVariant a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "SKU Variant"@en ;
+    rdfs:label "SKU 变体"@zh ;
+    rdfs:comment "A specific variant of a luxury product across color, size, material dimensions, typically with independent inventory and pricing"@en ;
+    rdfs:comment "奢侈品商品在颜色、尺寸、材质等维度的具体变体，通常具有独立库存和定价"@zh .
+
+uod-lux:LimitedEdition a owl:Class ;
+    rdfs:subClassOf uod-lux:LuxuryProduct ;
+    rdfs:label "Limited Edition"@en ;
+    rdfs:label "限量款"@zh ;
+    rdfs:comment "A scarce product manufactured in limited quantities, often associated with specific events, collaborations, or commemorative themes"@en ;
+    rdfs:comment "限定数量生产的稀缺商品，通常与特定事件、合作或纪念主题关联"@zh .
+
+uod-lux:MaterialLot a owl:Class ;
+    rdfs:subClassOf uod:Asset ;
+    rdfs:label "Material Lot"@en ;
+    rdfs:label "原料批次"@zh ;
+    rdfs:comment "A traceable lot of high-value raw materials such as leather, precious metals, gemstones, and rare fabrics"@en ;
+    rdfs:comment "皮革、贵金属、宝石、稀有面料等高价值原料的可追溯批次"@zh .
+
+uod-lux:CraftsmanshipCertificate a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Craftsmanship Certificate"@en ;
+    rdfs:label "工艺证书"@zh ;
+    rdfs:comment "A quality certification document attesting to a product's craftsmanship, origin, and artisanal process"@en ;
+    rdfs:comment "证明商品工艺、产地和手工流程的品质认证文件"@zh .
+
+uod-lux:AuthenticityCertificate a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Authenticity Certificate"@en ;
+    rdfs:label "真伪证书"@zh ;
+    rdfs:comment "Product authenticity certification based on anti-counterfeiting technologies (serial numbers, NFC chips, blockchain digital passports)"@en ;
+    rdfs:comment "基于防伪技术（序列号、NFC芯片、区块链数字护照）的商品真伪认证"@zh .
+
+uod-lux:DigitalProductPassport a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Digital Product Passport"@en ;
+    rdfs:label "数字产品护照"@zh ;
+    rdfs:comment "A digital identity record of a product's full lifecycle from raw materials to end customer, compliant with EU DPP regulations"@en ;
+    rdfs:comment "记录商品从原料到终端客户全生命周期的数字化身份档案，符合欧盟 DPP 法规要求"@zh .
+
+uod-lux:Channel a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Channel"@en ;
+    rdfs:label "渠道"@zh ;
+    rdfs:comment "A sales and service channel through which a brand interacts with clients, including offline stores and online platforms"@en ;
+    rdfs:comment "品牌与客户交互的销售和服务渠道，包含线下门店和线上平台"@zh .
+
+uod-lux:Boutique a owl:Class ;
+    rdfs:subClassOf uod-lux:Channel ;
+    rdfs:label "Boutique"@en ;
+    rdfs:label "精品店"@zh ;
+    rdfs:comment "A brand-operated store or boutique providing an immersive brand experience"@en ;
+    rdfs:comment "品牌直营门店或品牌精品店，提供沉浸式品牌体验"@zh .
+
+uod-lux:DepartmentStoreCounter a owl:Class ;
+    rdfs:subClassOf uod-lux:Channel ;
+    rdfs:label "Department Store Counter"@en ;
+    rdfs:label "百货专柜"@zh ;
+    rdfs:comment "A brand-exclusive section within a high-end department store"@en ;
+    rdfs:comment "设立在高端百货中的品牌专营区域"@zh .
+
+uod-lux:ECommerceChannel a owl:Class ;
+    rdfs:subClassOf uod-lux:Channel ;
+    rdfs:label "E-Commerce Channel"@en ;
+    rdfs:label "电商渠道"@zh ;
+    rdfs:comment "Brand official website, platform flagship stores, or exclusive online partner channels"@en ;
+    rdfs:comment "品牌官网、平台旗舰店或独家线上合作渠道"@zh .
+
+uod-lux:ClientAdvisorRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Client Advisor"@en ;
+    rdfs:label "客户顾问"@zh ;
+    rdfs:comment "A store-level role responsible for one-on-one service and sales to high-net-worth clients; the core link between brand and customer"@en ;
+    rdfs:comment "负责高净值客户一对一服务与销售的门店角色，是品牌与客户之间的核心纽带"@zh .
+
+uod-lux:VIPClientRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "VIP Client"@en ;
+    rdfs:label "VIP 客户"@zh ;
+    rdfs:comment "A client role with high spending value or loyalty, entitled to priority purchasing, exclusive events, and bespoke services"@en ;
+    rdfs:comment "具有高消费价值或高忠诚度的客户角色，享有优先购买权、专属活动和定制服务"@zh .
+
+uod-lux:BrandAmbassadorRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Brand Ambassador"@en ;
+    rdfs:label "品牌大使"@zh ;
+    rdfs:comment "A role representing the brand in public communication and cultural influence, including celebrity endorsers and key opinion leaders"@en ;
+    rdfs:comment "代表品牌进行公共传播和文化影响的角色，包含名人代言人和行业意见领袖"@zh .
+
+uod-lux:ArtisanRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Artisan"@en ;
+    rdfs:label "工匠"@zh ;
+    rdfs:comment "A highly skilled craftsperson mastering traditional artisanal techniques, responsible for luxury product creation"@en ;
+    rdfs:comment "掌握传统手工技艺、负责奢侈品制作的高技能工匠角色"@zh .
+
+uod-lux:PersonalShoppingService a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Personal Shopping Service"@en ;
+    rdfs:label "一对一私享服务"@zh ;
+    rdfs:comment "An appointment-based private shopping and styling consultation experience for VIP clients"@en ;
+    rdfs:comment "面向 VIP 客户的预约制私密购物和造型顾问体验"@zh .
+
+uod-lux:AfterSalesService a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "After-Sales Service"@en ;
+    rdfs:label "售后养护服务"@zh ;
+    rdfs:comment "Full lifecycle product care covering repair, maintenance, restoration, engraving, and extended warranty"@en ;
+    rdfs:comment "涵盖维修、保养、翻新、刻字和延保的全生命周期产品养护"@zh .
+
+uod-lux:BespokeService a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Bespoke Service"@en ;
+    rdfs:label "定制服务"@zh ;
+    rdfs:comment "Exclusive customization based on individual client needs, including material selection, design personalization, and handcrafting"@en ;
+    rdfs:comment "根据客户个性化需求进行的专属定制，包含材质选择、设计定制和手工制作"@zh .
+
+uod-lux:TraceabilityEvent a owl:Class ;
+    rdfs:subClassOf uod:Event ;
+    rdfs:label "Traceability Event"@en ;
+    rdfs:label "溯源事件"@zh ;
+    rdfs:comment "Key tracking nodes throughout a product's lifecycle: material intake, production completion, QC pass, warehousing, sale, transfer, repair"@en ;
+    rdfs:comment "商品全生命周期中的关键追踪节点：原料入库、生产完工、质检通过、入库、销售、转移、维修"@zh .
+
+uod-lux:CounterfeitRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Counterfeit Risk"@en ;
+    rdfs:label "假货风险"@zh ;
+    rdfs:comment "Risk to brand value and consumer trust from counterfeit products, grey markets, parallel imports, and unauthorized secondary market circulation"@en ;
+    rdfs:comment "仿冒品、灰色市场、串货和非授权二手流转对品牌价值和消费者信任造成的风险"@zh .
+
+uod-lux:BrandDilutionRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Brand Dilution Risk"@en ;
+    rdfs:label "品牌稀释风险"@zh ;
+    rdfs:comment "Blurred brand positioning and declining pricing power caused by over-extension of product lines, promotional discounting, or channel downgrading"@en ;
+    rdfs:comment "过度扩张产品线、折扣促销或渠道下沉导致的品牌定位模糊和溢价能力下降"@zh .
+
+uod-lux:ScarcityRule a owl:Class ;
+    rdfs:subClassOf uod:Rule ;
+    rdfs:label "Scarcity Rule"@en ;
+    rdfs:label "稀缺性分配规则"@zh ;
+    rdfs:comment "Allocation, reservation, and purchase eligibility rules for limited-edition and high-demand products, typically linked to client tier and purchase history"@en ;
+    rdfs:comment "限量商品和热门款式的配货、预约和购买资格规则，通常与客户层级和购买历史关联"@zh .
+
+uod-lux:PricingIntegrityPolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Pricing Integrity Policy"@en ;
+    rdfs:label "价格一致性政策"@zh ;
+    rdfs:comment "A governance policy ensuring consistent pricing strategy and strict discount control across global markets and all channels"@en ;
+    rdfs:comment "确保品牌在全球市场和全渠道中维持一致定价策略和严格折扣管控的治理政策"@zh .
+
+uod-lux:ClientelingCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Clienteling Capability"@en ;
+    rdfs:label "客户经营能力"@zh ;
+    rdfs:comment "Systematic operational capability for identifying, segmenting, engaging, and personally servicing high-net-worth client groups"@en ;
+    rdfs:comment "围绕高净值客群的识别、分层、触达和个性化服务的系统性运营能力"@zh .
+
+uod-lux:ProductPassportCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Product Passport Capability"@en ;
+    rdfs:label "数字护照能力"@zh ;
+    rdfs:comment "Digital capability for establishing and managing product digital identity, authenticity verification, and full lifecycle after-sales service"@en ;
+    rdfs:comment "建立和管理商品数字身份、真伪验证与售后服务全生命周期的数字化能力"@zh .
+
+uod-lux:AssortmentPlanningCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Assortment Planning Capability"@en ;
+    rdfs:label "精品配货能力"@zh ;
+    rdfs:comment "Business capability for intelligent assortment allocation based on scarce SKU supply, store tier, client profiles, and regional preferences"@en ;
+    rdfs:comment "基于稀缺 SKU 供给、门店等级、客户画像和区域偏好进行智能配货分配的业务能力"@zh .
+
+uod-lux:OmniChannelCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Omni-Channel Capability"@en ;
+    rdfs:label "全渠道能力"@zh ;
+    rdfs:comment "Capability for cross-channel inventory visibility, client recognition, and seamless shopping experience across boutiques, department stores, and online channels"@en ;
+    rdfs:comment "打通精品店、百货专柜和线上渠道的库存可见性、客户识别和无缝购物体验的能力"@zh .
+
+uod-lux:ClientelingProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Clienteling Process"@en ;
+    rdfs:label "客户经营流程"@zh ;
+    rdfs:comment "End-to-end client engagement process from identification, segmentation, outreach, personal service to long-term relationship maintenance"@en ;
+    rdfs:comment "从客户识别、分层、触达、私享服务到长期关系维护的端到端客户经营流程"@zh .
+
+uod-lux:ProductAuthenticationProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Product Authentication Process"@en ;
+    rdfs:label "产品鉴真流程"@zh ;
+    rdfs:comment "Full-chain authentication process from production registration, NFC/blockchain enrollment, sales activation to secondary market verification"@en ;
+    rdfs:comment "从生产注册、NFC/区块链录入、销售激活到二手流转验证的全链路鉴真流程"@zh .
+
+uod-lux:AssortmentAllocationProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Assortment Allocation Process"@en ;
+    rdfs:label "配货分配流程"@zh ;
+    rdfs:comment "Allocation and distribution process for limited-edition and new products based on store tier, client demand, and inventory strategy"@en ;
+    rdfs:comment "根据门店等级、客户需求和库存策略进行限量商品和新品的配货调拨流程"@zh .
+
+uod-lux:ClientelingCRM a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Clienteling CRM"@en ;
+    rdfs:label "客户经营系统"@zh ;
+    rdfs:comment "A specialized CRM system managing VIP client profiles, purchase history, preference profiles, and engagement records"@en ;
+    rdfs:comment "管理 VIP 客户档案、购买历史、偏好画像和触达记录的专业客户关系系统"@zh .
+
+uod-lux:ProductTraceabilitySystem a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Product Traceability System"@en ;
+    rdfs:label "产品溯源系统"@zh ;
+    rdfs:comment "A product lifecycle traceability and authentication platform based on blockchain, NFC, or IoT technologies"@en ;
+    rdfs:comment "基于区块链、NFC或物联网技术的商品全生命周期溯源和鉴真平台"@zh .
+
+uod-lux:AvgTransactionValue a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Average Transaction Value"@en ;
+    rdfs:label "客单价"@zh ;
+    rdfs:comment "Core retail metric measuring the average monetary value per transaction at a store or channel"@en ;
+    rdfs:comment "衡量门店或渠道平均每笔交易金额的核心零售指标"@zh .
+
+uod-lux:RepurchaseRate a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Repurchase Rate"@en ;
+    rdfs:label "复购率"@zh ;
+    rdfs:comment "Metric measuring the proportion of clients making repeat purchases within a given period, reflecting client loyalty and brand stickiness"@en ;
+    rdfs:comment "衡量客户在一定周期内再次购买的比例，反映客户忠诚度和品牌粘性"@zh .
+
+uod-lux:SellThroughRate a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Sell-Through Rate"@en ;
+    rdfs:label "售罄率"@zh ;
+    rdfs:comment "Metric measuring the proportion of inventory sold within a specific period, key to evaluating assortment accuracy and product appeal"@en ;
+    rdfs:comment "衡量商品在特定时间段内的销售比例，是评估配货精准度和产品吸引力的关键指标"@zh .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+uod-lux:belongs_to_collection a owl:ObjectProperty ;
+    rdfs:label "belongs to collection"@en ;
+    rdfs:label "属于系列"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod-lux:Collection ;
+    rdfs:comment "A product belongs to a design collection"@en ;
+    rdfs:comment "商品属于某个设计系列"@zh .
+
+uod-lux:has_variant a owl:ObjectProperty ;
+    rdfs:label "has variant"@en ;
+    rdfs:label "拥有变体"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod-lux:SKUVariant ;
+    rdfs:comment "A product has SKU variants of different specifications"@en ;
+    rdfs:comment "商品具有不同规格的 SKU 变体"@zh .
+
+uod-lux:crafted_from a owl:ObjectProperty ;
+    rdfs:label "crafted from"@en ;
+    rdfs:label "由…制作"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod-lux:MaterialLot ;
+    rdfs:comment "A product is crafted from a specific material lot"@en ;
+    rdfs:comment "商品由特定原料批次制作"@zh .
+
+uod-lux:authenticated_by a owl:ObjectProperty ;
+    rdfs:label "authenticated by"@en ;
+    rdfs:label "由…认证"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod-lux:AuthenticityCertificate ;
+    rdfs:comment "A product is authenticated by an authenticity certificate"@en ;
+    rdfs:comment "商品由真伪证书认证"@zh .
+
+uod-lux:passported_by a owl:ObjectProperty ;
+    rdfs:label "passported by"@en ;
+    rdfs:label "由…登记"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod-lux:DigitalProductPassport ;
+    rdfs:comment "A product's full lifecycle is registered by a digital product passport"@en ;
+    rdfs:comment "商品的全生命周期由数字产品护照登记"@zh .
+
+uod-lux:sold_through a owl:ObjectProperty ;
+    rdfs:label "sold through"@en ;
+    rdfs:label "通过…销售"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod-lux:Channel ;
+    rdfs:comment "A product is sold through a specific channel"@en ;
+    rdfs:comment "商品通过特定渠道销售"@zh .
+
+uod-lux:advised_by a owl:ObjectProperty ;
+    rdfs:label "advised by"@en ;
+    rdfs:label "由…服务"@zh ;
+    rdfs:domain uod-lux:VIPClientRole ;
+    rdfs:range uod-lux:ClientAdvisorRole ;
+    rdfs:comment "A VIP client is served by an assigned client advisor"@en ;
+    rdfs:comment "VIP 客户由指定客户顾问提供专属服务"@zh .
+
+uod-lux:crafted_by a owl:ObjectProperty ;
+    rdfs:label "crafted by"@en ;
+    rdfs:label "由…制作"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod-lux:ArtisanRole ;
+    rdfs:comment "A product is handcrafted by an artisan"@en ;
+    rdfs:comment "商品由工匠手工制作"@zh .
+
+uod-lux:endorsed_by a owl:ObjectProperty ;
+    rdfs:label "endorsed by"@en ;
+    rdfs:label "由…代言"@zh ;
+    rdfs:domain uod-lux:Collection ;
+    rdfs:range uod-lux:BrandAmbassadorRole ;
+    rdfs:comment "A collection is endorsed and promoted by a brand ambassador"@en ;
+    rdfs:comment "系列由品牌大使代言推广"@zh .
+
+uod-lux:tracked_by_event a owl:ObjectProperty ;
+    rdfs:label "tracked by event"@en ;
+    rdfs:label "被…追踪"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod-lux:TraceabilityEvent ;
+    rdfs:comment "A product is tracked and recorded at key nodes by traceability events"@en ;
+    rdfs:comment "商品在关键节点被溯源事件追踪记录"@zh .
+
+uod-lux:exposed_to a owl:ObjectProperty ;
+    rdfs:label "exposed to"@en ;
+    rdfs:label "面临…风险"@zh ;
+    rdfs:domain uod-lux:LuxuryProduct ;
+    rdfs:range uod:Risk ;
+    rdfs:comment "A product is exposed to specific risks (counterfeit, brand dilution, etc.)"@en ;
+    rdfs:comment "商品面临特定风险（假货风险、品牌稀释风险等）"@zh .
+
+uod-lux:allocated_by a owl:ObjectProperty ;
+    rdfs:label "allocated by"@en ;
+    rdfs:label "由…配货"@zh ;
+    rdfs:domain uod-lux:SKUVariant ;
+    rdfs:range uod-lux:AssortmentAllocationProcess ;
+    rdfs:comment "A SKU variant is distributed to channels through the assortment allocation process"@en ;
+    rdfs:comment "SKU 变体通过配货分配流程分配到各渠道"@zh .
+
+uod-lux:profiled_in a owl:ObjectProperty ;
+    rdfs:label "profiled in"@en ;
+    rdfs:label "画像记录于"@zh ;
+    rdfs:domain uod-lux:VIPClientRole ;
+    rdfs:range uod-lux:ClientelingCRM ;
+    rdfs:comment "A VIP client's profile and interaction records are stored in the clienteling CRM"@en ;
+    rdfs:comment "VIP 客户的画像和交互记录存储在客户经营系统中"@zh .
+
+uod-lux:verified_by a owl:ObjectProperty ;
+    rdfs:label "verified by"@en ;
+    rdfs:label "由…验证"@zh ;
+    rdfs:domain uod-lux:AuthenticityCertificate ;
+    rdfs:range uod-lux:ProductTraceabilitySystem ;
+    rdfs:comment "An authenticity certificate is verified by the product traceability system"@en ;
+    rdfs:comment "真伪证书由产品溯源系统验证"@zh .
+
+# ────────────────────────────────────────
+# NAMED INDIVIDUALS (Instances)
+# ────────────────────────────────────────
+
+uod-lux:brand_orion_maison a owl:NamedIndividual, uod-lux:LuxuryBrand ;
+    rdfs:label "Orion Maison"@en ;
+    rdfs:label "奥利安品牌"@zh .
+
+uod-lux:maison_haute_couture a owl:NamedIndividual, uod-lux:Maison ;
+    rdfs:label "Haute Couture Division"@en ;
+    rdfs:label "高级定制部"@zh .
+
+uod-lux:collection_fw26_aurora a owl:NamedIndividual, uod-lux:Collection ;
+    rdfs:label "FW26 Aurora Collection"@en ;
+    rdfs:label "FW26 极光系列"@zh .
+
+uod-lux:product_aurora_bag a owl:NamedIndividual, uod-lux:LuxuryProduct ;
+    rdfs:label "Aurora Top Handle Bag"@en ;
+    rdfs:label "极光手提包"@zh .
+
+uod-lux:product_limited_anniversary a owl:NamedIndividual, uod-lux:LimitedEdition ;
+    rdfs:label "25th Anniversary Collector's Piece"@en ;
+    rdfs:label "25 周年典藏限量款"@zh .
+
+uod-lux:sku_aurora_black_small a owl:NamedIndividual, uod-lux:SKUVariant ;
+    rdfs:label "Aurora Small / Noir"@en ;
+    rdfs:label "极光小号 / 黑色"@zh .
+
+uod-lux:material_croc_exotic a owl:NamedIndividual, uod-lux:MaterialLot ;
+    rdfs:label "Exotic Crocodile Leather Lot #2026-003"@en ;
+    rdfs:label "异域鳄鱼皮批次 #2026-003"@zh .
+
+uod-lux:channel_shanghai_boutique a owl:NamedIndividual, uod-lux:Boutique ;
+    rdfs:label "Shanghai Plaza 66 Boutique"@en ;
+    rdfs:label "上海恒隆广场精品店"@zh .
+
+uod-lux:channel_tmall_flagship a owl:NamedIndividual, uod-lux:ECommerceChannel ;
+    rdfs:label "Tmall Luxury Pavilion Flagship"@en ;
+    rdfs:label "天猫奢品旗舰店"@zh .
+
+uod-lux:role_senior_advisor a owl:NamedIndividual, uod-lux:ClientAdvisorRole ;
+    rdfs:label "Senior Client Advisor"@en ;
+    rdfs:label "高级客户顾问"@zh .
+
+uod-lux:role_vvip_client a owl:NamedIndividual, uod-lux:VIPClientRole ;
+    rdfs:label "VVIP Platinum Client"@en ;
+    rdfs:label "VVIP 铂金客户"@zh .
+
+uod-lux:role_master_artisan a owl:NamedIndividual, uod-lux:ArtisanRole ;
+    rdfs:label "Master Leather Artisan"@en ;
+    rdfs:label "皮具大师工匠"@zh .
+
+uod-lux:cap_clienteling a owl:NamedIndividual, uod-lux:ClientelingCapability ;
+    rdfs:label "VIP Clienteling"@en ;
+    rdfs:label "VIP 客户经营"@zh .
+
+uod-lux:cap_digital_passport a owl:NamedIndividual, uod-lux:ProductPassportCapability ;
+    rdfs:label "Digital Product Passport"@en ;
+    rdfs:label "数字产品护照"@zh .
+
+uod-lux:cap_omnichannel a owl:NamedIndividual, uod-lux:OmniChannelCapability ;
+    rdfs:label "Omni-Channel Retail"@en ;
+    rdfs:label "全渠道零售"@zh .
+
+uod-lux:proc_authentication a owl:NamedIndividual, uod-lux:ProductAuthenticationProcess ;
+    rdfs:label "Product Authentication & Passport Registration"@en ;
+    rdfs:label "产品鉴真与护照注册"@zh .
+
+uod-lux:sys_clienteling_crm a owl:NamedIndividual, uod-lux:ClientelingCRM ;
+    rdfs:label "Clienteling 360 Platform"@en ;
+    rdfs:label "客户经营 360 平台"@zh .
+
+uod-lux:sys_traceability a owl:NamedIndividual, uod-lux:ProductTraceabilitySystem ;
+    rdfs:label "Blockchain Traceability Hub"@en ;
+    rdfs:label "区块链溯源中心"@zh .
+
+uod-lux:risk_counterfeit a owl:NamedIndividual, uod-lux:CounterfeitRisk ;
+    rdfs:label "Cross-border Counterfeit Risk"@en ;
+    rdfs:label "跨境假货风险"@zh .
+
+uod-lux:kpi_avg_transaction a owl:NamedIndividual, uod-lux:AvgTransactionValue ;
+    rdfs:label "Average Transaction Value (Target: ¥15,000+)"@en ;
+    rdfs:label "客单价（目标：¥15,000+）"@zh .
+
+uod-lux:kpi_repurchase a owl:NamedIndividual, uod-lux:RepurchaseRate ;
+    rdfs:label "Annual Repurchase Rate (Target: 35%+)"@en ;
+    rdfs:label "年度复购率（目标：35%+）"@zh .
+
+uod-lux:kpi_sell_through a owl:NamedIndividual, uod-lux:SellThroughRate ;
+    rdfs:label "Seasonal Sell-Through Rate (Target: 85%+)"@en ;
+    rdfs:label "季度售罄率（目标：85%+）"@zh .

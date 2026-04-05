@@ -10,7 +10,7 @@ This directory contains the GraphQL Schema definition for the L1 Universal Enter
 
 | Ontology Concept | GraphQL Mapping |
 |:---|:---|
-| Class with subclasses | `interface` (e.g., `Party`, `BusinessObject`) |
+| Class with subclasses | `interface` (e.g., `Party`, `Resource`, `Governance`) |
 | Leaf class | `type` implementing interface |
 | `parent` (inheritance) | `implements` keyword |
 | Object property (1:N) | Field returning `[Type!]!` |

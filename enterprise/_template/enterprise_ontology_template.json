@@ -1,0 +1,35 @@
+{
+  "layer": "L3_enterprise_customization",
+  "enterprise": {
+    "name": "Enterprise Template",
+    "id": "ENT_TMPL_001"
+  },
+  "version": "1.0.0",
+  "extends": [
+    "L1_universal_enterprise_ontology_v1"
+  ],
+  "description": "Template for enterprise-specific ontology extensions. Replace placeholders with actual enterprise data.",
+  "classes": [
+    {
+      "id": "EnterpriseSpecificEntity",
+      "label_zh": "企业特定实体",
+      "label_en": "Enterprise Specific Entity",
+      "parent": "BusinessObject",
+      "definition": "A placeholder for entities unique to this enterprise's business model."
+    }
+  ],
+  "relations": [
+    {
+      "id": "isManagedByDepartment",
+      "label_zh": "由部门管理",
+      "label_en": "is managed by department",
+      "domain": "EnterpriseSpecificEntity",
+      "range": "OrgUnit",
+      "type": "owl:ObjectProperty"
+    }
+  ],
+  "metadata": {
+    "author": "Enterprise Architecture Team",
+    "last_updated": "2026-04-03"
+  }
+}

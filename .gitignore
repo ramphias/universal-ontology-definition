@@ -43,3 +43,9 @@ Raw/
 tmp/
 *.tmp
 *.log
+
+# Local archive/legacy
+legacy/
+
+# Private L3 Enterprise Ontologies
+private_enterprise/

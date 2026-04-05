@@ -1,284 +1,443 @@
 {
+  "$schema": "../../schema/addon_schema.json",
   "layer": "L2_consulting_industry_addon",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "extends": "L1_universal_organization_ontology",
+  "compatible_core_version": "2.0.0",
   "description": "咨询行业 addon ontology 数据，覆盖咨询项目、业务实践、方法论、交付物、客户关系、知识管理与人才配置",
+  "description_en": "Consulting industry addon ontology covering engagements, practice lines, methodologies, deliverables, client relationships, knowledge management, and talent allocation",
   "classes": [
     {
       "id": "ConsultingFirm",
       "label_zh": "咨询公司",
+      "label_en": "Consulting Firm",
       "parent": "Organization",
-      "definition": "提供专业咨询服务的企业主体，如管理咨询、IT咨询、战略咨询等"
+      "definition": "提供专业咨询服务的企业主体，如管理咨询、IT咨询、战略咨询等",
+      "definition_en": "An enterprise entity providing professional consulting services such as management consulting, IT consulting, and strategy consulting"
+    },
+    {
+      "id": "ConsultingOffice",
+      "label_zh": "咨询办公室",
+      "label_en": "Consulting Office",
+      "parent": "OrgUnit",
+      "definition": "咨询公司按地理区域设立的分支办公室，如北京办公室、纽约办公室等",
+      "definition_en": "A branch office set up by a consulting firm in a geographic region, e.g. Beijing office, New York office"
     },
     {
       "id": "PracticeLine",
       "label_zh": "业务线/实践领域",
+      "label_en": "Practice Line",
       "parent": "OrgUnit",
-      "definition": "咨询公司按行业或职能划分的业务实践领域，如战略、运营、数字化转型、人力资源等"
+      "definition": "咨询公司按行业或职能划分的业务实践领域，如战略、运营、数字化转型、人力资源等",
+      "definition_en": "A practice area organized by industry or function within a consulting firm, such as strategy, operations, digital transformation, and human resources"
     },
     {
       "id": "CompetencyCenter",
       "label_zh": "能力中心",
+      "label_en": "Competency Center",
       "parent": "OrgUnit",
-      "definition": "围绕特定专业能力或技术方向组建的跨项目支持中心"
+      "definition": "围绕特定专业能力或技术方向组建的跨项目支持中心",
+      "definition_en": "A cross-project support center organized around a specific professional competency or technology domain"
     },
     {
       "id": "Engagement",
       "label_zh": "咨询项目/签约项目",
-      "parent": "BusinessObject",
-      "definition": "与客户签订合同后的咨询服务交付项目，包含范围、时间、预算和团队"
+      "label_en": "Engagement",
+      "parent": "Resource",
+      "definition": "与客户签订合同后的咨询服务交付项目，包含范围、时间、预算和团队",
+      "definition_en": "A consulting service delivery project contracted with a client, encompassing scope, timeline, budget, and team"
+    },
+    {
+      "id": "EngagementMilestone",
+      "label_zh": "项目里程碑",
+      "label_en": "Engagement Milestone",
+      "parent": "Resource",
+      "definition": "咨询项目中与交付和付款绑定的关键里程碑节点",
+      "definition_en": "A key milestone node in a consulting engagement tied to deliverables and payment schedules"
     },
     {
       "id": "Proposal",
       "label_zh": "咨询提案",
-      "parent": "DocumentRecord",
-      "definition": "面向客户的项目建议书或竞标方案，包含方法论、团队、时间表和报价"
+      "label_en": "Proposal",
+      "parent": "Document",
+      "definition": "面向客户的项目建议书或竞标方案，包含方法论、团队、时间表和报价",
+      "definition_en": "A project proposal or bid document for clients, containing methodology, team composition, timeline, and pricing"
     },
     {
       "id": "StatementOfWork",
       "label_zh": "工作说明书",
-      "parent": "DocumentRecord",
-      "definition": "定义项目范围、交付物、时间线和验收标准的正式合同附件"
+      "label_en": "Statement of Work",
+      "parent": "Document",
+      "definition": "定义项目范围、交付物、时间线和验收标准的正式合同附件",
+      "definition_en": "A formal contract attachment defining project scope, deliverables, timeline, and acceptance criteria"
     },
     {
       "id": "Deliverable",
       "label_zh": "交付物",
-      "parent": "BusinessObject",
-      "definition": "咨询项目中需交付给客户的成果物，如报告、模型、实施方案、工具包等"
+      "label_en": "Deliverable",
+      "parent": "Resource",
+      "definition": "咨询项目中需交付给客户的成果物，如报告、模型、实施方案、工具包等",
+      "definition_en": "An output to be delivered to the client in a consulting engagement, such as reports, models, implementation plans, and toolkits"
     },
     {
       "id": "WorkStream",
-      "label_zh": "工作流",
-      "parent": "BusinessObject",
-      "definition": "咨询项目内按主题划分的并行工作模块，各自拥有独立交付目标"
+      "label_zh": "工作模块",
+      "label_en": "Work Stream",
+      "parent": "Resource",
+      "definition": "咨询项目内按主题划分的并行工作模块，各自拥有独立交付目标",
+      "definition_en": "A parallel work module within an engagement organized by theme, each with independent delivery objectives"
+    },
+    {
+      "id": "Workshop",
+      "label_zh": "工作坊",
+      "label_en": "Workshop",
+      "parent": "Process",
+      "definition": "咨询项目中常见的互动式研讨会或工作坊交付形式，用于调研、共创或汇报",
+      "definition_en": "An interactive seminar or workshop delivery format commonly used in consulting engagements for research, co-creation, or reporting"
     },
     {
       "id": "Methodology",
       "label_zh": "方法论",
-      "parent": "BusinessObject",
-      "definition": "咨询公司自主研发或引用的标准化方法论框架，如设计思维、精益六西格玛、TOGAF等"
+      "label_en": "Methodology",
+      "parent": "KnowledgeAsset",
+      "definition": "咨询公司自主研发或引用的标准化方法论框架，如设计思维、精益六西格玛、TOGAF等",
+      "definition_en": "A standardized methodology framework developed or adopted by a consulting firm, such as Design Thinking, Lean Six Sigma, TOGAF, etc."
     },
     {
       "id": "Framework",
       "label_zh": "分析框架",
-      "parent": "BusinessObject",
-      "definition": "用于问题分析和战略规划的结构化工具，如波特五力、SWOT、价值链分析、BCG矩阵等"
+      "label_en": "Analytical Framework",
+      "parent": "KnowledgeAsset",
+      "definition": "用于问题分析和战略规划的结构化工具，如波特五力、SWOT、价值链分析、BCG矩阵等",
+      "definition_en": "A structured tool for problem analysis and strategic planning, such as Porter's Five Forces, SWOT, Value Chain Analysis, BCG Matrix, etc."
     },
     {
       "id": "KnowledgeAsset",
       "label_zh": "知识资产",
+      "label_en": "Knowledge Asset",
       "parent": "Asset",
-      "definition": "咨询公司积累的可复用知识，包括案例库、行业报告、最佳实践、工具模板等"
+      "definition": "咨询公司积累的可复用知识，包括案例库、行业报告、最佳实践、工具模板等",
+      "definition_en": "Reusable knowledge accumulated by a consulting firm, including case libraries, industry reports, best practices, and tool templates"
     },
     {
       "id": "CaseStudy",
       "label_zh": "案例研究",
-      "parent": "DocumentRecord",
-      "definition": "过往项目的结构化总结，用于知识沉淀、业务开发和品牌展示"
+      "label_en": "Case Study",
+      "parent": "Document",
+      "definition": "过往项目的结构化总结，用于知识沉淀、业务开发和品牌展示",
+      "definition_en": "A structured summary of past engagements used for knowledge retention, business development, and brand showcase"
     },
     {
       "id": "ClientAccount",
       "label_zh": "客户账户",
-      "parent": "BusinessObject",
-      "definition": "咨询公司维护的客户主体记录，跟踪关系历史、项目记录和收入贡献"
+      "label_en": "Client Account",
+      "parent": "Resource",
+      "definition": "咨询公司维护的客户主体记录，跟踪关系历史、项目记录和收入贡献",
+      "definition_en": "A client entity record maintained by a consulting firm, tracking relationship history, engagement records, and revenue contribution"
     },
     {
       "id": "ClientRelationship",
       "label_zh": "客户关系",
-      "parent": "BusinessObject",
-      "definition": "与客户之间的长期战略合作关系，包含信任层级、接触频率和商机管道"
+      "label_en": "Client Relationship",
+      "parent": "Resource",
+      "definition": "与客户之间的长期战略合作关系，包含信任层级、接触频率和商机管道",
+      "definition_en": "A long-term strategic partnership with a client, encompassing trust levels, contact frequency, and opportunity pipeline"
     },
     {
       "id": "Pipeline",
       "label_zh": "商机管道",
-      "parent": "BusinessObject",
-      "definition": "潜在咨询项目的销售漏斗，跟踪从线索识别到签约的全流程"
+      "label_en": "Pipeline",
+      "parent": "Resource",
+      "definition": "潜在咨询项目的销售漏斗，跟踪从线索识别到签约的全流程",
+      "definition_en": "A sales funnel of potential consulting engagements, tracking the full process from lead identification to contract signing"
     },
     {
       "id": "ConsultingService",
       "label_zh": "咨询服务产品",
+      "label_en": "Consulting Service",
       "parent": "ProductService",
-      "definition": "咨询公司对外提供的标准化或定制化服务产品，如战略评估、组织诊断、数字化路线图等"
+      "definition": "咨询公司对外提供的标准化或定制化服务产品，如战略评估、组织诊断、数字化路线图等",
+      "definition_en": "Standardized or customized service offerings provided by a consulting firm, such as strategic assessment, organizational diagnostics, and digital roadmaps"
     },
     {
       "id": "PartnerRole",
       "label_zh": "合伙人角色",
+      "label_en": "Partner",
       "parent": "Role",
-      "definition": "对客户关系、项目质量和营收目标负最终责任的高级领导角色"
+      "definition": "对客户关系、项目质量和营收目标负最终责任的高级领导角色",
+      "definition_en": "A senior leadership role bearing ultimate responsibility for client relationships, engagement quality, and revenue targets"
     },
     {
       "id": "PrincipalRole",
       "label_zh": "总监/副合伙人角色",
+      "label_en": "Principal / Associate Partner",
       "parent": "Role",
-      "definition": "介于合伙人和经理之间的高级顾问角色，负责项目群管理和业务拓展"
+      "definition": "介于合伙人和经理之间的高级顾问角色，负责项目群管理和业务拓展",
+      "definition_en": "A senior advisory role between partner and manager, responsible for program management and business development"
     },
     {
       "id": "EngagementManagerRole",
       "label_zh": "项目经理角色",
+      "label_en": "Engagement Manager",
       "parent": "Role",
-      "definition": "负责单个项目日常管理、团队协调和客户沟通的角色"
+      "definition": "负责单个项目日常管理、团队协调和客户沟通的角色",
+      "definition_en": "A role responsible for day-to-day management, team coordination, and client communication for a single engagement"
     },
     {
       "id": "ConsultantRole",
       "label_zh": "顾问角色",
+      "label_en": "Consultant",
       "parent": "Role",
-      "definition": "执行具体分析、调研、方案设计和交付工作的专业角色"
+      "definition": "执行具体分析、调研、方案设计和交付工作的专业角色",
+      "definition_en": "A professional role performing specific analysis, research, solution design, and delivery work"
     },
     {
       "id": "AnalystRole",
       "label_zh": "分析师角色",
+      "label_en": "Analyst",
       "parent": "Role",
-      "definition": "负责数据收集、分析建模和材料准备的初级角色"
+      "definition": "负责数据收集、分析建模和材料准备的初级角色",
+      "definition_en": "A junior role responsible for data collection, analytical modeling, and material preparation"
     },
     {
       "id": "SubjectMatterExpertRole",
       "label_zh": "领域专家角色",
+      "label_en": "Subject Matter Expert",
       "parent": "Role",
-      "definition": "在特定行业或职能领域拥有深度专长的顾问角色，提供专家意见和质量把关"
+      "definition": "在特定行业或职能领域拥有深度专长的顾问角色，提供专家意见和质量把关",
+      "definition_en": "An advisory role with deep expertise in a specific industry or functional domain, providing expert opinions and quality assurance"
+    },
+    {
+      "id": "SubcontractorRole",
+      "label_zh": "外部分包顾问角色",
+      "label_en": "Subcontractor",
+      "parent": "Role",
+      "definition": "由外部合作方或独立顾问承担的项目分包角色，按合同提供专项服务",
+      "definition_en": "A project subcontracting role undertaken by external partners or independent consultants, providing specialized services under contract"
+    },
+    {
+      "id": "ClientStakeholder",
+      "label_zh": "客户利益相关方",
+      "label_en": "Client Stakeholder",
+      "parent": "Role",
+      "definition": "客户组织中与咨询项目相关的关键干系人，包括项目负责人、业务负责人、IT负责人等",
+      "definition_en": "Key stakeholders within the client organization related to the consulting engagement, including project leads, business owners, and IT leaders"
+    },
+    {
+      "id": "ClientSponsor",
+      "label_zh": "客户项目发起人",
+      "label_en": "Client Sponsor",
+      "parent": "Role",
+      "definition": "客户方为咨询项目提供预算审批和高层支持的行政发起人角色",
+      "definition_en": "An executive sponsor on the client side who provides budget approval and senior-level support for the consulting engagement"
     },
     {
       "id": "StaffingRequest",
       "label_zh": "人员配置需求",
-      "parent": "BusinessObject",
-      "definition": "项目团队组建中对特定技能、经验和可用性的人力需求申请"
+      "label_en": "Staffing Request",
+      "parent": "Resource",
+      "definition": "项目团队组建中对特定技能、经验和可用性的人力需求申请",
+      "definition_en": "A human resource request specifying required skills, experience, and availability for project team assembly"
     },
     {
       "id": "UtilizationMetric",
       "label_zh": "利用率指标",
+      "label_en": "Utilization Metric",
       "parent": "KPI",
-      "definition": "衡量顾问可计费时间与总工时比率的核心运营指标"
+      "definition": "衡量顾问可计费时间与总工时比率的核心运营指标",
+      "definition_en": "A core operational metric measuring the ratio of a consultant's billable hours to total working hours"
+    },
+    {
+      "id": "RevenueMetric",
+      "label_zh": "收入指标",
+      "label_en": "Revenue Metric",
+      "parent": "KPI",
+      "definition": "衡量咨询公司、业务线或项目层面收入表现的财务指标",
+      "definition_en": "A financial metric measuring revenue performance at the firm, practice line, or engagement level"
+    },
+    {
+      "id": "MarginMetric",
+      "label_zh": "利润率指标",
+      "label_en": "Margin Metric",
+      "parent": "KPI",
+      "definition": "衡量项目或业务线利润率的财务指标，反映交付效率和定价策略的有效性",
+      "definition_en": "A financial metric measuring profit margin at the engagement or practice line level, reflecting delivery efficiency and pricing strategy effectiveness"
     },
     {
       "id": "BillableRate",
       "label_zh": "计费费率",
-      "parent": "BusinessObject",
-      "definition": "按顾问等级、项目类型和客户协议确定的小时/天计费标准"
+      "label_en": "Billable Rate",
+      "parent": "Rule",
+      "definition": "按顾问等级、项目类型和客户协议确定的小时/天计费标准规则",
+      "definition_en": "A billing standard rule determined by consultant grade, engagement type, and client agreement for hourly or daily rates"
     },
     {
       "id": "QualityReview",
       "label_zh": "质量评审",
+      "label_en": "Quality Review",
       "parent": "Control",
-      "definition": "项目交付过程中的质量关口和审核机制，确保交付物达标"
+      "definition": "项目交付过程中的质量关口和审核机制，确保交付物达标",
+      "definition_en": "Quality gates and review mechanisms during engagement delivery to ensure deliverables meet standards"
     },
     {
       "id": "ClientSatisfactionSurvey",
       "label_zh": "客户满意度调查",
-      "parent": "DocumentRecord",
-      "definition": "项目结束后收集的客户反馈，衡量服务质量和客户体验"
+      "label_en": "Client Satisfaction Survey",
+      "parent": "Document",
+      "definition": "项目结束后收集的客户反馈，衡量服务质量和客户体验",
+      "definition_en": "Client feedback collected after engagement completion, measuring service quality and client experience"
     },
     {
       "id": "ThoughtLeadership",
       "label_zh": "思想领导力内容",
+      "label_en": "Thought Leadership",
       "parent": "Asset",
-      "definition": "咨询公司发布的行业洞察白皮书、研究报告和观点文章，用于品牌建设和客户吸引"
+      "definition": "咨询公司发布的行业洞察白皮书、研究报告和观点文章，用于品牌建设和客户吸引",
+      "definition_en": "Industry insight white papers, research reports, and opinion articles published by a consulting firm for brand building and client attraction"
     },
     {
       "id": "ChangeManagementPlan",
       "label_zh": "变革管理计划",
-      "parent": "DocumentRecord",
-      "definition": "咨询项目中为客户制定的组织变革和人员转型方案"
+      "label_en": "Change Management Plan",
+      "parent": "Document",
+      "definition": "咨询项目中为客户制定的组织变革和人员转型方案",
+      "definition_en": "An organizational change and personnel transformation plan developed for clients within a consulting engagement"
     },
     {
       "id": "BenchmarkStudy",
       "label_zh": "对标研究",
-      "parent": "DocumentRecord",
-      "definition": "基于行业数据和最佳实践的性能对标分析报告"
+      "label_en": "Benchmark Study",
+      "parent": "Document",
+      "definition": "基于行业数据和最佳实践的性能对标分析报告",
+      "definition_en": "A performance benchmarking analysis report based on industry data and best practices"
     },
     {
       "id": "ConflictOfInterestRisk",
       "label_zh": "利益冲突风险",
+      "label_en": "Conflict of Interest Risk",
       "parent": "Risk",
-      "definition": "同时服务竞争客户或关联方可能导致的利益冲突和声誉风险"
+      "definition": "同时服务竞争客户或关联方可能导致的利益冲突和声誉风险",
+      "definition_en": "A risk of conflicts and reputational damage arising from simultaneously serving competing clients or related parties"
     },
     {
       "id": "ScopeCreepRisk",
       "label_zh": "范围蔓延风险",
+      "label_en": "Scope Creep Risk",
       "parent": "Risk",
-      "definition": "项目执行过程中需求范围不断扩大但未相应调整预算和时间的风险"
+      "definition": "项目执行过程中需求范围不断扩大但未相应调整预算和时间的风险",
+      "definition_en": "A risk of requirements scope expanding during engagement execution without corresponding adjustments to budget and timeline"
     },
     {
       "id": "IndependencePolicy",
       "label_zh": "独立性政策",
+      "label_en": "Independence Policy",
       "parent": "Policy",
-      "definition": "确保咨询建议客观中立的内部治理政策，特别适用于审计和风控领域"
+      "definition": "确保咨询建议客观中立的内部治理政策，特别适用于审计和风控领域",
+      "definition_en": "An internal governance policy ensuring objectivity and neutrality of consulting advice, particularly applicable to audit and risk management domains"
     },
     {
       "id": "ConfidentialityPolicy",
       "label_zh": "保密政策",
+      "label_en": "Confidentiality Policy",
       "parent": "Policy",
-      "definition": "规范客户信息、项目数据和商业机密保护要求的信息安全政策"
+      "definition": "规范客户信息、项目数据和商业机密保护要求的信息安全政策",
+      "definition_en": "An information security policy governing the protection of client information, engagement data, and trade secrets"
     },
     {
       "id": "BusinessDevelopmentCapability",
       "label_zh": "业务开发能力",
+      "label_en": "Business Development Capability",
       "parent": "Capability",
-      "definition": "识别商机、建立客户关系和转化签约的市场拓展能力"
+      "definition": "识别商机、建立客户关系和转化签约的市场拓展能力",
+      "definition_en": "A market expansion capability for identifying opportunities, building client relationships, and converting leads into signed engagements"
     },
     {
       "id": "KnowledgeManagementCapability",
       "label_zh": "知识管理能力",
+      "label_en": "Knowledge Management Capability",
       "parent": "Capability",
-      "definition": "对项目经验、行业知识和方法论的系统化收集、整理、分享与复用能力"
+      "definition": "对项目经验、行业知识和方法论的系统化收集、整理、分享与复用能力",
+      "definition_en": "A systematic capability for collecting, organizing, sharing, and reusing engagement experiences, industry knowledge, and methodologies"
     },
     {
       "id": "TalentDevelopmentCapability",
       "label_zh": "人才发展能力",
+      "label_en": "Talent Development Capability",
       "parent": "Capability",
-      "definition": "咨询人才的选拔、培养、评估和晋升体系能力，是咨询公司核心竞争力"
+      "definition": "咨询人才的选拔、培养、评估和晋升体系能力，是咨询公司核心竞争力",
+      "definition_en": "A capability encompassing the selection, development, evaluation, and promotion of consulting talent, representing a core competitive advantage"
     },
     {
       "id": "DigitalDeliveryCapability",
       "label_zh": "数字化交付能力",
+      "label_en": "Digital Delivery Capability",
       "parent": "Capability",
-      "definition": "利用数据分析、AI、自动化工具提升交付效率和成果质量的能力"
+      "definition": "利用数据分析、AI、自动化工具提升交付效率和成果质量的能力",
+      "definition_en": "A capability leveraging data analytics, AI, and automation tools to enhance delivery efficiency and output quality"
     },
     {
       "id": "StaffingProcess",
       "label_zh": "人员配置流程",
+      "label_en": "Staffing Process",
       "parent": "Process",
-      "definition": "根据项目需求匹配和调配顾问资源的流程"
+      "definition": "根据项目需求匹配和调配顾问资源的流程",
+      "definition_en": "A process for matching and allocating consultant resources based on engagement requirements"
     },
     {
       "id": "EngagementDeliveryProcess",
       "label_zh": "项目交付流程",
+      "label_en": "Engagement Delivery Process",
       "parent": "Process",
-      "definition": "从项目启动、调研分析、方案设计到最终交付的端到端流程"
+      "definition": "从项目启动、调研分析、方案设计到最终交付的端到端流程",
+      "definition_en": "An end-to-end process from engagement kickoff, research and analysis, solution design, to final delivery"
     },
     {
       "id": "BusinessDevelopmentProcess",
       "label_zh": "业务开发流程",
+      "label_en": "Business Development Process",
       "parent": "Process",
-      "definition": "从市场情报、客户接洽、需求识别到提案竞标的商机转化流程"
+      "definition": "从市场情报、客户接洽、需求识别到提案竞标的商机转化流程",
+      "definition_en": "An opportunity conversion process from market intelligence, client outreach, requirements identification, to proposal and bidding"
     },
     {
       "id": "KnowledgeCaptureProcess",
       "label_zh": "知识沉淀流程",
+      "label_en": "Knowledge Capture Process",
       "parent": "Process",
-      "definition": "项目结束后的知识提炼、案例总结和经验入库流程"
+      "definition": "项目结束后的知识提炼、案例总结和经验入库流程",
+      "definition_en": "A post-engagement process for knowledge extraction, case summarization, and experience archiving"
     },
     {
       "id": "CRMSystem",
       "label_zh": "客户关系管理系统",
+      "label_en": "CRM System",
       "parent": "SystemApplication",
-      "definition": "管理客户信息、商机追踪和关系维护的系统平台"
+      "definition": "管理客户信息、商机追踪和关系维护的系统平台",
+      "definition_en": "A system platform for managing client information, opportunity tracking, and relationship maintenance"
     },
     {
       "id": "KnowledgePortal",
       "label_zh": "知识管理门户",
+      "label_en": "Knowledge Portal",
       "parent": "SystemApplication",
-      "definition": "存储和检索方法论、案例库、行业报告和最佳实践的知识平台"
+      "definition": "存储和检索方法论、案例库、行业报告和最佳实践的知识平台",
+      "definition_en": "A knowledge platform for storing and retrieving methodologies, case libraries, industry reports, and best practices"
     },
     {
       "id": "ResourceManagementSystem",
       "label_zh": "资源管理系统",
+      "label_en": "Resource Management System",
       "parent": "SystemApplication",
-      "definition": "跟踪顾问技能、可用性和项目分配的人员配置系统"
+      "definition": "跟踪顾问技能、可用性和项目分配的人员配置系统",
+      "definition_en": "A staffing system tracking consultant skills, availability, and engagement assignments"
     },
     {
       "id": "TimeTrackingSystem",
       "label_zh": "工时管理系统",
+      "label_en": "Time Tracking System",
       "parent": "SystemApplication",
-      "definition": "记录顾问计费时间和费用报销的工时系统"
+      "definition": "记录顾问计费时间和费用报销的工时系统",
+      "definition_en": "A time management system for recording consultant billable hours and expense reimbursements"
     }
   ],
   "relations": [
@@ -286,211 +445,316 @@
       "id": "has_practice_line",
       "domain": "ConsultingFirm",
       "range": "PracticeLine",
-      "definition": "咨询公司拥有业务实践领域"
+      "definition": "咨询公司拥有业务实践领域",
+      "definition_en": "A consulting firm has a practice line"
     },
     {
       "id": "has_competency_center",
       "domain": "ConsultingFirm",
       "range": "CompetencyCenter",
-      "definition": "咨询公司设立能力中心"
+      "definition": "咨询公司设立能力中心",
+      "definition_en": "A consulting firm establishes a competency center"
+    },
+    {
+      "id": "has_office",
+      "domain": "ConsultingFirm",
+      "range": "ConsultingOffice",
+      "definition": "咨询公司设立分支办公室",
+      "definition_en": "A consulting firm has a branch office"
     },
     {
       "id": "serves_client",
       "domain": "ConsultingFirm",
       "range": "ClientAccount",
-      "definition": "咨询公司服务客户"
+      "definition": "咨询公司服务客户",
+      "definition_en": "A consulting firm serves a client"
     },
     {
       "id": "manages_relationship",
       "domain": "PartnerRole",
       "range": "ClientRelationship",
-      "definition": "合伙人管理客户关系"
+      "definition": "合伙人管理客户关系",
+      "definition_en": "A partner manages a client relationship"
     },
     {
       "id": "leads_engagement",
       "domain": "PartnerRole",
       "range": "Engagement",
-      "definition": "合伙人领导咨询项目"
+      "definition": "合伙人领导咨询项目",
+      "definition_en": "A partner leads an engagement"
     },
     {
       "id": "manages_engagement",
       "domain": "EngagementManagerRole",
       "range": "Engagement",
-      "definition": "项目经理管理咨询项目日常"
+      "definition": "项目经理管理咨询项目日常",
+      "definition_en": "An engagement manager manages the day-to-day operations of an engagement"
     },
     {
       "id": "staffed_on",
       "domain": "ConsultantRole",
       "range": "Engagement",
-      "definition": "顾问被配置到咨询项目"
+      "definition": "顾问被配置到咨询项目",
+      "definition_en": "A consultant is staffed on an engagement"
+    },
+    {
+      "id": "has_team_member",
+      "domain": "Engagement",
+      "range": "ConsultantRole",
+      "definition": "咨询项目拥有团队成员（staffed_on 的逆关系）",
+      "definition_en": "An engagement has a team member (inverse of staffed_on)"
     },
     {
       "id": "provides_expertise",
       "domain": "SubjectMatterExpertRole",
       "range": "Engagement",
-      "definition": "领域专家为项目提供专业支持"
+      "definition": "领域专家为项目提供专业支持",
+      "definition_en": "A subject matter expert provides expertise to an engagement"
+    },
+    {
+      "id": "subcontracted_to",
+      "domain": "Engagement",
+      "range": "SubcontractorRole",
+      "definition": "咨询项目将部分工作分包给外部顾问",
+      "definition_en": "An engagement subcontracts work to an external consultant"
     },
     {
       "id": "engaged_by",
       "domain": "Engagement",
       "range": "ClientAccount",
-      "definition": "咨询项目服务于客户"
+      "definition": "咨询项目服务于客户",
+      "definition_en": "An engagement is engaged by a client"
+    },
+    {
+      "id": "sponsored_by",
+      "domain": "Engagement",
+      "range": "ClientSponsor",
+      "definition": "咨询项目由客户发起人提供高层支持",
+      "definition_en": "An engagement is sponsored by a client executive sponsor"
+    },
+    {
+      "id": "has_client_stakeholder",
+      "domain": "ClientAccount",
+      "range": "ClientStakeholder",
+      "definition": "客户账户拥有关键干系人",
+      "definition_en": "A client account has key stakeholders"
     },
     {
       "id": "scoped_by",
       "domain": "Engagement",
       "range": "StatementOfWork",
-      "definition": "项目范围由工作说明书定义"
+      "definition": "项目范围由工作说明书定义",
+      "definition_en": "An engagement's scope is defined by a statement of work"
     },
     {
       "id": "proposed_through",
       "domain": "Engagement",
       "range": "Proposal",
-      "definition": "项目通过提案赢得"
+      "definition": "项目通过提案赢得",
+      "definition_en": "An engagement is won through a proposal"
     },
     {
       "id": "has_workstream",
       "domain": "Engagement",
       "range": "WorkStream",
-      "definition": "项目包含工作流模块"
+      "definition": "项目包含工作模块",
+      "definition_en": "An engagement contains work streams"
+    },
+    {
+      "id": "has_milestone",
+      "domain": "Engagement",
+      "range": "EngagementMilestone",
+      "definition": "咨询项目包含关键里程碑",
+      "definition_en": "An engagement has key milestones"
+    },
+    {
+      "id": "conducts_workshop",
+      "domain": "Engagement",
+      "range": "Workshop",
+      "definition": "咨询项目中开展工作坊活动",
+      "definition_en": "An engagement conducts workshop activities"
     },
     {
       "id": "produces_deliverable",
       "domain": "WorkStream",
       "range": "Deliverable",
-      "definition": "工作流产出交付物"
+      "definition": "工作模块产出交付物",
+      "definition_en": "A work stream produces deliverables"
     },
     {
       "id": "applies_methodology",
       "domain": "Engagement",
       "range": "Methodology",
-      "definition": "项目应用方法论"
+      "definition": "项目应用方法论",
+      "definition_en": "An engagement applies a methodology"
     },
     {
       "id": "uses_framework",
       "domain": "Deliverable",
       "range": "Framework",
-      "definition": "交付物使用分析框架"
+      "definition": "交付物使用分析框架",
+      "definition_en": "A deliverable uses an analytical framework"
     },
     {
       "id": "fulfills_staffing_request",
       "domain": "ConsultantRole",
       "range": "StaffingRequest",
-      "definition": "顾问满足人员配置需求"
+      "definition": "顾问满足人员配置需求",
+      "definition_en": "A consultant fulfills a staffing request"
     },
     {
       "id": "generates_pipeline",
       "domain": "ClientRelationship",
       "range": "Pipeline",
-      "definition": "客户关系产生商机管道"
+      "definition": "客户关系产生商机管道",
+      "definition_en": "A client relationship generates a pipeline opportunity"
     },
     {
       "id": "converts_to_engagement",
       "domain": "Pipeline",
       "range": "Engagement",
-      "definition": "商机转化为签约项目"
+      "definition": "商机转化为签约项目",
+      "definition_en": "A pipeline opportunity converts into a signed engagement"
     },
     {
       "id": "reviewed_by",
       "domain": "Deliverable",
       "range": "QualityReview",
-      "definition": "交付物经过质量评审"
+      "definition": "交付物经过质量评审",
+      "definition_en": "A deliverable is reviewed through quality review"
     },
     {
       "id": "assessed_by_survey",
       "domain": "Engagement",
       "range": "ClientSatisfactionSurvey",
-      "definition": "项目通过客户满意度调查评估"
+      "definition": "项目通过客户满意度调查评估",
+      "definition_en": "An engagement is assessed by a client satisfaction survey"
     },
     {
       "id": "contributes_to_knowledge",
       "domain": "Engagement",
       "range": "KnowledgeAsset",
-      "definition": "项目经验沉淀为知识资产"
+      "definition": "项目经验沉淀为知识资产",
+      "definition_en": "An engagement contributes to knowledge assets"
     },
     {
       "id": "documented_as_case",
       "domain": "Engagement",
       "range": "CaseStudy",
-      "definition": "项目记录为案例研究"
+      "definition": "项目记录为案例研究",
+      "definition_en": "An engagement is documented as a case study"
     },
     {
       "id": "publishes_thought_leadership",
       "domain": "PracticeLine",
       "range": "ThoughtLeadership",
-      "definition": "业务线发布思想领导力内容"
+      "definition": "业务线发布思想领导力内容",
+      "definition_en": "A practice line publishes thought leadership content"
     },
     {
       "id": "benchmarked_against",
       "domain": "Deliverable",
       "range": "BenchmarkStudy",
-      "definition": "交付物使用对标研究支撑"
+      "definition": "交付物使用对标研究支撑",
+      "definition_en": "A deliverable is benchmarked against a benchmark study"
     },
     {
       "id": "includes_change_plan",
       "domain": "Engagement",
       "range": "ChangeManagementPlan",
-      "definition": "项目包含变革管理计划"
+      "definition": "项目包含变革管理计划",
+      "definition_en": "An engagement includes a change management plan"
     },
     {
-      "id": "exposed_to_conflict",
+      "id": "has_risk",
       "domain": "Engagement",
-      "range": "ConflictOfInterestRisk",
-      "definition": "项目面临利益冲突风险"
+      "range": "Risk",
+      "definition": "咨询项目面临的风险，包括利益冲突、范围蔓延等各类风险",
+      "definition_en": "Risks faced by an engagement, including conflict of interest, scope creep, and other risk types"
     },
     {
-      "id": "exposed_to_scope_creep",
+      "id": "governed_by_policy",
       "domain": "Engagement",
-      "range": "ScopeCreepRisk",
-      "definition": "项目面临范围蔓延风险"
-    },
-    {
-      "id": "governed_by_independence",
-      "domain": "Engagement",
-      "range": "IndependencePolicy",
-      "definition": "项目受独立性政策治理"
-    },
-    {
-      "id": "governed_by_confidentiality",
-      "domain": "Engagement",
-      "range": "ConfidentialityPolicy",
-      "definition": "项目受保密政策治理"
+      "range": "Policy",
+      "definition": "咨询项目受治理政策约束，包括独立性政策、保密政策等",
+      "definition_en": "An engagement is governed by policies, including independence policy, confidentiality policy, etc."
     },
     {
       "id": "measured_by_utilization",
       "domain": "ConsultantRole",
       "range": "UtilizationMetric",
-      "definition": "顾问绩效由利用率指标衡量"
+      "definition": "顾问绩效由利用率指标衡量",
+      "definition_en": "Consultant performance is measured by utilization metrics"
+    },
+    {
+      "id": "measured_by_revenue",
+      "domain": "PracticeLine",
+      "range": "RevenueMetric",
+      "definition": "业务线业绩由收入指标衡量",
+      "definition_en": "Practice line performance is measured by revenue metrics"
     },
     {
       "id": "billed_at",
       "domain": "ConsultantRole",
       "range": "BillableRate",
-      "definition": "顾问按照费率标准计费"
+      "definition": "顾问按照费率标准计费",
+      "definition_en": "A consultant is billed at a specific billable rate"
     },
     {
       "id": "tracked_in_crm",
       "domain": "ClientAccount",
       "range": "CRMSystem",
-      "definition": "客户账户在CRM系统中管理"
+      "definition": "客户账户在CRM系统中管理",
+      "definition_en": "A client account is tracked in the CRM system"
     },
     {
       "id": "stored_in_portal",
       "domain": "KnowledgeAsset",
       "range": "KnowledgePortal",
-      "definition": "知识资产存储于知识管理门户"
+      "definition": "知识资产存储于知识管理门户",
+      "definition_en": "Knowledge assets are stored in the knowledge portal"
     },
     {
       "id": "scheduled_in_rms",
       "domain": "StaffingRequest",
       "range": "ResourceManagementSystem",
-      "definition": "人员配置通过资源管理系统调度"
+      "definition": "人员配置通过资源管理系统调度",
+      "definition_en": "Staffing requests are scheduled through the resource management system"
     },
     {
       "id": "logged_in_timesheet",
       "domain": "Engagement",
       "range": "TimeTrackingSystem",
-      "definition": "项目工时在工时管理系统中记录"
+      "definition": "项目工时在工时管理系统中记录",
+      "definition_en": "Engagement hours are logged in the time tracking system"
+    },
+    {
+      "id": "bd_capability_realized_by",
+      "domain": "BusinessDevelopmentCapability",
+      "range": "BusinessDevelopmentProcess",
+      "definition": "业务开发能力由业务开发流程实现",
+      "definition_en": "Business development capability is realized by the business development process"
+    },
+    {
+      "id": "km_capability_realized_by",
+      "domain": "KnowledgeManagementCapability",
+      "range": "KnowledgeCaptureProcess",
+      "definition": "知识管理能力由知识沉淀流程实现",
+      "definition_en": "Knowledge management capability is realized by the knowledge capture process"
+    },
+    {
+      "id": "talent_capability_realized_by",
+      "domain": "TalentDevelopmentCapability",
+      "range": "StaffingProcess",
+      "definition": "人才发展能力由人员配置流程实现",
+      "definition_en": "Talent development capability is realized by the staffing process"
+    },
+    {
+      "id": "digital_capability_realized_by",
+      "domain": "DigitalDeliveryCapability",
+      "range": "EngagementDeliveryProcess",
+      "definition": "数字化交付能力由项目交付流程实现",
+      "definition_en": "Digital delivery capability is realized by the engagement delivery process"
     }
   ],
   "sample_instances": [
@@ -498,6 +762,16 @@
       "id": "firm_apex_consulting",
       "type": "ConsultingFirm",
       "label": "Apex Consulting Group"
+    },
+    {
+      "id": "office_beijing",
+      "type": "ConsultingOffice",
+      "label": "Apex Consulting - Beijing Office"
+    },
+    {
+      "id": "office_new_york",
+      "type": "ConsultingOffice",
+      "label": "Apex Consulting - New York Office"
     },
     {
       "id": "practice_strategy",
@@ -530,9 +804,29 @@
       "label": "Fortune 500 Manufacturing Co."
     },
     {
+      "id": "stakeholder_cio",
+      "type": "ClientStakeholder",
+      "label": "Client CIO - Manufacturing Co."
+    },
+    {
+      "id": "sponsor_ceo",
+      "type": "ClientSponsor",
+      "label": "Client CEO Sponsor - Manufacturing Co."
+    },
+    {
       "id": "engagement_digital_roadmap",
       "type": "Engagement",
       "label": "Digital Transformation Roadmap for Manufacturing Co."
+    },
+    {
+      "id": "milestone_phase1_complete",
+      "type": "EngagementMilestone",
+      "label": "Phase 1 - Current State Assessment Complete"
+    },
+    {
+      "id": "milestone_final_delivery",
+      "type": "EngagementMilestone",
+      "label": "Final Delivery & Knowledge Transfer"
     },
     {
       "id": "ws_current_state",
@@ -548,6 +842,16 @@
       "id": "ws_implementation_plan",
       "type": "WorkStream",
       "label": "Implementation Roadmap & Business Case"
+    },
+    {
+      "id": "workshop_stakeholder_alignment",
+      "type": "Workshop",
+      "label": "Stakeholder Alignment Workshop"
+    },
+    {
+      "id": "workshop_design_thinking",
+      "type": "Workshop",
+      "label": "Digital Vision Design Thinking Workshop"
     },
     {
       "id": "deliverable_maturity_assessment",
@@ -610,6 +914,11 @@
       "label": "Data & AI Subject Matter Expert"
     },
     {
+      "id": "role_external_cloud_consultant",
+      "type": "SubcontractorRole",
+      "label": "External Cloud Architecture Consultant"
+    },
+    {
       "id": "sys_salesforce_crm",
       "type": "CRMSystem",
       "label": "Salesforce CRM"
@@ -623,6 +932,16 @@
       "id": "kpi_utilization_rate",
       "type": "UtilizationMetric",
       "label": "Consultant Utilization Rate (Target: 75-85%)"
+    },
+    {
+      "id": "kpi_practice_revenue",
+      "type": "RevenueMetric",
+      "label": "Practice Line Annual Revenue"
+    },
+    {
+      "id": "kpi_engagement_margin",
+      "type": "MarginMetric",
+      "label": "Engagement Profit Margin (Target: 30-40%)"
     },
     {
       "id": "cap_biz_dev",

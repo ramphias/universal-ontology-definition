@@ -1,0 +1,840 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix uod-con: <https://w3id.org/uod/addon/consulting/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# Consulting industry addon ontology covering engagements, pra — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-05 00:36
+# ════════════════════════════════════════════════════════════════════════════
+
+uod-con:Ontology a owl:Ontology ;
+    rdfs:label "Consulting industry addon ontology covering engagements, pra"@en ;
+    rdfs:label "咨询行业 addon ontology 数据，覆盖咨询项目、业务实践、方法论、交付物、客户关系、知识管理与人才配置"@zh ;
+    owl:imports <https://w3id.org/uod/core/> ;
+    owl:versionInfo "1.1.0" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+uod-con:ConsultingFirm a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Consulting Firm"@en ;
+    rdfs:label "咨询公司"@zh ;
+    rdfs:comment "An enterprise entity providing professional consulting services such as management consulting, IT consulting, and strategy consulting"@en ;
+    rdfs:comment "提供专业咨询服务的企业主体，如管理咨询、IT咨询、战略咨询等"@zh .
+
+uod-con:ConsultingOffice a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Consulting Office"@en ;
+    rdfs:label "咨询办公室"@zh ;
+    rdfs:comment "A branch office set up by a consulting firm in a geographic region, e.g. Beijing office, New York office"@en ;
+    rdfs:comment "咨询公司按地理区域设立的分支办公室，如北京办公室、纽约办公室等"@zh .
+
+uod-con:PracticeLine a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Practice Line"@en ;
+    rdfs:label "业务线/实践领域"@zh ;
+    rdfs:comment "A practice area organized by industry or function within a consulting firm, such as strategy, operations, digital transformation, and human resources"@en ;
+    rdfs:comment "咨询公司按行业或职能划分的业务实践领域，如战略、运营、数字化转型、人力资源等"@zh .
+
+uod-con:CompetencyCenter a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Competency Center"@en ;
+    rdfs:label "能力中心"@zh ;
+    rdfs:comment "A cross-project support center organized around a specific professional competency or technology domain"@en ;
+    rdfs:comment "围绕特定专业能力或技术方向组建的跨项目支持中心"@zh .
+
+uod-con:Engagement a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Engagement"@en ;
+    rdfs:label "咨询项目/签约项目"@zh ;
+    rdfs:comment "A consulting service delivery project contracted with a client, encompassing scope, timeline, budget, and team"@en ;
+    rdfs:comment "与客户签订合同后的咨询服务交付项目，包含范围、时间、预算和团队"@zh .
+
+uod-con:EngagementMilestone a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Engagement Milestone"@en ;
+    rdfs:label "项目里程碑"@zh ;
+    rdfs:comment "A key milestone node in a consulting engagement tied to deliverables and payment schedules"@en ;
+    rdfs:comment "咨询项目中与交付和付款绑定的关键里程碑节点"@zh .
+
+uod-con:Proposal a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Proposal"@en ;
+    rdfs:label "咨询提案"@zh ;
+    rdfs:comment "A project proposal or bid document for clients, containing methodology, team composition, timeline, and pricing"@en ;
+    rdfs:comment "面向客户的项目建议书或竞标方案，包含方法论、团队、时间表和报价"@zh .
+
+uod-con:StatementOfWork a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Statement of Work"@en ;
+    rdfs:label "工作说明书"@zh ;
+    rdfs:comment "A formal contract attachment defining project scope, deliverables, timeline, and acceptance criteria"@en ;
+    rdfs:comment "定义项目范围、交付物、时间线和验收标准的正式合同附件"@zh .
+
+uod-con:Deliverable a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Deliverable"@en ;
+    rdfs:label "交付物"@zh ;
+    rdfs:comment "An output to be delivered to the client in a consulting engagement, such as reports, models, implementation plans, and toolkits"@en ;
+    rdfs:comment "咨询项目中需交付给客户的成果物，如报告、模型、实施方案、工具包等"@zh .
+
+uod-con:WorkStream a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Work Stream"@en ;
+    rdfs:label "工作模块"@zh ;
+    rdfs:comment "A parallel work module within an engagement organized by theme, each with independent delivery objectives"@en ;
+    rdfs:comment "咨询项目内按主题划分的并行工作模块，各自拥有独立交付目标"@zh .
+
+uod-con:Workshop a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Workshop"@en ;
+    rdfs:label "工作坊"@zh ;
+    rdfs:comment "An interactive seminar or workshop delivery format commonly used in consulting engagements for research, co-creation, or reporting"@en ;
+    rdfs:comment "咨询项目中常见的互动式研讨会或工作坊交付形式，用于调研、共创或汇报"@zh .
+
+uod-con:Methodology a owl:Class ;
+    rdfs:subClassOf uod-con:KnowledgeAsset ;
+    rdfs:label "Methodology"@en ;
+    rdfs:label "方法论"@zh ;
+    rdfs:comment "A standardized methodology framework developed or adopted by a consulting firm, such as Design Thinking, Lean Six Sigma, TOGAF, etc."@en ;
+    rdfs:comment "咨询公司自主研发或引用的标准化方法论框架，如设计思维、精益六西格玛、TOGAF等"@zh .
+
+uod-con:Framework a owl:Class ;
+    rdfs:subClassOf uod-con:KnowledgeAsset ;
+    rdfs:label "Analytical Framework"@en ;
+    rdfs:label "分析框架"@zh ;
+    rdfs:comment "A structured tool for problem analysis and strategic planning, such as Porter's Five Forces, SWOT, Value Chain Analysis, BCG Matrix, etc."@en ;
+    rdfs:comment "用于问题分析和战略规划的结构化工具，如波特五力、SWOT、价值链分析、BCG矩阵等"@zh .
+
+uod-con:KnowledgeAsset a owl:Class ;
+    rdfs:subClassOf uod:Asset ;
+    rdfs:label "Knowledge Asset"@en ;
+    rdfs:label "知识资产"@zh ;
+    rdfs:comment "Reusable knowledge accumulated by a consulting firm, including case libraries, industry reports, best practices, and tool templates"@en ;
+    rdfs:comment "咨询公司积累的可复用知识，包括案例库、行业报告、最佳实践、工具模板等"@zh .
+
+uod-con:CaseStudy a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Case Study"@en ;
+    rdfs:label "案例研究"@zh ;
+    rdfs:comment "A structured summary of past engagements used for knowledge retention, business development, and brand showcase"@en ;
+    rdfs:comment "过往项目的结构化总结，用于知识沉淀、业务开发和品牌展示"@zh .
+
+uod-con:ClientAccount a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Client Account"@en ;
+    rdfs:label "客户账户"@zh ;
+    rdfs:comment "A client entity record maintained by a consulting firm, tracking relationship history, engagement records, and revenue contribution"@en ;
+    rdfs:comment "咨询公司维护的客户主体记录，跟踪关系历史、项目记录和收入贡献"@zh .
+
+uod-con:ClientRelationship a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Client Relationship"@en ;
+    rdfs:label "客户关系"@zh ;
+    rdfs:comment "A long-term strategic partnership with a client, encompassing trust levels, contact frequency, and opportunity pipeline"@en ;
+    rdfs:comment "与客户之间的长期战略合作关系，包含信任层级、接触频率和商机管道"@zh .
+
+uod-con:Pipeline a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Pipeline"@en ;
+    rdfs:label "商机管道"@zh ;
+    rdfs:comment "A sales funnel of potential consulting engagements, tracking the full process from lead identification to contract signing"@en ;
+    rdfs:comment "潜在咨询项目的销售漏斗，跟踪从线索识别到签约的全流程"@zh .
+
+uod-con:ConsultingService a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Consulting Service"@en ;
+    rdfs:label "咨询服务产品"@zh ;
+    rdfs:comment "Standardized or customized service offerings provided by a consulting firm, such as strategic assessment, organizational diagnostics, and digital roadmaps"@en ;
+    rdfs:comment "咨询公司对外提供的标准化或定制化服务产品，如战略评估、组织诊断、数字化路线图等"@zh .
+
+uod-con:PartnerRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Partner"@en ;
+    rdfs:label "合伙人角色"@zh ;
+    rdfs:comment "A senior leadership role bearing ultimate responsibility for client relationships, engagement quality, and revenue targets"@en ;
+    rdfs:comment "对客户关系、项目质量和营收目标负最终责任的高级领导角色"@zh .
+
+uod-con:PrincipalRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Principal / Associate Partner"@en ;
+    rdfs:label "总监/副合伙人角色"@zh ;
+    rdfs:comment "A senior advisory role between partner and manager, responsible for program management and business development"@en ;
+    rdfs:comment "介于合伙人和经理之间的高级顾问角色，负责项目群管理和业务拓展"@zh .
+
+uod-con:EngagementManagerRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Engagement Manager"@en ;
+    rdfs:label "项目经理角色"@zh ;
+    rdfs:comment "A role responsible for day-to-day management, team coordination, and client communication for a single engagement"@en ;
+    rdfs:comment "负责单个项目日常管理、团队协调和客户沟通的角色"@zh .
+
+uod-con:ConsultantRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Consultant"@en ;
+    rdfs:label "顾问角色"@zh ;
+    rdfs:comment "A professional role performing specific analysis, research, solution design, and delivery work"@en ;
+    rdfs:comment "执行具体分析、调研、方案设计和交付工作的专业角色"@zh .
+
+uod-con:AnalystRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Analyst"@en ;
+    rdfs:label "分析师角色"@zh ;
+    rdfs:comment "A junior role responsible for data collection, analytical modeling, and material preparation"@en ;
+    rdfs:comment "负责数据收集、分析建模和材料准备的初级角色"@zh .
+
+uod-con:SubjectMatterExpertRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Subject Matter Expert"@en ;
+    rdfs:label "领域专家角色"@zh ;
+    rdfs:comment "An advisory role with deep expertise in a specific industry or functional domain, providing expert opinions and quality assurance"@en ;
+    rdfs:comment "在特定行业或职能领域拥有深度专长的顾问角色，提供专家意见和质量把关"@zh .
+
+uod-con:SubcontractorRole a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Subcontractor"@en ;
+    rdfs:label "外部分包顾问角色"@zh ;
+    rdfs:comment "A project subcontracting role undertaken by external partners or independent consultants, providing specialized services under contract"@en ;
+    rdfs:comment "由外部合作方或独立顾问承担的项目分包角色，按合同提供专项服务"@zh .
+
+uod-con:ClientStakeholder a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Client Stakeholder"@en ;
+    rdfs:label "客户利益相关方"@zh ;
+    rdfs:comment "Key stakeholders within the client organization related to the consulting engagement, including project leads, business owners, and IT leaders"@en ;
+    rdfs:comment "客户组织中与咨询项目相关的关键干系人，包括项目负责人、业务负责人、IT负责人等"@zh .
+
+uod-con:ClientSponsor a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Client Sponsor"@en ;
+    rdfs:label "客户项目发起人"@zh ;
+    rdfs:comment "An executive sponsor on the client side who provides budget approval and senior-level support for the consulting engagement"@en ;
+    rdfs:comment "客户方为咨询项目提供预算审批和高层支持的行政发起人角色"@zh .
+
+uod-con:StaffingRequest a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Staffing Request"@en ;
+    rdfs:label "人员配置需求"@zh ;
+    rdfs:comment "A human resource request specifying required skills, experience, and availability for project team assembly"@en ;
+    rdfs:comment "项目团队组建中对特定技能、经验和可用性的人力需求申请"@zh .
+
+uod-con:UtilizationMetric a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Utilization Metric"@en ;
+    rdfs:label "利用率指标"@zh ;
+    rdfs:comment "A core operational metric measuring the ratio of a consultant's billable hours to total working hours"@en ;
+    rdfs:comment "衡量顾问可计费时间与总工时比率的核心运营指标"@zh .
+
+uod-con:RevenueMetric a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Revenue Metric"@en ;
+    rdfs:label "收入指标"@zh ;
+    rdfs:comment "A financial metric measuring revenue performance at the firm, practice line, or engagement level"@en ;
+    rdfs:comment "衡量咨询公司、业务线或项目层面收入表现的财务指标"@zh .
+
+uod-con:MarginMetric a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Margin Metric"@en ;
+    rdfs:label "利润率指标"@zh ;
+    rdfs:comment "A financial metric measuring profit margin at the engagement or practice line level, reflecting delivery efficiency and pricing strategy effectiveness"@en ;
+    rdfs:comment "衡量项目或业务线利润率的财务指标，反映交付效率和定价策略的有效性"@zh .
+
+uod-con:BillableRate a owl:Class ;
+    rdfs:subClassOf uod:Rule ;
+    rdfs:label "Billable Rate"@en ;
+    rdfs:label "计费费率"@zh ;
+    rdfs:comment "A billing standard rule determined by consultant grade, engagement type, and client agreement for hourly or daily rates"@en ;
+    rdfs:comment "按顾问等级、项目类型和客户协议确定的小时/天计费标准规则"@zh .
+
+uod-con:QualityReview a owl:Class ;
+    rdfs:subClassOf uod:Control ;
+    rdfs:label "Quality Review"@en ;
+    rdfs:label "质量评审"@zh ;
+    rdfs:comment "Quality gates and review mechanisms during engagement delivery to ensure deliverables meet standards"@en ;
+    rdfs:comment "项目交付过程中的质量关口和审核机制，确保交付物达标"@zh .
+
+uod-con:ClientSatisfactionSurvey a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Client Satisfaction Survey"@en ;
+    rdfs:label "客户满意度调查"@zh ;
+    rdfs:comment "Client feedback collected after engagement completion, measuring service quality and client experience"@en ;
+    rdfs:comment "项目结束后收集的客户反馈，衡量服务质量和客户体验"@zh .
+
+uod-con:ThoughtLeadership a owl:Class ;
+    rdfs:subClassOf uod:Asset ;
+    rdfs:label "Thought Leadership"@en ;
+    rdfs:label "思想领导力内容"@zh ;
+    rdfs:comment "Industry insight white papers, research reports, and opinion articles published by a consulting firm for brand building and client attraction"@en ;
+    rdfs:comment "咨询公司发布的行业洞察白皮书、研究报告和观点文章，用于品牌建设和客户吸引"@zh .
+
+uod-con:ChangeManagementPlan a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Change Management Plan"@en ;
+    rdfs:label "变革管理计划"@zh ;
+    rdfs:comment "An organizational change and personnel transformation plan developed for clients within a consulting engagement"@en ;
+    rdfs:comment "咨询项目中为客户制定的组织变革和人员转型方案"@zh .
+
+uod-con:BenchmarkStudy a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Benchmark Study"@en ;
+    rdfs:label "对标研究"@zh ;
+    rdfs:comment "A performance benchmarking analysis report based on industry data and best practices"@en ;
+    rdfs:comment "基于行业数据和最佳实践的性能对标分析报告"@zh .
+
+uod-con:ConflictOfInterestRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Conflict of Interest Risk"@en ;
+    rdfs:label "利益冲突风险"@zh ;
+    rdfs:comment "A risk of conflicts and reputational damage arising from simultaneously serving competing clients or related parties"@en ;
+    rdfs:comment "同时服务竞争客户或关联方可能导致的利益冲突和声誉风险"@zh .
+
+uod-con:ScopeCreepRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Scope Creep Risk"@en ;
+    rdfs:label "范围蔓延风险"@zh ;
+    rdfs:comment "A risk of requirements scope expanding during engagement execution without corresponding adjustments to budget and timeline"@en ;
+    rdfs:comment "项目执行过程中需求范围不断扩大但未相应调整预算和时间的风险"@zh .
+
+uod-con:IndependencePolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Independence Policy"@en ;
+    rdfs:label "独立性政策"@zh ;
+    rdfs:comment "An internal governance policy ensuring objectivity and neutrality of consulting advice, particularly applicable to audit and risk management domains"@en ;
+    rdfs:comment "确保咨询建议客观中立的内部治理政策，特别适用于审计和风控领域"@zh .
+
+uod-con:ConfidentialityPolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Confidentiality Policy"@en ;
+    rdfs:label "保密政策"@zh ;
+    rdfs:comment "An information security policy governing the protection of client information, engagement data, and trade secrets"@en ;
+    rdfs:comment "规范客户信息、项目数据和商业机密保护要求的信息安全政策"@zh .
+
+uod-con:BusinessDevelopmentCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Business Development Capability"@en ;
+    rdfs:label "业务开发能力"@zh ;
+    rdfs:comment "A market expansion capability for identifying opportunities, building client relationships, and converting leads into signed engagements"@en ;
+    rdfs:comment "识别商机、建立客户关系和转化签约的市场拓展能力"@zh .
+
+uod-con:KnowledgeManagementCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Knowledge Management Capability"@en ;
+    rdfs:label "知识管理能力"@zh ;
+    rdfs:comment "A systematic capability for collecting, organizing, sharing, and reusing engagement experiences, industry knowledge, and methodologies"@en ;
+    rdfs:comment "对项目经验、行业知识和方法论的系统化收集、整理、分享与复用能力"@zh .
+
+uod-con:TalentDevelopmentCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Talent Development Capability"@en ;
+    rdfs:label "人才发展能力"@zh ;
+    rdfs:comment "A capability encompassing the selection, development, evaluation, and promotion of consulting talent, representing a core competitive advantage"@en ;
+    rdfs:comment "咨询人才的选拔、培养、评估和晋升体系能力，是咨询公司核心竞争力"@zh .
+
+uod-con:DigitalDeliveryCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Digital Delivery Capability"@en ;
+    rdfs:label "数字化交付能力"@zh ;
+    rdfs:comment "A capability leveraging data analytics, AI, and automation tools to enhance delivery efficiency and output quality"@en ;
+    rdfs:comment "利用数据分析、AI、自动化工具提升交付效率和成果质量的能力"@zh .
+
+uod-con:StaffingProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Staffing Process"@en ;
+    rdfs:label "人员配置流程"@zh ;
+    rdfs:comment "A process for matching and allocating consultant resources based on engagement requirements"@en ;
+    rdfs:comment "根据项目需求匹配和调配顾问资源的流程"@zh .
+
+uod-con:EngagementDeliveryProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Engagement Delivery Process"@en ;
+    rdfs:label "项目交付流程"@zh ;
+    rdfs:comment "An end-to-end process from engagement kickoff, research and analysis, solution design, to final delivery"@en ;
+    rdfs:comment "从项目启动、调研分析、方案设计到最终交付的端到端流程"@zh .
+
+uod-con:BusinessDevelopmentProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Business Development Process"@en ;
+    rdfs:label "业务开发流程"@zh ;
+    rdfs:comment "An opportunity conversion process from market intelligence, client outreach, requirements identification, to proposal and bidding"@en ;
+    rdfs:comment "从市场情报、客户接洽、需求识别到提案竞标的商机转化流程"@zh .
+
+uod-con:KnowledgeCaptureProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Knowledge Capture Process"@en ;
+    rdfs:label "知识沉淀流程"@zh ;
+    rdfs:comment "A post-engagement process for knowledge extraction, case summarization, and experience archiving"@en ;
+    rdfs:comment "项目结束后的知识提炼、案例总结和经验入库流程"@zh .
+
+uod-con:CRMSystem a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "CRM System"@en ;
+    rdfs:label "客户关系管理系统"@zh ;
+    rdfs:comment "A system platform for managing client information, opportunity tracking, and relationship maintenance"@en ;
+    rdfs:comment "管理客户信息、商机追踪和关系维护的系统平台"@zh .
+
+uod-con:KnowledgePortal a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Knowledge Portal"@en ;
+    rdfs:label "知识管理门户"@zh ;
+    rdfs:comment "A knowledge platform for storing and retrieving methodologies, case libraries, industry reports, and best practices"@en ;
+    rdfs:comment "存储和检索方法论、案例库、行业报告和最佳实践的知识平台"@zh .
+
+uod-con:ResourceManagementSystem a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Resource Management System"@en ;
+    rdfs:label "资源管理系统"@zh ;
+    rdfs:comment "A staffing system tracking consultant skills, availability, and engagement assignments"@en ;
+    rdfs:comment "跟踪顾问技能、可用性和项目分配的人员配置系统"@zh .
+
+uod-con:TimeTrackingSystem a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Time Tracking System"@en ;
+    rdfs:label "工时管理系统"@zh ;
+    rdfs:comment "A time management system for recording consultant billable hours and expense reimbursements"@en ;
+    rdfs:comment "记录顾问计费时间和费用报销的工时系统"@zh .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+uod-con:has_practice_line a owl:ObjectProperty ;
+    rdfs:label "has practice line"@en ;
+    rdfs:domain uod-con:ConsultingFirm ;
+    rdfs:range uod-con:PracticeLine ;
+    rdfs:comment "A consulting firm has a practice line"@en ;
+    rdfs:comment "咨询公司拥有业务实践领域"@zh .
+
+uod-con:has_competency_center a owl:ObjectProperty ;
+    rdfs:label "has competency center"@en ;
+    rdfs:domain uod-con:ConsultingFirm ;
+    rdfs:range uod-con:CompetencyCenter ;
+    rdfs:comment "A consulting firm establishes a competency center"@en ;
+    rdfs:comment "咨询公司设立能力中心"@zh .
+
+uod-con:has_office a owl:ObjectProperty ;
+    rdfs:label "has office"@en ;
+    rdfs:domain uod-con:ConsultingFirm ;
+    rdfs:range uod-con:ConsultingOffice ;
+    rdfs:comment "A consulting firm has a branch office"@en ;
+    rdfs:comment "咨询公司设立分支办公室"@zh .
+
+uod-con:serves_client a owl:ObjectProperty ;
+    rdfs:label "serves client"@en ;
+    rdfs:domain uod-con:ConsultingFirm ;
+    rdfs:range uod-con:ClientAccount ;
+    rdfs:comment "A consulting firm serves a client"@en ;
+    rdfs:comment "咨询公司服务客户"@zh .
+
+uod-con:manages_relationship a owl:ObjectProperty ;
+    rdfs:label "manages relationship"@en ;
+    rdfs:domain uod-con:PartnerRole ;
+    rdfs:range uod-con:ClientRelationship ;
+    rdfs:comment "A partner manages a client relationship"@en ;
+    rdfs:comment "合伙人管理客户关系"@zh .
+
+uod-con:leads_engagement a owl:ObjectProperty ;
+    rdfs:label "leads engagement"@en ;
+    rdfs:domain uod-con:PartnerRole ;
+    rdfs:range uod-con:Engagement ;
+    rdfs:comment "A partner leads an engagement"@en ;
+    rdfs:comment "合伙人领导咨询项目"@zh .
+
+uod-con:manages_engagement a owl:ObjectProperty ;
+    rdfs:label "manages engagement"@en ;
+    rdfs:domain uod-con:EngagementManagerRole ;
+    rdfs:range uod-con:Engagement ;
+    rdfs:comment "An engagement manager manages the day-to-day operations of an engagement"@en ;
+    rdfs:comment "项目经理管理咨询项目日常"@zh .
+
+uod-con:staffed_on a owl:ObjectProperty ;
+    rdfs:label "staffed on"@en ;
+    rdfs:domain uod-con:ConsultantRole ;
+    rdfs:range uod-con:Engagement ;
+    rdfs:comment "A consultant is staffed on an engagement"@en ;
+    rdfs:comment "顾问被配置到咨询项目"@zh .
+
+uod-con:has_team_member a owl:ObjectProperty ;
+    rdfs:label "has team member"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:ConsultantRole ;
+    rdfs:comment "An engagement has a team member (inverse of staffed_on)"@en ;
+    rdfs:comment "咨询项目拥有团队成员（staffed_on 的逆关系）"@zh .
+
+uod-con:provides_expertise a owl:ObjectProperty ;
+    rdfs:label "provides expertise"@en ;
+    rdfs:domain uod-con:SubjectMatterExpertRole ;
+    rdfs:range uod-con:Engagement ;
+    rdfs:comment "A subject matter expert provides expertise to an engagement"@en ;
+    rdfs:comment "领域专家为项目提供专业支持"@zh .
+
+uod-con:subcontracted_to a owl:ObjectProperty ;
+    rdfs:label "subcontracted to"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:SubcontractorRole ;
+    rdfs:comment "An engagement subcontracts work to an external consultant"@en ;
+    rdfs:comment "咨询项目将部分工作分包给外部顾问"@zh .
+
+uod-con:engaged_by a owl:ObjectProperty ;
+    rdfs:label "engaged by"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:ClientAccount ;
+    rdfs:comment "An engagement is engaged by a client"@en ;
+    rdfs:comment "咨询项目服务于客户"@zh .
+
+uod-con:sponsored_by a owl:ObjectProperty ;
+    rdfs:label "sponsored by"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:ClientSponsor ;
+    rdfs:comment "An engagement is sponsored by a client executive sponsor"@en ;
+    rdfs:comment "咨询项目由客户发起人提供高层支持"@zh .
+
+uod-con:has_client_stakeholder a owl:ObjectProperty ;
+    rdfs:label "has client stakeholder"@en ;
+    rdfs:domain uod-con:ClientAccount ;
+    rdfs:range uod-con:ClientStakeholder ;
+    rdfs:comment "A client account has key stakeholders"@en ;
+    rdfs:comment "客户账户拥有关键干系人"@zh .
+
+uod-con:scoped_by a owl:ObjectProperty ;
+    rdfs:label "scoped by"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:StatementOfWork ;
+    rdfs:comment "An engagement's scope is defined by a statement of work"@en ;
+    rdfs:comment "项目范围由工作说明书定义"@zh .
+
+uod-con:proposed_through a owl:ObjectProperty ;
+    rdfs:label "proposed through"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:Proposal ;
+    rdfs:comment "An engagement is won through a proposal"@en ;
+    rdfs:comment "项目通过提案赢得"@zh .
+
+uod-con:has_workstream a owl:ObjectProperty ;
+    rdfs:label "has workstream"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:WorkStream ;
+    rdfs:comment "An engagement contains work streams"@en ;
+    rdfs:comment "项目包含工作模块"@zh .
+
+uod-con:has_milestone a owl:ObjectProperty ;
+    rdfs:label "has milestone"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:EngagementMilestone ;
+    rdfs:comment "An engagement has key milestones"@en ;
+    rdfs:comment "咨询项目包含关键里程碑"@zh .
+
+uod-con:conducts_workshop a owl:ObjectProperty ;
+    rdfs:label "conducts workshop"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:Workshop ;
+    rdfs:comment "An engagement conducts workshop activities"@en ;
+    rdfs:comment "咨询项目中开展工作坊活动"@zh .
+
+uod-con:produces_deliverable a owl:ObjectProperty ;
+    rdfs:label "produces deliverable"@en ;
+    rdfs:domain uod-con:WorkStream ;
+    rdfs:range uod-con:Deliverable ;
+    rdfs:comment "A work stream produces deliverables"@en ;
+    rdfs:comment "工作模块产出交付物"@zh .
+
+uod-con:applies_methodology a owl:ObjectProperty ;
+    rdfs:label "applies methodology"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:Methodology ;
+    rdfs:comment "An engagement applies a methodology"@en ;
+    rdfs:comment "项目应用方法论"@zh .
+
+uod-con:uses_framework a owl:ObjectProperty ;
+    rdfs:label "uses framework"@en ;
+    rdfs:domain uod-con:Deliverable ;
+    rdfs:range uod-con:Framework ;
+    rdfs:comment "A deliverable uses an analytical framework"@en ;
+    rdfs:comment "交付物使用分析框架"@zh .
+
+uod-con:fulfills_staffing_request a owl:ObjectProperty ;
+    rdfs:label "fulfills staffing request"@en ;
+    rdfs:domain uod-con:ConsultantRole ;
+    rdfs:range uod-con:StaffingRequest ;
+    rdfs:comment "A consultant fulfills a staffing request"@en ;
+    rdfs:comment "顾问满足人员配置需求"@zh .
+
+uod-con:generates_pipeline a owl:ObjectProperty ;
+    rdfs:label "generates pipeline"@en ;
+    rdfs:domain uod-con:ClientRelationship ;
+    rdfs:range uod-con:Pipeline ;
+    rdfs:comment "A client relationship generates a pipeline opportunity"@en ;
+    rdfs:comment "客户关系产生商机管道"@zh .
+
+uod-con:converts_to_engagement a owl:ObjectProperty ;
+    rdfs:label "converts to engagement"@en ;
+    rdfs:domain uod-con:Pipeline ;
+    rdfs:range uod-con:Engagement ;
+    rdfs:comment "A pipeline opportunity converts into a signed engagement"@en ;
+    rdfs:comment "商机转化为签约项目"@zh .
+
+uod-con:reviewed_by a owl:ObjectProperty ;
+    rdfs:label "reviewed by"@en ;
+    rdfs:domain uod-con:Deliverable ;
+    rdfs:range uod-con:QualityReview ;
+    rdfs:comment "A deliverable is reviewed through quality review"@en ;
+    rdfs:comment "交付物经过质量评审"@zh .
+
+uod-con:assessed_by_survey a owl:ObjectProperty ;
+    rdfs:label "assessed by survey"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:ClientSatisfactionSurvey ;
+    rdfs:comment "An engagement is assessed by a client satisfaction survey"@en ;
+    rdfs:comment "项目通过客户满意度调查评估"@zh .
+
+uod-con:contributes_to_knowledge a owl:ObjectProperty ;
+    rdfs:label "contributes to knowledge"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:KnowledgeAsset ;
+    rdfs:comment "An engagement contributes to knowledge assets"@en ;
+    rdfs:comment "项目经验沉淀为知识资产"@zh .
+
+uod-con:documented_as_case a owl:ObjectProperty ;
+    rdfs:label "documented as case"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:CaseStudy ;
+    rdfs:comment "An engagement is documented as a case study"@en ;
+    rdfs:comment "项目记录为案例研究"@zh .
+
+uod-con:publishes_thought_leadership a owl:ObjectProperty ;
+    rdfs:label "publishes thought leadership"@en ;
+    rdfs:domain uod-con:PracticeLine ;
+    rdfs:range uod-con:ThoughtLeadership ;
+    rdfs:comment "A practice line publishes thought leadership content"@en ;
+    rdfs:comment "业务线发布思想领导力内容"@zh .
+
+uod-con:benchmarked_against a owl:ObjectProperty ;
+    rdfs:label "benchmarked against"@en ;
+    rdfs:domain uod-con:Deliverable ;
+    rdfs:range uod-con:BenchmarkStudy ;
+    rdfs:comment "A deliverable is benchmarked against a benchmark study"@en ;
+    rdfs:comment "交付物使用对标研究支撑"@zh .
+
+uod-con:includes_change_plan a owl:ObjectProperty ;
+    rdfs:label "includes change plan"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:ChangeManagementPlan ;
+    rdfs:comment "An engagement includes a change management plan"@en ;
+    rdfs:comment "项目包含变革管理计划"@zh .
+
+uod-con:has_risk a owl:ObjectProperty ;
+    rdfs:label "has risk"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod:Risk ;
+    rdfs:comment "Risks faced by an engagement, including conflict of interest, scope creep, and other risk types"@en ;
+    rdfs:comment "咨询项目面临的风险，包括利益冲突、范围蔓延等各类风险"@zh .
+
+uod-con:governed_by_policy a owl:ObjectProperty ;
+    rdfs:label "governed by policy"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod:Policy ;
+    rdfs:comment "An engagement is governed by policies, including independence policy, confidentiality policy, etc."@en ;
+    rdfs:comment "咨询项目受治理政策约束，包括独立性政策、保密政策等"@zh .
+
+uod-con:measured_by_utilization a owl:ObjectProperty ;
+    rdfs:label "measured by utilization"@en ;
+    rdfs:domain uod-con:ConsultantRole ;
+    rdfs:range uod-con:UtilizationMetric ;
+    rdfs:comment "Consultant performance is measured by utilization metrics"@en ;
+    rdfs:comment "顾问绩效由利用率指标衡量"@zh .
+
+uod-con:measured_by_revenue a owl:ObjectProperty ;
+    rdfs:label "measured by revenue"@en ;
+    rdfs:domain uod-con:PracticeLine ;
+    rdfs:range uod-con:RevenueMetric ;
+    rdfs:comment "Practice line performance is measured by revenue metrics"@en ;
+    rdfs:comment "业务线业绩由收入指标衡量"@zh .
+
+uod-con:billed_at a owl:ObjectProperty ;
+    rdfs:label "billed at"@en ;
+    rdfs:domain uod-con:ConsultantRole ;
+    rdfs:range uod-con:BillableRate ;
+    rdfs:comment "A consultant is billed at a specific billable rate"@en ;
+    rdfs:comment "顾问按照费率标准计费"@zh .
+
+uod-con:tracked_in_crm a owl:ObjectProperty ;
+    rdfs:label "tracked in crm"@en ;
+    rdfs:domain uod-con:ClientAccount ;
+    rdfs:range uod-con:CRMSystem ;
+    rdfs:comment "A client account is tracked in the CRM system"@en ;
+    rdfs:comment "客户账户在CRM系统中管理"@zh .
+
+uod-con:stored_in_portal a owl:ObjectProperty ;
+    rdfs:label "stored in portal"@en ;
+    rdfs:domain uod-con:KnowledgeAsset ;
+    rdfs:range uod-con:KnowledgePortal ;
+    rdfs:comment "Knowledge assets are stored in the knowledge portal"@en ;
+    rdfs:comment "知识资产存储于知识管理门户"@zh .
+
+uod-con:scheduled_in_rms a owl:ObjectProperty ;
+    rdfs:label "scheduled in rms"@en ;
+    rdfs:domain uod-con:StaffingRequest ;
+    rdfs:range uod-con:ResourceManagementSystem ;
+    rdfs:comment "Staffing requests are scheduled through the resource management system"@en ;
+    rdfs:comment "人员配置通过资源管理系统调度"@zh .
+
+uod-con:logged_in_timesheet a owl:ObjectProperty ;
+    rdfs:label "logged in timesheet"@en ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range uod-con:TimeTrackingSystem ;
+    rdfs:comment "Engagement hours are logged in the time tracking system"@en ;
+    rdfs:comment "项目工时在工时管理系统中记录"@zh .
+
+uod-con:bd_capability_realized_by a owl:ObjectProperty ;
+    rdfs:label "bd capability realized by"@en ;
+    rdfs:domain uod-con:BusinessDevelopmentCapability ;
+    rdfs:range uod-con:BusinessDevelopmentProcess ;
+    rdfs:comment "Business development capability is realized by the business development process"@en ;
+    rdfs:comment "业务开发能力由业务开发流程实现"@zh .
+
+uod-con:km_capability_realized_by a owl:ObjectProperty ;
+    rdfs:label "km capability realized by"@en ;
+    rdfs:domain uod-con:KnowledgeManagementCapability ;
+    rdfs:range uod-con:KnowledgeCaptureProcess ;
+    rdfs:comment "Knowledge management capability is realized by the knowledge capture process"@en ;
+    rdfs:comment "知识管理能力由知识沉淀流程实现"@zh .
+
+uod-con:talent_capability_realized_by a owl:ObjectProperty ;
+    rdfs:label "talent capability realized by"@en ;
+    rdfs:domain uod-con:TalentDevelopmentCapability ;
+    rdfs:range uod-con:StaffingProcess ;
+    rdfs:comment "Talent development capability is realized by the staffing process"@en ;
+    rdfs:comment "人才发展能力由人员配置流程实现"@zh .
+
+uod-con:digital_capability_realized_by a owl:ObjectProperty ;
+    rdfs:label "digital capability realized by"@en ;
+    rdfs:domain uod-con:DigitalDeliveryCapability ;
+    rdfs:range uod-con:EngagementDeliveryProcess ;
+    rdfs:comment "Digital delivery capability is realized by the engagement delivery process"@en ;
+    rdfs:comment "数字化交付能力由项目交付流程实现"@zh .
+
+# ────────────────────────────────────────
+# NAMED INDIVIDUALS (Instances)
+# ────────────────────────────────────────
+
+uod-con:firm_apex_consulting a owl:NamedIndividual, uod-con:ConsultingFirm ;
+    rdfs:label "Apex Consulting Group"@en .
+
+uod-con:office_beijing a owl:NamedIndividual, uod-con:ConsultingOffice ;
+    rdfs:label "Apex Consulting - Beijing Office"@en .
+
+uod-con:office_new_york a owl:NamedIndividual, uod-con:ConsultingOffice ;
+    rdfs:label "Apex Consulting - New York Office"@en .
+
+uod-con:practice_strategy a owl:NamedIndividual, uod-con:PracticeLine ;
+    rdfs:label "Strategy & Corporate Finance"@en .
+
+uod-con:practice_digital a owl:NamedIndividual, uod-con:PracticeLine ;
+    rdfs:label "Digital Transformation & Technology"@en .
+
+uod-con:practice_operations a owl:NamedIndividual, uod-con:PracticeLine ;
+    rdfs:label "Operations & Supply Chain"@en .
+
+uod-con:practice_org_hr a owl:NamedIndividual, uod-con:PracticeLine ;
+    rdfs:label "Organization & Human Capital"@en .
+
+uod-con:center_ai_analytics a owl:NamedIndividual, uod-con:CompetencyCenter ;
+    rdfs:label "AI & Advanced Analytics Center"@en .
+
+uod-con:client_fortune500_mfg a owl:NamedIndividual, uod-con:ClientAccount ;
+    rdfs:label "Fortune 500 Manufacturing Co."@en .
+
+uod-con:stakeholder_cio a owl:NamedIndividual, uod-con:ClientStakeholder ;
+    rdfs:label "Client CIO - Manufacturing Co."@en .
+
+uod-con:sponsor_ceo a owl:NamedIndividual, uod-con:ClientSponsor ;
+    rdfs:label "Client CEO Sponsor - Manufacturing Co."@en .
+
+uod-con:engagement_digital_roadmap a owl:NamedIndividual, uod-con:Engagement ;
+    rdfs:label "Digital Transformation Roadmap for Manufacturing Co."@en .
+
+uod-con:milestone_phase1_complete a owl:NamedIndividual, uod-con:EngagementMilestone ;
+    rdfs:label "Phase 1 - Current State Assessment Complete"@en .
+
+uod-con:milestone_final_delivery a owl:NamedIndividual, uod-con:EngagementMilestone ;
+    rdfs:label "Final Delivery & Knowledge Transfer"@en .
+
+uod-con:ws_current_state a owl:NamedIndividual, uod-con:WorkStream ;
+    rdfs:label "Current State Assessment"@en .
+
+uod-con:ws_target_architecture a owl:NamedIndividual, uod-con:WorkStream ;
+    rdfs:label "Target State Architecture Design"@en .
+
+uod-con:ws_implementation_plan a owl:NamedIndividual, uod-con:WorkStream ;
+    rdfs:label "Implementation Roadmap & Business Case"@en .
+
+uod-con:workshop_stakeholder_alignment a owl:NamedIndividual, uod-con:Workshop ;
+    rdfs:label "Stakeholder Alignment Workshop"@en .
+
+uod-con:workshop_design_thinking a owl:NamedIndividual, uod-con:Workshop ;
+    rdfs:label "Digital Vision Design Thinking Workshop"@en .
+
+uod-con:deliverable_maturity_assessment a owl:NamedIndividual, uod-con:Deliverable ;
+    rdfs:label "Digital Maturity Assessment Report"@en .
+
+uod-con:deliverable_roadmap_deck a owl:NamedIndividual, uod-con:Deliverable ;
+    rdfs:label "3-Year Digital Transformation Roadmap"@en .
+
+uod-con:deliverable_business_case a owl:NamedIndividual, uod-con:Deliverable ;
+    rdfs:label "ROI Business Case & Investment Plan"@en .
+
+uod-con:methodology_design_thinking a owl:NamedIndividual, uod-con:Methodology ;
+    rdfs:label "Human-Centered Design Thinking"@en .
+
+uod-con:framework_value_chain a owl:NamedIndividual, uod-con:Framework ;
+    rdfs:label "Porter's Value Chain Analysis"@en .
+
+uod-con:framework_digital_maturity a owl:NamedIndividual, uod-con:Framework ;
+    rdfs:label "Digital Maturity Model (DMM)"@en .
+
+uod-con:ka_industry_benchmark a owl:NamedIndividual, uod-con:KnowledgeAsset ;
+    rdfs:label "Manufacturing Industry Digital Benchmark 2026"@en .
+
+uod-con:pipeline_ops_improvement a owl:NamedIndividual, uod-con:Pipeline ;
+    rdfs:label "Operations Improvement Opportunity - Manufacturing Co."@en .
+
+uod-con:role_lead_partner a owl:NamedIndividual, uod-con:PartnerRole ;
+    rdfs:label "Lead Engagement Partner"@en .
+
+uod-con:role_em a owl:NamedIndividual, uod-con:EngagementManagerRole ;
+    rdfs:label "Engagement Manager"@en .
+
+uod-con:role_senior_consultant a owl:NamedIndividual, uod-con:ConsultantRole ;
+    rdfs:label "Senior Consultant - Digital"@en .
+
+uod-con:role_data_sme a owl:NamedIndividual, uod-con:SubjectMatterExpertRole ;
+    rdfs:label "Data & AI Subject Matter Expert"@en .
+
+uod-con:role_external_cloud_consultant a owl:NamedIndividual, uod-con:SubcontractorRole ;
+    rdfs:label "External Cloud Architecture Consultant"@en .
+
+uod-con:sys_salesforce_crm a owl:NamedIndividual, uod-con:CRMSystem ;
+    rdfs:label "Salesforce CRM"@en .
+
+uod-con:sys_knowledge_hub a owl:NamedIndividual, uod-con:KnowledgePortal ;
+    rdfs:label "Internal Knowledge Hub"@en .
+
+uod-con:kpi_utilization_rate a owl:NamedIndividual, uod-con:UtilizationMetric ;
+    rdfs:label "Consultant Utilization Rate (Target: 75-85%)"@en .
+
+uod-con:kpi_practice_revenue a owl:NamedIndividual, uod-con:RevenueMetric ;
+    rdfs:label "Practice Line Annual Revenue"@en .
+
+uod-con:kpi_engagement_margin a owl:NamedIndividual, uod-con:MarginMetric ;
+    rdfs:label "Engagement Profit Margin (Target: 30-40%)"@en .
+
+uod-con:cap_biz_dev a owl:NamedIndividual, uod-con:BusinessDevelopmentCapability ;
+    rdfs:label "Client Business Development"@en .
+
+uod-con:cap_km a owl:NamedIndividual, uod-con:KnowledgeManagementCapability ;
+    rdfs:label "Enterprise Knowledge Management"@en .

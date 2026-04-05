@@ -21,9 +21,26 @@
       "description": "Semantic version string"
     },
     "extends": {
-      "type": "string",
-      "const": "L1_universal_organization_ontology",
-      "description": "Must extend the L1 universal organization ontology"
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^L1_",
+          "description": "Must extend the L1 universal organization ontology"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^L[12]_"
+          },
+          "minItems": 1,
+          "contains": {
+            "type": "string",
+            "pattern": "^L1_"
+          },
+          "description": "Array of L1 and L2 layer IDs this addon extends; must include at least one L1"
+        }
+      ]
     },
     "description": {
       "type": "string",

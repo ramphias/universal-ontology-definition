@@ -67,6 +67,43 @@ Core Ontology (L1) 是整个框架的基础，修改需要谨慎审核。
 
 ---
 
+## 🛡️ L1 Core 治理规则 (Governance Rules)
+
+为防止 Ontology 在持续迭代中熵增失控，L1 Core 受以下硬性规则约束。所有 Core 层 PR 在合并前必须通过自动化治理检查。
+
+> **Anti-Entropy Principle**: L1 Core 是"语义骨架"而非"概念百科"。添加新概念的成本应显著高于在 L2 中添加。
+
+| 规则编号 | 规则名称 | 约束 | 说明 |
+|:---|:---|:---|:---|
+| **G-01** | 类数量硬上限 | L1 类总数 ≤ **25** | 超过上限必须先合并或下放现有类，才能新增。由 `core_schema.json` 中 `maxItems: 25` 强制执行。 |
+| **G-02** | 根类数量限制 | `parent: null` 的根类 ≤ **5** | 当前 4 个抽象域根类（Entity / Governance / Operational / Measurement），仅在极特殊情况下可新增第 5 个。 |
+| **G-03** | 继承深度限制 | 继承链深度 ≤ **4** 层 | 避免过度抽象导致的理解成本增加。 |
+| **G-04** | 跨行业验证 | 新增 L1 类需 ≥ **3 个行业** 证明 | 提议者必须论证该概念在至少 3 个不同行业中是通用且必要的。 |
+| **G-05** | 关系密度控制 | 关系数量 ≤ 类数量 × **1.0** | 避免关系爆炸。当前 12 关系 / 24 类 = 0.5，健康范围内。 |
+| **G-06** | 变更速度限制 | 单次版本迭代最多变更 **3 个类** | 每个 minor 版本最多新增/修改/删除 3 个类定义，确保下游有充分适配时间。 |
+| **G-07** | 废弃过渡期 | Deprecated → Removed 至少 **2 个 minor 版本** | 标记 `deprecated` 后，必须在至少 2 个后续版本中保留 `deprecated_classes` 记录，才能最终移除。 |
+| **G-08** | 示例行业中立 | `sample_instances` 不得暗示特定行业 | 使用通用企业名称（如 "Acme Corp"）和通用流程（如 "Order to Cash"），避免引导用户误认为 L1 面向特定领域。 |
+
+### 治理检查清单 (Core PR Checklist)
+
+每个修改 L1 Core 的 PR 必须在描述中附上以下检查清单：
+
+```markdown
+### L1 Governance Checklist
+- [ ] G-01: 修改后类总数 ≤ 25
+- [ ] G-02: 根类（parent=null）总数 ≤ 5
+- [ ] G-03: 所有继承链深度 ≤ 4
+- [ ] G-04: 新增类已提供 ≥3 行业通用性论证
+- [ ] G-05: 关系数 ≤ 类数
+- [ ] G-06: 本次变更涉及 ≤ 3 个类
+- [ ] G-07: 废弃的类/关系记录在 deprecated_classes/deprecated_relations 中
+- [ ] G-08: sample_instances 不含行业特定示例
+- [ ] 通过 `schema/core_schema.json` 校验
+- [ ] 通过 `scripts/validate_governance.py` 自动化检查
+```
+
+---
+
 ## 贡献行业 Addon
 
 我们非常欢迎新的行业 Addon！

@@ -11,37 +11,34 @@
     "id": "@id",
     "type": "@type",
 
+    "Entity": "uod:Entity",
     "Party": "uod:Party",
     "Person": "uod:Person",
     "Organization": "uod:Organization",
     "OrgUnit": "uod:OrgUnit",
-    "Role": "uod:Role",
 
-    "Capability": "uod:Capability",
-    "Process": "uod:Process",
-    "Activity": "uod:Activity",
-
-    "BusinessObject": "uod:BusinessObject",
+    "Resource": "uod:Resource",
     "ProductService": "uod:ProductService",
     "Asset": "uod:Asset",
-
     "DataObject": "uod:DataObject",
-    "DocumentRecord": "uod:DocumentRecord",
+    "Document": "uod:Document",
     "SystemApplication": "uod:SystemApplication",
 
+    "Governance": "uod:Governance",
     "Policy": "uod:Policy",
     "Rule": "uod:Rule",
     "Control": "uod:Control",
     "Risk": "uod:Risk",
 
+    "Operational": "uod:Operational",
+    "Role": "uod:Role",
+    "Capability": "uod:Capability",
+    "Process": "uod:Process",
     "Event": "uod:Event",
-    "Decision": "uod:Decision",
+
+    "Measurement": "uod:Measurement",
     "Goal": "uod:Goal",
     "KPI": "uod:KPI",
-
-    "Location": "uod:Location",
-    "Channel": "uod:Channel",
-    "MarketSegment": "uod:MarketSegment",
 
     "label": "rdfs:label",
     "label_zh": { "@id": "rdfs:label", "@language": "zh" },
@@ -51,20 +48,16 @@
     "parent": { "@id": "rdfs:subClassOf", "@type": "@id" },
 
     "plays_role": { "@id": "uod:plays_role", "@type": "@id" },
-    "belongs_to": { "@id": "uod:belongs_to", "@type": "@id" },
+    "part_of": { "@id": "uod:part_of", "@type": "@id" },
     "owns": { "@id": "uod:owns", "@type": "@id" },
-    "is_accountable_for": { "@id": "uod:is_accountable_for", "@type": "@id" },
+    "accountable_for": { "@id": "uod:accountable_for", "@type": "@id" },
     "realized_by": { "@id": "uod:realized_by", "@type": "@id" },
-    "composed_of": { "@id": "uod:composed_of", "@type": "@id" },
     "consumes": { "@id": "uod:consumes", "@type": "@id" },
     "produces": { "@id": "uod:produces", "@type": "@id" },
     "recorded_in": { "@id": "uod:recorded_in", "@type": "@id" },
     "governed_by": { "@id": "uod:governed_by", "@type": "@id" },
-    "constrained_by": { "@id": "uod:constrained_by", "@type": "@id" },
     "mitigated_by": { "@id": "uod:mitigated_by", "@type": "@id" },
     "triggered_by": { "@id": "uod:triggered_by", "@type": "@id" },
-    "requires_decision": { "@id": "uod:requires_decision", "@type": "@id" },
-    "supports": { "@id": "uod:supports", "@type": "@id" },
     "measured_by": { "@id": "uod:measured_by", "@type": "@id" }
   }
 }

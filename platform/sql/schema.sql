@@ -1,21 +1,21 @@
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- Universal Enterprise Ontology Core — PostgreSQL DDL Binding
--- L0 Platform Binding for L1 Core v1.0.0
+-- L0 Platform Binding for L1 Core v2.0.0
 -- ═══════════════════════════════════════════════════════════════════════════════
--- 
--- This schema maps L1 core classes to relational tables.
--- Design choices:
---   - Each core class → one table
---   - Inheritance (parent) → foreign key to parent table via shared PK
---   - Object properties → foreign key columns or junction tables (M:N)
---   - Bilingual labels → label_zh + label_en columns
---   - All tables use UUID primary keys for distributed compatibility
+--
+-- v2.0 Changes:
+--   - Replaced business_object table with resource table
+--   - Renamed document_record → document
+--   - Removed demoted classes (activity, decision, location, channel, market_segment)
+--   - Merged belongs_to/composed_of → part_of relation
+--   - Generalized governance relations: process_governance replaces process_policy + process_rule
+--   - Added abstract domain marker columns where applicable
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 -- Enable UUID extension (PostgreSQL)
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- ─── Party & Organization ────────────────────────────────────────────────────
+-- ─── Abstract Domain: Entity > Party ────────────────────────────────────────
 
 CREATE TABLE party (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -29,7 +29,6 @@ CREATE TABLE party (
 
 CREATE TABLE person (
     id          UUID PRIMARY KEY REFERENCES party(id) ON DELETE CASCADE,
-    -- Person-specific fields can be added here
     first_name  VARCHAR(100),
     last_name   VARCHAR(100),
     email       VARCHAR(255)
@@ -37,7 +36,6 @@ CREATE TABLE person (
 
 CREATE TABLE organization (
     id          UUID PRIMARY KEY REFERENCES party(id) ON DELETE CASCADE,
-    -- Organization-specific fields
     legal_name  VARCHAR(500),
     industry    VARCHAR(100)
 );
@@ -47,10 +45,52 @@ CREATE TABLE org_unit (
     label_zh    VARCHAR(255) NOT NULL,
     label_en    VARCHAR(255) NOT NULL,
     definition  TEXT,
-    belongs_to  UUID NOT NULL REFERENCES organization(id) ON DELETE CASCADE,
+    part_of     UUID NOT NULL REFERENCES organization(id) ON DELETE CASCADE,
     parent_unit UUID REFERENCES org_unit(id),
     created_at  TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- ─── Abstract Domain: Entity > Resource ─────────────────────────────────────
+
+CREATE TABLE resource (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    resource_type   VARCHAR(30) NOT NULL CHECK (resource_type IN (
+        'ProductService', 'Asset', 'DataObject', 'Document', 'SystemApplication', 'Other'
+    )),
+    label_zh        VARCHAR(255) NOT NULL,
+    label_en        VARCHAR(255) NOT NULL,
+    definition      TEXT,
+    owner_id        UUID REFERENCES party(id),
+    created_at      TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Subtype tables for specific resource kinds
+CREATE TABLE product_service (
+    id UUID PRIMARY KEY REFERENCES resource(id) ON DELETE CASCADE
+    -- product-specific fields
+);
+
+CREATE TABLE asset (
+    id UUID PRIMARY KEY REFERENCES resource(id) ON DELETE CASCADE
+    -- asset-specific fields
+);
+
+CREATE TABLE data_object (
+    id UUID PRIMARY KEY REFERENCES resource(id) ON DELETE CASCADE
+    -- data-specific fields
+);
+
+CREATE TABLE document (
+    id UUID PRIMARY KEY REFERENCES resource(id) ON DELETE CASCADE
+    -- document-specific fields
+);
+
+CREATE TABLE system_application (
+    id UUID PRIMARY KEY REFERENCES resource(id) ON DELETE CASCADE
+    -- system-specific fields
+);
+
+-- ─── Abstract Domain: Operational ───────────────────────────────────────────
 
 CREATE TABLE role (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -60,16 +100,6 @@ CREATE TABLE role (
     created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Relation: Party plays Role (M:N)
-CREATE TABLE party_role (
-    party_id    UUID NOT NULL REFERENCES party(id) ON DELETE CASCADE,
-    role_id     UUID NOT NULL REFERENCES role(id) ON DELETE CASCADE,
-    context     TEXT,
-    PRIMARY KEY (party_id, role_id)
-);
-
--- ─── Capability & Process ────────────────────────────────────────────────────
-
 CREATE TABLE capability (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     label_zh    VARCHAR(255) NOT NULL,
@@ -78,85 +108,25 @@ CREATE TABLE capability (
     created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Relation: Role is accountable for Capability (M:N)
-CREATE TABLE role_capability (
-    role_id       UUID NOT NULL REFERENCES role(id) ON DELETE CASCADE,
-    capability_id UUID NOT NULL REFERENCES capability(id) ON DELETE CASCADE,
-    PRIMARY KEY (role_id, capability_id)
-);
-
 CREATE TABLE process (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     label_zh    VARCHAR(255) NOT NULL,
     label_en    VARCHAR(255) NOT NULL,
     definition  TEXT,
+    parent_process UUID REFERENCES process(id),  -- part_of: sub-process hierarchy
     created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Relation: Capability realized by Process (M:N)
-CREATE TABLE capability_process (
-    capability_id UUID NOT NULL REFERENCES capability(id) ON DELETE CASCADE,
-    process_id    UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
-    PRIMARY KEY (capability_id, process_id)
-);
-
-CREATE TABLE activity (
+CREATE TABLE event (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     label_zh    VARCHAR(255) NOT NULL,
     label_en    VARCHAR(255) NOT NULL,
     definition  TEXT,
-    process_id  UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
-    seq_order   INT,
+    occurred_at TIMESTAMPTZ,
     created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ─── Business Objects ────────────────────────────────────────────────────────
-
-CREATE TABLE business_object (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    obj_type    VARCHAR(30) NOT NULL CHECK (obj_type IN ('ProductService', 'Asset', 'Other')),
-    label_zh    VARCHAR(255) NOT NULL,
-    label_en    VARCHAR(255) NOT NULL,
-    definition  TEXT,
-    owner_id    UUID REFERENCES party(id),
-    created_at  TIMESTAMPTZ DEFAULT NOW()
-);
-
--- ─── Data & Systems ──────────────────────────────────────────────────────────
-
-CREATE TABLE data_object (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    obj_type    VARCHAR(30) NOT NULL CHECK (obj_type IN ('DataObject', 'DocumentRecord')),
-    label_zh    VARCHAR(255) NOT NULL,
-    label_en    VARCHAR(255) NOT NULL,
-    definition  TEXT,
-    created_at  TIMESTAMPTZ DEFAULT NOW()
-);
-
-CREATE TABLE system_application (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    label_zh    VARCHAR(255) NOT NULL,
-    label_en    VARCHAR(255) NOT NULL,
-    definition  TEXT,
-    created_at  TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Relation: DataObject recorded in SystemApplication (M:N)
-CREATE TABLE data_system (
-    data_id     UUID NOT NULL REFERENCES data_object(id) ON DELETE CASCADE,
-    system_id   UUID NOT NULL REFERENCES system_application(id) ON DELETE CASCADE,
-    PRIMARY KEY (data_id, system_id)
-);
-
--- Relation: Process consumes/produces DataObject (M:N)
-CREATE TABLE process_data (
-    process_id  UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
-    data_id     UUID NOT NULL REFERENCES data_object(id) ON DELETE CASCADE,
-    direction   VARCHAR(10) NOT NULL CHECK (direction IN ('consumes', 'produces')),
-    PRIMARY KEY (process_id, data_id, direction)
-);
-
--- ─── Governance & Compliance ─────────────────────────────────────────────────
+-- ─── Abstract Domain: Governance ────────────────────────────────────────────
 
 CREATE TABLE policy (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -190,59 +160,7 @@ CREATE TABLE risk (
     created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Relation: Risk mitigated by Control (M:N)
-CREATE TABLE risk_control (
-    risk_id     UUID NOT NULL REFERENCES risk(id) ON DELETE CASCADE,
-    control_id  UUID NOT NULL REFERENCES control(id) ON DELETE CASCADE,
-    PRIMARY KEY (risk_id, control_id)
-);
-
--- Relation: Process governed by Policy (M:N)
-CREATE TABLE process_policy (
-    process_id  UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
-    policy_id   UUID NOT NULL REFERENCES policy(id) ON DELETE CASCADE,
-    PRIMARY KEY (process_id, policy_id)
-);
-
--- Relation: Process constrained by Rule (M:N)
-CREATE TABLE process_rule (
-    process_id  UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
-    rule_id     UUID NOT NULL REFERENCES rule(id) ON DELETE CASCADE,
-    PRIMARY KEY (process_id, rule_id)
-);
-
--- ─── Decision & Measurement ──────────────────────────────────────────────────
-
-CREATE TABLE event (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    label_zh    VARCHAR(255) NOT NULL,
-    label_en    VARCHAR(255) NOT NULL,
-    definition  TEXT,
-    occurred_at TIMESTAMPTZ,
-    created_at  TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Relation: Event triggered by Process (M:N)
-CREATE TABLE event_process (
-    event_id    UUID NOT NULL REFERENCES event(id) ON DELETE CASCADE,
-    process_id  UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
-    PRIMARY KEY (event_id, process_id)
-);
-
-CREATE TABLE decision (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    label_zh    VARCHAR(255) NOT NULL,
-    label_en    VARCHAR(255) NOT NULL,
-    definition  TEXT,
-    created_at  TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Relation: Process requires Decision (M:N)
-CREATE TABLE process_decision (
-    process_id  UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
-    decision_id UUID NOT NULL REFERENCES decision(id) ON DELETE CASCADE,
-    PRIMARY KEY (process_id, decision_id)
-);
+-- ─── Abstract Domain: Measurement ───────────────────────────────────────────
 
 CREATE TABLE goal (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -252,55 +170,93 @@ CREATE TABLE goal (
     created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Relation: Capability supports Goal (M:N)
-CREATE TABLE capability_goal (
-    capability_id UUID NOT NULL REFERENCES capability(id) ON DELETE CASCADE,
-    goal_id       UUID NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
-    PRIMARY KEY (capability_id, goal_id)
-);
-
 CREATE TABLE kpi (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     label_zh    VARCHAR(255) NOT NULL,
     label_en    VARCHAR(255) NOT NULL,
     definition  TEXT,
-    goal_id     UUID REFERENCES goal(id),
     created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ─── Market & Channel ────────────────────────────────────────────────────────
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- JUNCTION TABLES (Relations) — v2.0 Generalized
+-- ═══════════════════════════════════════════════════════════════════════════════
 
-CREATE TABLE location (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    label_zh    VARCHAR(255) NOT NULL,
-    label_en    VARCHAR(255) NOT NULL,
-    definition  TEXT,
-    latitude    DECIMAL(10, 7),
-    longitude   DECIMAL(10, 7),
-    created_at  TIMESTAMPTZ DEFAULT NOW()
+-- plays_role: Party ↔ Role (M:N)
+CREATE TABLE party_role (
+    party_id    UUID NOT NULL REFERENCES party(id) ON DELETE CASCADE,
+    role_id     UUID NOT NULL REFERENCES role(id) ON DELETE CASCADE,
+    context     TEXT,
+    PRIMARY KEY (party_id, role_id)
 );
 
-CREATE TABLE channel (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    label_zh    VARCHAR(255) NOT NULL,
-    label_en    VARCHAR(255) NOT NULL,
-    definition  TEXT,
-    channel_type VARCHAR(50),
-    created_at  TIMESTAMPTZ DEFAULT NOW()
+-- owns: Party → Resource (1:N via resource.owner_id FK above)
+
+-- accountable_for: Role ↔ Capability (M:N) — generalized from is_accountable_for
+CREATE TABLE role_accountability (
+    role_id       UUID NOT NULL REFERENCES role(id) ON DELETE CASCADE,
+    capability_id UUID NOT NULL REFERENCES capability(id) ON DELETE CASCADE,
+    PRIMARY KEY (role_id, capability_id)
 );
 
-CREATE TABLE market_segment (
-    id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    label_zh    VARCHAR(255) NOT NULL,
-    label_en    VARCHAR(255) NOT NULL,
-    definition  TEXT,
-    created_at  TIMESTAMPTZ DEFAULT NOW()
+-- realized_by: Capability ↔ Process (M:N)
+CREATE TABLE capability_process (
+    capability_id UUID NOT NULL REFERENCES capability(id) ON DELETE CASCADE,
+    process_id    UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+    PRIMARY KEY (capability_id, process_id)
 );
 
--- ─── Indexes for common queries ──────────────────────────────────────────────
+-- consumes / produces: Process ↔ Resource (M:N) — generalized range from DataObject to Resource
+CREATE TABLE process_resource (
+    process_id    UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+    resource_id   UUID NOT NULL REFERENCES resource(id) ON DELETE CASCADE,
+    direction     VARCHAR(10) NOT NULL CHECK (direction IN ('consumes', 'produces')),
+    PRIMARY KEY (process_id, resource_id, direction)
+);
+
+-- recorded_in: DataObject ↔ SystemApplication (M:N)
+CREATE TABLE data_system (
+    data_id     UUID NOT NULL REFERENCES resource(id) ON DELETE CASCADE,
+    system_id   UUID NOT NULL REFERENCES resource(id) ON DELETE CASCADE,
+    PRIMARY KEY (data_id, system_id)
+);
+
+-- governed_by: Operational ↔ Governance (M:N) — unified governance relation
+-- Uses a generic pattern: subject + governance_type + governance_id
+CREATE TABLE operational_governance (
+    subject_type    VARCHAR(20) NOT NULL CHECK (subject_type IN ('Role', 'Capability', 'Process', 'Event')),
+    subject_id      UUID NOT NULL,
+    governance_type VARCHAR(20) NOT NULL CHECK (governance_type IN ('Policy', 'Rule', 'Control')),
+    governance_id   UUID NOT NULL,
+    PRIMARY KEY (subject_type, subject_id, governance_type, governance_id)
+);
+
+-- mitigated_by: Risk ↔ Control (M:N)
+CREATE TABLE risk_control (
+    risk_id     UUID NOT NULL REFERENCES risk(id) ON DELETE CASCADE,
+    control_id  UUID NOT NULL REFERENCES control(id) ON DELETE CASCADE,
+    PRIMARY KEY (risk_id, control_id)
+);
+
+-- triggered_by: Event ↔ Process (M:N)
+CREATE TABLE event_process (
+    event_id    UUID NOT NULL REFERENCES event(id) ON DELETE CASCADE,
+    process_id  UUID NOT NULL REFERENCES process(id) ON DELETE CASCADE,
+    PRIMARY KEY (event_id, process_id)
+);
+
+-- measured_by: Operational ↔ KPI (M:N) — generalized domain
+CREATE TABLE operational_kpi (
+    subject_type VARCHAR(20) NOT NULL CHECK (subject_type IN ('Role', 'Capability', 'Process', 'Event', 'Goal')),
+    subject_id   UUID NOT NULL,
+    kpi_id       UUID NOT NULL REFERENCES kpi(id) ON DELETE CASCADE,
+    PRIMARY KEY (subject_type, subject_id, kpi_id)
+);
+
+-- ─── Indexes ────────────────────────────────────────────────────────────────
 
 CREATE INDEX idx_party_type ON party(party_type);
-CREATE INDEX idx_org_unit_belongs ON org_unit(belongs_to);
-CREATE INDEX idx_activity_process ON activity(process_id);
-CREATE INDEX idx_business_object_owner ON business_object(owner_id);
-CREATE INDEX idx_kpi_goal ON kpi(goal_id);
+CREATE INDEX idx_org_unit_part_of ON org_unit(part_of);
+CREATE INDEX idx_resource_type ON resource(resource_type);
+CREATE INDEX idx_resource_owner ON resource(owner_id);
+CREATE INDEX idx_process_parent ON process(parent_process);

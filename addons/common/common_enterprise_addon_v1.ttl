@@ -1,0 +1,145 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix uod-cmn: <https://w3id.org/uod/addon/common/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# 通用企业扩展概念包，包含从 L1 v2.0 下放的常见但非核心的概念：渠道、市场细分、地点、决策。这些概念在许多行业中通 — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-05 00:36
+# ════════════════════════════════════════════════════════════════════════════
+
+uod-cmn:Ontology a owl:Ontology ;
+    rdfs:label "通用企业扩展概念包，包含从 L1 v2.0 下放的常见但非核心的概念：渠道、市场细分、地点、决策。这些概念在许多行业中通"@en ;
+    rdfs:label "通用企业扩展概念包，包含从 L1 v2.0 下放的常见但非核心的概念：渠道、市场细分、地点、决策。这些概念在许多行业中通用，但不属于所有企业的必备抽象。"@zh ;
+    owl:imports <https://w3id.org/uod/core/> ;
+    owl:versionInfo "1.0.0" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+uod-cmn:Channel a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Channel"@en ;
+    rdfs:label "渠道"@zh ;
+    rdfs:comment "Channels for interacting with customers, partners, or internal users"@en ;
+    rdfs:comment "与客户、伙伴或内部用户交互的渠道"@zh .
+
+uod-cmn:MarketSegment a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Market Segment"@en ;
+    rdfs:label "市场细分"@zh ;
+    rdfs:comment "Classification dimensions for customers or markets"@en ;
+    rdfs:comment "客户或市场的分类维度"@zh .
+
+uod-cmn:Location a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Location"@en ;
+    rdfs:label "地点"@zh ;
+    rdfs:comment "Places where organizational operations or transactions occur"@en ;
+    rdfs:comment "组织运营或交易发生的地点"@zh .
+
+uod-cmn:Decision a owl:Class ;
+    rdfs:subClassOf uod:Event ;
+    rdfs:label "Decision"@en ;
+    rdfs:label "决策"@zh ;
+    rdfs:comment "Choices and approvals made regarding events, rules, or goals; a specialized type of Event"@en ;
+    rdfs:comment "对事件、规则或目标做出的选择与批准，是事件的一种特殊类型"@zh .
+
+uod-cmn:Activity a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Activity"@en ;
+    rdfs:label "活动"@zh ;
+    rdfs:comment "An executable step within a process; a subtype of Process"@en ;
+    rdfs:comment "流程中的可执行步骤，是流程的子类型"@zh .
+
+uod-cmn:Contract a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Contract"@en ;
+    rdfs:label "合同"@zh ;
+    rdfs:comment "A legally binding agreement document"@en ;
+    rdfs:comment "具有法律约束力的协议文档"@zh .
+
+uod-cmn:Report a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Report"@en ;
+    rdfs:label "报告"@zh ;
+    rdfs:comment "A structured analytical or business report"@en ;
+    rdfs:comment "结构化的分析报告或业务报告"@zh .
+
+uod-cmn:Project a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Project"@en ;
+    rdfs:label "项目"@zh ;
+    rdfs:comment "A temporary work organization with defined scope, timeline, and objectives"@en ;
+    rdfs:comment "有明确起止时间、范围和目标的临时性工作组织"@zh .
+
+uod-cmn:Stakeholder a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Stakeholder"@en ;
+    rdfs:label "利益相关方"@zh ;
+    rdfs:comment "A role with vested interest in organizational decisions or projects"@en ;
+    rdfs:comment "对组织决策或项目有利益关系的角色"@zh .
+
+uod-cmn:Regulation a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Regulation"@en ;
+    rdfs:label "法规"@zh ;
+    rdfs:comment "Legal and regulatory requirements from external regulatory bodies"@en ;
+    rdfs:comment "来自外部监管机构的法律法规要求"@zh .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+uod-cmn:serves_through a owl:ObjectProperty ;
+    rdfs:label "serves through"@en ;
+    rdfs:domain uod:ProductService ;
+    rdfs:range uod-cmn:Channel ;
+    rdfs:comment "产品或服务通过渠道提供"@zh .
+
+uod-cmn:targets_segment a owl:ObjectProperty ;
+    rdfs:label "targets segment"@en ;
+    rdfs:domain uod:ProductService ;
+    rdfs:range uod-cmn:MarketSegment ;
+    rdfs:comment "产品或服务面向特定市场细分"@zh .
+
+uod-cmn:located_at a owl:ObjectProperty ;
+    rdfs:label "located at"@en ;
+    rdfs:domain uod:Organization ;
+    rdfs:range uod-cmn:Location ;
+    rdfs:comment "组织位于或运营在某个地点"@zh .
+
+uod-cmn:results_in a owl:ObjectProperty ;
+    rdfs:label "results in"@en ;
+    rdfs:domain uod-cmn:Decision ;
+    rdfs:range uod:Event ;
+    rdfs:comment "决策产生后续事件或行动"@zh .
+
+uod-cmn:complies_with a owl:ObjectProperty ;
+    rdfs:label "complies with"@en ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod-cmn:Regulation ;
+    rdfs:comment "流程符合法规要求"@zh .
+
+# ────────────────────────────────────────
+# NAMED INDIVIDUALS (Instances)
+# ────────────────────────────────────────
+
+uod-cmn:channel_online_store a owl:NamedIndividual, uod-cmn:Channel ;
+    rdfs:label "Online Store"@en .
+
+uod-cmn:channel_retail_outlet a owl:NamedIndividual, uod-cmn:Channel ;
+    rdfs:label "Retail Outlet"@en .
+
+uod-cmn:segment_enterprise_b2b a owl:NamedIndividual, uod-cmn:MarketSegment ;
+    rdfs:label "Enterprise B2B"@en .
+
+uod-cmn:loc_headquarters a owl:NamedIndividual, uod-cmn:Location ;
+    rdfs:label "Corporate Headquarters"@en .
+
+uod-cmn:decision_budget_approval a owl:NamedIndividual, uod-cmn:Decision ;
+    rdfs:label "Annual Budget Approval"@en .

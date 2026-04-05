@@ -1,0 +1,7 @@
+﻿common_enterprise_addon_v1_webprotege.zip	6 KB
+consulting_addon_v1_webprotege.zip	15 KB
+luxury_goods_addon_v1_webprotege.zip	12 KB
+universal_ontology_v1_webprotege.zip	4 KB
+acme_tech_solutions_ontology_v1_webprotege.zip	18 KB
+chanel_china_ontology_v1_webprotege.zip	19 KB
+deloitte_china_consulting_ontology_v1_webprotege.zip	19 KB

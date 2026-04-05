@@ -4,8 +4,10 @@
 
 **An Open, Standardized Four-Layer Enterprise Ontology Framework**
 
+**Anti-entropy by design — structured, governed, and built to scale.**
+
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Version](https://img.shields.io/badge/Version-1.1.0-green.svg)](#)
+[![Version](https://img.shields.io/badge/Version-2.0.0-green.svg)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 [中文](./README_CN.md) | **English**
@@ -30,26 +32,31 @@ Enterprise digitalization commonly faces:
 ### The Solution: Four-Layer Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│         L3: Enterprise Customization Layer                  │  ← Private extensions
-│    (Company A)    (Company B)    (Company C)                │
-├─────────────────────────────────────────────────────────────┤
-│         L2: Industry & Domain Addons                        │  ← Optional, industry-specific
-│  (Consulting) (Luxury) (Finance) (Manufacturing)            │
-├─────────────────────────────────────────────────────────────┤
-│         L1: Universal Enterprise Ontology Core              │  ← Mandatory inheritance
-│    (Party/Org/Role/Capability/Process/Risk/Goal/KPI)        │
-├─════════════════════════════════════════════════════════════┤
-│    L0: Platform & Syntax Bindings                           │  ← Technical serialization
-│  (OWL/RDF)  (JSON-LD)  (GraphQL)  (SQL DDL)                │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│         L3: Enterprise Customization Layer                       │  ← Private extensions
+│    (Company A)    (Company B)    (Company C)                     │
+├──────────────────────────────────────────────────────────────────┤
+│         L2: Industry & Domain Addons                             │  ← Optional, pluggable
+│  (Common)  (Consulting)  (Luxury)  (Finance)  (Manufacturing)   │
+├──────────────────────────────────────────────────────────────────┤
+│         L1: Universal Enterprise Ontology Core (v2.0)            │  ← Mandatory inheritance
+│  ┌──────────┐ ┌──────────┐ ┌─────────────┐ ┌─────────────┐      │
+│  │  Entity   │ │Governance│ │ Operational  │ │ Measurement │      │
+│  │Party/Org/ │ │Policy/   │ │Role/Process/ │ │ Goal / KPI  │      │
+│  │Resource   │ │Rule/Risk │ │Capability    │ │             │      │
+│  └──────────┘ └──────────┘ └─────────────┘ └─────────────┘      │
+├═════════════════════════════════════════════════════════════╤════╡
+│    L0: Platform & Syntax Bindings                           │    │
+│  (OWL/RDF)  (JSON-LD)  (GraphQL)  (SQL DDL)                │    │
+└─────────────────────────────────────────────────────────────┘    │
 ```
 
 ## ✨ Key Features
 
 - 🏗️ **Four-Layer Separation** — Stable semantic core, pluggable industry addons, free enterprise customization, multi-platform bindings
-- 📐 **Standardized Definition Format** — Unified JSON Schema for classes, relations, and instances
-- 🔗 **Inheritance & Extension** — L2 extends L1, L3 extends L1+L2, with clear semantic lineage
+- 🛡️ **Anti-Entropy by Design** — 4 abstract domain roots, hard class caps, governance rules, and CI validation prevent ontology sprawl
+- 📐 **Standardized Definition Format** — Unified JSON Schema with lifecycle management (status, since, deprecated_since)
+- 🔗 **Inheritance & Extension** — L2 extends L1, L3 extends L1+L2, with generalized domain/range relations
 - ⚙️ **Platform Bindings** — L0 provides ready-to-use OWL/RDF, JSON-LD, GraphQL, and SQL mappings
 - 🌍 **Bilingual Support** — All concepts include Chinese and English labels
 - 🤝 **Community-Driven** — Anyone can contribute industry addons, platform bindings, or improve core definitions
@@ -57,23 +64,30 @@ Enterprise digitalization commonly faces:
 ## 📁 Repository Structure
 
 ```
-universal-ontology-definition/
+.
 ├── core/                       # L1 Universal Enterprise Ontology Core
 │   └── universal_ontology_v1.json
 ├── addons/                     # L2 Industry & Domain Addons
+│   ├── common/                 #   └── Common Enterprise Extension (demoted L1 classes)
 │   ├── consulting/             #   └── Consulting Industry Addon
 │   ├── luxury-goods/           #   └── Luxury Goods Industry Addon
 │   └── _template/              #   └── Addon Contribution Template
+├── enterprise/                 # L3 Enterprise Customization Layer (public samples)
+│   ├── acme-tech-solutions/    #   └── Sample Virtual Enterprise (L3 demo)
+│   ├── _template/              #   └── Enterprise Layer Template
+│   └── README.md
+├── private_enterprise/         # L3 Private Enterprise Layer (.gitignore excluded)
 ├── platform/                   # L0 Platform & Syntax Bindings
 │   ├── owl-rdf/                #   └── OWL 2 / RDF Turtle Serialization
 │   ├── json-ld/                #   └── JSON-LD Context Definition
 │   ├── graphql/                #   └── GraphQL Schema Definition
 │   ├── sql/                    #   └── PostgreSQL DDL Mapping
 │   └── _template/              #   └── Platform Binding Template
+├── scripts/                    # CI & Governance Automation
+│   ├── validate_governance.py  #   └── L1 Governance Rule Validator
+│   └── json_to_owl.py          #   └── JSON → OWL/RDF Turtle Converter
+├── legacy/                     # Archived legacy tools and apps
 ├── docs/                       # Design Documentation & Specs
-│   ├── architecture.md
-│   ├── ontology-design-guide.md
-│   └── addon-development-guide.md
 └── schema/                     # JSON Schema Validation
     ├── core_schema.json
     └── addon_schema.json
@@ -83,17 +97,16 @@ universal-ontology-definition/
 
 ### Understanding Core Ontology
 
-L1 defines **25 core classes** and **16 standard relations** covering universal enterprise concepts:
+L1 v2.0 defines **24 classes** (4 abstract domains + 20 concrete) and **12 generalized relations**, organized into 4 semantic domains:
 
-| Category | Core Classes |
+| Domain (Abstract) | Concrete Classes |
 |:---|:---|
-| Party & Organization | Party, Person, Organization, OrgUnit, Role |
-| Capability & Process | Capability, Process, Activity |
-| Business Objects | BusinessObject, ProductService, Asset |
-| Data & Systems | DataObject, DocumentRecord, SystemApplication |
-| Governance & Compliance | Policy, Rule, Control, Risk |
-| Decision & Measurement | Event, Decision, Goal, KPI |
-| Market & Channel | Location, Channel, MarketSegment |
+| 🟦 **Entity** | Party, Person, Organization, OrgUnit, Resource, ProductService, Asset, DataObject, Document, SystemApplication |
+| 🟨 **Governance** | Policy, Rule, Control, Risk |
+| 🟩 **Operational** | Role, Capability, Process, Event |
+| 🟪 **Measurement** | Goal, KPI |
+
+> Classes like Channel, Location, MarketSegment, Decision, and Activity have been moved to the [`addons/common/`](addons/common/) L2 addon for better separation of concerns.
 
 ### Using Platform Bindings (L0)
 
@@ -135,12 +148,19 @@ Browse the `addons/` directory and select the appropriate industry package. Each
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
+### 📋 Full Ontology Creation & Update Guide
+
+For a comprehensive, step-by-step guide on creating or updating ontologies at any layer (L2/L3), including inheritance, validation, format conversion, and version management, see **[README_CN.md — Ontology 创建与更新完整指南](README_CN.md#-ontology-创建与更新完整指南)**.
+
+A working L3 sample is available at [`enterprise/acme-tech-solutions/`](enterprise/acme-tech-solutions/) — a fictional technology consulting company demonstrating the full workflow.
+
 ## 🗂️ Available Industry Addons
 
 | Industry | Directory | Classes | Relations | Status |
 |:---|:---|:---:|:---:|:---|
+| Common Enterprise | [`addons/common/`](addons/common/) | 10 | 5 | ✅ v1.0.0 |
 | Consulting | [`addons/consulting/`](addons/consulting/) | 40+ | 34 | ✅ v1.0.0 |
-| Luxury Goods | [`addons/luxury-goods/`](addons/luxury-goods/) | 21 | 10 | ✅ v1.0.0 |
+| Luxury Goods | [`addons/luxury-goods/`](addons/luxury-goods/) | 38 | 14 | ✅ v2.0.0 |
 
 **We're looking for community contributions!** Finance, Manufacturing, Retail, Healthcare, Education, and more.
 

@@ -1,0 +1,438 @@
+@prefix ent: <https://w3id.org/uod/enterprise/ent-acme-tech-001/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix uod-lux: <https://w3id.org/uod/addon/luxury-goods/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# Acme Tech Solutions — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-05 00:39
+# ════════════════════════════════════════════════════════════════════════════
+
+ent:Ontology a owl:Ontology ;
+    rdfs:label "Acme Tech Solutions"@en ;
+    rdfs:label "极客方舟科技 L3 企业定制 ontology — 示例虚拟企业，演示 L3 层的完整创建流程"@zh ;
+    owl:imports <https://w3id.org/uod/core/> ;
+    owl:imports <https://w3id.org/uod/addon/luxury-goods/> ;
+    owl:versionInfo "1.0.0" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+ent:TechConsultingDivision a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Technology Consulting Division"@en ;
+    rdfs:label "技术咨询事业部"@zh ;
+    rdfs:comment "A division organized by technology domain, such as cloud computing, AI, and data engineering"@en ;
+    rdfs:comment "按技术领域划分的事业部，如云计算、人工智能、数据工程等"@zh .
+
+ent:SolutionArchitectTeam a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Solution Architect Team"@en ;
+    rdfs:label "解决方案架构团队"@zh ;
+    rdfs:comment "A cross-domain architecture team responsible for designing end-to-end technology solutions for clients"@en ;
+    rdfs:comment "负责为客户设计端到端技术解决方案的跨领域架构团队"@zh .
+
+ent:CloudMigrationEngagement a owl:Class ;
+    rdfs:subClassOf uod-con:Engagement ;
+    rdfs:label "Cloud Migration Engagement"@en ;
+    rdfs:label "云迁移项目"@zh ;
+    rdfs:comment "A consulting engagement helping clients migrate traditional IT infrastructure to public, private, or hybrid cloud"@en ;
+    rdfs:comment "帮助客户将传统 IT 基础设施迁移到公有云、私有云或混合云的咨询项目"@zh .
+
+ent:AIPlatformEngagement a owl:Class ;
+    rdfs:subClassOf uod-con:Engagement ;
+    rdfs:label "AI Platform Engagement"@en ;
+    rdfs:label "AI 平台建设项目"@zh ;
+    rdfs:comment "Building enterprise AI/ML platforms for clients, including data lake, model training, and inference services"@en ;
+    rdfs:comment "为客户构建企业级 AI/ML 平台，包含数据湖、模型训练和推理服务的全栈建设"@zh .
+
+ent:DataGovernanceEngagement a owl:Class ;
+    rdfs:subClassOf uod-con:Engagement ;
+    rdfs:label "Data Governance Engagement"@en ;
+    rdfs:label "数据治理项目"@zh ;
+    rdfs:comment "A governance consulting engagement helping clients establish data standards, data quality management, and data asset catalogs"@en ;
+    rdfs:comment "帮助客户建立数据标准、数据质量管理和数据资产目录的治理咨询项目"@zh .
+
+ent:DevSecOpsEngagement a owl:Class ;
+    rdfs:subClassOf uod-con:Engagement ;
+    rdfs:label "DevSecOps Transformation Engagement"@en ;
+    rdfs:label "DevSecOps 转型项目"@zh ;
+    rdfs:comment "Helping clients build shift-left DevSecOps pipelines and engineering culture"@en ;
+    rdfs:comment "帮助客户构建安全左移的 DevSecOps 流水线和工程文化"@zh .
+
+ent:SolutionArchitectRole a owl:Class ;
+    rdfs:subClassOf uod-con:ConsultantRole ;
+    rdfs:label "Solution Architect"@en ;
+    rdfs:label "解决方案架构师角色"@zh ;
+    rdfs:comment "A senior technical role responsible for solution design, architecture review, and technology selection"@en ;
+    rdfs:comment "负责技术方案设计、架构评审和技术选型的高级技术角色"@zh .
+
+ent:TechLeadRole a owl:Class ;
+    rdfs:subClassOf uod-con:ConsultantRole ;
+    rdfs:label "Tech Lead"@en ;
+    rdfs:label "技术负责人角色"@zh ;
+    rdfs:comment "A role responsible for technical team management and technical delivery quality within an engagement"@en ;
+    rdfs:comment "在项目中负责技术团队管理和技术交付质量的角色"@zh .
+
+ent:DataEngineerRole a owl:Class ;
+    rdfs:subClassOf uod-con:ConsultantRole ;
+    rdfs:label "Data Engineer"@en ;
+    rdfs:label "数据工程师角色"@zh ;
+    rdfs:comment "A technical role responsible for data pipelines, ETL, and data platform construction"@en ;
+    rdfs:comment "负责数据管道、ETL 和数据平台建设的技术角色"@zh .
+
+ent:CloudEngineerRole a owl:Class ;
+    rdfs:subClassOf uod-con:ConsultantRole ;
+    rdfs:label "Cloud Engineer"@en ;
+    rdfs:label "云工程师角色"@zh ;
+    rdfs:comment "A technical role responsible for cloud architecture, IaC, and cloud-native application deployment"@en ;
+    rdfs:comment "负责云架构设计、IaC 和云原生应用部署的技术角色"@zh .
+
+ent:TechnicalAccelerator a owl:Class ;
+    rdfs:subClassOf uod-con:KnowledgeAsset ;
+    rdfs:label "Technical Accelerator"@en ;
+    rdfs:label "技术加速器"@zh ;
+    rdfs:comment "Proprietary reusable technical components, code templates, and automation scripts for accelerating delivery"@en ;
+    rdfs:comment "公司自研的可复用技术组件、代码模板和自动化脚本，用于加速项目交付"@zh .
+
+ent:TechRadarReport a owl:Class ;
+    rdfs:subClassOf uod-con:ThoughtLeadership ;
+    rdfs:label "Tech Radar Report"@en ;
+    rdfs:label "技术雷达报告"@zh ;
+    rdfs:comment "A periodic technology trend assessment report evaluating adoption recommendations for emerging technologies"@en ;
+    rdfs:comment "公司定期发布的技术趋势评估报告，评估新兴技术的采纳建议"@zh .
+
+ent:CloudReadinessAssessment a owl:Class ;
+    rdfs:subClassOf uod-con:Deliverable ;
+    rdfs:label "Cloud Readiness Assessment"@en ;
+    rdfs:label "云就绪评估"@zh ;
+    rdfs:comment "A comprehensive assessment deliverable evaluating the client's existing IT environment for cloud migration readiness"@en ;
+    rdfs:comment "对客户现有 IT 环境的云迁移就绪度进行全面评估的交付物"@zh .
+
+ent:ArchitectureBlueprint a owl:Class ;
+    rdfs:subClassOf uod-con:Deliverable ;
+    rdfs:label "Architecture Blueprint"@en ;
+    rdfs:label "架构蓝图"@zh ;
+    rdfs:comment "A detailed design document for the target architecture, including system topology, integration patterns, and technology selection"@en ;
+    rdfs:comment "目标架构的详细设计文档，包含系统拓扑、集成模式和技术选型"@zh .
+
+ent:CloudCostOptimizationPolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Cloud Cost Optimization Policy"@en ;
+    rdfs:label "云成本优化策略"@zh ;
+    rdfs:comment "Internal governance policy for cloud resource usage and cost control, including RI purchases, Spot instances, and idle resource cleanup"@en ;
+    rdfs:comment "规范云资源使用和成本控制的内部治理策略，包括 RI 购买、Spot 实例和闲置资源清理"@zh .
+
+ent:OpenSourceCompliancePolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Open Source Compliance Policy"@en ;
+    rdfs:label "开源合规策略"@zh ;
+    rdfs:comment "Compliance policy governing open-source software usage, license auditing, and security vulnerability management in projects"@en ;
+    rdfs:comment "规范项目中开源软件使用、许可证审核和安全漏洞管理的合规策略"@zh .
+
+ent:VendorLockInRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Vendor Lock-In Risk"@en ;
+    rdfs:label "供应商锁定风险"@zh ;
+    rdfs:comment "Migration and negotiation risks from over-dependence on a single cloud vendor or technology supplier"@en ;
+    rdfs:comment "过度依赖单一云厂商或技术供应商导致的迁移和谈判风险"@zh .
+
+ent:DataLeakageRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Data Leakage Risk"@en ;
+    rdfs:label "数据泄露风险"@zh ;
+    rdfs:comment "Risk of client data leakage due to improper permission configuration or data transmission during engagement delivery"@en ;
+    rdfs:comment "项目交付过程中因权限配置、数据传输不当导致的客户数据泄露风险"@zh .
+
+ent:CloudMigrationCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Cloud Migration Capability"@en ;
+    rdfs:label "云迁移能力"@zh ;
+    rdfs:comment "Organizational capability to assess, plan, and execute large-scale cloud migrations"@en ;
+    rdfs:comment "评估、规划和执行大规模云迁移的组织能力"@zh .
+
+ent:MLOpsCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "MLOps Capability"@en ;
+    rdfs:label "MLOps 能力"@zh ;
+    rdfs:comment "End-to-end machine learning operations capability covering model training, deployment, monitoring, and iteration"@en ;
+    rdfs:comment "端到端机器学习运维能力，涵盖模型训练、部署、监控和迭代"@zh .
+
+ent:CertificationCompletionKPI a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Certification Completion KPI"@en ;
+    rdfs:label "认证完成率 KPI"@zh ;
+    rdfs:comment "Annual completion rate for technical consultants obtaining cloud vendor and technology certifications"@en ;
+    rdfs:comment "技术顾问获取云厂商和技术认证的年度完成率"@zh .
+
+ent:CodeQualityKPI a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Code Quality KPI"@en ;
+    rdfs:label "代码质量 KPI"@zh ;
+    rdfs:comment "Quality metrics for delivered code, including test coverage, static analysis scores, and technical debt ratio"@en ;
+    rdfs:comment "项目交付代码的质量指标，包含测试覆盖率、静态分析评分和技术债务比率"@zh .
+
+ent:MigrationSuccessRateKPI a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Migration Success Rate KPI"@en ;
+    rdfs:label "迁移成功率 KPI"@zh ;
+    rdfs:comment "Percentage of applications and data successfully migrated in cloud migration engagements"@en ;
+    rdfs:comment "云迁移项目中应用和数据成功迁移的比例"@zh .
+
+ent:TechBlogProgram a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Tech Blog Program"@en ;
+    rdfs:label "技术博客计划"@zh ;
+    rdfs:comment "Internal program encouraging consultants to write technical blog posts for knowledge sharing and personal branding"@en ;
+    rdfs:comment "鼓励顾问撰写技术博客文章进行知识分享和个人品牌建设的内部流程"@zh .
+
+ent:TechCertificationProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Technical Certification Process"@en ;
+    rdfs:label "技术认证流程"@zh ;
+    rdfs:comment "Standardized process for consultants to apply, study, take exams, and get reimbursed for technical certifications"@en ;
+    rdfs:comment "顾问申请、学习、考试和报销技术认证的标准化流程"@zh .
+
+ent:ArchitectureReviewBoard a owl:Class ;
+    rdfs:subClassOf uod:Control ;
+    rdfs:label "Architecture Review Board"@en ;
+    rdfs:label "架构评审委员会"@zh ;
+    rdfs:comment "Internal committee reviewing and gatekeeping project technical solutions to ensure alignment with best practices"@en ;
+    rdfs:comment "对项目技术方案进行评审和把关的内部委员会，确保方案符合最佳实践"@zh .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+ent:has_tech_division a owl:ObjectProperty ;
+    rdfs:subPropertyOf uod:part_of ;
+    rdfs:label "has technology division"@en ;
+    rdfs:label "设有技术事业部"@zh ;
+    rdfs:domain uod-con:ConsultingFirm ;
+    rdfs:range ent:TechConsultingDivision ;
+    rdfs:comment "The firm has technology-domain-specific divisions"@en ;
+    rdfs:comment "公司设有按技术方向划分的事业部"@zh .
+
+ent:designs_solution_for a owl:ObjectProperty ;
+    rdfs:subPropertyOf uod:staffed_on ;
+    rdfs:label "designs solution for"@en ;
+    rdfs:label "为…设计解决方案"@zh ;
+    rdfs:domain ent:SolutionArchitectRole ;
+    rdfs:range uod-con:Engagement ;
+    rdfs:comment "A solution architect designs technical solutions for an engagement"@en ;
+    rdfs:comment "解决方案架构师为项目设计技术方案"@zh .
+
+ent:produces_blueprint a owl:ObjectProperty ;
+    rdfs:subPropertyOf uod:produces ;
+    rdfs:label "produces blueprint"@en ;
+    rdfs:label "产出架构蓝图"@zh ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range ent:ArchitectureBlueprint ;
+    rdfs:comment "An engagement produces an architecture blueprint deliverable"@en ;
+    rdfs:comment "项目产出架构蓝图交付物"@zh .
+
+ent:assessed_by_readiness a owl:ObjectProperty ;
+    rdfs:label "assessed by cloud readiness"@en ;
+    rdfs:label "经云就绪评估"@zh ;
+    rdfs:domain ent:CloudMigrationEngagement ;
+    rdfs:range ent:CloudReadinessAssessment ;
+    rdfs:comment "Cloud migration engagements begin with a cloud readiness assessment"@en ;
+    rdfs:comment "云迁移项目起始阶段须经云就绪评估"@zh .
+
+ent:reviewed_by_arb a owl:ObjectProperty ;
+    rdfs:subPropertyOf uod:reviewed_by ;
+    rdfs:label "reviewed by ARB"@en ;
+    rdfs:label "经架构评审委员会审核"@zh ;
+    rdfs:domain ent:ArchitectureBlueprint ;
+    rdfs:range ent:ArchitectureReviewBoard ;
+    rdfs:comment "Architecture blueprints must be reviewed and approved by the Architecture Review Board"@en ;
+    rdfs:comment "架构蓝图须经架构评审委员会审核通过"@zh .
+
+ent:uses_accelerator a owl:ObjectProperty ;
+    rdfs:subPropertyOf uod:contributes_to_knowledge ;
+    rdfs:label "uses accelerator"@en ;
+    rdfs:label "使用技术加速器"@zh ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range ent:TechnicalAccelerator ;
+    rdfs:comment "An engagement uses technical accelerators to speed up delivery"@en ;
+    rdfs:comment "项目使用技术加速器加速交付"@zh .
+
+ent:certified_through a owl:ObjectProperty ;
+    rdfs:label "certified through"@en ;
+    rdfs:label "通过…认证"@zh ;
+    rdfs:domain uod-con:ConsultantRole ;
+    rdfs:range ent:TechCertificationProcess ;
+    rdfs:comment "Consultants obtain qualifications through the technical certification process"@en ;
+    rdfs:comment "顾问通过技术认证流程获取资质"@zh .
+
+ent:publishes_radar a owl:ObjectProperty ;
+    rdfs:subPropertyOf uod:publishes_thought_leadership ;
+    rdfs:label "publishes tech radar"@en ;
+    rdfs:label "发布技术雷达"@zh ;
+    rdfs:domain ent:TechConsultingDivision ;
+    rdfs:range ent:TechRadarReport ;
+    rdfs:comment "Technology divisions periodically publish tech radar reports"@en ;
+    rdfs:comment "技术事业部定期发布技术雷达报告"@zh .
+
+ent:governed_by_oss_policy a owl:ObjectProperty ;
+    rdfs:subPropertyOf uod:governed_by_policy ;
+    rdfs:label "governed by OSS policy"@en ;
+    rdfs:label "受开源合规策略约束"@zh ;
+    rdfs:domain uod-con:Engagement ;
+    rdfs:range ent:OpenSourceCompliancePolicy ;
+    rdfs:comment "Engagements must comply with the open source compliance policy"@en ;
+    rdfs:comment "项目须遵守开源合规策略"@zh .
+
+ent:migration_measured_by a owl:ObjectProperty ;
+    rdfs:subPropertyOf uod:measured_by ;
+    rdfs:label "migration measured by"@en ;
+    rdfs:label "由迁移成功率衡量"@zh ;
+    rdfs:domain ent:CloudMigrationEngagement ;
+    rdfs:range ent:MigrationSuccessRateKPI ;
+    rdfs:comment "Cloud migration engagement effectiveness is measured by migration success rate KPI"@en ;
+    rdfs:comment "云迁移项目成效由迁移成功率 KPI 衡量"@zh .
+
+# ────────────────────────────────────────
+# NAMED INDIVIDUALS (Instances)
+# ────────────────────────────────────────
+
+ent:org_acme_tech a owl:NamedIndividual, uod-con:ConsultingFirm ;
+    rdfs:label "Acme Tech Solutions"@en ;
+    rdfs:label "极客方舟科技"@zh .
+
+ent:div_cloud a owl:NamedIndividual, ent:TechConsultingDivision ;
+    rdfs:label "Cloud & Infrastructure Division"@en ;
+    rdfs:label "云与基础设施事业部"@zh .
+
+ent:div_ai_data a owl:NamedIndividual, ent:TechConsultingDivision ;
+    rdfs:label "AI & Data Engineering Division"@en ;
+    rdfs:label "AI 与数据工程事业部"@zh .
+
+ent:div_devsecops a owl:NamedIndividual, ent:TechConsultingDivision ;
+    rdfs:label "DevSecOps & Platform Engineering Division"@en ;
+    rdfs:label "DevSecOps 与平台工程事业部"@zh .
+
+ent:team_sa a owl:NamedIndividual, ent:SolutionArchitectTeam ;
+    rdfs:label "Enterprise Solution Architecture Team"@en ;
+    rdfs:label "企业解决方案架构团队"@zh .
+
+ent:office_beijing a owl:NamedIndividual, uod-con:ConsultingOffice ;
+    rdfs:label "Acme Tech Beijing Office"@en ;
+    rdfs:label "极客方舟北京办公室"@zh .
+
+ent:office_shanghai a owl:NamedIndividual, uod-con:ConsultingOffice ;
+    rdfs:label "Acme Tech Shanghai Office"@en ;
+    rdfs:label "极客方舟上海办公室"@zh .
+
+ent:office_shenzhen a owl:NamedIndividual, uod-con:ConsultingOffice ;
+    rdfs:label "Acme Tech Shenzhen Office"@en ;
+    rdfs:label "极客方舟深圳办公室"@zh .
+
+ent:practice_cloud_migration a owl:NamedIndividual, uod-con:PracticeLine ;
+    rdfs:label "Cloud Migration & Modernization"@en ;
+    rdfs:label "云迁移与现代化"@zh .
+
+ent:practice_ai_ml a owl:NamedIndividual, uod-con:PracticeLine ;
+    rdfs:label "AI/ML Solutions"@en ;
+    rdfs:label "AI/ML 解决方案"@zh .
+
+ent:practice_data_governance a owl:NamedIndividual, uod-con:PracticeLine ;
+    rdfs:label "Data Governance & Analytics"@en ;
+    rdfs:label "数据治理与分析"@zh .
+
+ent:practice_devsecops a owl:NamedIndividual, uod-con:PracticeLine ;
+    rdfs:label "DevSecOps & SRE"@en ;
+    rdfs:label "DevSecOps 与 SRE"@zh .
+
+ent:accel_terraform_modules a owl:NamedIndividual, ent:TechnicalAccelerator ;
+    rdfs:label "Enterprise Terraform Module Library"@en ;
+    rdfs:label "企业级 Terraform 模块库"@zh .
+
+ent:accel_data_pipeline a owl:NamedIndividual, ent:TechnicalAccelerator ;
+    rdfs:label "Data Pipeline Starter Kit"@en ;
+    rdfs:label "数据管道快速搭建工具包"@zh .
+
+ent:accel_k8s_template a owl:NamedIndividual, ent:TechnicalAccelerator ;
+    rdfs:label "Kubernetes Deployment Template"@en ;
+    rdfs:label "Kubernetes 部署模板"@zh .
+
+ent:framework_cloud_adoption a owl:NamedIndividual, uod-con:Framework ;
+    rdfs:label "Acme Cloud Adoption Framework (ACAF)"@en ;
+    rdfs:label "极客方舟云采纳框架 (ACAF)"@zh .
+
+ent:framework_data_maturity a owl:NamedIndividual, uod-con:Framework ;
+    rdfs:label "Data Maturity Assessment Model"@en ;
+    rdfs:label "数据成熟度评估模型"@zh .
+
+ent:methodology_agile_consulting a owl:NamedIndividual, uod-con:Methodology ;
+    rdfs:label "Acme Agile Consulting Methodology"@en ;
+    rdfs:label "极客方舟敏捷咨询方法论"@zh .
+
+ent:report_tech_radar_2026 a owl:NamedIndividual, ent:TechRadarReport ;
+    rdfs:label "Acme Tech Radar 2026 Q1"@en ;
+    rdfs:label "极客方舟技术雷达 2026 Q1"@zh .
+
+ent:engagement_bank_cloud a owl:NamedIndividual, ent:CloudMigrationEngagement ;
+    rdfs:label "[Anonymized Bank A] Core Banking Cloud Migration"@en ;
+    rdfs:label "[匿名银行 A] 核心银行系统云迁移"@zh .
+
+ent:engagement_retail_ai a owl:NamedIndividual, ent:AIPlatformEngagement ;
+    rdfs:label "[Anonymized Retailer B] Recommendation AI Platform"@en ;
+    rdfs:label "[匿名零售商 B] 推荐引擎 AI 平台建设"@zh .
+
+ent:engagement_mfg_data a owl:NamedIndividual, ent:DataGovernanceEngagement ;
+    rdfs:label "[Anonymized Manufacturer C] Enterprise Data Catalog"@en ;
+    rdfs:label "[匿名制造商 C] 企业数据资产目录建设"@zh .
+
+ent:engagement_fintech_devsecops a owl:NamedIndividual, ent:DevSecOpsEngagement ;
+    rdfs:label "[Anonymized Fintech D] DevSecOps Pipeline"@en ;
+    rdfs:label "[匿名金融科技 D] DevSecOps 流水线建设"@zh .
+
+ent:sys_jira a owl:NamedIndividual, uod:SystemApplication ;
+    rdfs:label "Jira Project Management"@en ;
+    rdfs:label "Jira 项目管理系统"@zh .
+
+ent:sys_confluence a owl:NamedIndividual, uod-con:KnowledgePortal ;
+    rdfs:label "Confluence Knowledge Base"@en ;
+    rdfs:label "Confluence 知识库"@zh .
+
+ent:sys_gitlab a owl:NamedIndividual, uod:SystemApplication ;
+    rdfs:label "GitLab DevOps Platform"@en ;
+    rdfs:label "GitLab DevOps 平台"@zh .
+
+ent:sys_crm_hubspot a owl:NamedIndividual, uod-con:CRMSystem ;
+    rdfs:label "HubSpot CRM"@en ;
+    rdfs:label "HubSpot 客户关系管理"@zh .
+
+ent:policy_oss_compliance a owl:NamedIndividual, ent:OpenSourceCompliancePolicy ;
+    rdfs:label "Acme OSS Compliance Policy v2.0"@en ;
+    rdfs:label "极客方舟开源合规策略 v2.0"@zh .
+
+ent:policy_cloud_cost a owl:NamedIndividual, ent:CloudCostOptimizationPolicy ;
+    rdfs:label "Cloud Cost Governance Policy"@en ;
+    rdfs:label "云成本治理策略"@zh .
+
+ent:kpi_cert_completion a owl:NamedIndividual, ent:CertificationCompletionKPI ;
+    rdfs:label "Certification Completion Rate (Target: 90%+)"@en ;
+    rdfs:label "认证完成率（目标 90%+）"@zh .
+
+ent:kpi_code_quality a owl:NamedIndividual, ent:CodeQualityKPI ;
+    rdfs:label "Code Quality Score (Target: A-grade)"@en ;
+    rdfs:label "代码质量评分（目标：A 级）"@zh .
+
+ent:kpi_migration_success a owl:NamedIndividual, ent:MigrationSuccessRateKPI ;
+    rdfs:label "Migration Success Rate (Target: 99%+)"@en ;
+    rdfs:label "迁移成功率（目标 99%+）"@zh .
+
+ent:kpi_utilization a owl:NamedIndividual, uod-con:UtilizationMetric ;
+    rdfs:label "Consultant Utilization Rate (Target: 75%+)"@en ;
+    rdfs:label "顾问利用率（目标 75%+）"@zh .
+
+ent:kpi_client_nps a owl:NamedIndividual, uod:KPI ;
+    rdfs:label "Client NPS Score (Target: 65+)"@en ;
+    rdfs:label "客户 NPS 评分（目标 65+）"@zh .

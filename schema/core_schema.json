@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/ramphias/universal-ontology-definition/schema/core_schema.json",
   "title": "Universal Ontology Core Schema",
-  "description": "JSON Schema for validating L1 Universal Enterprise Ontology Core definitions",
+  "description": "JSON Schema for validating L1 Universal Enterprise Ontology Core definitions. v2.0 adds abstract classes, lifecycle status, cardinality, and deprecation tracking.",
   "type": "object",
   "required": ["metadata", "classes", "relations"],
   "properties": {
@@ -45,6 +45,11 @@
           "type": "string",
           "format": "date"
         },
+        "updated": {
+          "type": "string",
+          "format": "date",
+          "description": "Last modification date"
+        },
         "contributors": {
           "type": "array",
           "items": { "type": "string" }
@@ -54,6 +59,8 @@
     "classes": {
       "type": "array",
       "minItems": 1,
+      "maxItems": 25,
+      "description": "L1 Core classes, hard capped at 25 to prevent entropy growth (Governance Rule G-01)",
       "items": {
         "type": "object",
         "required": ["id", "label_zh", "definition"],
@@ -74,7 +81,36 @@
           },
           "parent": {
             "type": ["string", "null"],
-            "description": "Parent class ID or null for root classes"
+            "description": "Parent class ID or null for abstract root domains only"
+          },
+          "abstract": {
+            "type": "boolean",
+            "default": false,
+            "description": "Abstract classes cannot be directly instantiated; they serve as structural groupings for inheritance"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["stable", "experimental", "deprecated"],
+            "default": "stable",
+            "description": "Lifecycle status of this class"
+          },
+          "since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "description": "Version when this class was first introduced"
+          },
+          "deprecated_since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "description": "Version when this class was deprecated"
+          },
+          "replaced_by": {
+            "type": ["string", "null"],
+            "description": "ID of the class that replaces this one, if deprecated"
+          },
+          "replaced_from": {
+            "type": ["string", "null"],
+            "description": "ID of the class that this one replaces"
           },
           "definition": {
             "type": "string",
@@ -84,6 +120,32 @@
           "definition_en": {
             "type": "string",
             "description": "English definition"
+          }
+        }
+      }
+    },
+    "deprecated_classes": {
+      "type": "array",
+      "description": "Registry of classes removed or demoted from L1, with migration guidance",
+      "items": {
+        "type": "object",
+        "required": ["id", "deprecated_since"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$"
+          },
+          "replaced_by": {
+            "type": ["string", "null"],
+            "description": "Replacement class ID, or null if demoted to L2"
+          },
+          "deprecated_since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          },
+          "note": {
+            "type": "string",
+            "description": "Migration guidance for downstream consumers"
           }
         }
       }
@@ -107,17 +169,64 @@
           },
           "domain": {
             "type": "string",
-            "description": "Source class ID"
+            "description": "Source class ID — prefer abstract parent classes to enable L2 reuse"
           },
           "range": {
             "type": "string",
-            "description": "Target class ID"
+            "description": "Target class ID — prefer abstract parent classes to enable L2 reuse"
+          },
+          "cardinality": {
+            "type": "string",
+            "enum": ["1:1", "1:N", "N:1", "N:M"],
+            "default": "N:M",
+            "description": "Relationship cardinality"
+          },
+          "inverse_of": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "ID of the inverse relation, if defined"
+          },
+          "since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "description": "Version when this relation was first introduced"
+          },
+          "deprecated_since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          },
+          "replaced_by": {
+            "type": ["string", "null"]
           },
           "definition": {
             "type": "string",
             "minLength": 1
           },
           "definition_en": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "deprecated_relations": {
+      "type": "array",
+      "description": "Registry of relations removed or merged, with migration guidance",
+      "items": {
+        "type": "object",
+        "required": ["id", "deprecated_since"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "replaced_by": {
+            "type": ["string", "null"]
+          },
+          "deprecated_since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          },
+          "note": {
             "type": "string"
           }
         }
@@ -136,7 +245,7 @@
           },
           "type": {
             "type": "string",
-            "description": "Class ID this instance belongs to"
+            "description": "Class ID this instance belongs to — must not reference abstract classes"
           },
           "label": {
             "type": "string",

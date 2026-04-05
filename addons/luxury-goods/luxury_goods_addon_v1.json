@@ -1,232 +1,586 @@
 {
+  "$schema": "../../schema/addon_schema.json",
   "layer": "L2_luxury_goods_addon",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "extends": "L1_universal_organization_ontology",
-  "description": "奢侈品行业 addon ontology 数据，覆盖品牌、产品、渠道、客户体验、供应链与鉴真",
+  "compatible_core_version": "2.0.0",
+  "optional_extends": ["L2_common_enterprise_addon"],
+  "description": "奢侈品行业 addon ontology 数据，覆盖品牌管理、产品生命周期、全渠道零售、客户体验、供应链溯源与鉴真、稀缺性管控与行业合规",
+  "description_en": "Luxury goods industry addon ontology covering brand management, product lifecycle, omni-channel retail, client experience, supply chain traceability & authentication, scarcity management, and industry compliance",
   "classes": [
     {
       "id": "LuxuryBrand",
       "label_zh": "奢侈品牌",
+      "label_en": "Luxury Brand",
       "parent": "Organization",
-      "definition": "经营奢侈品品牌的企业或品牌主体"
+      "definition": "经营奢侈品品牌的企业或品牌主体，以独特的品牌遗产、工艺传承和稀缺性策略为核心竞争力",
+      "definition_en": "An enterprise or brand entity operating in the luxury goods sector, with brand heritage, craftsmanship legacy, and scarcity strategy as core competitive advantages"
     },
     {
       "id": "Maison",
       "label_zh": "品牌屋",
+      "label_en": "Maison",
       "parent": "OrgUnit",
-      "definition": "品牌或子品牌经营单元"
+      "definition": "品牌或子品牌的独立经营单元，拥有独立的创意方向和品牌定位",
+      "definition_en": "An independent operating unit for a brand or sub-brand, with its own creative direction and brand positioning"
+    },
+    {
+      "id": "Atelier",
+      "label_zh": "工坊",
+      "label_en": "Atelier",
+      "parent": "OrgUnit",
+      "definition": "承担手工制作、定制和修复工作的工艺中心，是品牌工艺传承的核心场所",
+      "definition_en": "A craftsmanship center responsible for handcrafting, bespoke creation, and restoration; core to brand artisanal heritage"
     },
     {
       "id": "LuxuryProduct",
       "label_zh": "奢侈品商品",
+      "label_en": "Luxury Product",
       "parent": "ProductService",
-      "definition": "高端时尚、皮具、珠宝、腕表、美妆等奢侈品"
+      "definition": "具有高工艺价值、品牌溢价和情感连接的高端商品，涵盖时装、皮具、珠宝、腕表、美妆等品类",
+      "definition_en": "High-end products with superior craftsmanship, brand premium, and emotional connection, spanning fashion, leather goods, jewelry, watches, beauty, etc."
     },
     {
       "id": "Collection",
       "label_zh": "系列",
-      "parent": "BusinessObject",
-      "definition": "按季节、主题或设计语言组织的系列"
+      "label_en": "Collection",
+      "parent": "Resource",
+      "definition": "按季节、主题或设计语言组织的商品系列，承载品牌创意叙事",
+      "definition_en": "A product series organized by season, theme, or design language, carrying the brand's creative narrative"
     },
     {
       "id": "SKUVariant",
       "label_zh": "SKU 变体",
-      "parent": "BusinessObject",
-      "definition": "颜色、尺寸、材质等层级的商品变体"
+      "label_en": "SKU Variant",
+      "parent": "Resource",
+      "definition": "奢侈品商品在颜色、尺寸、材质等维度的具体变体，通常具有独立库存和定价",
+      "definition_en": "A specific variant of a luxury product across color, size, material dimensions, typically with independent inventory and pricing"
+    },
+    {
+      "id": "LimitedEdition",
+      "label_zh": "限量款",
+      "label_en": "Limited Edition",
+      "parent": "LuxuryProduct",
+      "definition": "限定数量生产的稀缺商品，通常与特定事件、合作或纪念主题关联",
+      "definition_en": "A scarce product manufactured in limited quantities, often associated with specific events, collaborations, or commemorative themes"
     },
     {
       "id": "MaterialLot",
       "label_zh": "原料批次",
+      "label_en": "Material Lot",
       "parent": "Asset",
-      "definition": "皮革、贵金属、宝石等原料批次"
+      "definition": "皮革、贵金属、宝石、稀有面料等高价值原料的可追溯批次",
+      "definition_en": "A traceable lot of high-value raw materials such as leather, precious metals, gemstones, and rare fabrics"
     },
     {
       "id": "CraftsmanshipCertificate",
       "label_zh": "工艺证书",
-      "parent": "DocumentRecord",
-      "definition": "工艺、产地、手工流程证明"
+      "label_en": "Craftsmanship Certificate",
+      "parent": "Document",
+      "definition": "证明商品工艺、产地和手工流程的品质认证文件",
+      "definition_en": "A quality certification document attesting to a product's craftsmanship, origin, and artisanal process"
     },
     {
       "id": "AuthenticityCertificate",
       "label_zh": "真伪证书",
-      "parent": "DocumentRecord",
-      "definition": "防伪、序列号、区块链或数字护照证明"
+      "label_en": "Authenticity Certificate",
+      "parent": "Document",
+      "definition": "基于防伪技术（序列号、NFC芯片、区块链数字护照）的商品真伪认证",
+      "definition_en": "Product authenticity certification based on anti-counterfeiting technologies (serial numbers, NFC chips, blockchain digital passports)"
+    },
+    {
+      "id": "DigitalProductPassport",
+      "label_zh": "数字产品护照",
+      "label_en": "Digital Product Passport",
+      "parent": "Document",
+      "definition": "记录商品从原料到终端客户全生命周期的数字化身份档案，符合欧盟 DPP 法规要求",
+      "definition_en": "A digital identity record of a product's full lifecycle from raw materials to end customer, compliant with EU DPP regulations"
+    },
+    {
+      "id": "Channel",
+      "label_zh": "渠道",
+      "label_en": "Channel",
+      "parent": "Resource",
+      "definition": "品牌与客户交互的销售和服务渠道，包含线下门店和线上平台",
+      "definition_en": "A sales and service channel through which a brand interacts with clients, including offline stores and online platforms"
     },
     {
       "id": "Boutique",
       "label_zh": "精品店",
+      "label_en": "Boutique",
       "parent": "Channel",
-      "definition": "直营门店或品牌精品店渠道"
+      "definition": "品牌直营门店或品牌精品店，提供沉浸式品牌体验",
+      "definition_en": "A brand-operated store or boutique providing an immersive brand experience"
     },
     {
       "id": "DepartmentStoreCounter",
       "label_zh": "百货专柜",
+      "label_en": "Department Store Counter",
       "parent": "Channel",
-      "definition": "百货渠道直营网点"
+      "definition": "设立在高端百货中的品牌专营区域",
+      "definition_en": "A brand-exclusive section within a high-end department store"
+    },
+    {
+      "id": "ECommerceChannel",
+      "label_zh": "电商渠道",
+      "label_en": "E-Commerce Channel",
+      "parent": "Channel",
+      "definition": "品牌官网、平台旗舰店或独家线上合作渠道",
+      "definition_en": "Brand official website, platform flagship stores, or exclusive online partner channels"
     },
     {
       "id": "ClientAdvisorRole",
-      "label_zh": "客户顾问角色",
+      "label_zh": "客户顾问",
+      "label_en": "Client Advisor",
       "parent": "Role",
-      "definition": "负责高净值客户服务与销售的门店角色"
+      "definition": "负责高净值客户一对一服务与销售的门店角色，是品牌与客户之间的核心纽带",
+      "definition_en": "A store-level role responsible for one-on-one service and sales to high-net-worth clients; the core link between brand and customer"
     },
     {
       "id": "VIPClientRole",
-      "label_zh": "VIP 客户角色",
+      "label_zh": "VIP 客户",
+      "label_en": "VIP Client",
       "parent": "Role",
-      "definition": "具有高价值或高忠诚度的客户角色"
+      "definition": "具有高消费价值或高忠诚度的客户角色，享有优先购买权、专属活动和定制服务",
+      "definition_en": "A client role with high spending value or loyalty, entitled to priority purchasing, exclusive events, and bespoke services"
+    },
+    {
+      "id": "BrandAmbassadorRole",
+      "label_zh": "品牌大使",
+      "label_en": "Brand Ambassador",
+      "parent": "Role",
+      "definition": "代表品牌进行公共传播和文化影响的角色，包含名人代言人和行业意见领袖",
+      "definition_en": "A role representing the brand in public communication and cultural influence, including celebrity endorsers and key opinion leaders"
+    },
+    {
+      "id": "ArtisanRole",
+      "label_zh": "工匠",
+      "label_en": "Artisan",
+      "parent": "Role",
+      "definition": "掌握传统手工技艺、负责奢侈品制作的高技能工匠角色",
+      "definition_en": "A highly skilled craftsperson mastering traditional artisanal techniques, responsible for luxury product creation"
     },
     {
       "id": "PersonalShoppingService",
       "label_zh": "一对一私享服务",
+      "label_en": "Personal Shopping Service",
       "parent": "ProductService",
-      "definition": "预约制客户体验服务"
+      "definition": "面向 VIP 客户的预约制私密购物和造型顾问体验",
+      "definition_en": "An appointment-based private shopping and styling consultation experience for VIP clients"
     },
     {
       "id": "AfterSalesService",
       "label_zh": "售后养护服务",
+      "label_en": "After-Sales Service",
       "parent": "ProductService",
-      "definition": "维修、保养、翻新与延保服务"
+      "definition": "涵盖维修、保养、翻新、刻字和延保的全生命周期产品养护",
+      "definition_en": "Full lifecycle product care covering repair, maintenance, restoration, engraving, and extended warranty"
+    },
+    {
+      "id": "BespokeService",
+      "label_zh": "定制服务",
+      "label_en": "Bespoke Service",
+      "parent": "ProductService",
+      "definition": "根据客户个性化需求进行的专属定制，包含材质选择、设计定制和手工制作",
+      "definition_en": "Exclusive customization based on individual client needs, including material selection, design personalization, and handcrafting"
     },
     {
       "id": "TraceabilityEvent",
       "label_zh": "溯源事件",
+      "label_en": "Traceability Event",
       "parent": "Event",
-      "definition": "原料、生产、入库、销售、转移等溯源事件"
+      "definition": "商品全生命周期中的关键追踪节点：原料入库、生产完工、质检通过、入库、销售、转移、维修",
+      "definition_en": "Key tracking nodes throughout a product's lifecycle: material intake, production completion, QC pass, warehousing, sale, transfer, repair"
     },
     {
       "id": "CounterfeitRisk",
       "label_zh": "假货风险",
+      "label_en": "Counterfeit Risk",
       "parent": "Risk",
-      "definition": "仿冒、灰市、串货和二手流转带来的风险"
+      "definition": "仿冒品、灰色市场、串货和非授权二手流转对品牌价值和消费者信任造成的风险",
+      "definition_en": "Risk to brand value and consumer trust from counterfeit products, grey markets, parallel imports, and unauthorized secondary market circulation"
+    },
+    {
+      "id": "BrandDilutionRisk",
+      "label_zh": "品牌稀释风险",
+      "label_en": "Brand Dilution Risk",
+      "parent": "Risk",
+      "definition": "过度扩张产品线、折扣促销或渠道下沉导致的品牌定位模糊和溢价能力下降",
+      "definition_en": "Blurred brand positioning and declining pricing power caused by over-extension of product lines, promotional discounting, or channel downgrading"
     },
     {
       "id": "ScarcityRule",
       "label_zh": "稀缺性分配规则",
+      "label_en": "Scarcity Rule",
       "parent": "Rule",
-      "definition": "限量商品的配货、预约与购买资格规则"
+      "definition": "限量商品和热门款式的配货、预约和购买资格规则，通常与客户层级和购买历史关联",
+      "definition_en": "Allocation, reservation, and purchase eligibility rules for limited-edition and high-demand products, typically linked to client tier and purchase history"
+    },
+    {
+      "id": "PricingIntegrityPolicy",
+      "label_zh": "价格一致性政策",
+      "label_en": "Pricing Integrity Policy",
+      "parent": "Policy",
+      "definition": "确保品牌在全球市场和全渠道中维持一致定价策略和严格折扣管控的治理政策",
+      "definition_en": "A governance policy ensuring consistent pricing strategy and strict discount control across global markets and all channels"
     },
     {
       "id": "ClientelingCapability",
       "label_zh": "客户经营能力",
+      "label_en": "Clienteling Capability",
       "parent": "Capability",
-      "definition": "围绕高净值客群的识别、分层、触达和服务能力"
+      "definition": "围绕高净值客群的识别、分层、触达和个性化服务的系统性运营能力",
+      "definition_en": "Systematic operational capability for identifying, segmenting, engaging, and personally servicing high-net-worth client groups"
     },
     {
       "id": "ProductPassportCapability",
       "label_zh": "数字护照能力",
+      "label_en": "Product Passport Capability",
       "parent": "Capability",
-      "definition": "围绕商品数字身份、真伪与售后全生命周期的能力"
+      "definition": "建立和管理商品数字身份、真伪验证与售后服务全生命周期的数字化能力",
+      "definition_en": "Digital capability for establishing and managing product digital identity, authenticity verification, and full lifecycle after-sales service"
     },
     {
       "id": "AssortmentPlanningCapability",
       "label_zh": "精品配货能力",
+      "label_en": "Assortment Planning Capability",
       "parent": "Capability",
-      "definition": "围绕稀缺 SKU、门店等级和客户画像的分配能力"
+      "definition": "基于稀缺 SKU 供给、门店等级、客户画像和区域偏好进行智能配货分配的业务能力",
+      "definition_en": "Business capability for intelligent assortment allocation based on scarce SKU supply, store tier, client profiles, and regional preferences"
+    },
+    {
+      "id": "OmniChannelCapability",
+      "label_zh": "全渠道能力",
+      "label_en": "Omni-Channel Capability",
+      "parent": "Capability",
+      "definition": "打通精品店、百货专柜和线上渠道的库存可见性、客户识别和无缝购物体验的能力",
+      "definition_en": "Capability for cross-channel inventory visibility, client recognition, and seamless shopping experience across boutiques, department stores, and online channels"
+    },
+    {
+      "id": "ClientelingProcess",
+      "label_zh": "客户经营流程",
+      "label_en": "Clienteling Process",
+      "parent": "Process",
+      "definition": "从客户识别、分层、触达、私享服务到长期关系维护的端到端客户经营流程",
+      "definition_en": "End-to-end client engagement process from identification, segmentation, outreach, personal service to long-term relationship maintenance"
+    },
+    {
+      "id": "ProductAuthenticationProcess",
+      "label_zh": "产品鉴真流程",
+      "label_en": "Product Authentication Process",
+      "parent": "Process",
+      "definition": "从生产注册、NFC/区块链录入、销售激活到二手流转验证的全链路鉴真流程",
+      "definition_en": "Full-chain authentication process from production registration, NFC/blockchain enrollment, sales activation to secondary market verification"
+    },
+    {
+      "id": "AssortmentAllocationProcess",
+      "label_zh": "配货分配流程",
+      "label_en": "Assortment Allocation Process",
+      "parent": "Process",
+      "definition": "根据门店等级、客户需求和库存策略进行限量商品和新品的配货调拨流程",
+      "definition_en": "Allocation and distribution process for limited-edition and new products based on store tier, client demand, and inventory strategy"
+    },
+    {
+      "id": "ClientelingCRM",
+      "label_zh": "客户经营系统",
+      "label_en": "Clienteling CRM",
+      "parent": "SystemApplication",
+      "definition": "管理 VIP 客户档案、购买历史、偏好画像和触达记录的专业客户关系系统",
+      "definition_en": "A specialized CRM system managing VIP client profiles, purchase history, preference profiles, and engagement records"
+    },
+    {
+      "id": "ProductTraceabilitySystem",
+      "label_zh": "产品溯源系统",
+      "label_en": "Product Traceability System",
+      "parent": "SystemApplication",
+      "definition": "基于区块链、NFC或物联网技术的商品全生命周期溯源和鉴真平台",
+      "definition_en": "A product lifecycle traceability and authentication platform based on blockchain, NFC, or IoT technologies"
+    },
+    {
+      "id": "AvgTransactionValue",
+      "label_zh": "客单价",
+      "label_en": "Average Transaction Value",
+      "parent": "KPI",
+      "definition": "衡量门店或渠道平均每笔交易金额的核心零售指标",
+      "definition_en": "Core retail metric measuring the average monetary value per transaction at a store or channel"
+    },
+    {
+      "id": "RepurchaseRate",
+      "label_zh": "复购率",
+      "label_en": "Repurchase Rate",
+      "parent": "KPI",
+      "definition": "衡量客户在一定周期内再次购买的比例，反映客户忠诚度和品牌粘性",
+      "definition_en": "Metric measuring the proportion of clients making repeat purchases within a given period, reflecting client loyalty and brand stickiness"
+    },
+    {
+      "id": "SellThroughRate",
+      "label_zh": "售罄率",
+      "label_en": "Sell-Through Rate",
+      "parent": "KPI",
+      "definition": "衡量商品在特定时间段内的销售比例，是评估配货精准度和产品吸引力的关键指标",
+      "definition_en": "Metric measuring the proportion of inventory sold within a specific period, key to evaluating assortment accuracy and product appeal"
     }
   ],
   "relations": [
     {
       "id": "belongs_to_collection",
+      "label_zh": "属于系列",
+      "label_en": "belongs to collection",
       "domain": "LuxuryProduct",
       "range": "Collection",
-      "definition": "商品属于某个系列"
+      "definition": "商品属于某个设计系列",
+      "definition_en": "A product belongs to a design collection"
     },
     {
       "id": "has_variant",
+      "label_zh": "拥有变体",
+      "label_en": "has variant",
       "domain": "LuxuryProduct",
       "range": "SKUVariant",
-      "definition": "商品具有 SKU 变体"
+      "definition": "商品具有不同规格的 SKU 变体",
+      "definition_en": "A product has SKU variants of different specifications"
     },
     {
       "id": "crafted_from",
+      "label_zh": "由…制作",
+      "label_en": "crafted from",
       "domain": "LuxuryProduct",
       "range": "MaterialLot",
-      "definition": "商品使用原料批次"
+      "definition": "商品由特定原料批次制作",
+      "definition_en": "A product is crafted from a specific material lot"
     },
     {
       "id": "authenticated_by",
+      "label_zh": "由…认证",
+      "label_en": "authenticated by",
       "domain": "LuxuryProduct",
       "range": "AuthenticityCertificate",
-      "definition": "商品由真伪证书认证"
+      "definition": "商品由真伪证书认证",
+      "definition_en": "A product is authenticated by an authenticity certificate"
     },
     {
-      "id": "served_through",
-      "domain": "ProductService",
+      "id": "passported_by",
+      "label_zh": "由…登记",
+      "label_en": "passported by",
+      "domain": "LuxuryProduct",
+      "range": "DigitalProductPassport",
+      "definition": "商品的全生命周期由数字产品护照登记",
+      "definition_en": "A product's full lifecycle is registered by a digital product passport"
+    },
+    {
+      "id": "sold_through",
+      "label_zh": "通过…销售",
+      "label_en": "sold through",
+      "domain": "LuxuryProduct",
       "range": "Channel",
-      "definition": "服务通过渠道提供"
+      "definition": "商品通过特定渠道销售",
+      "definition_en": "A product is sold through a specific channel"
     },
     {
       "id": "advised_by",
+      "label_zh": "由…服务",
+      "label_en": "advised by",
       "domain": "VIPClientRole",
       "range": "ClientAdvisorRole",
-      "definition": "VIP 客户由客户顾问服务"
+      "definition": "VIP 客户由指定客户顾问提供专属服务",
+      "definition_en": "A VIP client is served by an assigned client advisor"
     },
     {
-      "id": "governed_by_scarcity_rule",
+      "id": "crafted_by",
+      "label_zh": "由…制作",
+      "label_en": "crafted by",
       "domain": "LuxuryProduct",
-      "range": "ScarcityRule",
-      "definition": "限量商品遵循稀缺性规则"
+      "range": "ArtisanRole",
+      "definition": "商品由工匠手工制作",
+      "definition_en": "A product is handcrafted by an artisan"
+    },
+    {
+      "id": "endorsed_by",
+      "label_zh": "由…代言",
+      "label_en": "endorsed by",
+      "domain": "Collection",
+      "range": "BrandAmbassadorRole",
+      "definition": "系列由品牌大使代言推广",
+      "definition_en": "A collection is endorsed and promoted by a brand ambassador"
     },
     {
       "id": "tracked_by_event",
+      "label_zh": "被…追踪",
+      "label_en": "tracked by event",
       "domain": "LuxuryProduct",
       "range": "TraceabilityEvent",
-      "definition": "商品被溯源事件追踪"
+      "definition": "商品在关键节点被溯源事件追踪记录",
+      "definition_en": "A product is tracked and recorded at key nodes by traceability events"
     },
     {
-      "id": "exposed_to_counterfeit_risk",
+      "id": "exposed_to",
+      "label_zh": "面临…风险",
+      "label_en": "exposed to",
       "domain": "LuxuryProduct",
-      "range": "CounterfeitRisk",
-      "definition": "商品面临假货风险"
+      "range": "Risk",
+      "definition": "商品面临特定风险（假货风险、品牌稀释风险等）",
+      "definition_en": "A product is exposed to specific risks (counterfeit, brand dilution, etc.)"
     },
     {
-      "id": "mitigated_by_passport",
-      "domain": "CounterfeitRisk",
-      "range": "ProductPassportCapability",
-      "definition": "假货风险通过数字护照能力缓释"
+      "id": "allocated_by",
+      "label_zh": "由…配货",
+      "label_en": "allocated by",
+      "domain": "SKUVariant",
+      "range": "AssortmentAllocationProcess",
+      "definition": "SKU 变体通过配货分配流程分配到各渠道",
+      "definition_en": "A SKU variant is distributed to channels through the assortment allocation process"
+    },
+    {
+      "id": "profiled_in",
+      "label_zh": "画像记录于",
+      "label_en": "profiled in",
+      "domain": "VIPClientRole",
+      "range": "ClientelingCRM",
+      "definition": "VIP 客户的画像和交互记录存储在客户经营系统中",
+      "definition_en": "A VIP client's profile and interaction records are stored in the clienteling CRM"
+    },
+    {
+      "id": "verified_by",
+      "label_zh": "由…验证",
+      "label_en": "verified by",
+      "domain": "AuthenticityCertificate",
+      "range": "ProductTraceabilitySystem",
+      "definition": "真伪证书由产品溯源系统验证",
+      "definition_en": "An authenticity certificate is verified by the product traceability system"
     }
   ],
   "sample_instances": [
     {
       "id": "brand_orion_maison",
       "type": "LuxuryBrand",
-      "label": "Orion Maison"
+      "label": "Orion Maison",
+      "label_zh": "奥利安品牌"
+    },
+    {
+      "id": "maison_haute_couture",
+      "type": "Maison",
+      "label": "Haute Couture Division",
+      "label_zh": "高级定制部"
     },
     {
       "id": "collection_fw26_aurora",
       "type": "Collection",
-      "label": "FW26 Aurora Collection"
+      "label": "FW26 Aurora Collection",
+      "label_zh": "FW26 极光系列"
     },
     {
       "id": "product_aurora_bag",
       "type": "LuxuryProduct",
-      "label": "Aurora Top Handle Bag"
+      "label": "Aurora Top Handle Bag",
+      "label_zh": "极光手提包"
+    },
+    {
+      "id": "product_limited_anniversary",
+      "type": "LimitedEdition",
+      "label": "25th Anniversary Collector's Piece",
+      "label_zh": "25 周年典藏限量款"
     },
     {
       "id": "sku_aurora_black_small",
       "type": "SKUVariant",
-      "label": "Aurora Small / Black"
+      "label": "Aurora Small / Noir",
+      "label_zh": "极光小号 / 黑色"
+    },
+    {
+      "id": "material_croc_exotic",
+      "type": "MaterialLot",
+      "label": "Exotic Crocodile Leather Lot #2026-003",
+      "label_zh": "异域鳄鱼皮批次 #2026-003"
     },
     {
       "id": "channel_shanghai_boutique",
       "type": "Boutique",
-      "label": "Shanghai Plaza Boutique"
+      "label": "Shanghai Plaza 66 Boutique",
+      "label_zh": "上海恒隆广场精品店"
+    },
+    {
+      "id": "channel_tmall_flagship",
+      "type": "ECommerceChannel",
+      "label": "Tmall Luxury Pavilion Flagship",
+      "label_zh": "天猫奢品旗舰店"
+    },
+    {
+      "id": "role_senior_advisor",
+      "type": "ClientAdvisorRole",
+      "label": "Senior Client Advisor",
+      "label_zh": "高级客户顾问"
+    },
+    {
+      "id": "role_vvip_client",
+      "type": "VIPClientRole",
+      "label": "VVIP Platinum Client",
+      "label_zh": "VVIP 铂金客户"
+    },
+    {
+      "id": "role_master_artisan",
+      "type": "ArtisanRole",
+      "label": "Master Leather Artisan",
+      "label_zh": "皮具大师工匠"
     },
     {
       "id": "cap_clienteling",
       "type": "ClientelingCapability",
-      "label": "VIP Clienteling"
+      "label": "VIP Clienteling",
+      "label_zh": "VIP 客户经营"
     },
     {
       "id": "cap_digital_passport",
       "type": "ProductPassportCapability",
-      "label": "Digital Product Passport"
+      "label": "Digital Product Passport",
+      "label_zh": "数字产品护照"
+    },
+    {
+      "id": "cap_omnichannel",
+      "type": "OmniChannelCapability",
+      "label": "Omni-Channel Retail",
+      "label_zh": "全渠道零售"
+    },
+    {
+      "id": "proc_authentication",
+      "type": "ProductAuthenticationProcess",
+      "label": "Product Authentication & Passport Registration",
+      "label_zh": "产品鉴真与护照注册"
+    },
+    {
+      "id": "sys_clienteling_crm",
+      "type": "ClientelingCRM",
+      "label": "Clienteling 360 Platform",
+      "label_zh": "客户经营 360 平台"
+    },
+    {
+      "id": "sys_traceability",
+      "type": "ProductTraceabilitySystem",
+      "label": "Blockchain Traceability Hub",
+      "label_zh": "区块链溯源中心"
     },
     {
       "id": "risk_counterfeit",
       "type": "CounterfeitRisk",
-      "label": "Cross-border Counterfeit Risk"
+      "label": "Cross-border Counterfeit Risk",
+      "label_zh": "跨境假货风险"
+    },
+    {
+      "id": "kpi_avg_transaction",
+      "type": "AvgTransactionValue",
+      "label": "Average Transaction Value (Target: ¥15,000+)",
+      "label_zh": "客单价（目标：¥15,000+）"
+    },
+    {
+      "id": "kpi_repurchase",
+      "type": "RepurchaseRate",
+      "label": "Annual Repurchase Rate (Target: 35%+)",
+      "label_zh": "年度复购率（目标：35%+）"
+    },
+    {
+      "id": "kpi_sell_through",
+      "type": "SellThroughRate",
+      "label": "Seasonal Sell-Through Rate (Target: 85%+)",
+      "label_zh": "季度售罄率（目标：85%+）"
     }
   ]
 }

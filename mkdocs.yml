@@ -7,7 +7,7 @@ repo_name: ramphias/universal-ontology-definition
 edit_uri: edit/main/docs-site/
 
 docs_dir: docs-site
-site_dir: site/docs
+site_dir: _mkdocs_site
 
 copyright: Copyright &copy; 2026 Universal Ontology Definition Contributors
 

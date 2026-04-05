@@ -1,0 +1,360 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# Universal Enterprise Ontology Core — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-05 00:36
+# ════════════════════════════════════════════════════════════════════════════
+
+uod:Ontology a owl:Ontology ;
+    rdfs:label "Universal Enterprise Ontology Core"@en ;
+    rdfs:label "适用于所有企业的组织通用 ontology 核心，定义了跨行业、跨企业的核心概念、关系与实例。v2.0 引入抽象域根类、泛型关系与版本演进机制。"@zh ;
+    owl:versionInfo "2.0.0" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+uod:Entity a owl:Class ;
+    rdfs:label "Entity"@en ;
+    rdfs:label "实体"@zh ;
+    rdfs:comment "Top-level abstraction for all identifiable and manageable things"@en ;
+    rdfs:comment "所有可被识别和管理的事物的顶层抽象"@zh ;
+    uod:abstract "true"^^xsd:boolean .
+
+uod:Party a owl:Class ;
+    rdfs:subClassOf uod:Entity ;
+    rdfs:label "Party"@en ;
+    rdfs:label "主体"@zh ;
+    rdfs:comment "The superclass of all entities that can participate in business and governance relationships"@en ;
+    rdfs:comment "可参与业务关系与治理关系的主体总类"@zh .
+
+uod:Person a owl:Class ;
+    rdfs:subClassOf uod:Party ;
+    rdfs:label "Person"@en ;
+    rdfs:label "人员"@zh ;
+    rdfs:comment "A natural person entity"@en ;
+    rdfs:comment "自然人主体"@zh .
+
+uod:Organization a owl:Class ;
+    rdfs:subClassOf uod:Party ;
+    rdfs:label "Organization"@en ;
+    rdfs:label "组织"@zh ;
+    rdfs:comment "A legal or non-legal organization entity"@en ;
+    rdfs:comment "法人或非法人组织"@zh .
+
+uod:OrgUnit a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Organizational Unit"@en ;
+    rdfs:label "组织单元"@zh ;
+    rdfs:comment "Internal organizational units such as departments, teams, committees, and program groups"@en ;
+    rdfs:comment "部门、团队、委员会、项目群等组织内部单元"@zh .
+
+uod:Resource a owl:Class ;
+    rdfs:subClassOf uod:Entity ;
+    rdfs:label "Resource"@en ;
+    rdfs:label "资源"@zh ;
+    rdfs:comment "Tangible or intangible resources created, modified, managed, or consumed by business processes"@en ;
+    rdfs:comment "被业务过程创建、变更、管理、消费的有形或无形资源"@zh ;
+    uod:abstract "true"^^xsd:boolean .
+
+uod:ProductService a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Product & Service"@en ;
+    rdfs:label "产品与服务"@zh ;
+    rdfs:comment "Products and services provided externally or used internally by an enterprise"@en ;
+    rdfs:comment "企业对外提供或内部使用的产品和服务对象"@zh .
+
+uod:Asset a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Asset"@en ;
+    rdfs:label "资产"@zh ;
+    rdfs:comment "Financial, physical, knowledge, data, brand, and other assets"@en ;
+    rdfs:comment "财务、实物、知识、数据、品牌等资产"@zh .
+
+uod:DataObject a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Data Object"@en ;
+    rdfs:label "数据对象"@zh ;
+    rdfs:comment "A structured or unstructured data entity"@en ;
+    rdfs:comment "结构化或非结构化的数据实体"@zh .
+
+uod:Document a owl:Class ;
+    rdfs:subClassOf uod:DataObject ;
+    rdfs:label "Document"@en ;
+    rdfs:label "文档与记录"@zh ;
+    rdfs:comment "Contracts, reports, files, documents, and records"@en ;
+    rdfs:comment "合同、报告、文件、单据、记录"@zh .
+
+uod:SystemApplication a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "System Application"@en ;
+    rdfs:label "系统应用"@zh ;
+    rdfs:comment "Software systems supporting processes, data, and decision-making"@en ;
+    rdfs:comment "支撑流程、数据和决策的软件系统"@zh .
+
+uod:Governance a owl:Class ;
+    rdfs:label "Governance"@en ;
+    rdfs:label "治理"@zh ;
+    rdfs:comment "Abstract domain for constraints, governance, and risk management"@en ;
+    rdfs:comment "用于约束、治理和风险管控的抽象域"@zh ;
+    uod:abstract "true"^^xsd:boolean .
+
+uod:Policy a owl:Class ;
+    rdfs:subClassOf uod:Governance ;
+    rdfs:label "Policy"@en ;
+    rdfs:label "政策"@zh ;
+    rdfs:comment "Management principles and constraint requirements"@en ;
+    rdfs:comment "管理原则与约束要求"@zh .
+
+uod:Rule a owl:Class ;
+    rdfs:subClassOf uod:Governance ;
+    rdfs:label "Rule"@en ;
+    rdfs:label "规则"@zh ;
+    rdfs:comment "Executable and evaluable business or control rules"@en ;
+    rdfs:comment "可执行、可判断的业务或控制规则"@zh .
+
+uod:Control a owl:Class ;
+    rdfs:subClassOf uod:Governance ;
+    rdfs:label "Control"@en ;
+    rdfs:label "控制"@zh ;
+    rdfs:comment "Control measures to reduce risk and ensure compliance and quality"@en ;
+    rdfs:comment "用于降低风险、保障合规和质量的控制措施"@zh .
+
+uod:Risk a owl:Class ;
+    rdfs:subClassOf uod:Governance ;
+    rdfs:label "Risk"@en ;
+    rdfs:label "风险"@zh ;
+    rdfs:comment "Uncertain events or conditions that may affect goal achievement"@en ;
+    rdfs:comment "可能影响目标实现的不确定事件或状态"@zh .
+
+uod:Operational a owl:Class ;
+    rdfs:label "Operational"@en ;
+    rdfs:label "运营"@zh ;
+    rdfs:comment "Abstract domain describing how an organization operates, including roles, capabilities, processes, and events"@en ;
+    rdfs:comment "描述组织运作方式的抽象域，包含角色、能力、流程与事件"@zh ;
+    uod:abstract "true"^^xsd:boolean .
+
+uod:Role a owl:Class ;
+    rdfs:subClassOf uod:Operational ;
+    rdfs:label "Role"@en ;
+    rdfs:label "角色"@zh ;
+    rdfs:comment "An identity or responsibility assumed by a party in a given context"@en ;
+    rdfs:comment "主体在某一上下文中承担的身份或职责"@zh .
+
+uod:Capability a owl:Class ;
+    rdfs:subClassOf uod:Operational ;
+    rdfs:label "Capability"@en ;
+    rdfs:label "能力"@zh ;
+    rdfs:comment "A stable and reusable business capability possessed by an organization"@en ;
+    rdfs:comment "组织稳定具备且可被复用的业务能力"@zh .
+
+uod:Process a owl:Class ;
+    rdfs:subClassOf uod:Operational ;
+    rdfs:label "Process"@en ;
+    rdfs:label "流程"@zh ;
+    rdfs:comment "An end-to-end sequence of activities defined to achieve business objectives; sub-activities expressed via part_of relation"@en ;
+    rdfs:comment "为实现业务目标而定义的端到端活动序列，可通过 part_of 关系表达子活动"@zh .
+
+uod:Event a owl:Class ;
+    rdfs:subClassOf uod:Operational ;
+    rdfs:label "Event"@en ;
+    rdfs:label "事件"@zh ;
+    rdfs:comment "A state change occurring in the business or technical environment"@en ;
+    rdfs:comment "发生在业务或技术环境中的状态变化"@zh .
+
+uod:Measurement a owl:Class ;
+    rdfs:label "Measurement"@en ;
+    rdfs:label "度量"@zh ;
+    rdfs:comment "Abstract domain for goal-setting and performance measurement"@en ;
+    rdfs:comment "描述目标设定与绩效衡量的抽象域"@zh ;
+    uod:abstract "true"^^xsd:boolean .
+
+uod:Goal a owl:Class ;
+    rdfs:subClassOf uod:Measurement ;
+    rdfs:label "Goal"@en ;
+    rdfs:label "目标"@zh ;
+    rdfs:comment "Outcomes an organization aims to achieve"@en ;
+    rdfs:comment "组织希望达成的结果"@zh .
+
+uod:KPI a owl:Class ;
+    rdfs:subClassOf uod:Measurement ;
+    rdfs:label "Key Performance Indicator"@en ;
+    rdfs:label "关键指标"@zh ;
+    rdfs:comment "Metrics that measure the degree of goal achievement"@en ;
+    rdfs:comment "衡量目标达成程度的指标"@zh .
+
+# ────────────────────────────────────────
+# DEPRECATED CLASSES
+# ────────────────────────────────────────
+
+uod:BusinessObject a owl:Class ;
+    owl:deprecated true ;
+    rdfs:comment "Replaced by uod:Resource"@en ;
+    rdfs:comment "BusinessObject was overly broad; replaced by Resource as a more precise abstract parent"@en .
+
+uod:DocumentRecord a owl:Class ;
+    owl:deprecated true ;
+    rdfs:comment "Replaced by uod:Document"@en ;
+    rdfs:comment "Simplified naming; Document conveys the same semantics"@en .
+
+uod:Activity a owl:Class ;
+    owl:deprecated true ;
+    rdfs:comment "Sub-activities are now expressed via part_of relation on Process; no standalone class needed"@en .
+
+uod:Channel a owl:Class ;
+    owl:deprecated true ;
+    rdfs:comment "Demoted to L2 common addon; not universally applicable to all enterprises"@en .
+
+uod:MarketSegment a owl:Class ;
+    owl:deprecated true ;
+    rdfs:comment "Demoted to L2 common addon; marketing-domain concept"@en .
+
+uod:Location a owl:Class ;
+    owl:deprecated true ;
+    rdfs:comment "Demoted to L2 common addon; can be modeled as an attribute or a common extension"@en .
+
+uod:Decision a owl:Class ;
+    owl:deprecated true ;
+    rdfs:comment "Replaced by uod:Event"@en ;
+    rdfs:comment "Can be modeled as an Event subtype in L2; semantically a state change"@en .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+uod:plays_role a owl:ObjectProperty ;
+    rdfs:label "plays role"@en ;
+    rdfs:label "扮演角色"@zh ;
+    rdfs:domain uod:Party ;
+    rdfs:range uod:Role ;
+    rdfs:comment "A party plays a specific role"@en ;
+    rdfs:comment "主体扮演某个角色"@zh .
+
+uod:part_of a owl:ObjectProperty ;
+    rdfs:label "part of"@en ;
+    rdfs:label "属于/组成"@zh ;
+    rdfs:domain uod:Entity ;
+    rdfs:range uod:Entity ;
+    rdfs:comment "An entity is part of another entity (unifies belongs_to and composed_of)"@en ;
+    rdfs:comment "一个实体是另一个实体的组成部分（合并了 belongs_to 和 composed_of）"@zh .
+
+uod:owns a owl:ObjectProperty ;
+    rdfs:label "owns"@en ;
+    rdfs:label "拥有"@zh ;
+    rdfs:domain uod:Party ;
+    rdfs:range uod:Resource ;
+    rdfs:comment "A party owns or is responsible for a resource"@en ;
+    rdfs:comment "主体拥有或负责资源"@zh .
+
+uod:accountable_for a owl:ObjectProperty ;
+    rdfs:label "accountable for"@en ;
+    rdfs:label "负责"@zh ;
+    rdfs:domain uod:Role ;
+    rdfs:range uod:Operational ;
+    rdfs:comment "A role is accountable for an operational element (capability, process, etc.)"@en ;
+    rdfs:comment "角色对运营元素（能力、流程等）负责"@zh .
+
+uod:realized_by a owl:ObjectProperty ;
+    rdfs:label "realized by"@en ;
+    rdfs:label "由…实现"@zh ;
+    rdfs:domain uod:Capability ;
+    rdfs:range uod:Process ;
+    rdfs:comment "A capability is realized by a process"@en ;
+    rdfs:comment "能力由流程实现"@zh .
+
+uod:consumes a owl:ObjectProperty ;
+    rdfs:label "consumes"@en ;
+    rdfs:label "消费"@zh ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod:Resource ;
+    rdfs:comment "A process consumes resources"@en ;
+    rdfs:comment "流程消费资源"@zh .
+
+uod:produces a owl:ObjectProperty ;
+    rdfs:label "produces"@en ;
+    rdfs:label "产出"@zh ;
+    rdfs:domain uod:Process ;
+    rdfs:range uod:Resource ;
+    rdfs:comment "A process produces resources"@en ;
+    rdfs:comment "流程产出资源"@zh .
+
+uod:recorded_in a owl:ObjectProperty ;
+    rdfs:label "recorded in"@en ;
+    rdfs:label "记录于"@zh ;
+    rdfs:domain uod:DataObject ;
+    rdfs:range uod:SystemApplication ;
+    rdfs:comment "A data object is recorded in a system application"@en ;
+    rdfs:comment "数据对象记录于系统"@zh .
+
+uod:governed_by a owl:ObjectProperty ;
+    rdfs:label "governed by"@en ;
+    rdfs:label "受…治理"@zh ;
+    rdfs:domain uod:Operational ;
+    rdfs:range uod:Governance ;
+    rdfs:comment "An operational element is governed by a governance element (generalizes both governed_by and constrained_by)"@en ;
+    rdfs:comment "运营元素受治理要素约束（泛化了原 governed_by 和 constrained_by）"@zh .
+
+uod:mitigated_by a owl:ObjectProperty ;
+    rdfs:label "mitigated by"@en ;
+    rdfs:label "由…缓释"@zh ;
+    rdfs:domain uod:Risk ;
+    rdfs:range uod:Control ;
+    rdfs:comment "A risk is mitigated by a control measure"@en ;
+    rdfs:comment "风险由控制措施缓释"@zh .
+
+uod:triggered_by a owl:ObjectProperty ;
+    rdfs:label "triggered by"@en ;
+    rdfs:label "由…触发"@zh ;
+    rdfs:domain uod:Event ;
+    rdfs:range uod:Process ;
+    rdfs:comment "An event triggers a process"@en ;
+    rdfs:comment "事件触发流程"@zh .
+
+uod:measured_by a owl:ObjectProperty ;
+    rdfs:label "measured by"@en ;
+    rdfs:label "由…衡量"@zh ;
+    rdfs:domain uod:Operational ;
+    rdfs:range uod:KPI ;
+    rdfs:comment "An operational element is measured by a KPI (generalizes the former Goal-only constraint)"@en ;
+    rdfs:comment "运营元素由指标衡量（泛化了原 Goal→KPI 的限制）"@zh .
+
+# ────────────────────────────────────────
+# NAMED INDIVIDUALS (Instances)
+# ────────────────────────────────────────
+
+uod:org_acme_corp a owl:NamedIndividual, uod:Organization ;
+    rdfs:label "Acme Corporation"@en ;
+    rdfs:label "示例公司"@zh .
+
+uod:ou_operations_dept a owl:NamedIndividual, uod:OrgUnit ;
+    rdfs:label "Operations Department"@en ;
+    rdfs:label "运营部"@zh .
+
+uod:role_ceo a owl:NamedIndividual, uod:Role ;
+    rdfs:label "Chief Executive Officer"@en ;
+    rdfs:label "首席执行官"@zh .
+
+uod:cap_supply_chain a owl:NamedIndividual, uod:Capability ;
+    rdfs:label "Supply Chain Management"@en ;
+    rdfs:label "供应链管理"@zh .
+
+uod:proc_order_to_cash a owl:NamedIndividual, uod:Process ;
+    rdfs:label "Order to Cash"@en ;
+    rdfs:label "订单到回款"@zh .
+
+uod:sys_erp a owl:NamedIndividual, uod:SystemApplication ;
+    rdfs:label "Enterprise Resource Planning System"@en ;
+    rdfs:label "企业资源计划系统"@zh .
+
+uod:goal_revenue_growth a owl:NamedIndividual, uod:Goal ;
+    rdfs:label "Revenue Growth"@en ;
+    rdfs:label "营收增长"@zh .
+
+uod:kpi_customer_satisfaction a owl:NamedIndividual, uod:KPI ;
+    rdfs:label "Customer Satisfaction Score"@en ;
+    rdfs:label "客户满意度评分"@zh .

@@ -39,11 +39,13 @@ jobs:
       - name: Build documentation
         run: mkdocs build --strict
 
-      - name: Add original static homepage
+      - name: Assemble final site
         run: |
+          mkdir -p site
           cp docs/index.html site/
           cp -r docs/css site/
           cp -r docs/js site/
+          mv _mkdocs_site site/docs
           touch site/.nojekyll
 
       - name: Upload artifact
