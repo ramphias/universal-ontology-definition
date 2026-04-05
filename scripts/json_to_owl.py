@@ -322,6 +322,131 @@ def generate_turtle(data, project_root):
         lines[-1] = lines[-1].rstrip(" ;") + " ."
         lines.append("")
 
+    # ── Axioms ──
+    axioms = data.get("axioms", [])
+    if axioms:
+        lines.append("# " + "─" * 40)
+        lines.append("# AXIOMS (OWL 2 Semantic Constraints)")
+        lines.append("# " + "─" * 40)
+        lines.append("")
+
+        # Collect disjoint pairs for potential AllDisjointClasses grouping
+        disjoint_pairs = []
+
+        for ax in axioms:
+            ax_id = ax.get("id", "")
+            ax_type = ax.get("type", "")
+            comment = ax.get("definition_en", ax.get("definition", ""))
+
+            if ax_type == "disjoint":
+                cls_list = ax.get("classes", [])
+                if len(cls_list) == 2:
+                    c1 = resolve_class_ref(cls_list[0], local_classes, local_ns, registry)
+                    c2 = resolve_class_ref(cls_list[1], local_classes, local_ns, registry)
+                    lines.append(f"# {ax_id}: {comment}")
+                    lines.append(f"{c1} owl:disjointWith {c2} .")
+                    lines.append("")
+                elif len(cls_list) > 2:
+                    refs = " ".join(resolve_class_ref(c, local_classes, local_ns, registry) for c in cls_list)
+                    lines.append(f"# {ax_id}: {comment}")
+                    lines.append(f"[] a owl:AllDisjointClasses ;")
+                    lines.append(f"    owl:members ( {refs} ) .")
+                    lines.append("")
+
+            elif ax_type == "transitive":
+                rel = ax.get("relation", "")
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in {r["id"] for r in data.get("relations", [])} else f"uod:{rel}"
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{rel_ref} a owl:TransitiveProperty .")
+                lines.append("")
+
+            elif ax_type == "asymmetric":
+                rel = ax.get("relation", "")
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in {r["id"] for r in data.get("relations", [])} else f"uod:{rel}"
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{rel_ref} a owl:AsymmetricProperty .")
+                lines.append("")
+
+            elif ax_type == "symmetric":
+                rel = ax.get("relation", "")
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in {r["id"] for r in data.get("relations", [])} else f"uod:{rel}"
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{rel_ref} a owl:SymmetricProperty .")
+                lines.append("")
+
+            elif ax_type == "functional":
+                rel = ax.get("relation", "")
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in {r["id"] for r in data.get("relations", [])} else f"uod:{rel}"
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{rel_ref} a owl:FunctionalProperty .")
+                lines.append("")
+
+            elif ax_type == "inverse_functional":
+                rel = ax.get("relation", "")
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in {r["id"] for r in data.get("relations", [])} else f"uod:{rel}"
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{rel_ref} a owl:InverseFunctionalProperty .")
+                lines.append("")
+
+            elif ax_type == "existential":
+                subj = ax.get("subject_class", "")
+                rel = ax.get("relation", "")
+                obj = ax.get("object_class", "")
+                subj_ref = resolve_class_ref(subj, local_classes, local_ns, registry)
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in {r["id"] for r in data.get("relations", [])} else f"uod:{rel}"
+                obj_ref = resolve_class_ref(obj, local_classes, local_ns, registry)
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{subj_ref} rdfs:subClassOf [")
+                lines.append(f"    a owl:Restriction ;")
+                lines.append(f"    owl:onProperty {rel_ref} ;")
+                lines.append(f"    owl:someValuesFrom {obj_ref}")
+                lines.append(f"] .")
+                lines.append("")
+
+            elif ax_type == "universal":
+                subj = ax.get("subject_class", "")
+                rel = ax.get("relation", "")
+                obj = ax.get("object_class", "")
+                subj_ref = resolve_class_ref(subj, local_classes, local_ns, registry)
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in {r["id"] for r in data.get("relations", [])} else f"uod:{rel}"
+                obj_ref = resolve_class_ref(obj, local_classes, local_ns, registry)
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{subj_ref} rdfs:subClassOf [")
+                lines.append(f"    a owl:Restriction ;")
+                lines.append(f"    owl:onProperty {rel_ref} ;")
+                lines.append(f"    owl:allValuesFrom {obj_ref}")
+                lines.append(f"] .")
+                lines.append("")
+
+            elif ax_type in ("cardinality_min", "cardinality_max", "cardinality_exact"):
+                subj = ax.get("subject_class", "")
+                rel = ax.get("relation", "")
+                val = ax.get("value", 0)
+                subj_ref = resolve_class_ref(subj, local_classes, local_ns, registry)
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in {r["id"] for r in data.get("relations", [])} else f"uod:{rel}"
+                owl_pred = {
+                    "cardinality_min": "owl:minCardinality",
+                    "cardinality_max": "owl:maxCardinality",
+                    "cardinality_exact": "owl:cardinality",
+                }[ax_type]
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{subj_ref} rdfs:subClassOf [")
+                lines.append(f"    a owl:Restriction ;")
+                lines.append(f"    owl:onProperty {rel_ref} ;")
+                lines.append(f'    {owl_pred} "{val}"^^xsd:nonNegativeInteger')
+                lines.append(f"] .")
+                lines.append("")
+
+            elif ax_type == "subproperty":
+                rel = ax.get("relation", "")
+                parent_rel = ax.get("parent_relation", "")
+                local_rels = {r["id"] for r in data.get("relations", [])}
+                rel_ref = f"{local_ns[0]}:{rel}" if rel in local_rels else f"uod:{rel}"
+                parent_ref = f"{local_ns[0]}:{parent_rel}" if parent_rel in local_rels else f"uod:{parent_rel}"
+                lines.append(f"# {ax_id}: {comment}")
+                lines.append(f"{rel_ref} rdfs:subPropertyOf {parent_ref} .")
+                lines.append("")
+
     # ── Named Individuals (Sample Instances) ──
     instances = data.get("sample_instances", [])
     if instances:

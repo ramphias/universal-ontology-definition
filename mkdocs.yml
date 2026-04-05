@@ -126,6 +126,7 @@ nav:
     - core/index.md
     - Classes Reference: core/classes.md
     - Relations Reference: core/relations.md
+    - Axioms Reference: core/axioms.md
     - Sample Instances: core/instances.md
   - Industry Addons (L2):
     - addons/index.md
@@ -137,5 +138,6 @@ nav:
   - Design Guide:
     - guides/index.md
     - Ontology Design Rules: guides/design-rules.md
+    - Merging Layers: guides/merge-layers.md
     - Contributing: guides/contributing.md
   - Changelog: changelog.md

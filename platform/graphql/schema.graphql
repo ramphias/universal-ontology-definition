@@ -24,6 +24,9 @@ type Query {
 
   risk(id: ID!): Risk
   risks(limit: Int = 50): [Risk!]!
+
+  axiom(id: ID!): Axiom
+  axioms(type: AxiomType, limit: Int = 50): [Axiom!]!
 }
 
 # ─── Abstract Domain: Entity ─────────────────────────────────────────────────
@@ -293,4 +296,51 @@ input ProcessFilter {
 enum PartyType {
   PERSON
   ORGANIZATION
+}
+
+# ─── Axioms ─────────────────────────────────────────────────────────────────
+
+"""
+Formal semantic axiom constraining classes and/or relations.
+Maps to OWL 2 constructs (disjointWith, Restriction, TransitiveProperty, etc.).
+"""
+type Axiom {
+  id: ID!
+  type: AxiomType!
+  labelZh: String!
+  labelEn: String
+  definition: String
+  definitionEn: String
+  """Class IDs involved (for disjoint axioms)."""
+  classes: [String!]
+  """The class being constrained (for cardinality, existential, universal axioms)."""
+  subjectClass: String
+  """Relation ID being constrained or characterized."""
+  relation: String
+  """The filler/target class (for existential, universal axioms)."""
+  objectClass: String
+  """Cardinality value (for cardinality axioms)."""
+  value: Int
+  """Parent relation ID (for subproperty axioms)."""
+  parentRelation: String
+  status: String
+  since: String
+}
+
+"""
+Axiom type enum mapping to OWL 2 constructs.
+"""
+enum AxiomType {
+  DISJOINT
+  CARDINALITY_MIN
+  CARDINALITY_MAX
+  CARDINALITY_EXACT
+  EXISTENTIAL
+  UNIVERSAL
+  FUNCTIONAL
+  INVERSE_FUNCTIONAL
+  SYMMETRIC
+  ASYMMETRIC
+  TRANSITIVE
+  SUBPROPERTY
 }

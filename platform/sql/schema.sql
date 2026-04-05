@@ -253,6 +253,42 @@ CREATE TABLE operational_kpi (
     PRIMARY KEY (subject_type, subject_id, kpi_id)
 );
 
+-- ═══════════════════════════════════════════════════════════════════════════════
+-- AXIOMS — Formal Semantic Constraints
+-- ═══════════════════════════════════════════════════════════════════════════════
+
+CREATE TABLE axiom (
+    id              VARCHAR(100) PRIMARY KEY,
+    axiom_type      VARCHAR(30) NOT NULL CHECK (axiom_type IN (
+        'disjoint', 'cardinality_min', 'cardinality_max', 'cardinality_exact',
+        'existential', 'universal', 'functional', 'inverse_functional',
+        'symmetric', 'asymmetric', 'transitive', 'subproperty'
+    )),
+    label_zh        VARCHAR(255) NOT NULL,
+    label_en        VARCHAR(255),
+    definition      TEXT NOT NULL,
+    definition_en   TEXT,
+    subject_class   VARCHAR(100),       -- class being constrained
+    relation        VARCHAR(100),       -- relation being constrained
+    object_class    VARCHAR(100),       -- filler/target class
+    cardinality_val INTEGER,            -- for cardinality axioms
+    parent_relation VARCHAR(100),       -- for subproperty axioms
+    status          VARCHAR(20) DEFAULT 'stable' CHECK (status IN ('stable', 'experimental', 'deprecated')),
+    since           VARCHAR(20),
+    created_at      TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Junction table for disjoint axioms (which reference multiple classes)
+CREATE TABLE axiom_disjoint_class (
+    axiom_id    VARCHAR(100) NOT NULL REFERENCES axiom(id) ON DELETE CASCADE,
+    class_name  VARCHAR(100) NOT NULL,
+    PRIMARY KEY (axiom_id, class_name)
+);
+
+CREATE INDEX idx_axiom_type ON axiom(axiom_type);
+CREATE INDEX idx_axiom_subject ON axiom(subject_class);
+CREATE INDEX idx_axiom_relation ON axiom(relation);
+
 -- ─── Indexes ────────────────────────────────────────────────────────────────
 
 CREATE INDEX idx_party_type ON party(party_type);

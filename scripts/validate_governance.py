@@ -287,6 +287,80 @@ def validate_required_fields(ontology: dict, report: GovernanceReport):
         report.warn("BILINGUAL", f"Classes missing English label/definition: {missing_en}")
 
 
+def validate_axioms(ontology: dict, report: GovernanceReport):
+    """Validate axiom references, naming, and bilingual definitions"""
+    import re
+
+    axioms = ontology.get("axioms", [])
+    if not axioms:
+        report.ok("AXIOM", "No axioms defined (optional)")
+        return
+
+    classes = ontology.get("classes", [])
+    relations = ontology.get("relations", [])
+    class_ids = {c["id"] for c in classes}
+    relation_ids = {r["id"] for r in relations}
+    # Include deprecated relations for subproperty axioms
+    deprecated_rels = ontology.get("deprecated_relations", [])
+    all_relation_ids = relation_ids | {r["id"] for r in deprecated_rels}
+
+    ax_prefix = re.compile(r"^ax_[a-z][a-z0-9_]*$")
+
+    bad_naming = []
+    bad_refs = []
+    missing_bilingual = []
+
+    for ax in axioms:
+        ax_id = ax.get("id", "<no-id>")
+
+        # Naming convention: ax_ prefix + snake_case
+        if not ax_prefix.match(ax_id):
+            bad_naming.append(ax_id)
+
+        # Bilingual check
+        if not ax.get("definition_en"):
+            missing_bilingual.append(ax_id)
+
+        # Reference integrity by type
+        ax_type = ax.get("type", "")
+
+        if ax_type == "disjoint":
+            for cls in ax.get("classes", []):
+                if cls not in class_ids:
+                    bad_refs.append(f"Axiom '{ax_id}' references unknown class '{cls}'")
+
+        if ax.get("subject_class") and ax["subject_class"] not in class_ids:
+            bad_refs.append(f"Axiom '{ax_id}' subject_class '{ax['subject_class']}' not found")
+
+        if ax.get("object_class") and ax["object_class"] not in class_ids:
+            bad_refs.append(f"Axiom '{ax_id}' object_class '{ax['object_class']}' not found")
+
+        if ax.get("relation") and ax["relation"] not in all_relation_ids:
+            bad_refs.append(f"Axiom '{ax_id}' relation '{ax['relation']}' not found")
+
+        if ax.get("parent_relation") and ax["parent_relation"] not in all_relation_ids:
+            bad_refs.append(f"Axiom '{ax_id}' parent_relation '{ax['parent_relation']}' not found")
+
+    # Report naming
+    if not bad_naming:
+        report.ok("AXIOM", f"All {len(axioms)} axiom IDs follow ax_ prefix + snake_case")
+    else:
+        report.fail("AXIOM", f"Invalid axiom IDs (must match ax_snake_case): {bad_naming}")
+
+    # Report references
+    if not bad_refs:
+        report.ok("AXIOM", f"All axiom class/relation references are valid")
+    else:
+        for br in bad_refs:
+            report.fail("AXIOM", br)
+
+    # Report bilingual
+    if not missing_bilingual:
+        report.ok("AXIOM", f"All {len(axioms)} axioms have bilingual definitions")
+    else:
+        report.warn("AXIOM", f"Axioms missing English definition: {missing_bilingual}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="L1 Core Governance Validator")
     parser.add_argument(
@@ -320,6 +394,7 @@ def main():
     validate_referential_integrity(ontology, report)
     validate_abstract_classes(ontology, report)
     validate_required_fields(ontology, report)
+    validate_axioms(ontology, report)
 
     success = report.print_report()
 
