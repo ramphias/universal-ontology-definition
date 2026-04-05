@@ -43,6 +43,7 @@ Raw/
 tmp/
 *.tmp
 *.log
+site/
 
 # Local archive/legacy
 legacy/

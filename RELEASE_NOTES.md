@@ -1,78 +1,77 @@
-# 🌐 Universal Ontology Definition v1.1.0
+# 🌐 Universal Ontology Definition v2.0.0
 
-**Introducing the L0 Platform & Syntax Bindings Layer — multi-platform Ontology support.**
+**Anti-Entropy Refactoring — A major restructuring for long-term maintainability and clarity.**
 
-## 🆕 What's New in v1.1.0
+## ⚠️ Breaking Changes
 
-### L0 — Platform & Syntax Bindings Layer
+- **L1 Core restructured**: 25 classes → 24 classes (4 abstract domains + 20 concrete)
+- **`BusinessObject` → `Resource`** — all L2 addons must update parent references
+- **`DocumentRecord` → `Document`** — all L2 addons must update parent references
+- **`Activity` demoted to L2** — now in `addons/common/` as a subtype of `Process`
+- **Relations merged/renamed**:
+  - `belongs_to` + `composed_of` → `part_of`
+  - `is_accountable_for` → `accountable_for`
+  - `constrained_by` → merged into `governed_by`
+  - `supports` and `requires_decision` removed
 
-A brand new foundation layer that provides concrete technical serializations for the L1 semantic core:
+## 🆕 What's New in v2.0.0
 
-| Platform | Format | Use Case |
-|:---|:---|:---|
-| **OWL/RDF** | Turtle (.ttl) | Knowledge graphs, SPARQL queries, Semantic Web |
-| **JSON-LD** | JSON-LD Context (.jsonld) | REST APIs, Linked Data, Web standards |
-| **GraphQL** | Schema (.graphql) | Modern API layers, Frontend integration |
-| **SQL DDL** | PostgreSQL (.sql) | Relational databases, Data warehouses |
+### Structural Improvements
+- **4 Abstract Domain Root Classes**: `Entity`, `Governance`, `Operational`, `Measurement` — organizes all classes into a clear tree
+- **`Resource` abstract class** — replaces `BusinessObject` as parent for ProductService, Asset, DataObject, Document, SystemApplication
+- **`deprecated_classes` and `deprecated_relations` registries** — migration guidance built into the ontology
+- **Schema lifecycle fields**: `abstract`, `status`, `since`, `deprecated_since`, `replaced_by`
+- **Relation metadata**: `cardinality` (1:1, 1:N, N:1, N:M), `inverse_of` declarations
 
-### Architecture Evolution: Three-Layer → Four-Layer
+### New Components
+- **`addons/common/` L2 addon** — Common Enterprise Extension containing universally useful classes (Activity, Contract, Report, Project, Stakeholder, Regulation, Channel, MarketSegment, Location, Decision)
+- **L3 Enterprise Layer** — `enterprise/` with template and Acme Tech Solutions example
+- **MkDocs Material documentation site** — full documentation at GitHub Pages
+- **`scripts/json_to_owl.py`** — JSON-to-OWL/RDF Turtle converter
+- **`scripts/pack_for_webprotege.py`** — WebProtégé package builder
+- **`scripts/validate_governance.py`** — Automated CI governance validator (Rules G-01 through G-08)
 
-```
-  v1.0.0 (Three-Layer)          v1.1.0 (Four-Layer)
-  ┌──────────────────┐          ┌──────────────────┐
-  │   L3: Enterprise │          │   L3: Enterprise │
-  ├──────────────────┤          ├──────────────────┤
-  │   L2: Industry   │          │   L2: Industry   │
-  ├──────────────────┤          ├──────────────────┤
-  │   L1: Core       │          │   L1: Core       │
-  └──────────────────┘          ├══════════════════┤
-                                │   L0: Platform   │  ← NEW
-                                └──────────────────┘
-```
-
-**Why L0?** Separating *what concepts mean* (L1) from *how they're expressed* (L0) enables the same semantic core to serve knowledge graphs, REST APIs, relational databases, and more — without duplicating or drifting definitions.
-
-## ✨ Full Feature Set
-
-### L1 — Universal Enterprise Ontology Core
-- 25 universal entity classes (Party, Organization, Process, Capability, Risk, Goal, KPI, etc.)
-- 16 standard relationship definitions
-- 8 sample instances
-- Full bilingual support (English + Chinese)
-
-### L2 — Industry Addons
-- **Consulting Industry Addon** — 40+ classes, 34 relations, 25+ instances
-- **Luxury Goods Industry Addon** — 21 classes, 10 relations, 8 instances
-- **Addon Template** for community contributors
-
-### L0 — Platform Bindings
-- **OWL/RDF** — Full OWL 2 ontology in Turtle format with w3id.org namespace
-- **JSON-LD** — Complete `@context` for seamless JSON-to-RDF mapping
-- **GraphQL** — Type definitions with interfaces, enums, and query roots
-- **SQL DDL** — PostgreSQL schema with UUID PKs, junction tables, indexes
-- **Template** for contributing new platform bindings
-
-### Infrastructure
-- JSON Schema validation for core and addon definitions
-- Four-layer architecture documentation
-- Addon development guide
-- Platform binding contribution guide
+### Schema & Platform Updates
+- **`maxItems: 25` constraint** in `core_schema.json` for class cap enforcement
+- **`addon_schema.json` `extends` field** now supports both string and array format
+- **All L0 platform bindings updated** to v2.0 (OWL/RDF, JSON-LD, GraphQL, SQL DDL)
+- **Generalized relation domains/ranges** for better L2 reuse
 
 ## 📐 Four-Layer Architecture
 
 | Layer | Purpose | Stability |
 |:---|:---|:---|
 | L0 Platform | Technical serialization for specific platforms | High |
-| L1 Core | Universal enterprise semantic concepts | Very High |
+| L1 Core | Universal enterprise semantic concepts (24 classes) | Very High |
 | L2 Addons | Industry-specific extensions | High |
 | L3 Enterprise | Private customizations | Flexible |
 
-## 🚀 Get Started
+### L1 Core Domain Structure (v2.0)
 
-1. Choose your L0 platform binding (OWL, JSON-LD, GraphQL, or SQL)
-2. Inherit L1 Core as your semantic foundation
-3. Select L2 industry addons (or contribute your own)
-4. Build L3 private extensions for your enterprise
+```
+L1 Core (24 classes)
+├── Entity (abstract)
+│   ├── Party, Organization, Role
+│   └── Resource (abstract)
+│       ├── ProductService, Asset, DataObject, Document, SystemApplication
+├── Governance (abstract)
+│   ├── Policy, Standard, Rule, Metric, Goal, KPI
+├── Operational (abstract)
+│   ├── Process, Event, Capability, Risk, Project
+├── Measurement (abstract)
+│   └── TimePoint
+```
+
+## 🚀 Migration Guide
+
+For projects upgrading from v1.x:
+
+1. Replace `"parent": "BusinessObject"` → `"parent": "Resource"` in all L2/L3 JSON files
+2. Replace `"parent": "DocumentRecord"` → `"parent": "Document"`
+3. Move any `Activity` references to depend on `addons/common/`
+4. Update relation names: `belongs_to` → `part_of`, `is_accountable_for` → `accountable_for`
+5. Remove references to `constrained_by`, `supports`, `requires_decision`
+6. Re-run `scripts/json_to_owl.py` to regenerate platform bindings
 
 ## 📄 License
 
