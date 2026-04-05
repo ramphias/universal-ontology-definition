@@ -41,12 +41,18 @@ jobs:
 
       - name: Assemble final site
         run: |
-          mkdir -p site
+          mkdir -p site/docs
+          # Copy landing page to root
           cp docs/index.html site/
-          cp -r docs/css site/
-          cp -r docs/js site/
-          mv _mkdocs_site site/docs
+          # Copy landing page assets if they exist
+          [ -d "docs/css" ] && cp -r docs/css site/ || echo "No docs/css"
+          [ -d "docs/js" ] && cp -r docs/js site/ || echo "No docs/js"
+          # Copy mkdocs site to /docs subfolder
+          cp -r _mkdocs_site/* site/docs/
           touch site/.nojekyll
+          # Verify structure
+          echo "--- Site Layout ---"
+          find site -maxdepth 2
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
