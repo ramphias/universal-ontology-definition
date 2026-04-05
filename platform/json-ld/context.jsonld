@@ -58,6 +58,21 @@
     "governed_by": { "@id": "uod:governed_by", "@type": "@id" },
     "mitigated_by": { "@id": "uod:mitigated_by", "@type": "@id" },
     "triggered_by": { "@id": "uod:triggered_by", "@type": "@id" },
-    "measured_by": { "@id": "uod:measured_by", "@type": "@id" }
+    "measured_by": { "@id": "uod:measured_by", "@type": "@id" },
+
+    "axioms": { "@id": "uod:axioms", "@container": "@set" },
+    "disjointWith": { "@id": "owl:disjointWith", "@type": "@id" },
+    "allValuesFrom": { "@id": "owl:allValuesFrom", "@type": "@id" },
+    "someValuesFrom": { "@id": "owl:someValuesFrom", "@type": "@id" },
+    "onProperty": { "@id": "owl:onProperty", "@type": "@id" },
+    "minCardinality": { "@id": "owl:minCardinality", "@type": "xsd:nonNegativeInteger" },
+    "maxCardinality": { "@id": "owl:maxCardinality", "@type": "xsd:nonNegativeInteger" },
+    "cardinality": { "@id": "owl:cardinality", "@type": "xsd:nonNegativeInteger" },
+    "TransitiveProperty": "owl:TransitiveProperty",
+    "AsymmetricProperty": "owl:AsymmetricProperty",
+    "SymmetricProperty": "owl:SymmetricProperty",
+    "FunctionalProperty": "owl:FunctionalProperty",
+    "InverseFunctionalProperty": "owl:InverseFunctionalProperty",
+    "subPropertyOf": { "@id": "rdfs:subPropertyOf", "@type": "@id" }
   }
 }

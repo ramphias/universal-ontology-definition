@@ -232,6 +232,96 @@
         }
       }
     },
+    "axioms": {
+      "type": "array",
+      "description": "Formal semantic axioms (OWL 2-compatible) constraining classes and relations",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "definition"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^ax_[a-z][a-z0-9_]*$",
+            "description": "Axiom identifier with ax_ prefix, snake_case"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "disjoint",
+              "cardinality_min",
+              "cardinality_max",
+              "cardinality_exact",
+              "existential",
+              "universal",
+              "functional",
+              "inverse_functional",
+              "symmetric",
+              "asymmetric",
+              "transitive",
+              "subproperty"
+            ],
+            "description": "Axiom type, maps to OWL 2 construct"
+          },
+          "label_zh": {
+            "type": "string",
+            "description": "Chinese label"
+          },
+          "label_en": {
+            "type": "string",
+            "description": "English label"
+          },
+          "classes": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^[A-Z][a-zA-Z0-9]*$" },
+            "minItems": 2,
+            "description": "Array of class IDs (used by disjoint axioms)"
+          },
+          "subject_class": {
+            "type": "string",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$",
+            "description": "The class being constrained (used by cardinality, existential, universal axioms)"
+          },
+          "relation": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "Relation ID being constrained or characterized"
+          },
+          "object_class": {
+            "type": "string",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$",
+            "description": "The filler/target class (used by existential, universal axioms)"
+          },
+          "value": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Cardinality value (used by cardinality_min, cardinality_max, cardinality_exact)"
+          },
+          "parent_relation": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "Parent relation ID (used by subproperty axioms)"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["stable", "experimental", "deprecated"],
+            "default": "stable"
+          },
+          "since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Chinese definition"
+          },
+          "definition_en": {
+            "type": "string",
+            "description": "English definition"
+          }
+        }
+      }
+    },
     "sample_instances": {
       "type": "array",
       "items": {

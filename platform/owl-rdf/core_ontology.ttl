@@ -276,3 +276,88 @@ uod:measured_by a owl:ObjectProperty ;
     rdfs:domain uod:Operational ;
     rdfs:range uod:KPI ;
     rdfs:comment "An operational element is measured by a KPI"@en .
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# AXIOMS — OWL 2 Formal Semantic Constraints
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ─── Disjoint Class Axioms ──────────────────────────────────────────────────
+
+# ax_person_org_disjoint: Person and Organization cannot overlap
+uod:Person owl:disjointWith uod:Organization .
+
+# ax_policy_rule_disjoint: Policy and Rule cannot overlap
+uod:Policy owl:disjointWith uod:Rule .
+
+# Four abstract domain roots are pairwise disjoint
+[] a owl:AllDisjointClasses ;
+    owl:members ( uod:Entity uod:Governance uod:Operational uod:Measurement ) .
+
+# ─── Property Characteristics ───────────────────────────────────────────────
+
+# ax_part_of_transitive: part_of is transitive
+uod:part_of a owl:TransitiveProperty .
+
+# ax_part_of_asymmetric: part_of is asymmetric
+uod:part_of a owl:AsymmetricProperty .
+
+# ─── Existential Restrictions (someValuesFrom) ──────────────────────────────
+
+# ax_process_realizes_capability: Every Capability realized by some Process
+uod:Capability rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty uod:realized_by ;
+    owl:someValuesFrom uod:Process
+] .
+
+# ax_risk_mitigated_by_control: Every Risk mitigated by some Control
+uod:Risk rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty uod:mitigated_by ;
+    owl:someValuesFrom uod:Control
+] .
+
+# ax_kpi_measures_operational: Every KPI measures some Operational element
+uod:KPI rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty uod:measured_by ;
+    owl:someValuesFrom uod:Operational
+] .
+
+# ax_plays_role_domain_party: Every Role is played by some Party
+uod:Role rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty [ owl:inverseOf uod:plays_role ] ;
+    owl:someValuesFrom uod:Party
+] .
+
+# ─── Universal Restrictions (allValuesFrom) ─────────────────────────────────
+
+# ax_owns_domain_party: owns range restricted to Resource
+uod:Party rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty uod:owns ;
+    owl:allValuesFrom uod:Resource
+] .
+
+# ax_governed_by_range_governance: governed_by targets only Governance subclasses
+uod:Operational rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty uod:governed_by ;
+    owl:allValuesFrom uod:Governance
+] .
+
+# ─── Cardinality Restrictions ───────────────────────────────────────────────
+
+# ax_org_min_one_role: Organization plays at least 1 Role
+uod:Organization rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty uod:plays_role ;
+    owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+# ─── Subproperty Axioms ────────────────────────────────────────────────────
+
+# ax_composed_of_sub_part_of: (deprecated) composed_of was a subproperty of part_of
+# Note: composed_of is deprecated in v2.0 and merged into part_of
