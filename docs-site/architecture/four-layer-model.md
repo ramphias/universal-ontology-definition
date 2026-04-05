@@ -11,7 +11,7 @@ Universal Ontology Definition uses a **Technical—Universal—Industry—Enterp
 │  │  Org A    │  │  Org B    │  │  Org C    │   ← Tenant isolation │
 │  └──────────┘  └──────────┘  └──────────┘                       │
 ├──────────────────────────────────────────────────────────────────┤
-│  L2: Industry & Domain Addons                                    │
+│  L2: Industry & Domain Extensions                                    │
 │  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐                  │
 │  │Conslt│ │Luxury│ │Financ│ │Manuf │ │Retail│  ← Community      │
 │  └──────┘ └──────┘ └──────┘ └──────┘ └──────┘                  │
@@ -53,7 +53,7 @@ Universal Ontology Definition uses a **Technical—Universal—Industry—Enterp
 | **Modify Rights** | Only project maintainers, requires community review |
 | **Inheritance** | All L2 and L3 must inherit from L1 |
 
-## L2 — Industry & Domain Addons
+## L2 — Industry & Domain Extensions
 
 | Dimension | Description |
 |:---|:---|
@@ -71,7 +71,7 @@ Universal Ontology Definition uses a **Technical—Universal—Industry—Enterp
 | **Scope** | Enterprise-specific objects, system mappings, organizational constraints, internal terminology |
 | **Stability** | Flexible — enterprise self-managed |
 | **Modify Rights** | Enterprise administrators |
-| **Inheritance** | Extends L1 + selected L2 addons |
+| **Inheritance** | Extends L1 + selected L2 extensions |
 
 ## Design Principles
 

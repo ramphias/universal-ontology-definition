@@ -81,21 +81,33 @@ def get_namespace_for_layer(layer, data=None):
 
 def get_extends_namespaces(data):
     """Get namespace prefixes for all extended layers."""
+    import re as _re
     extends = data.get("extends", [])
     if isinstance(extends, str):
         extends = [extends]
     result = []
     for ext in extends:
-        # Normalize: strip version suffixes like _v1, _v2
-        ext_key = ext
+        # Step 1: exact match
+        if ext in LAYER_NS:
+            result.append(LAYER_NS[ext])
+            continue
+        # Step 2: strip trailing version suffix (_v1, _v2, _v1.0, etc.) then exact match
+        ext_stripped = _re.sub(r'[_\-]v\d+(\.\d+)*$', '', ext)
+        if ext_stripped in LAYER_NS:
+            result.append(LAYER_NS[ext_stripped])
+            continue
+        # Step 3: find the LAYER_NS key that is a prefix of ext (longest match wins)
+        best = None
+        best_len = 0
         for layer_id in LAYER_NS:
-            if ext.startswith(layer_id.split("_")[0] + "_") or ext == layer_id:
-                ext_key = layer_id
-                break
-            # try matching by prefix
-            if layer_id.startswith(ext[:10]):
-                ext_key = layer_id
-                break
+            if ext.startswith(layer_id) and len(layer_id) > best_len:
+                best = layer_id
+                best_len = len(layer_id)
+        if best:
+            result.append(LAYER_NS[best])
+            continue
+        # Step 4: fallback guess from L-level prefix
+        ext_key = ext
         if ext_key in LAYER_NS:
             result.append(LAYER_NS[ext_key])
         else:

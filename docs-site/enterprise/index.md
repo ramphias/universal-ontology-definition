@@ -4,7 +4,7 @@ The Enterprise Customization Layer is where specific organizations define their 
 
 ## Why L3?
 
-While the Universal Core (L1) and Industry Addons (L2) provide a standardized semantic foundation, every enterprise has unique needs:
+While the Universal Core (L1) and Industry and Domain Extension (L2) provide a standardized semantic foundation, every enterprise has unique needs:
 
 - **Internal systems & IDs** — Mapping ontology classes to specific internal database tables or API endpoints
 - **Proprietary processes** — Definitions for workflows unique to the company's competitive advantage
@@ -25,7 +25,7 @@ An L3 implementation follows this pattern:
   "version": "1.0.0",
   "extends": [
     "L1_universal_enterprise_ontology_v1",
-    "L2_consulting_industry_addon"
+    "L2_consulting_industry_extension"
   ],
   "classes": [
     {
@@ -50,7 +50,7 @@ An L3 implementation follows this pattern:
 
 ## Getting Started
 
-1. **Inherit**: Choose your L1 core and relevant L2 industry addons to extend
+1. **Inherit**: Choose your L1 core and relevant L2 Industry and Domain Extension to extend
 2. **Define**: Add enterprise-specific classes using the `parent` field to link back to L1/L2 classes
 3. **Map**: Use L0 platform bindings to deploy the ontology to your internal knowledge graph or data layer
 
@@ -64,6 +64,6 @@ An L3 implementation follows this pattern:
 
 !!! info "L3 Inheritance Rules"
     - L3 **must** extend L1 (mandatory)
-    - L3 **may** extend one or more L2 addons (optional)
+    - L3 **may** extend one or more L2 extensions (optional)
     - L3 cannot override core definitions from L1 or L2
     - L3 classes must use the `parent` field to inherit from L1/L2 classes

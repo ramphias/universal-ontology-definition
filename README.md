@@ -36,7 +36,7 @@ Enterprise digitalization commonly faces:
 │         L3: Enterprise Customization Layer                       │  ← Private extensions
 │    (Company A)    (Company B)    (Company C)                     │
 ├──────────────────────────────────────────────────────────────────┤
-│         L2: Industry & Domain Addons                             │  ← Optional, pluggable
+│         L2: Industry & Domain Extensions                             │  ← Optional, pluggable
 │  (Common)  (Consulting)  (Luxury)  (Finance)  (Manufacturing)   │
 ├──────────────────────────────────────────────────────────────────┤
 │         L1: Universal Enterprise Ontology Core (v2.0)            │  ← Mandatory inheritance
@@ -53,13 +53,13 @@ Enterprise digitalization commonly faces:
 
 ## ✨ Key Features
 
-- 🏗️ **Four-Layer Separation** — Stable semantic core, pluggable industry addons, free enterprise customization, multi-platform bindings
+- 🏗️ **Four-Layer Separation** — Stable semantic core, pluggable Industry and Domain Extension, free enterprise customization, multi-platform bindings
 - 🛡️ **Anti-Entropy by Design** — 4 abstract domain roots, hard class caps, governance rules, and CI validation prevent ontology sprawl
 - 📐 **Standardized Definition Format** — Unified JSON Schema with lifecycle management (status, since, deprecated_since)
 - 🔗 **Inheritance & Extension** — L2 extends L1, L3 extends L1+L2, with generalized domain/range relations
 - ⚙️ **Platform Bindings** — L0 provides ready-to-use OWL/RDF, JSON-LD, GraphQL, and SQL mappings
 - 🌍 **Bilingual Support** — All concepts include Chinese and English labels
-- 🤝 **Community-Driven** — Anyone can contribute industry addons, platform bindings, or improve core definitions
+- 🤝 **Community-Driven** — Anyone can contribute Industry and Domain Extension, platform bindings, or improve core definitions
 
 ## 📁 Repository Structure
 
@@ -67,11 +67,11 @@ Enterprise digitalization commonly faces:
 .
 ├── core/                       # L1 Universal Enterprise Ontology Core
 │   └── universal_ontology_v1.json
-├── addons/                     # L2 Industry & Domain Addons
+├── extensions/                     # L2 Industry & Domain Extensions
 │   ├── common/                 #   └── Common Enterprise Extension (demoted L1 classes)
-│   ├── consulting/             #   └── Consulting Industry Addon
-│   ├── luxury-goods/           #   └── Luxury Goods Industry Addon
-│   └── _template/              #   └── Addon Contribution Template
+│   ├── consulting/             #   └── Consulting Industry and Domain Extension
+│   ├── luxury-goods/           #   └── Luxury Goods Industry and Domain Extension
+│   └── _template/              #   └── Extension Contribution Template
 ├── enterprise/                 # L3 Enterprise Customization Layer (public samples)
 │   ├── acme-tech-solutions/    #   └── Sample Virtual Enterprise (L3 demo)
 │   ├── _template/              #   └── Enterprise Layer Template
@@ -90,7 +90,7 @@ Enterprise digitalization commonly faces:
 ├── docs/                       # Design Documentation & Specs
 └── schema/                     # JSON Schema Validation
     ├── core_schema.json
-    └── addon_schema.json
+    └── extension_schema.json
 ```
 
 ## 🚀 Quick Start
@@ -106,7 +106,7 @@ L1 v2.0 defines **24 classes** (4 abstract domains + 20 concrete) and **12 gener
 | 🟩 **Operational** | Role, Capability, Process, Event |
 | 🟪 **Measurement** | Goal, KPI |
 
-> Classes like Channel, Location, MarketSegment, Decision, and Activity have been moved to the [`addons/common/`](addons/common/) L2 addon for better separation of concerns.
+> Classes like Channel, Location, MarketSegment, Decision, and Activity have been moved to the [`extensions/common/`](extensions/common/) L2 extension for better separation of concerns.
 
 ### Using Platform Bindings (L0)
 
@@ -119,13 +119,13 @@ Choose the binding that matches your technology stack:
 | GraphQL | Modern API layers, Frontend integration | [`platform/graphql/`](platform/graphql/) |
 | SQL DDL | Relational databases, Data warehouses | [`platform/sql/`](platform/sql/) |
 
-### Using Industry Addons
+### Using Industry and Domain Extension
 
-Browse the `addons/` directory and select the appropriate industry package. Each addon declares its parent through the `extends` field:
+Browse the `extensions/` directory and select the appropriate industry package. Each extension declares its parent through the `extends` field:
 
 ```json
 {
-  "layer": "L2_consulting_industry_addon",
+  "layer": "L2_consulting_industry_extension",
   "version": "1.0.0",
   "extends": "L1_universal_organization_ontology",
   "classes": [
@@ -139,11 +139,11 @@ Browse the `addons/` directory and select the appropriate industry package. Each
 }
 ```
 
-### Contributing a New Industry Addon
+### Contributing a New Industry and Domain Extension
 
-1. Copy `addons/_template/` as your starting point
-2. Follow the [Addon Development Guide](docs/addon-development-guide.md)
-3. Validate against `schema/addon_schema.json`
+1. Copy `extensions/_template/` as your starting point
+2. Follow the [Extension Development Guide](docs/extension-development-guide.md)
+3. Validate against `schema/extension_schema.json`
 4. Submit a Pull Request
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
@@ -154,13 +154,13 @@ For a comprehensive, step-by-step guide on creating or updating ontologies at an
 
 A working L3 sample is available at [`enterprise/acme-tech-solutions/`](enterprise/acme-tech-solutions/) — a fictional technology consulting company demonstrating the full workflow.
 
-## 🗂️ Available Industry Addons
+## 🗂️ Available Industry and Domain Extension
 
 | Industry | Directory | Classes | Relations | Status |
 |:---|:---|:---:|:---:|:---|
-| Common Enterprise | [`addons/common/`](addons/common/) | 10 | 5 | ✅ v1.0.0 |
-| Consulting | [`addons/consulting/`](addons/consulting/) | 40+ | 34 | ✅ v1.0.0 |
-| Luxury Goods | [`addons/luxury-goods/`](addons/luxury-goods/) | 38 | 14 | ✅ v2.0.0 |
+| Common Enterprise | [`extensions/common/`](extensions/common/) | 10 | 5 | ✅ v1.0.0 |
+| Consulting | [`extensions/consulting/`](extensions/consulting/) | 40+ | 34 | ✅ v1.0.0 |
+| Luxury Goods | [`extensions/luxury-goods/`](extensions/luxury-goods/) | 38 | 14 | ✅ v2.0.0 |
 
 **We're looking for community contributions!** Finance, Manufacturing, Retail, Healthcare, Education, and more.
 
@@ -180,7 +180,7 @@ A working L3 sample is available at [`enterprise/acme-tech-solutions/`](enterpri
 We welcome all contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) to learn about:
 
 - How to propose changes to the Core Ontology
-- How to submit new Industry Addons
+- How to submit new Industry and Domain Extension
 - How to contribute new Platform Bindings
 - Coding standards and PR workflow
 

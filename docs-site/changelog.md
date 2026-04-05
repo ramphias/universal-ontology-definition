@@ -39,14 +39,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
     - 25 universal entity classes
     - 16 standard relationship definitions
     - 8 sample instances
-- **Consulting Industry Addon** (`addons/consulting/consulting_addon_v1.json`)
+- **Consulting Industry and Domain Extension** (`extensions/consulting/consulting_extension_v1.json`)
     - 40+ consulting-specific classes
     - 34 industry relationship definitions
     - 25+ sample instances
-- **Luxury Goods Industry Addon** (`addons/luxury-goods/luxury_goods_addon_v1.json`)
+- **Luxury Goods Industry and Domain Extension** (`extensions/luxury-goods/luxury_goods_extension_v1.json`)
     - 21 luxury-specific classes
     - 10 industry relationship definitions
     - 8 sample instances
-- **Addon Template** (`addons/_template/`) for community contributors
-- **JSON Schema** validation for core and addon definitions
-- **Documentation**: Architecture guide, design guide, addon development guide
+- **Extension Template** (`extensions/_template/`) for community contributors
+- **JSON Schema** validation for core and extension definitions
+- **Documentation**: Architecture guide, design guide, extension development guide

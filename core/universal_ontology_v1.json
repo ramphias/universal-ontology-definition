@@ -302,19 +302,19 @@
       "id": "Channel",
       "replaced_by": null,
       "deprecated_since": "2.0.0",
-      "note": "Demoted to L2 common addon; not universally applicable to all enterprises"
+      "note": "Demoted to L2 common extension; not universally applicable to all enterprises"
     },
     {
       "id": "MarketSegment",
       "replaced_by": null,
       "deprecated_since": "2.0.0",
-      "note": "Demoted to L2 common addon; marketing-domain concept"
+      "note": "Demoted to L2 common extension; marketing-domain concept"
     },
     {
       "id": "Location",
       "replaced_by": null,
       "deprecated_since": "2.0.0",
-      "note": "Demoted to L2 common addon; can be modeled as an attribute or a common extension"
+      "note": "Demoted to L2 common extension; can be modeled as an attribute or a common extension"
     },
     {
       "id": "Decision",
@@ -492,7 +492,7 @@
       "label_en": "Person and Organization are disjoint",
       "classes": ["Person", "Organization"],
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "一个实例不能同时是人员和组织",
       "definition_en": "An instance cannot be both a Person and an Organization"
     },
@@ -503,7 +503,7 @@
       "label_en": "Entity and Governance domains are disjoint",
       "classes": ["Entity", "Governance"],
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "实体域和治理域的实例互斥",
       "definition_en": "Entity domain and Governance domain instances are mutually exclusive"
     },
@@ -514,7 +514,7 @@
       "label_en": "Entity and Operational domains are disjoint",
       "classes": ["Entity", "Operational"],
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "实体域和运营域的实例互斥",
       "definition_en": "Entity domain and Operational domain instances are mutually exclusive"
     },
@@ -525,7 +525,7 @@
       "label_en": "Entity and Measurement domains are disjoint",
       "classes": ["Entity", "Measurement"],
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "实体域和度量域的实例互斥",
       "definition_en": "Entity domain and Measurement domain instances are mutually exclusive"
     },
@@ -536,7 +536,7 @@
       "label_en": "Governance and Operational domains are disjoint",
       "classes": ["Governance", "Operational"],
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "治理域和运营域的实例互斥",
       "definition_en": "Governance domain and Operational domain instances are mutually exclusive"
     },
@@ -547,7 +547,7 @@
       "label_en": "Governance and Measurement domains are disjoint",
       "classes": ["Governance", "Measurement"],
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "治理域和度量域的实例互斥",
       "definition_en": "Governance domain and Measurement domain instances are mutually exclusive"
     },
@@ -558,7 +558,7 @@
       "label_en": "Operational and Measurement domains are disjoint",
       "classes": ["Operational", "Measurement"],
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "运营域和度量域的实例互斥",
       "definition_en": "Operational domain and Measurement domain instances are mutually exclusive"
     },
@@ -569,7 +569,7 @@
       "label_en": "Policy and Rule are disjoint",
       "classes": ["Policy", "Rule"],
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "一个实例不能同时是政策和规则",
       "definition_en": "An instance cannot be both a Policy and a Rule"
     },
@@ -580,7 +580,7 @@
       "label_en": "part_of is transitive",
       "relation": "part_of",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "如果 A 是 B 的一部分，B 是 C 的一部分，则 A 是 C 的一部分",
       "definition_en": "If A is part of B and B is part of C, then A is part of C"
     },
@@ -591,7 +591,7 @@
       "label_en": "part_of is asymmetric",
       "relation": "part_of",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "如果 A 是 B 的一部分，则 B 不能是 A 的一部分",
       "definition_en": "If A is part of B, then B cannot be part of A"
     },
@@ -604,7 +604,7 @@
       "relation": "owns",
       "object_class": "Resource",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "owns 关系的域限制为 Party 子类，值域限制为 Resource 子类",
       "definition_en": "The owns relation is restricted to Party subclasses as domain and Resource subclasses as range"
     },
@@ -617,7 +617,7 @@
       "relation": "governed_by",
       "object_class": "Governance",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "所有通过 governed_by 关联的对象必须是 Governance 域的子类",
       "definition_en": "All objects linked via governed_by must be subclasses of the Governance domain"
     },
@@ -630,7 +630,7 @@
       "relation": "realized_by",
       "object_class": "Process",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "每个能力至少由一个流程实现",
       "definition_en": "Every Capability is realized by at least one Process"
     },
@@ -643,7 +643,7 @@
       "relation": "mitigated_by",
       "object_class": "Control",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "每个风险至少由一个控制措施缓释",
       "definition_en": "Every Risk is mitigated by at least one Control measure"
     },
@@ -656,7 +656,7 @@
       "relation": "measured_by",
       "object_class": "Operational",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "每个关键指标至少关联一个被衡量的运营元素",
       "definition_en": "Every KPI is linked to at least one Operational element it measures"
     },
@@ -669,7 +669,7 @@
       "relation": "plays_role",
       "value": 1,
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "每个组织至少扮演一个角色",
       "definition_en": "Every Organization plays at least one Role"
     },
@@ -681,7 +681,7 @@
       "relation": "composed_of",
       "parent_relation": "part_of",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "组成关系是部分关系的特化形式",
       "definition_en": "The composition relation is a specialization of the part-of relation"
     },
@@ -694,7 +694,7 @@
       "relation": "plays_role",
       "object_class": "Party",
       "status": "stable",
-      "since": "2.1.0",
+      "since": "2.0.0",
       "definition": "每个角色至少被一个主体扮演",
       "definition_en": "Every Role is played by at least one Party"
     }

@@ -1,6 +1,6 @@
 # Merging Ontology Layers
 
-The `merge_layers.py` script combines L1 Core + L2 Addons + L3 Enterprise into a single, flattened enterprise ontology and generates output in all 5 platform formats.
+The `merge_layers.py` script combines L1 Core + L2 Extensions + L3 Enterprise into a single, flattened enterprise ontology and generates output in all 5 platform formats.
 
 ## Why Merge?
 
@@ -22,8 +22,8 @@ L3 Acme Tech (26)     ─┘                       ├── merged_ontology.jso
 # Merge L3 enterprise (auto-resolves L2 + L1 dependencies)
 python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
 
-# Merge L2 addon + L1 core only
-python scripts/merge_layers.py addons/consulting/consulting_addon_v1.json
+# Merge L2 extension + L1 core only
+python scripts/merge_layers.py extensions/consulting/consulting_extension_v1.json
 
 # Specify output directory
 python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json -o output/acme
@@ -31,9 +31,9 @@ python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solution
 
 ## How It Works
 
-1. **Dependency Resolution** — Reads the target file's `extends` field, recursively follows the chain (L3 -> L2 -> L1), auto-discovers referenced JSON files by scanning `core/`, `addons/*/`, `enterprise/*/`
+1. **Dependency Resolution** — Reads the target file's `extends` field, recursively follows the chain (L3 -> L2 -> L1), auto-discovers referenced JSON files by scanning `core/`, `extensions/*/`, `enterprise/*/`
 
-2. **Ordered Merge** — Merges layers bottom-up: L1 first, then L2 addons, then L3 enterprise. Each element gets a `source_layer` field for traceability
+2. **Ordered Merge** — Merges layers bottom-up: L1 first, then L2 extensions, then L3 enterprise. Each element gets a `source_layer` field for traceability
 
 3. **Validation** — Checks all `parent`, `domain`, `range`, and instance `type` references resolve to existing classes in the merged set
 
@@ -64,7 +64,7 @@ Every class, relation, axiom, and instance in the merged output includes a `sour
   "id": "Engagement",
   "label_en": "Engagement",
   "parent": "Process",
-  "source_layer": "L2_consulting_industry_addon"
+  "source_layer": "L2_consulting_industry_extension"
 },
 {
   "id": "CloudMigrationEngagement",

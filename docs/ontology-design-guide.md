@@ -2,7 +2,7 @@
 
 ## 1. 概述
 
-本文档定义了 Universal Ontology Definition 项目的设计规范和最佳实践，适用于 L1 Core、L2 Addon 和 L3 企业定制层。
+本文档定义了 Universal Ontology Definition 项目的设计规范和最佳实践，适用于 L1 Core、L2 Extension 和 L3 企业定制层。
 
 ## 2. 类 (Class) 设计规范
 
@@ -107,7 +107,7 @@
 | 层级 | 最低要求 |
 |:---|:---|
 | L1 Core | 每个主要类别至少 1 个实例 |
-| L2 Addon | 至少 5 个示例实例 |
+| L2 Extension | 至少 5 个示例实例 |
 | L3 Enterprise | 根据企业情况自定 |
 
 ## 5. JSON 格式规范

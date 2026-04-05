@@ -131,11 +131,11 @@ nav:
     - Relations Reference: core/relations.md
     - Axioms Reference: core/axioms.md
     - Sample Instances: core/instances.md
-  - Industry Addons (L2):
-    - addons/index.md
-    - Consulting: addons/consulting.md
-    - Luxury Goods: addons/luxury-goods.md
-    - Create Your Own: addons/create-addon.md
+  - Industry and Domain Extension (L2):
+    - extensions/index.md
+    - Consulting: extensions/consulting.md
+    - Luxury Goods: extensions/luxury-goods.md
+    - Create Your Own: extensions/create-extension.md
   - Enterprise Layer (L3):
     - enterprise/index.md
   - Design Guide:
@@ -143,4 +143,5 @@ nav:
     - Ontology Design Rules: guides/design-rules.md
     - Merging Layers: guides/merge-layers.md
     - Contributing: guides/contributing.md
+    - Anti-Entropy Manual: guides/anti-entropy-manual.md
   - Changelog: changelog.md

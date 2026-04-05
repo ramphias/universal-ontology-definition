@@ -9,15 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### ⚠️ Breaking Changes
 - **L1 Core restructured**: 25 classes → 24 classes (4 abstract domains + 20 concrete)
-- **`BusinessObject` replaced by `Resource`** — all L2 addons using `"parent": "BusinessObject"` must change to `"parent": "Resource"`
-- **`DocumentRecord` renamed to `Document`** — all L2 addons using `"parent": "DocumentRecord"` must change to `"parent": "Document"`
-- **`Activity` class removed from L1** — now available in `addons/common/` as a subtype of `Process`
+- **`BusinessObject` replaced by `Resource`** — all L2 extensions using `"parent": "BusinessObject"` must change to `"parent": "Resource"`
+- **`DocumentRecord` renamed to `Document`** — all L2 extensions using `"parent": "DocumentRecord"` must change to `"parent": "Document"`
+- **`Activity` class removed from L1** — now available in `extensions/common/` as a subtype of `Process`
 - **Relations renamed/merged**:
   - `belongs_to` + `composed_of` → `part_of`
   - `is_accountable_for` → `accountable_for`
   - `constrained_by` merged into `governed_by` (generalized domain/range)
   - `supports` and `requires_decision` removed (expressible via other relations)
-- **Classes demoted to L2 `addons/common/`**: `Channel`, `MarketSegment`, `Location`, `Decision`
+- **Classes demoted to L2 `extensions/common/`**: `Channel`, `MarketSegment`, `Location`, `Decision`
 
 ### Added
 - **4 Abstract Domain Root Classes**: `Entity`, `Governance`, `Operational`, `Measurement` — organizes all classes into a structured tree instead of a flat list
@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`deprecated_classes` and `deprecated_relations` registries** — provides migration guidance for breaking changes
 - **Schema lifecycle fields**: `abstract`, `status`, `since`, `deprecated_since`, `replaced_by` for versioned evolution
 - **Relation metadata**: `cardinality` (1:1, 1:N, N:1, N:M), `inverse_of` for bidirectional relation declarations
-- **`addons/common/` L2 addon** — Common Enterprise Extension containing demoted L1 classes plus new universally useful classes (Contract, Report, Project, Stakeholder, Regulation)
+- **`extensions/common/` L2 extension** — Common Enterprise Extension containing demoted L1 classes plus new universally useful classes (Contract, Report, Project, Stakeholder, Regulation)
 - **`scripts/validate_governance.py`** — Automated CI governance validator enforcing rules G-01 through G-08
 - **Governance Rules G-01 through G-08** in CONTRIBUTING.md — hard structural constraints to prevent entropy growth
 - **`maxItems: 25` constraint** in core_schema.json — schema-level enforcement of class cap
@@ -35,10 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`measured_by` generalized** — domain changed from `Goal` to `Operational`, allowing any operational element to be measured
 - **`consumes`/`produces` generalized** — range changed from `DataObject` to `Resource`
 - **All L0 platform bindings updated** to v2.0 (OWL/RDF, JSON-LD, GraphQL, SQL DDL)
-- **`addon_schema.json` `extends` field relaxed** — now supports both string and array format, enabling L2-to-L2 dependencies
+- **`extension_schema.json` `extends` field relaxed** — now supports both string and array format, enabling L2-to-L2 dependencies
 - **`sample_instances` made industry-neutral** — removed retail/manufacturing specific examples
-- **Consulting addon** updated to use `Resource`/`Document` parent classes
-- **Luxury Goods addon** updated to use `Resource`/`Document` parent classes
+- **Consulting extension** updated to use `Resource`/`Document` parent classes
+- **Luxury Goods extension** updated to use `Resource`/`Document` parent classes
 - README.md updated with v2.0 architecture diagram and class domain table
 
 ## [1.2.0] - 2026-04-03
@@ -76,14 +76,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - 25 universal entity classes covering Party, Organization, Process, Capability, Risk, Goal, KPI, etc.
   - 16 standard relationship definitions
   - 8 sample instances
-- **Consulting Industry Addon** (`addons/consulting/consulting_addon_v1.json`)
+- **Consulting Industry and Domain Extension** (`extensions/consulting/consulting_extension_v1.json`)
   - 40+ consulting-specific classes (Engagement, Deliverable, Methodology, Framework, etc.)
   - 34 industry relationship definitions
   - 25+ sample instances
-- **Luxury Goods Industry Addon** (`addons/luxury-goods/luxury_goods_addon_v1.json`)
+- **Luxury Goods Industry and Domain Extension** (`extensions/luxury-goods/luxury_goods_extension_v1.json`)
   - 21 luxury-specific classes (Brand, Collection, SKU, Boutique, etc.)
   - 10 industry relationship definitions
   - 8 sample instances
-- **Addon Template** (`addons/_template/`) for community contributors
-- **JSON Schema** validation for core and addon definitions
-- **Documentation**: Architecture guide, design guide, addon development guide
+- **Extension Template** (`extensions/_template/`) for community contributors
+- **JSON Schema** validation for core and extension definitions
+- **Documentation**: Architecture guide, design guide, extension development guide

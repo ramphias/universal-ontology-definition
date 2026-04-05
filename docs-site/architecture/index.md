@@ -10,7 +10,7 @@ graph TB
         E3["Company C"]
     end
     
-    subgraph L2["L2: Industry Addons"]
+    subgraph L2["L2: Industry and Domain Extension"]
         I1["Consulting"]
         I2["Luxury Goods"]
         I3["Finance"]

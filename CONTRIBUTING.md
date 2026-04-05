@@ -12,7 +12,7 @@ Thank you for your interest in Universal Ontology Definition! We welcome contrib
 - [行为准则](#行为准则)
 - [提交 Issue](#提交-issue)
 - [贡献 Core Ontology 修改](#贡献-core-ontology-修改)
-- [贡献行业 Addon](#贡献行业-addon)
+- [贡献行业与业务领域扩展](#贡献行业-extension)
 - [Pull Request 流程](#pull-request-流程)
 - [命名与格式规范](#命名与格式规范)
 
@@ -25,7 +25,7 @@ Thank you for your interest in Universal Ontology Definition! We welcome contrib
 | 🐛 Bug 报告 | 发现定义错误、关系缺失、JSON 格式问题 | ⭐ |
 | 💡 建议讨论 | 对 Core Ontology 的改进建议 | ⭐ |
 | 📝 文档改进 | 完善文档、修正翻译、添加示例 | ⭐⭐ |
-| 🌐 行业 Addon | 贡献新的行业或领域扩展包 | ⭐⭐⭐ |
+| 🌐 行业与业务领域扩展 | 贡献新的行业或领域扩展包 | ⭐⭐⭐ |
 | 🏗️ Core 修改 | 对 L1 核心层的结构性修改 | ⭐⭐⭐⭐ |
 
 ---
@@ -41,7 +41,7 @@ Thank you for your interest in Universal Ontology Definition! We welcome contrib
 请使用对应的 Issue 模板：
 
 - **Core Ontology 修改建议** — 对 L1 通用层的修改提议
-- **行业 Addon 提交** — 提议或提交新的行业扩展
+- **行业与业务领域扩展 提交** — 提议或提交新的行业扩展
 - **Bug 报告** — JSON 格式错误、关系定义不一致等
 
 ---
@@ -104,21 +104,21 @@ Core Ontology (L1) 是整个框架的基础，修改需要谨慎审核。
 
 ---
 
-## 贡献行业 Addon
+## 贡献行业与业务领域扩展
 
-我们非常欢迎新的行业 Addon！
+我们非常欢迎新的行业与业务领域扩展！
 
 ### 步骤
 
-1. **复制模板**：将 `addons/_template/` 复制为 `addons/your-industry/`
+1. **复制模板**：将 `extensions/_template/` 复制为 `extensions/your-industry/`
 2. **命名规范**：目录名使用英文小写 + 连字符，如 `financial-services`、`healthcare`
 3. **编写定义**：
    - 所有类必须通过 `parent` 字段继承 L1 中的类
    - 使用 `extends` 字段声明继承的上层 Ontology
    - 每个类和关系都必须有 `definition` 字段（中文说明）
    - 提供 `sample_instances`（至少 5 个示例实例）
-4. **编写 README**：说明该行业 Addon 的覆盖范围和设计考量
-5. **格式校验**：确保通过 `schema/addon_schema.json` 校验
+4. **编写 README**：说明该行业与业务领域扩展 的覆盖范围和设计考量
+5. **格式校验**：确保通过 `schema/extension_schema.json` 校验
 6. **提交 PR**：使用 PR 模板提交
 
 ### 质量要求
@@ -135,7 +135,7 @@ Core Ontology (L1) 是整个框架的基础，修改需要谨慎审核。
 
 1. Fork 本仓库
 2. 创建特性分支：`git checkout -b feature/your-feature-name`
-3. 提交修改：`git commit -m "feat: add healthcare industry addon"`
+3. 提交修改：`git commit -m "feat: add healthcare Industry and Domain Extension"`
 4. 推送到你的 Fork：`git push origin feature/your-feature-name`
 5. 创建 Pull Request，使用项目提供的 PR 模板
 
@@ -144,9 +144,9 @@ Core Ontology (L1) 是整个框架的基础，修改需要谨慎审核。
 使用 [Conventional Commits](https://www.conventionalcommits.org/) 格式：
 
 ```
-feat: add healthcare industry addon
-fix: correct relationship domain in consulting addon
-docs: improve addon development guide
+feat: add healthcare Industry and Domain Extension
+fix: correct relationship domain in consulting extension
+docs: improve extension development guide
 refactor: reorganize core ontology class hierarchy
 ```
 

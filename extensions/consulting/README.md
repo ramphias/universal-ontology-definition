@@ -1,10 +1,10 @@
-# 咨询行业 Addon | Consulting Industry Addon
+# 咨询行业与业务领域扩展 | Consulting Industry and Domain Extension
 
 ## 概述 | Overview
 
-咨询行业 Addon 继承 L1 通用 Ontology，新增了咨询行业特有的概念体系，覆盖：
+咨询行业与业务领域扩展 继承 L1 通用 Ontology，新增了咨询行业特有的概念体系，覆盖：
 
-The Consulting Industry Addon extends the L1 Universal Ontology with consulting-specific concepts, covering:
+The Consulting Industry and Domain Extension extends the L1 Universal Ontology with consulting-specific concepts, covering:
 
 - 🏢 **组织结构** — 咨询公司、办公室、业务线、能力中心 | Consulting Firm, Office, Practice Line, Competency Center
 - 📋 **项目管理** — 签约项目、工作模块、交付物、里程碑、工作坊 | Engagement, Work Stream, Deliverable, Milestone, Workshop
@@ -37,7 +37,7 @@ The Consulting Industry Addon extends the L1 Universal Ontology with consulting-
 
 ## 文件 | Files
 
-- [`consulting_addon_v1.json`](consulting_addon_v1.json) — 完整定义文件 | Full definition file
+- [`consulting_extension_v1.json`](consulting_extension_v1.json) — 完整定义文件 | Full definition file
 
 ## 版本 | Version
 

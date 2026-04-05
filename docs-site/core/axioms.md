@@ -36,7 +36,7 @@ Axioms are formal semantic constraints that express logical assertions about how
   "label_en": "Person and Organization are disjoint",
   "classes": ["Person", "Organization"],
   "status": "stable",
-  "since": "2.1.0",
+  "since": "2.0.0",
   "definition": "...",
   "definition_en": "An instance cannot be both a Person and an Organization"
 }
@@ -134,4 +134,4 @@ All axiom IDs use the `ax_` prefix with snake_case naming (e.g., `ax_part_of_tra
 
 ## Scope
 
-Axioms are **L1-only**. L2 Industry Addons and L3 Enterprise layers do not define their own axioms. All semantic constraints are centrally managed in the core ontology to maintain consistency.
+Axioms are **L1-only**. L2 Industry and Domain Extension and L3 Enterprise layers do not define their own axioms. All semantic constraints are centrally managed in the core ontology to maintain consistency.

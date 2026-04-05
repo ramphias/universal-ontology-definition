@@ -1,15 +1,15 @@
-# Industry Addons (L2)
+# Industry and Domain Extension (L2)
 
-Industry addons extend the L1 Universal Core with domain-specific concepts, relations, and instances.
+Industry and Domain Extension extend the L1 Universal Core with domain-specific concepts, relations, and instances.
 
-## Available Addons
+## Available Extensions
 
 | Industry | Classes | Relations | Instances | Status |
 |:---|:---:|:---:|:---:|:---|
 | [Consulting](consulting.md) | 40+ | 34 | 25+ | ✅ v1.0.0 |
 | [Luxury Goods](luxury-goods.md) | 21 | 10 | 8 | ✅ v1.0.0 |
 
-## Wanted Addons
+## Wanted Extensions
 
 We're looking for community contributions in these industries:
 
@@ -22,4 +22,4 @@ We're looking for community contributions in these industries:
 
 ## How to Contribute
 
-Want to create an addon for your industry? Follow the [Addon Development Guide](create-addon.md).
+Want to create an extension for your industry? Follow the [Extension Development Guide](create-extension.md).

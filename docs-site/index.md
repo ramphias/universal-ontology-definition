@@ -77,7 +77,7 @@ An Open, Standardized Four-Layer Enterprise Ontology Framework
 <div class="layer-card layer-l2">
   <span class="layer-tag">L2</span>
   <div class="layer-info">
-    <strong>Industry &amp; Domain Addons</strong>
+    <strong>Industry &amp; Domain Extensions</strong>
     <span>Consulting · Luxury · Finance · Manufacturing — Optional, industry-specific</span>
   </div>
   <span class="layer-arrow">▸</span>
@@ -113,7 +113,7 @@ An Open, Standardized Four-Layer Enterprise Ontology Framework
 
     ---
 
-    Stable semantic core, pluggable industry addons, free enterprise customization, multi-platform bindings
+    Stable semantic core, pluggable Industry and Domain Extension, free enterprise customization, multi-platform bindings
 
 -   :triangular_ruler: **Standardized Format**
 
@@ -143,7 +143,7 @@ An Open, Standardized Four-Layer Enterprise Ontology Framework
 
     ---
 
-    Anyone can contribute industry addons, platform bindings, or improve core definitions
+    Anyone can contribute Industry and Domain Extension, platform bindings, or improve core definitions
 
 </div>
 
@@ -176,19 +176,19 @@ An Open, Standardized Four-Layer Enterprise Ontology Framework
   </div>
 </a>
 
-<a class="quick-link-card" href="addons/">
+<a class="quick-link-card" href="extensions/">
   <span class="ql-icon">🧩</span>
   <div class="ql-info">
-    <strong>Industry Addons</strong>
+    <strong>Industry and Domain Extension</strong>
     <span>Browse available industry packages</span>
   </div>
 </a>
 
-<a class="quick-link-card" href="addons/create-addon/">
+<a class="quick-link-card" href="extensions/create-extension/">
   <span class="ql-icon">🛠️</span>
   <div class="ql-info">
-    <strong>Create an Addon</strong>
-    <span>Contribute your own industry addon</span>
+    <strong>Create an Extension</strong>
+    <span>Contribute your own Industry and Domain Extension</span>
   </div>
 </a>
 

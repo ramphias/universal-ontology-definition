@@ -1,9 +1,9 @@
 {
-  "$schema": "../../schema/addon_schema.json",
-  "layer": "L2_your_industry_addon",
+  "$schema": "../../schema/extension_schema.json",
+  "layer": "L2_your_industry_extension",
   "version": "1.0.0",
   "extends": "L1_universal_organization_ontology",
-  "description": "请替换为你的行业 addon 描述",
+  "description": "请替换为你的行业 extension 描述",
   "classes": [
     {
       "id": "YourIndustryEntity",

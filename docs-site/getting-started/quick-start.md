@@ -77,20 +77,20 @@ Pick the binding that matches your technology stack:
 
     File: `platform/sql/schema.sql`
 
-## Step 4: Select Industry Addons (Optional)
+## Step 4: Select Industry and Domain Extension (Optional)
 
-Browse the `addons/` directory for industry-specific extensions:
+Browse the `extensions/` directory for industry-specific extensions:
 
 | Industry | Classes | Relations | Status |
 |:---|:---:|:---:|:---|
-| [Consulting](../addons/consulting.md) | 40+ | 34 | ✅ v1.0.0 |
-| [Luxury Goods](../addons/luxury-goods.md) | 21 | 10 | ✅ v1.0.0 |
+| [Consulting](../extensions/consulting.md) | 40+ | 34 | ✅ v1.0.0 |
+| [Luxury Goods](../extensions/luxury-goods.md) | 21 | 10 | ✅ v1.0.0 |
 
-Each addon extends L1 through the `extends` field:
+Each extension extends L1 through the `extends` field:
 
 ```json
 {
-  "layer": "L2_consulting_industry_addon",
+  "layer": "L2_consulting_industry_extension",
   "version": "1.0.0",
   "extends": "L1_universal_organization_ontology",
   "classes": [
@@ -116,4 +116,4 @@ If you need company-specific customizations, use the L3 template:
 
 - [Core Concepts](core-concepts.md) — Understand key UOD terminology
 - [Architecture Deep Dive](../architecture/four-layer-model.md) — Learn the full four-layer design
-- [Create an Addon](../addons/create-addon.md) — Contribute your own industry package
+- [Create an Extension](../extensions/create-extension.md) — Contribute your own industry package

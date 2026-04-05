@@ -1,4 +1,4 @@
-# Common Enterprise Addon
+# Common Enterprise Extension
 
 **Layer**: L2 — Common Enterprise Extension  
 **Version**: 1.0.0  
@@ -6,11 +6,11 @@
 
 ## Overview
 
-This addon provides commonly-needed enterprise concepts that are not part of the L1 universal core. These concepts are widely applicable but not universally required across all enterprise types.
+This extension provides commonly-needed enterprise concepts that are not part of the L1 universal core. These concepts are widely applicable but not universally required across all enterprise types.
 
 ### Included Concepts
 
-Several classes in this addon were **demoted from L1 v1.x** during the v2.0 anti-entropy refactoring:
+Several classes in this extension were **demoted from L1 v1.x** during the v2.0 anti-entropy refactoring:
 
 | Class | Origin | Rationale for Demotion |
 |:---|:---|:---|
@@ -20,7 +20,7 @@ Several classes in this addon were **demoted from L1 v1.x** during the v2.0 anti
 | `Decision` | L1 v1.0 | Modeled as `Event` subtype; not a separate root concept |
 | `Activity` | L1 v1.0 | Modeled as `Process` subtype; sub-steps via `part_of` relation |
 
-Additionally, this addon provides useful extensions:
+Additionally, this extension provides useful extensions:
 
 | Class | Parent | Description |
 |:---|:---|:---|
@@ -32,10 +32,10 @@ Additionally, this addon provides useful extensions:
 
 ## Usage
 
-Include this addon when your enterprise model needs channels, locations, market segmentation, or formal decision tracking. Most L2 industry addons can depend on this common addon.
+Include this extension when your enterprise model needs channels, locations, market segmentation, or formal decision tracking. Most L2 Industry and Domain Extension can depend on this common extension.
 
 ```json
 {
-  "extends": ["L1_universal_organization_ontology", "L2_common_enterprise_addon"]
+  "extends": ["L1_universal_organization_ontology", "L2_common_enterprise_extension"]
 }
 ```

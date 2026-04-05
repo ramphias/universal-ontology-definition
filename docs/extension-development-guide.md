@@ -1,26 +1,26 @@
-# Addon 开发指南 | Addon Development Guide
+# Extension 开发指南 | Extension Development Guide
 
 ## 1. 概述
 
-本指南帮助你创建符合规范的行业/领域 Addon。一个好的 Addon 应该覆盖该行业的核心概念，并与 L1 通用层形成清晰的继承关系。
+本指南帮助你创建符合规范的行业/领域 Extension。一个好的 Extension 应该覆盖该行业的核心概念，并与 L1 通用层形成清晰的继承关系。
 
 ## 2. 快速开始
 
 ### 第一步：复制模板
 
 ```bash
-cp -r addons/_template addons/your-industry
-mv addons/your-industry/addon_template.json addons/your-industry/your_industry_addon_v1.json
+cp -r extensions/_template extensions/your-industry
+mv extensions/your-industry/extension_template.json extensions/your-industry/your_industry_extension_v1.json
 ```
 
 ### 第二步：修改元数据
 
 ```json
 {
-  "layer": "L2_your_industry_addon",
+  "layer": "L2_your_industry_extension",
   "version": "1.0.0",
   "extends": "L1_universal_organization_ontology",
-  "description": "你对这个行业 Addon 的一句话描述"
+  "description": "你对这个行业与业务领域扩展 的一句话描述"
 }
 ```
 
@@ -98,9 +98,9 @@ mv addons/your-industry/addon_template.json addons/your-industry/your_industry_a
 
 ### 第六步：编写 README
 
-修改 `addons/your-industry/README.md`，包含：
+修改 `extensions/your-industry/README.md`，包含：
 
-- 行业 Addon 概述
+- 行业与业务领域扩展 概述
 - 覆盖范围说明
 - 统计信息（类数量、关系数量）
 - 适用场景
@@ -126,7 +126,7 @@ mv addons/your-industry/addon_template.json addons/your-industry/your_industry_a
 - [ ] 示例实例来自真实业务场景
 - [ ] 定义基于行业标准或专业规范
 
-## 4. 行业 Addon 设计建议
+## 4. 行业与业务领域扩展 设计建议
 
 ### 4.1 如何选择概念
 
@@ -145,16 +145,16 @@ mv addons/your-industry/addon_template.json addons/your-industry/your_industry_a
 | 混入企业专属概念 | 添加只属于某家企业的概念 | 这些应放在 L3 |
 | 关系过于宽泛 | `related_to` 类型的万能关系 | 用具体的动词描述 |
 
-### 4.3 参考已有 Addon
+### 4.3 参考已有 Extension
 
-- [咨询行业 Addon](../addons/consulting/) — 40+ 类的完整示例
-- [奢侈品行业 Addon](../addons/luxury-goods/) — 21 类的精简示例
+- [咨询行业与业务领域扩展](../extensions/consulting/) — 40+ 类的完整示例
+- [奢侈品行业与业务领域扩展](../extensions/luxury-goods/) — 21 类的精简示例
 
 ## 5. 提交流程
 
 1. Fork 本仓库
-2. 创建分支：`git checkout -b addon/your-industry`
-3. 添加完整的 Addon 目录
+2. 创建分支：`git checkout -b extension/your-industry`
+3. 添加完整的 Extension 目录
 4. 提交 PR，使用项目的 PR 模板
 5. 等待审核反馈
 

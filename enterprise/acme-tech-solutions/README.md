@@ -21,7 +21,7 @@
 
 ```
 L1 Universal Core v2.0 (24 类 / 12 关系)
-    └── L2 Consulting Industry Addon v1.1 (40+ 类 / 34 关系)
+    └── L2 Consulting Industry and Domain Extension v1.1 (40+ 类 / 34 关系)
         └── L3 Acme Tech Solutions v1.0 (26 类 / 10 关系 / 34 实例)
 ```
 

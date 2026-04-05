@@ -1,24 +1,24 @@
-# Create Your Own Addon
+# Create Your Own Extension
 
-This guide walks you through creating a new industry addon for UOD.
+This guide walks you through creating a new Industry and Domain Extension for UOD.
 
 ## Quick Start
 
 ### Step 1: Copy the Template
 
 ```bash
-cp -r addons/_template addons/your-industry
-mv addons/your-industry/addon_template.json addons/your-industry/your_industry_addon_v1.json
+cp -r extensions/_template extensions/your-industry
+mv extensions/your-industry/extension_template.json extensions/your-industry/your_industry_extension_v1.json
 ```
 
 ### Step 2: Edit Metadata
 
 ```json
 {
-  "layer": "L2_your_industry_addon",
+  "layer": "L2_your_industry_extension",
   "version": "1.0.0",
   "extends": "L1_universal_organization_ontology",
-  "description": "One-line description of your industry addon"
+  "description": "One-line description of your Industry and Domain Extension"
 }
 ```
 
@@ -129,7 +129,7 @@ Include: overview, coverage, statistics, use cases.
 ## Submission Process
 
 1. Fork the repository
-2. Create a branch: `git checkout -b addon/your-industry`
-3. Add the complete addon directory
+2. Create a branch: `git checkout -b extension/your-industry`
+3. Add the complete extension directory
 4. Submit a PR using the project's PR template
 5. Wait for review (typically 1-2 weeks)

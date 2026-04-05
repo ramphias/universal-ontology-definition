@@ -1,10 +1,10 @@
-# Consulting Industry Addon
+# Consulting Industry and Domain Extension
 
-The Consulting Industry Addon extends L1 with concepts specific to the professional consulting domain.
+The Consulting Industry and Domain Extension extends L1 with concepts specific to the professional consulting domain.
 
 ## Overview
 
-This addon covers:
+This extension covers:
 
 - :office: **Organizational Structure** — Consulting firms, practice lines, capability centers
 - :clipboard: **Project Management** — Engagements, work streams, deliverables
@@ -44,4 +44,4 @@ This addon covers:
 
 ## Source File
 
-:material-file-code: [`consulting_addon_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/addons/consulting/consulting_addon_v1.json)
+:material-file-code: [`consulting_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/extensions/consulting/consulting_extension_v1.json)

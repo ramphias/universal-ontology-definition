@@ -9,7 +9,7 @@ Thank you for your interest in Universal Ontology Definition! We welcome contrib
 | :bug: Bug Report | Definition errors, missing relations, JSON format issues | ⭐ |
 | :bulb: Suggestion | Improvement proposals for Core Ontology | ⭐ |
 | :memo: Documentation | Improve docs, fix translations, add examples | ⭐⭐ |
-| :globe_with_meridians: Industry Addon | Contribute new industry domain packages | ⭐⭐⭐ |
+| :globe_with_meridians: Industry and Domain Extension | Contribute new industry domain packages | ⭐⭐⭐ |
 | :building_construction: Core Modification | Structural changes to L1 core layer | ⭐⭐⭐⭐ |
 
 ## Code of Conduct
@@ -35,25 +35,25 @@ Core Ontology is the foundation of the entire framework. Changes require careful
 5. Explain rationale and impact analysis in the PR description
 6. Wait for at least 2 maintainer approvals
 
-## Contributing Industry Addons (L2)
+## Contributing Industry and Domain Extension (L2)
 
-We highly welcome new industry addons!
+We highly welcome new Industry and Domain Extension!
 
-1. Copy `addons/_template/` to `addons/your-industry/`
+1. Copy `extensions/_template/` to `extensions/your-industry/`
 2. Follow naming convention: lowercase + hyphens (e.g., `financial-services`)
 3. All classes must inherit from L1 via `parent` field
 4. Include at least 10 classes, 5 relations, 5 sample instances
 5. Write a complete README
-6. Validate against `schema/addon_schema.json`
+6. Validate against `schema/extension_schema.json`
 7. Submit a PR
 
-See the detailed [Addon Development Guide](../addons/create-addon.md).
+See the detailed [Extension Development Guide](../extensions/create-extension.md).
 
 ## Pull Request Workflow
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature-name`
-3. Commit: `git commit -m "feat: add healthcare industry addon"`
+3. Commit: `git commit -m "feat: add healthcare Industry and Domain Extension"`
 4. Push: `git push origin feature/your-feature-name`
 5. Create a Pull Request using the project's template
 
@@ -62,8 +62,8 @@ See the detailed [Addon Development Guide](../addons/create-addon.md).
 Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ```
-feat: add healthcare industry addon
-fix: correct relationship domain in consulting addon
-docs: improve addon development guide
+feat: add healthcare Industry and Domain Extension
+fix: correct relationship domain in consulting extension
+docs: improve extension development guide
 refactor: reorganize core ontology class hierarchy
 ```

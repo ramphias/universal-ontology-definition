@@ -1,5 +1,5 @@
 {
-  "$schema": "../../schema/addon_schema.json",
+  "$schema": "../../schema/extension_schema.json",
   "layer": "L3_enterprise_customization",
   "enterprise": {
     "name": "Acme Tech Solutions",
@@ -14,10 +14,10 @@
   "version": "1.0.0",
   "extends": [
     "L1_universal_organization_ontology_v2",
-    "L2_consulting_industry_addon_v1"
+    "L2_consulting_industry_extension_v1"
   ],
   "compatible_core_version": "2.0.0",
-  "compatible_addon_version": "1.1.0",
+  "compatible_extension_version": "1.1.0",
   "description": "极客方舟科技 L3 企业定制 ontology — 示例虚拟企业，演示 L3 层的完整创建流程",
   "description_en": "Acme Tech Solutions L3 enterprise ontology — sample virtual enterprise demonstrating the full L3 creation workflow",
 

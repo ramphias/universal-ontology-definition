@@ -12,9 +12,9 @@ The **technical serialization layer**. Provides pre-built mappings of the L1 sem
 
 The **mandatory foundation**. Defines 25 cross-industry, cross-enterprise universal concepts (classes) and 16 standard relationships. All L2 and L3 definitions must inherit from L1.
 
-### L2 — Industry & Domain Addons
+### L2 — Industry & Domain Extensions
 
-**Optional, pluggable** industry-specific extensions. Each addon targets a specific industry (consulting, luxury goods, finance, etc.) and adds new classes and relationships that inherit from L1.
+**Optional, pluggable** industry-specific extensions. Each extension targets a specific industry (consulting, luxury goods, finance, etc.) and adds new classes and relationships that inherit from L1.
 
 ### L3 — Enterprise Customization Layer
 
@@ -61,18 +61,18 @@ Party (L1)
 ├── Person (L1)
 ├── Organization (L1)
 │   ├── OrgUnit (L1)
-│   ├── ConsultingFirm (L2 - Consulting Addon)
-│   └── LuxuryBrand (L2 - Luxury Goods Addon)
+│   ├── ConsultingFirm (L2 - Consulting Extension)
+│   └── LuxuryBrand (L2 - Luxury Goods Extension)
 │       └── MyCompany (L3 - Enterprise)
 ```
 
-### Addon
+### Extension
 
-An **addon** is a packaged set of industry-specific classes and relations that extends L1. Addons are:
+An **extension** is a packaged set of industry-specific classes and relations that extends L1. Extensions are:
 
 - **Optional** — Only load the ones you need
 - **Community-driven** — Anyone can contribute
-- **Validated** — Must conform to `schema/addon_schema.json`
+- **Validated** — Must conform to `schema/extension_schema.json`
 
 ### Platform Binding
 

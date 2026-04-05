@@ -1,6 +1,6 @@
 # Classes Reference
 
-All 25 core classes defined in L1, organized by category. Each class is available for inheritance by L2 industry addons and L3 enterprise extensions.
+All 25 core classes defined in L1, organized by category. Each class is available for inheritance by L2 Industry and Domain Extension and L3 enterprise extensions.
 
 ---
 

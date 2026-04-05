@@ -1,12 +1,12 @@
-# 奢侈品行业 Addon | Luxury Goods Industry Addon
+# 奢侈品行业与业务领域扩展 | Luxury Goods Industry and Domain Extension
 
-**Layer**: L2 — Industry Addon  
+**Layer**: L2 — Industry and Domain Extension  
 **Version**: 2.0.0  
-**Extends**: L1 Core v2.0 + L2 Common Enterprise Addon  
+**Extends**: L1 Core v2.0 + L2 Common Enterprise Extension  
 
 ## 概述
 
-奢侈品行业 Addon 继承 L1 通用 Ontology 和 L2 通用企业扩展包（Channel 等），新增了奢侈品行业特有的完整概念体系：
+奢侈品行业与业务领域扩展 继承 L1 通用 Ontology 和 L2 通用企业扩展包（Channel 等），新增了奢侈品行业特有的完整概念体系：
 
 - 👜 **品牌与产品** — 奢侈品牌、品牌屋、工坊、商品、系列、SKU 变体、限量款
 - 🏪 **全渠道零售** — 精品店、百货专柜、电商渠道（继承 Common 的 Channel）
@@ -49,7 +49,7 @@
 
 ## 文件
 
-- [`luxury_goods_addon_v1.json`](luxury_goods_addon_v1.json) — 完整定义文件
+- [`luxury_goods_extension_v1.json`](luxury_goods_extension_v1.json) — 完整定义文件
 
 ## 适用场景
 

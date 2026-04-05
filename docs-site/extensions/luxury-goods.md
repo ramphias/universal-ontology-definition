@@ -1,10 +1,10 @@
-# Luxury Goods Industry Addon
+# Luxury Goods Industry and Domain Extension
 
-The Luxury Goods Industry Addon extends L1 with concepts specific to the luxury retail and fashion domain.
+The Luxury Goods Industry and Domain Extension extends L1 with concepts specific to the luxury retail and fashion domain.
 
 ## Overview
 
-This addon covers:
+This extension covers:
 
 - :handbag: **Brand & Products** — Luxury brands, brand houses, merchandise, collections, SKU variants
 - :convenience_store: **Channels** — Boutiques, department store counters
@@ -43,4 +43,4 @@ This addon covers:
 
 ## Source File
 
-:material-file-code: [`luxury_goods_addon_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/addons/luxury-goods/luxury_goods_addon_v1.json)
+:material-file-code: [`luxury_goods_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/extensions/luxury-goods/luxury_goods_extension_v1.json)

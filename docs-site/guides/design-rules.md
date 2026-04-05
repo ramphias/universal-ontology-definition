@@ -1,6 +1,6 @@
 # Ontology Design Rules
 
-Design standards and best practices for L1 Core, L2 Addons, and L3 Enterprise extensions.
+Design standards and best practices for L1 Core, L2 Extensions, and L3 Enterprise extensions.
 
 ## Class Naming
 
@@ -89,7 +89,7 @@ Use `type_prefix_specific_name` format:
 | Layer | Minimum |
 |:---|:---|
 | L1 Core | At least 1 per major category |
-| L2 Addon | At least 5 sample instances |
+| L2 Extension | At least 5 sample instances |
 | L3 Enterprise | Per enterprise needs |
 
 ## JSON Format

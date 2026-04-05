@@ -619,6 +619,14 @@ def main():
     generate_merged_graphql(merged, str(output_dir))
     generate_merged_sql(merged, str(output_dir))
 
+    # Generate interactive HTML visualization
+    try:
+        from visualize_ontology import generate_visualization
+        merged_json_path = Path(output_dir) / "merged_ontology.json"
+        generate_visualization(str(merged_json_path))
+    except Exception as e:
+        print(f"  [WARN] Visualization skipped: {e}")
+
     print(f"\n{'='*60}")
     print(f"  Merge complete! {total_cls} classes across {len(layers)} layers.")
     print(f"{'='*60}\n")

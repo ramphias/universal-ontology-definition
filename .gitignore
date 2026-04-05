@@ -44,6 +44,9 @@ tmp/
 *.tmp
 *.log
 site/
+_mkdocs_site/
+site_local/
+site_test/
 
 # Local archive/legacy
 legacy/

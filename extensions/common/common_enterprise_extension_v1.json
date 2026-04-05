@@ -1,6 +1,6 @@
 {
-  "$schema": "../../schema/addon_schema.json",
-  "layer": "L2_common_enterprise_addon",
+  "$schema": "../../schema/extension_schema.json",
+  "layer": "L2_common_enterprise_extension",
   "version": "1.0.0",
   "extends": "L1_universal_organization_ontology",
   "description": "通用企业扩展概念包，包含从 L1 v2.0 下放的常见但非核心的概念：渠道、市场细分、地点、决策。这些概念在许多行业中通用，但不属于所有企业的必备抽象。",
