@@ -53,3 +53,6 @@ legacy/
 
 # Private L3 Enterprise Ontologies
 private_enterprise/
+
+# Local Netlify folder
+.netlify

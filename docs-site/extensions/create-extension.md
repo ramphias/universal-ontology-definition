@@ -45,11 +45,11 @@ Each class must inherit from an L1 class via the `parent` field:
 |:---|:---|
 | `Organization` | Industry-specific organizations |
 | `OrgUnit` | Internal organizational units |
-| `Role` | Industry-specific roles |
-| `BusinessObject` | Core business entities |
-| `ProductService` | Industry products or services |
-| `Asset` | Industry asset types |
-| `DocumentRecord` | Industry document types |
+| `Role`| **Parent Core Class Mapping Examples** |
+| `Resource` | Core business entities |
+| `SystemApplication` | Software platforms |
+| `Process` | Industry-specific procedures |
+| `Document` | Industry document types |
 | `Process` | Industry workflows |
 | `Capability` | Industry capabilities |
 | `Risk` | Industry risks |

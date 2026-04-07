@@ -6,14 +6,14 @@ The L1 Core includes sample instances to demonstrate how classes are used in pra
 
 | ID | Type | English Label | 中文标签 |
 |:---|:---|:---|:---|
-| `org_global_retail_group` | Organization | Global Retail Group | 全球零售集团 |
-| `ou_merchandising` | OrgUnit | Merchandising Department | 商品部 |
-| `role_category_manager` | Role | Category Manager | 品类经理 |
-| `cap_product_launch` | Capability | Product Launch Management | 产品上市管理 |
-| `proc_new_product_intro` | Process | New Product Introduction | 新品引入流程 |
-| `sys_plm` | SystemApplication | PLM Platform | PLM 平台 |
-| `goal_margin_growth` | Goal | Gross Margin Growth | 毛利增长 |
-| `kpi_launch_cycle_time` | KPI | Launch Cycle Time | 上市周期 |
+| `org_acme_corp` | Organization | Acme Corporation | 示例公司 |
+| `ou_operations_dept` | OrgUnit | Operations Department | 运营部 |
+| `role_ceo` | Role | Chief Executive Officer | 首席执行官 |
+| `cap_supply_chain` | Capability | Supply Chain Management | 供应链管理 |
+| `proc_order_to_cash` | Process | Order to Cash | 订单到回款 |
+| `sys_erp` | SystemApplication | Enterprise Resource Planning System | 企业资源计划系统 |
+| `goal_revenue_growth` | Goal | Revenue Growth | 营收增长 |
+| `kpi_customer_satisfaction` | KPI | Customer Satisfaction Score | 客户满意度评分 |
 
 ## Usage Example
 
@@ -21,20 +21,19 @@ These instances demonstrate a complete business narrative:
 
 ```mermaid
 graph LR
-    ORG["🏢 Global Retail Group<br/>(Organization)"]
-    OU["🏬 Merchandising Dept<br/>(OrgUnit)"]
-    ROLE["👤 Category Manager<br/>(Role)"]
-    CAP["💡 Product Launch Mgmt<br/>(Capability)"]
-    PROC["⚙️ New Product Intro<br/>(Process)"]
-    SYS["💻 PLM Platform<br/>(SystemApplication)"]
-    GOAL["🎯 Margin Growth<br/>(Goal)"]
-    KPI["📊 Launch Cycle Time<br/>(KPI)"]
+    ORG["🏢 Acme Corporation<br/>(Organization)"]
+    OU["🏬 Operations Dept<br/>(OrgUnit)"]
+    ROLE["👤 CEO<br/>(Role)"]
+    CAP["💡 Supply Chain Mgmt<br/>(Capability)"]
+    PROC["⚙️ Order to Cash<br/>(Process)"]
+    SYS["💻 ERP System<br/>(SystemApplication)"]
+    GOAL["🎯 Revenue Growth<br/>(Goal)"]
+    KPI["📊 Customer Satisfaction<br/>(KPI)"]
     
-    OU -->|belongs_to| ORG
-    ROLE -->|is_accountable_for| CAP
+    OU -->|part_of| ORG
+    ROLE -->|accountable_for| CAP
     CAP -->|realized_by| PROC
-    CAP -->|supports| GOAL
-    GOAL -->|measured_by| KPI
+    PROC -->|measured_by| KPI
     
     style ORG fill:#c8e6c9,stroke:#388e3c
     style OU fill:#c8e6c9,stroke:#388e3c
@@ -48,4 +47,4 @@ graph LR
 
 **Reading the narrative:**
 
-> The **Merchandising Department** (`OrgUnit`) belongs to the **Global Retail Group** (`Organization`). The **Category Manager** (`Role`) is accountable for the **Product Launch Management** capability, which is realized by the **New Product Introduction** process. This capability supports the **Gross Margin Growth** goal, which is measured by the **Launch Cycle Time** KPI.
+> The **Operations Department** (`OrgUnit`) is `part_of` the **Acme Corporation** (`Organization`). The **CEO** (`Role`) is `accountable_for` the **Supply Chain Management** capability, which is `realized_by` the **Order to Cash** process. The process is `measured_by` the **Customer Satisfaction Score** KPI.

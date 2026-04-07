@@ -11,7 +11,7 @@ cd universal-ontology-definition
 
 ## Step 2: Explore the Core Ontology
 
-Open `core/universal_ontology_v1.json` to see all **25 core classes** and **16 standard relations**.
+Open `core/universal_ontology_v1.json` to see all **24 core classes** and **12 standard relations**.
 
 The core ontology covers these universal enterprise domains:
 
@@ -19,8 +19,8 @@ The core ontology covers these universal enterprise domains:
 |:---|:---|
 | Party & Organization | `Party`, `Person`, `Organization`, `OrgUnit`, `Role` |
 | Capability & Process | `Capability`, `Process`, `Activity` |
-| Business Objects | `BusinessObject`, `ProductService`, `Asset` |
-| Data & Systems | `DataObject`, `DocumentRecord`, `SystemApplication` |
+| Resources | `Resource`, `ProductService`, `Asset` |
+| Data & Systems | `DataObject`, `Document`, `SystemApplication` |
 | Governance & Compliance | `Policy`, `Rule`, `Control`, `Risk` |
 | Decision & Measurement | `Event`, `Decision`, `Goal`, `KPI` |
 | Market & Channel | `Location`, `Channel`, `MarketSegment` |

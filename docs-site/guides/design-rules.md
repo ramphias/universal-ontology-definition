@@ -72,8 +72,9 @@ Every class definition must include:
 ## Domain & Range Rules
 
 - `domain` and `range` must reference existing class IDs
-- L2 relations can reference L1 classes as domain/range
-- Avoid overly broad relations (e.g., `BusinessObject` → `BusinessObject`)
+- Ensure relations point natively upward in inheritance (e.g., L2 → L1, not L1 → L2)
+- Avoid overly broad relations (e.g., `Resource` → `Resource`)
+- Use existing generic relations (`part_of`, `depends_on`) before creating new ones
 
 ## Instance ID Convention
 

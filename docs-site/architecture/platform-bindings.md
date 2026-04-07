@@ -90,7 +90,7 @@ The same `Organization` class expressed across different L0 bindings:
 Want to add Protobuf, Avro, Neo4j Cypher, or another format?
 
 1. Copy `platform/_template/` as your starting point
-2. Map all 25 L1 classes and 16 relations to your target format
+2. Map all 24 L1 classes and 12 relations to your target format
 3. Include a `README.md` explaining usage and limitations
 4. Submit a Pull Request
 

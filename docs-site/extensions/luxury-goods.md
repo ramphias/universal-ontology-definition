@@ -28,11 +28,11 @@ This extension covers:
 |:---|:---|:---|
 | `LuxuryBrand` | `Organization` | A luxury brand entity |
 | `MaisonHouse` | `Organization` | A brand house or fashion house |
-| `Collection` | `BusinessObject` | A seasonal product collection |
-| `SKUVariant` | `ProductService` | A specific product variant (size, color, material) |
-| `Boutique` | `Channel` | A brand-owned retail boutique |
-| `ClientAdvisor` | `Role` | A personal shopping advisor for VIP clients |
-| `DigitalPassport` | `DocumentRecord` | Digital authenticity certificate for products |
+| `Brand` | `Organization` | The luxury brand entity |
+| `Collection` | `Resource` | A seasonal product collection |
+| `Boutique` | `OrgUnit` | A physical retail store |
+| `VIC` | `Role` | Very Important Client |
+| `DigitalPassport` | `Document` | Digital authenticity certificate for products |
 
 ## Use Cases
 

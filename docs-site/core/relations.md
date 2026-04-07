@@ -1,6 +1,6 @@
 # Relations Reference
 
-All 16 standard relations defined in L1. Each relation connects a **domain** class (source) to a **range** class (target).
+All 12 standard relations defined in L1 v2.0. Each relation connects a **domain** class (source) to a **range** class (target) and includes cardinality definitions.
 
 ---
 
@@ -9,26 +9,22 @@ All 16 standard relations defined in L1. Each relation connects a **domain** cla
 ```mermaid
 graph LR
     Party -->|plays_role| Role
-    OrgUnit -->|belongs_to| Organization
-    Party -->|owns| BusinessObject
-    Role -->|is_accountable_for| Capability
+    Entity -->|part_of| Entity
+    Party -->|owns| Resource
+    Role -->|accountable_for| Operational
     Capability -->|realized_by| Process
-    Process -->|composed_of| Activity
-    Process -->|consumes| DataObject
-    Process -->|produces| DataObject
+    Process -->|consumes| Resource
+    Process -->|produces| Resource
     DataObject -->|recorded_in| SystemApplication
-    Process -->|governed_by| Policy
-    Process -->|constrained_by| Rule
+    Operational -->|governed_by| Governance
     Risk -->|mitigated_by| Control
     Event -->|triggered_by| Process
-    Process -->|requires_decision| Decision
-    Capability -->|supports| Goal
-    Goal -->|measured_by| KPI
+    Operational -->|measured_by| KPI
 ```
 
 ---
 
-## Party & Organization Relations
+## Party & Entity Relations
 
 ### plays_role
 
@@ -38,19 +34,21 @@ graph LR
 | **中文** | 扮演角色 |
 | **Domain** | `Party` |
 | **Range** | `Role` |
+| **Cardinality** | N:M |
 | **Definition** | A party plays a specific role |
 | **定义** | 主体扮演某个角色 |
 
-### belongs_to
+### part_of
 
 | Field | Value |
 |:---|:---|
-| **ID** | `belongs_to` |
-| **中文** | 隶属于 |
-| **Domain** | `OrgUnit` |
-| **Range** | `Organization` |
-| **Definition** | An organizational unit belongs to an organization or a parent unit |
-| **定义** | 组织单元隶属于组织或上级单元 |
+| **ID** | `part_of` |
+| **中文** | 属于/组成 |
+| **Domain** | `Entity` |
+| **Range** | `Entity` |
+| **Cardinality** | N:1 |
+| **Definition** | An entity is part of another entity (unifies belongs_to and composed_of) |
+| **定义** | 一个实体是另一个实体的组成部分（合并了 belongs_to 和 composed_of） |
 
 ### owns
 
@@ -59,24 +57,26 @@ graph LR
 | **ID** | `owns` |
 | **中文** | 拥有 |
 | **Domain** | `Party` |
-| **Range** | `BusinessObject` |
-| **Definition** | A party owns or is responsible for a business object |
-| **定义** | 主体拥有或负责业务对象 |
+| **Range** | `Resource` |
+| **Cardinality** | 1:N |
+| **Definition** | A party owns or is responsible for a resource |
+| **定义** | 主体拥有或负责资源 |
 
 ---
 
-## Capability & Process Relations
+## Operational & Governance Relations
 
-### is_accountable_for
+### accountable_for
 
 | Field | Value |
 |:---|:---|
-| **ID** | `is_accountable_for` |
+| **ID** | `accountable_for` |
 | **中文** | 负责 |
 | **Domain** | `Role` |
-| **Range** | `Capability` |
-| **Definition** | A role is accountable for a capability |
-| **定义** | 角色对能力负责 |
+| **Range** | `Operational` |
+| **Cardinality** | N:M |
+| **Definition** | A role is accountable for an operational element (capability, process, etc.) |
+| **定义** | 角色对运营元素（能力、流程等）负责 |
 
 ### realized_by
 
@@ -86,60 +86,9 @@ graph LR
 | **中文** | 由…实现 |
 | **Domain** | `Capability` |
 | **Range** | `Process` |
+| **Cardinality** | N:M |
 | **Definition** | A capability is realized by a process |
 | **定义** | 能力由流程实现 |
-
-### composed_of
-
-| Field | Value |
-|:---|:---|
-| **ID** | `composed_of` |
-| **中文** | 由…组成 |
-| **Domain** | `Process` |
-| **Range** | `Activity` |
-| **Definition** | A process is composed of activities |
-| **定义** | 流程由活动组成 |
-
----
-
-## Data Flow Relations
-
-### consumes
-
-| Field | Value |
-|:---|:---|
-| **ID** | `consumes` |
-| **中文** | 消费 |
-| **Domain** | `Process` |
-| **Range** | `DataObject` |
-| **Definition** | A process consumes data objects |
-| **定义** | 流程消费数据对象 |
-
-### produces
-
-| Field | Value |
-|:---|:---|
-| **ID** | `produces` |
-| **中文** | 产出 |
-| **Domain** | `Process` |
-| **Range** | `DataObject` |
-| **Definition** | A process produces data objects |
-| **定义** | 流程产出数据对象 |
-
-### recorded_in
-
-| Field | Value |
-|:---|:---|
-| **ID** | `recorded_in` |
-| **中文** | 记录于 |
-| **Domain** | `DataObject` |
-| **Range** | `SystemApplication` |
-| **Definition** | A data object is recorded in a system application |
-| **定义** | 数据对象记录于系统 |
-
----
-
-## Governance Relations
 
 ### governed_by
 
@@ -147,21 +96,11 @@ graph LR
 |:---|:---|
 | **ID** | `governed_by` |
 | **中文** | 受…治理 |
-| **Domain** | `Process` |
-| **Range** | `Policy` |
-| **Definition** | A process is governed by a policy |
-| **定义** | 流程受政策治理 |
-
-### constrained_by
-
-| Field | Value |
-|:---|:---|
-| **ID** | `constrained_by` |
-| **中文** | 受…约束 |
-| **Domain** | `Process` |
-| **Range** | `Rule` |
-| **Definition** | A process is constrained by a rule |
-| **定义** | 流程受规则约束 |
+| **Domain** | `Operational` |
+| **Range** | `Governance` |
+| **Cardinality** | N:M |
+| **Definition** | An operational element is governed by a governance element (generalizes both governed_by and constrained_by) |
+| **定义** | 运营元素受治理要素约束（泛化了原 governed_by 和 constrained_by） |
 
 ### mitigated_by
 
@@ -171,12 +110,53 @@ graph LR
 | **中文** | 由…缓释 |
 | **Domain** | `Risk` |
 | **Range** | `Control` |
+| **Cardinality** | N:M |
 | **Definition** | A risk is mitigated by a control measure |
 | **定义** | 风险由控制措施缓释 |
 
 ---
 
-## Event & Decision Relations
+## Data & System Relations
+
+### consumes
+
+| Field | Value |
+|:---|:---|
+| **ID** | `consumes` |
+| **中文** | 消费 |
+| **Domain** | `Process` |
+| **Range** | `Resource` |
+| **Cardinality** | N:M |
+| **Definition** | A process consumes resources |
+| **定义** | 流程消费资源 |
+
+### produces
+
+| Field | Value |
+|:---|:---|
+| **ID** | `produces` |
+| **中文** | 产出 |
+| **Domain** | `Process` |
+| **Range** | `Resource` |
+| **Cardinality** | N:M |
+| **Definition** | A process produces resources |
+| **定义** | 流程产出资源 |
+
+### recorded_in
+
+| Field | Value |
+|:---|:---|
+| **ID** | `recorded_in` |
+| **中文** | 记录于 |
+| **Domain** | `DataObject` |
+| **Range** | `SystemApplication` |
+| **Cardinality** | N:M |
+| **Definition** | A data object is recorded in a system application |
+| **定义** | 数据对象记录于系统 |
+
+---
+
+## Event & Measurement Relations
 
 ### triggered_by
 
@@ -186,34 +166,9 @@ graph LR
 | **中文** | 由…触发 |
 | **Domain** | `Event` |
 | **Range** | `Process` |
+| **Cardinality** | N:M |
 | **Definition** | An event triggers a process |
 | **定义** | 事件触发流程 |
-
-### requires_decision
-
-| Field | Value |
-|:---|:---|
-| **ID** | `requires_decision` |
-| **中文** | 需要决策 |
-| **Domain** | `Process` |
-| **Range** | `Decision` |
-| **Definition** | A process requires a decision or approval |
-| **定义** | 流程需要决策或审批 |
-
----
-
-## Goal & Measurement Relations
-
-### supports
-
-| Field | Value |
-|:---|:---|
-| **ID** | `supports` |
-| **中文** | 支持 |
-| **Domain** | `Capability` |
-| **Range** | `Goal` |
-| **Definition** | A capability supports a business goal |
-| **定义** | 能力支持业务目标 |
 
 ### measured_by
 
@@ -221,7 +176,8 @@ graph LR
 |:---|:---|
 | **ID** | `measured_by` |
 | **中文** | 由…衡量 |
-| **Domain** | `Goal` |
+| **Domain** | `Operational` |
 | **Range** | `KPI` |
-| **Definition** | A goal is measured by a KPI |
-| **定义** | 目标由指标衡量 |
+| **Cardinality** | N:M |
+| **Definition** | An operational element is measured by a KPI (generalizes the former Goal-only constraint) |
+| **定义** | 运营元素由指标衡量（泛化了原 Goal→KPI 的限制） |

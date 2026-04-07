@@ -11,7 +11,9 @@
       "Bash(python scripts/merge_layers.py)",
       "Bash(python scripts/merge_layers.py private_enterprise/deloitte-china-consulting/deloitte_china_consulting_ontology_v1.json)",
       "Bash(python scripts/visualize_ontology.py private_enterprise/deloitte-china-consulting/output/merged_ontology.json)",
-      "Bash(start \"\" \"c:\\\\Users\\\\Ram\\\\Desktop\\\\Work Files\\\\Coding\\\\Ontology\\\\private_enterprise\\\\deloitte-china-consulting\\\\output\\\\visualization.html\")"
+      "Bash(start \"\" \"c:\\\\Users\\\\Ram\\\\Desktop\\\\Work Files\\\\Coding\\\\Ontology\\\\private_enterprise\\\\deloitte-china-consulting\\\\output\\\\visualization.html\")",
+      "Bash(start \"\" \"private_enterprise\\\\deloitte-china-consulting\\\\output\\\\visualization.html\")",
+      "Bash(python -c ':*)"
     ]
   }
 }

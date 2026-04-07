@@ -18,8 +18,7 @@ Universal Ontology Definition uses a **Technical—Universal—Industry—Enterp
 ├──────────────────────────────────────────────────────────────────┤
 │  L1: Universal Enterprise Ontology Core                          │
 │  ┌────────────────────────────────────────────────────────────┐  │
-│  │ Party · Organization · Role · Capability · Process · Risk │  │
-│  │ Goal · KPI · DataObject · SystemApplication · Policy      │  │
+│  │  Entity · Governance · Operational · Measurement           │  │
 │  └────────────────────────────────────────────────────────────┘  │
 │                                     ← Mandatory, stable          │
 ├══════════════════════════════════════════════════════════════════┤

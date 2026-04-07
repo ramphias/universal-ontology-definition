@@ -17,7 +17,7 @@ UOD is an **open, standardized four-layer enterprise ontology framework** design
 graph TB
     L3["🏢 L3: Enterprise Layer<br/>Your Company's Custom Extensions"]
     L2["🏭 L2: Industry and Domain Extension<br/>Consulting, Luxury, Finance..."]
-    L1["🌐 L1: Universal Core<br/>25 Classes · 16 Relations"]
+    L1["🌐 L1: Universal Core<br/>24 Classes · 12 Relations"]
     L0["⚙️ L0: Platform Bindings<br/>OWL/RDF · JSON-LD · GraphQL · SQL"]
     
     L3 -->|extends| L2

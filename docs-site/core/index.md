@@ -1,6 +1,6 @@
 # Core Ontology (L1)
 
-The Universal Enterprise Ontology Core defines **25 classes** and **16 relations** that form the mandatory foundation for all Industry and Domain Extension and enterprise customizations.
+The Universal Enterprise Ontology Core defines **24 classes** and **12 relations** that form the mandatory foundation for all Industry and Domain Extension and enterprise customizations.
 
 ## Overview
 

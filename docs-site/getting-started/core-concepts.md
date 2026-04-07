@@ -10,7 +10,7 @@ The **technical serialization layer**. Provides pre-built mappings of the L1 sem
 
 ### L1 — Universal Enterprise Ontology Core
 
-The **mandatory foundation**. Defines 25 cross-industry, cross-enterprise universal concepts (classes) and 16 standard relationships. All L2 and L3 definitions must inherit from L1.
+The **mandatory foundation**. Defines 24 cross-industry, cross-enterprise universal concepts (classes) and 12 standard relationships. All L2 and L3 definitions must inherit from L1.
 
 ### L2 — Industry & Domain Extensions
 

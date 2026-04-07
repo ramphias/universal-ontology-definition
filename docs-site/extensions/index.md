@@ -6,6 +6,7 @@ Industry and Domain Extension extend the L1 Universal Core with domain-specific 
 
 | Industry | Classes | Relations | Instances | Status |
 |:---|:---:|:---:|:---:|:---|
+| Common Enterprise | 10 | 5 | - | ✅ v1.0.0 |
 | [Consulting](consulting.md) | 40+ | 34 | 25+ | ✅ v1.0.0 |
 | [Luxury Goods](luxury-goods.md) | 21 | 10 | 8 | ✅ v1.0.0 |
 

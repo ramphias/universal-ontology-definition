@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deloitte China Management Consulting — Merged Enterprise Ontology · Ontology Explorer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+:root {
+  --l1: #3949AB; --l1-bg: #E8EAF6; --l1-light: #7986CB;
+  --l2: #00897B; --l2-bg: #E0F2F1; --l2-light: #4DB6AC;
+  --l3: #E65100; --l3-bg: #FFF3E0; --l3-light: #FFB74D;
+  --entity: #5C6BC0; --resource: #00897B;
+  --governance: #E53935; --operational: #F57C00; --measurement: #7B1FA2;
+  --bg: #F8F9FA; --surface: #FFFFFF; --border: #E0E0E0;
+  --text: #212121; --text-sec: #757575;
+  --sidebar: 300px;
+}
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
+        color: var(--text); display: flex; flex-direction: column; height: 100%; height: 100dvh; overflow: hidden; }
+
+/* ── Header ── */
+#header {
+  background: #1A237E; color: #fff; padding: 10px 20px;
+  display: flex; align-items: center; gap: 16px; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+#header h1 { font-size: 15px; font-weight: 600; flex: 1; white-space: nowrap;
+               overflow: hidden; text-overflow: ellipsis; }
+.stat-pill { background: rgba(255,255,255,.15); border-radius: 12px;
+              padding: 2px 10px; font-size: 12px; white-space: nowrap; }
+#search-box {
+  padding: 5px 12px; border-radius: 20px; border: none;
+  background: rgba(255,255,255,.15); color: #fff; outline: none;
+  font-size: 13px; width: 180px; transition: background .2s;
+}
+#search-box::placeholder { color: rgba(255,255,255,.6); }
+#search-box:focus { background: rgba(255,255,255,.25); }
+
+/* ── View Tabs ── */
+#tabs {
+  background: #283593; display: flex; gap: 0; flex-shrink: 0;
+  border-bottom: 2px solid rgba(255,255,255,.1);
+}
+.tab {
+  padding: 8px 20px; color: rgba(255,255,255,.7); cursor: pointer;
+  font-size: 13px; font-weight: 500; transition: all .2s; border: none;
+  background: transparent; position: relative;
+}
+.tab:hover { color: #fff; background: rgba(255,255,255,.08); }
+.tab.active { color: #fff; }
+.tab.active::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 2px; background: #82B1FF;
+}
+
+/* ── Layout ── */
+#main { display: flex; flex: 1; overflow: hidden; }
+#viz-area { flex: 1; overflow: hidden; position: relative; }
+#sidebar {
+  width: var(--sidebar); background: var(--surface); border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0;
+}
+
+/* ── Views ── */
+.view { width: 100%; height: 100%; display: none; }
+.view.active { display: flex; flex-direction: column; }
+#view-force { overflow: hidden; }
+#view-tree { overflow: hidden; }
+#view-grid { overflow-y: auto; padding: 20px; }
+
+/* ── Force Graph ── */
+#force-svg { width: 100%; height: 100%; }
+.node circle { stroke-width: 1.5px; cursor: pointer; transition: r .15s; }
+.node circle:hover { stroke-width: 3px; }
+.node.abstract circle { stroke-dasharray: 4 2; }
+.node text { font-size: 10px; pointer-events: none; fill: #333; }
+.link { stroke-opacity: 0.6; }
+.link.inheritance { stroke: #9E9E9E; stroke-dasharray: 4 2; }
+.link.relation { stroke-opacity: 0.5; }
+.link-label { font-size: 9px; fill: #666; pointer-events: none; }
+.arrowhead { fill-opacity: 0.6; }
+
+/* ── Tree ── */
+#tree-svg { width: 100%; height: 100%; }
+.tree-node circle { stroke-width: 1.5px; cursor: pointer; }
+.tree-node text { font-size: 11px; }
+.tree-link { fill: none; stroke: #BDBDBD; stroke-width: 1.5px; }
+
+/* ── Grid ── */
+#view-grid h2 { font-size: 13px; color: var(--text-sec); margin-bottom: 16px; }
+.layer-section { margin-bottom: 28px; }
+.layer-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid;
+}
+.layer-badge {
+  padding: 3px 10px; border-radius: 12px; font-size: 12px;
+  font-weight: 700; color: #fff;
+}
+.layer-title { font-size: 15px; font-weight: 600; }
+.layer-count { font-size: 12px; color: var(--text-sec); margin-left: auto; }
+.domain-group { margin-bottom: 16px; }
+.domain-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .5px; margin-bottom: 8px; padding: 3px 8px;
+  border-radius: 4px; display: inline-block;
+}
+.cards { display: flex; flex-wrap: wrap; gap: 8px; }
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 12px; width: 220px; cursor: pointer;
+  transition: box-shadow .15s, border-color .15s; border-left: 3px solid transparent;
+}
+.card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+.card-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.card-zh { font-size: 11px; color: var(--text-sec); margin-bottom: 6px; }
+.card-def { font-size: 11px; color: var(--text-sec); line-height: 1.5;
+              display: -webkit-box; -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical; overflow: hidden; }
+.card-badges { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.badge {
+  font-size: 10px; padding: 1px 6px; border-radius: 8px;
+  font-weight: 500; white-space: nowrap;
+}
+.badge-abstract { background: #F5F5F5; color: #616161; border: 1px solid #E0E0E0; }
+
+/* ── Sidebar ── */
+#sidebar {
+  width: var(--sidebar); background: #fff; border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0;
+  transition: right 0.3s ease;
+}
+#mobile-sidebar-toggle {
+  display: none; position: absolute; top: 12px; right: 12px; z-index: 1000;
+  background: #1A237E; color: #fff; border: none; padding: 6px 14px;
+  border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+#filter-panel { padding: 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+#filter-panel h3 { font-size: 12px; font-weight: 600; text-transform: uppercase;
+                    letter-spacing: .5px; color: var(--text-sec); margin-bottom: 8px; }
+.filter-group { margin-bottom: 10px; }
+.filter-label { font-size: 11px; color: var(--text-sec); margin-bottom: 5px; }
+.filter-buttons { display: flex; flex-wrap: wrap; gap: 4px; }
+.filter-btn {
+  padding: 3px 10px; border-radius: 12px; border: 1.5px solid; cursor: pointer;
+  font-size: 11px; font-weight: 600; background: transparent; transition: all .15s;
+}
+.filter-btn.active { color: #fff !important; }
+.filter-btn[data-layer="L1"] { border-color: var(--l1); color: var(--l1); }
+.filter-btn[data-layer="L1"].active { background: var(--l1); }
+.filter-btn[data-layer="L2"] { border-color: var(--l2); color: var(--l2); }
+.filter-btn[data-layer="L2"].active { background: var(--l2); }
+.filter-btn[data-layer="L3"] { border-color: var(--l3); color: var(--l3); }
+.filter-btn[data-layer="L3"].active { background: var(--l3); }
+.filter-btn[data-domain="entity"] { border-color: var(--entity); color: var(--entity); }
+.filter-btn[data-domain="entity"].active { background: var(--entity); }
+.filter-btn[data-domain="resource"] { border-color: var(--resource); color: var(--resource); }
+.filter-btn[data-domain="resource"].active { background: var(--resource); }
+.filter-btn[data-domain="governance"] { border-color: var(--governance); color: var(--governance); }
+.filter-btn[data-domain="governance"].active { background: var(--governance); }
+.filter-btn[data-domain="operational"] { border-color: var(--operational); color: var(--operational); }
+.filter-btn[data-domain="operational"].active { background: var(--operational); }
+.filter-btn[data-domain="measurement"] { border-color: var(--measurement); color: var(--measurement); }
+.filter-btn[data-domain="measurement"].active { background: var(--measurement); }
+.toggle-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.toggle { width: 32px; height: 18px; border-radius: 9px; background: #BDBDBD;
+           cursor: pointer; position: relative; transition: background .2s; flex-shrink: 0; }
+.toggle.on { background: #3949AB; }
+.toggle::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px;
+  border-radius: 50%; background: #fff; transition: left .2s;
+}
+.toggle.on::after { left: 16px; }
+.toggle-label { font-size: 11px; color: var(--text-sec); }
+
+#detail-panel { flex: 1; padding: 12px; overflow-y: auto; }
+#detail-panel h3 { font-size: 12px; font-weight: 600; text-transform: uppercase;
+                    letter-spacing: .5px; color: var(--text-sec); margin-bottom: 10px; }
+#detail-empty { color: var(--text-sec); font-size: 12px; font-style: italic; }
+#detail-content { display: none; }
+.detail-id { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.detail-zh { font-size: 13px; color: var(--text-sec); margin-bottom: 10px; }
+.detail-section { margin-bottom: 12px; }
+.detail-section-title {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .5px; color: var(--text-sec); margin-bottom: 5px;
+}
+.detail-def { font-size: 12px; line-height: 1.6; color: #424242; }
+.detail-tag {
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-size: 11px; font-weight: 600; color: #fff; margin-right: 4px; margin-bottom: 4px;
+}
+.detail-rel { font-size: 11px; padding: 4px 0; border-bottom: 1px solid var(--border);
+               color: #424242; }
+.detail-rel:last-child { border-bottom: none; }
+.detail-rel .rel-name { font-weight: 600; color: #1A237E; }
+.detail-inst { font-size: 11px; padding: 2px 0; color: #424242; }
+.chip {
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  font-size: 10px; font-weight: 600; margin: 1px; cursor: pointer;
+  border: 1px solid; transition: all .15s;
+}
+.chip:hover { opacity: .75; }
+
+/* ── Tooltip ── */
+#tooltip {
+  position: fixed; background: rgba(0,0,0,.85); color: #fff; border-radius: 6px;
+  padding: 8px 12px; font-size: 12px; pointer-events: none; z-index: 1000;
+  max-width: 240px; display: none; line-height: 1.5;
+}
+
+/* ── Zoom controls ── */
+#zoom-controls {
+  position: absolute; bottom: 16px; right: 8px; display: flex;
+  flex-direction: column; gap: 4px;
+}
+.zoom-btn {
+  width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--surface); cursor: pointer; font-size: 16px; font-weight: 300;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,.15); transition: background .15s;
+}
+.zoom-btn:hover { background: #F5F5F5; }
+
+/* ── Tree Title Bar ── */
+#tree-title-bar {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  padding: 10px 20px; display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(to bottom, rgba(248,249,250,0.97) 70%, transparent);
+  pointer-events: none;
+}
+#tree-title-name {
+  font-size: 15px; font-weight: 700; color: #1A237E;
+}
+#tree-title-pills { display: flex; gap: 6px; }
+.tree-pill {
+  padding: 2px 10px; border-radius: 10px; font-size: 11px;
+  font-weight: 600; color: #fff;
+}
+#view-tree { position: relative; }
+
+/* ── Description Bar ── */
+#desc-bar {
+  background: #E8EAF6; border-bottom: 1px solid #C5CAE9;
+  padding: 5px 20px; font-size: 12px; color: #3949AB;
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  white-space: nowrap; overflow: hidden;
+}
+#desc-name { font-weight: 600; }
+.desc-sep { color: #9FA8DA; }
+#desc-layers { color: #5C6BC0; }
+#desc-hint { color: #7986CB; font-style: italic; flex: 1; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Legend ── */
+#legend {
+  position: absolute; bottom: 16px; left: 12px; background: rgba(255,255,255,.95);
+  border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
+  font-size: 11px; box-shadow: 0 1px 4px rgba(0,0,0,.1);
+}
+#legend h4 { font-size: 10px; text-transform: uppercase; letter-spacing: .5px;
+               color: var(--text-sec); margin-bottom: 6px; }
+.legend-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legend-line { width: 20px; height: 2px; flex-shrink: 0; }
+
+/* ── Mobile Responsiveness ── */
+@media (max-width: 600px) {
+  #header { flex-wrap: wrap; padding: 8px 12px; gap: 8px; }
+  #header h1 { white-space: normal; font-size: 13px; flex: 100%; text-align: center; margin-bottom: 4px; }
+  .stat-pill { display: none; }
+  #search-box { width: 100%; }
+  .tab { padding: 8px 10px; font-size: 12px; flex: 1; text-align: center; }
+  /* Push controls up on mobile to avoid home bar / thumb zone overlap */
+  #zoom-controls, #zoom-controls-tree { bottom: max(32px, env(safe-area-inset-bottom, 32px)) !important; right: 12px !important; z-index: 100; }
+  #legend { display: none; } /* Hide complex legend to save screen real estate */
+  #tree-title-name { font-size: 13px; }
+  .tree-pill { padding: 2px 6px; font-size: 10px; }
+  
+  #main { flex: 1; }
+  #sidebar { 
+    position: absolute; right: -100%; top: 0; bottom: 0; 
+    width: 85%; max-width: 350px; z-index: 2000; 
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3); 
+  }
+  #sidebar.open { right: 0; }
+  #sidebar-mobile-header { display: flex !important; }
+  #mobile-sidebar-toggle { display: block; }
+}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/>
+    <line x1="12" y1="7" x2="5" y2="17"/><line x1="12" y1="7" x2="19" y2="17"/>
+  </svg>
+  <h1 id="header-title">Deloitte China Management Consulting — Merged Enterprise Ontology</h1>
+  <span class="stat-pill">108 classes</span>
+  <span class="stat-pill">70 relations</span>
+  <span class="stat-pill">94 instances</span>
+  <input id="search-box" type="text" placeholder="Search classes…">
+</div>
+
+<div id="tabs">
+  <button class="tab active" onclick="switchView('force')">&#9737; Relation Graph</button>
+  <button class="tab" onclick="switchView('tree')">&#9663; Hierarchy Tree</button>
+  <button class="tab" onclick="switchView('grid')">&#9783; Layer Overview</button>
+</div>
+
+<div id="desc-bar">
+  <span id="desc-name"></span>
+  <span class="desc-sep">·</span>
+  <span id="desc-layers"></span>
+  <span class="desc-sep">·</span>
+  <span id="desc-hint"></span>
+</div>
+
+<div id="main">
+  <button id="mobile-sidebar-toggle" onclick="document.getElementById('sidebar').classList.add('open')">☰ Filters & Details</button>
+  <div id="viz-area">
+
+    <!-- View 1: Force Graph -->
+    <div id="view-force" class="view active">
+      <svg id="force-svg"></svg>
+      <div id="zoom-controls">
+        <button class="zoom-btn" onclick="forceZoom(1.3)">+</button>
+        <button class="zoom-btn" onclick="forceZoom(0.77)">−</button>
+        <button class="zoom-btn" onclick="forceReset()" title="Reset">⤢</button>
+      </div>
+      <div id="legend">
+        <h4>Legend</h4>
+        <div class="legend-row"><div class="legend-dot" style="background:#3949AB"></div> L1 Core</div>
+        <div class="legend-row"><div class="legend-dot" style="background:#00897B"></div> L2 Consulting</div>
+        <div class="legend-row"><div class="legend-dot" style="background:#E65100"></div> L3 Enterprise</div>
+        <div class="legend-row"><div class="legend-dot" style="background:#ccc;border:1.5px dashed #888"></div> Abstract</div>
+        <div class="legend-row"><div class="legend-line" style="background:#9E9E9E;border-top:1.5px dashed #9E9E9E"></div> Inheritance</div>
+        <div class="legend-row"><div class="legend-line" style="background:#5C6BC0"></div> Relation</div>
+      </div>
+    </div>
+
+    <!-- View 2: Tree -->
+    <div id="view-tree" class="view">
+      <div id="tree-title-bar">
+        <span id="tree-title-name"></span>
+        <span id="tree-title-pills"></span>
+      </div>
+      <svg id="tree-svg"></svg>
+      <div id="zoom-controls-tree" style="position: absolute; bottom: 16px; right: 8px; display: flex; flex-direction: column; gap: 4px;">
+        <button class="zoom-btn" onclick="toggleTreeOrientation()" title="Toggle Horizontal/Vertical">⇋</button>
+        <button class="zoom-btn" onclick="initTree()" title="Reset Layout">↺</button>
+      </div>
+    </div>
+
+    <!-- View 3: Grid -->
+    <div id="view-grid" class="view">
+      <h2 id="grid-subtitle"></h2>
+      <div id="grid-content"></div>
+    </div>
+
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div id="sidebar-mobile-header" style="display:none; padding:12px 20px; background:#1A237E; color:#fff; align-items:center; justify-content:space-between; flex-shrink:0;">
+      <span style="font-weight:600; font-size:15px; letter-spacing:0.5px;">Menu</span>
+      <button onclick="document.getElementById('sidebar').classList.remove('open')" style="background:transparent; border:none; color:#fff; font-size:20px; cursor:pointer; line-height:1; width:30px; height:30px; border-radius:15px; display:flex; align-items:center; justify-content:center;">✕</button>
+    </div>
+    <div id="filter-panel">
+      <h3>Filters</h3>
+      <div class="filter-group">
+        <div class="filter-label">Layer</div>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-layer="L1" onclick="toggleLayer('L1',this)">L1</button>
+          <button class="filter-btn active" data-layer="L2" onclick="toggleLayer('L2',this)">L2</button>
+          <button class="filter-btn active" data-layer="L3" onclick="toggleLayer('L3',this)">L3</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Domain</div>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-domain="entity" onclick="toggleDomain('entity',this)">Entity</button>
+          <button class="filter-btn active" data-domain="resource" onclick="toggleDomain('resource',this)">Resource</button>
+          <button class="filter-btn active" data-domain="governance" onclick="toggleDomain('governance',this)">Gov</button>
+          <button class="filter-btn active" data-domain="operational" onclick="toggleDomain('operational',this)">Ops</button>
+          <button class="filter-btn active" data-domain="measurement" onclick="toggleDomain('measurement',this)">Measure</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="toggle-row">
+          <div class="toggle on" id="toggle-relations" onclick="toggleRelations(this)"></div>
+          <span class="toggle-label">Show relations</span>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle" id="toggle-instances" onclick="toggleInstances(this)"></div>
+          <span class="toggle-label">Show instances</span>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle on" id="toggle-labels" onclick="toggleLabels(this)"></div>
+          <span class="toggle-label">Show labels</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="detail-panel">
+      <h3>Details</h3>
+      <div id="detail-empty">Click any node or card to inspect.</div>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+const D = {"meta":{"name":"Deloitte China Management Consulting — Merged Enterprise Ontology","generated":"2026-04-05 23:18","layers":["L1_universal_organization_ontology","L2_consulting_industry_extension","L3_enterprise_customization"]},"nodes":[{"id":"Entity","label_en":"Entity","label_zh":"实体","parent":null,"layer":"L1","domain":"entity","abstract":true,"status":"stable","def_en":"Top-level abstraction for all identifiable and manageable things","def_zh":"所有可被识别和管理的事物的顶层抽象"},{"id":"Party","label_en":"Party","label_zh":"主体","parent":"Entity","layer":"L1","domain":"entity","abstract":false,"status":"stable","def_en":"The superclass of all entities that can participate in business and governance relationships","def_zh":"可参与业务关系与治理关系的主体总类"},{"id":"Person","label_en":"Person","label_zh":"人员","parent":"Party","layer":"L1","domain":"entity","abstract":false,"status":"stable","def_en":"A natural person entity","def_zh":"自然人主体"},{"id":"Organization","label_en":"Organization","label_zh":"组织","parent":"Party","layer":"L1","domain":"entity","abstract":false,"status":"stable","def_en":"A legal or non-legal organization entity","def_zh":"法人或非法人组织"},{"id":"OrgUnit","label_en":"Organizational Unit","label_zh":"组织单元","parent":"Organization","layer":"L1","domain":"entity","abstract":false,"status":"stable","def_en":"Internal organizational units such as departments, teams, committees, and program groups","def_zh":"部门、团队、委员会、项目群等组织内部单元"},{"id":"Resource","label_en":"Resource","label_zh":"资源","parent":"Entity","layer":"L1","domain":"resource","abstract":true,"status":"stable","def_en":"Tangible or intangible resources created, modified, managed, or consumed by business processes","def_zh":"被业务过程创建、变更、管理、消费的有形或无形资源"},{"id":"ProductService","label_en":"Product & Service","label_zh":"产品与服务","parent":"Resource","layer":"L1","domain":"resource","abstract":false,"status":"stable","def_en":"Products and services provided externally or used internally by an enterprise","def_zh":"企业对外提供或内部使用的产品和服务对象"},{"id":"Asset","label_en":"Asset","label_zh":"资产","parent":"Resource","layer":"L1","domain":"resource","abstract":false,"status":"stable","def_en":"Financial, physical, knowledge, data, brand, and other assets","def_zh":"财务、实物、知识、数据、品牌等资产"},{"id":"DataObject","label_en":"Data Object","label_zh":"数据对象","parent":"Resource","layer":"L1","domain":"resource","abstract":false,"status":"stable","def_en":"A structured or unstructured data entity","def_zh":"结构化或非结构化的数据实体"},{"id":"Document","label_en":"Document","label_zh":"文档与记录","parent":"DataObject","layer":"L1","domain":"resource","abstract":false,"status":"stable","def_en":"Contracts, reports, files, documents, and records","def_zh":"合同、报告、文件、单据、记录"},{"id":"SystemApplication","label_en":"System Application","label_zh":"系统应用","parent":"Resource","layer":"L1","domain":"resource","abstract":false,"status":"stable","def_en":"Software systems supporting processes, data, and decision-making","def_zh":"支撑流程、数据和决策的软件系统"},{"id":"Governance","label_en":"Governance","label_zh":"治理","parent":null,"layer":"L1","domain":"governance","abstract":true,"status":"stable","def_en":"Abstract domain for constraints, governance, and risk management","def_zh":"用于约束、治理和风险管控的抽象域"},{"id":"Policy","label_en":"Policy","label_zh":"政策","parent":"Governance","layer":"L1","domain":"governance","abstract":false,"status":"stable","def_en":"Management principles and constraint requirements","def_zh":"管理原则与约束要求"},{"id":"Rule","label_en":"Rule","label_zh":"规则","parent":"Governance","layer":"L1","domain":"governance","abstract":false,"status":"stable","def_en":"Executable and evaluable business or control rules","def_zh":"可执行、可判断的业务或控制规则"},{"id":"Control","label_en":"Control","label_zh":"控制","parent":"Governance","layer":"L1","domain":"governance","abstract":false,"status":"stable","def_en":"Control measures to reduce risk and ensure compliance and quality","def_zh":"用于降低风险、保障合规和质量的控制措施"},{"id":"Risk","label_en":"Risk","label_zh":"风险","parent":"Governance","layer":"L1","domain":"governance","abstract":false,"status":"stable","def_en":"Uncertain events or conditions that may affect goal achievement","def_zh":"可能影响目标实现的不确定事件或状态"},{"id":"Operational","label_en":"Operational","label_zh":"运营","parent":null,"layer":"L1","domain":"operational","abstract":true,"status":"stable","def_en":"Abstract domain describing how an organization operates, including roles, capabilities, processes, and events","def_zh":"描述组织运作方式的抽象域，包含角色、能力、流程与事件"},{"id":"Role","label_en":"Role","label_zh":"角色","parent":"Operational","layer":"L1","domain":"operational","abstract":false,"status":"stable","def_en":"An identity or responsibility assumed by a party in a given context","def_zh":"主体在某一上下文中承担的身份或职责"},{"id":"Capability","label_en":"Capability","label_zh":"能力","parent":"Operational","layer":"L1","domain":"operational","abstract":false,"status":"stable","def_en":"A stable and reusable business capability possessed by an organization","def_zh":"组织稳定具备且可被复用的业务能力"},{"id":"Process","label_en":"Process","label_zh":"流程","parent":"Operational","layer":"L1","domain":"operational","abstract":false,"status":"stable","def_en":"An end-to-end sequence of activities defined to achieve business objectives; sub-activities expressed via part_of relation","def_zh":"为实现业务目标而定义的端到端活动序列，可通过 part_of 关系表达子活动"},{"id":"Event","label_en":"Event","label_zh":"事件","parent":"Operational","layer":"L1","domain":"operational","abstract":false,"status":"stable","def_en":"A state change occurring in the business or technical environment","def_zh":"发生在业务或技术环境中的状态变化"},{"id":"Measurement","label_en":"Measurement","label_zh":"度量","parent":null,"layer":"L1","domain":"measurement","abstract":true,"status":"stable","def_en":"Abstract domain for goal-setting and performance measurement","def_zh":"描述目标设定与绩效衡量的抽象域"},{"id":"Goal","label_en":"Goal","label_zh":"目标","parent":"Measurement","layer":"L1","domain":"measurement","abstract":false,"status":"stable","def_en":"Outcomes an organization aims to achieve","def_zh":"组织希望达成的结果"},{"id":"KPI","label_en":"Key Performance Indicator","label_zh":"关键指标","parent":"Measurement","layer":"L1","domain":"measurement","abstract":false,"status":"stable","def_en":"Metrics that measure the degree of goal achievement","def_zh":"衡量目标达成程度的指标"},{"id":"ConsultingFirm","label_en":"Consulting Firm","label_zh":"咨询公司","parent":"Organization","layer":"L2","domain":"entity","abstract":false,"status":"stable","def_en":"An enterprise entity providing professional consulting services such as management consulting, IT consulting, and strategy consulting","def_zh":"提供专业咨询服务的企业主体，如管理咨询、IT咨询、战略咨询等"},{"id":"ConsultingOffice","label_en":"Consulting Office","label_zh":"咨询办公室","parent":"OrgUnit","layer":"L2","domain":"entity","abstract":false,"status":"stable","def_en":"A branch office set up by a consulting firm in a geographic region, e.g. Beijing office, New York office","def_zh":"咨询公司按地理区域设立的分支办公室，如北京办公室、纽约办公室等"},{"id":"PracticeLine","label_en":"Practice Line","label_zh":"业务线/实践领域","parent":"OrgUnit","layer":"L2","domain":"entity","abstract":false,"status":"stable","def_en":"A practice area organized by industry or function within a consulting firm, such as strategy, operations, digital transformation, and human resources","def_zh":"咨询公司按行业或职能划分的业务实践领域，如战略、运营、数字化转型、人力资源等"},{"id":"CompetencyCenter","label_en":"Competency Center","label_zh":"能力中心","parent":"OrgUnit","layer":"L2","domain":"entity","abstract":false,"status":"stable","def_en":"A cross-project support center organized around a specific professional competency or technology domain","def_zh":"围绕特定专业能力或技术方向组建的跨项目支持中心"},{"id":"Engagement","label_en":"Engagement","label_zh":"咨询项目/签约项目","parent":"Resource","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A consulting service delivery project contracted with a client, encompassing scope, timeline, budget, and team","def_zh":"与客户签订合同后的咨询服务交付项目，包含范围、时间、预算和团队"},{"id":"EngagementMilestone","label_en":"Engagement Milestone","label_zh":"项目里程碑","parent":"Resource","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A key milestone node in a consulting engagement tied to deliverables and payment schedules","def_zh":"咨询项目中与交付和付款绑定的关键里程碑节点"},{"id":"Proposal","label_en":"Proposal","label_zh":"咨询提案","parent":"Document","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A project proposal or bid document for clients, containing methodology, team composition, timeline, and pricing","def_zh":"面向客户的项目建议书或竞标方案，包含方法论、团队、时间表和报价"},{"id":"StatementOfWork","label_en":"Statement of Work","label_zh":"工作说明书","parent":"Document","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A formal contract attachment defining project scope, deliverables, timeline, and acceptance criteria","def_zh":"定义项目范围、交付物、时间线和验收标准的正式合同附件"},{"id":"Deliverable","label_en":"Deliverable","label_zh":"交付物","parent":"Resource","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"An output to be delivered to the client in a consulting engagement, such as reports, models, implementation plans, and toolkits","def_zh":"咨询项目中需交付给客户的成果物，如报告、模型、实施方案、工具包等"},{"id":"WorkStream","label_en":"Work Stream","label_zh":"工作模块","parent":"Resource","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A parallel work module within an engagement organized by theme, each with independent delivery objectives","def_zh":"咨询项目内按主题划分的并行工作模块，各自拥有独立交付目标"},{"id":"Workshop","label_en":"Workshop","label_zh":"工作坊","parent":"Process","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"An interactive seminar or workshop delivery format commonly used in consulting engagements for research, co-creation, or reporting","def_zh":"咨询项目中常见的互动式研讨会或工作坊交付形式，用于调研、共创或汇报"},{"id":"Methodology","label_en":"Methodology","label_zh":"方法论","parent":"KnowledgeAsset","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A standardized methodology framework developed or adopted by a consulting firm, such as Design Thinking, Lean Six Sigma, TOGAF, etc.","def_zh":"咨询公司自主研发或引用的标准化方法论框架，如设计思维、精益六西格玛、TOGAF等"},{"id":"Framework","label_en":"Analytical Framework","label_zh":"分析框架","parent":"KnowledgeAsset","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A structured tool for problem analysis and strategic planning, such as Porter's Five Forces, SWOT, Value Chain Analysis, BCG Matrix, etc.","def_zh":"用于问题分析和战略规划的结构化工具，如波特五力、SWOT、价值链分析、BCG矩阵等"},{"id":"KnowledgeAsset","label_en":"Knowledge Asset","label_zh":"知识资产","parent":"Asset","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"Reusable knowledge accumulated by a consulting firm, including case libraries, industry reports, best practices, and tool templates","def_zh":"咨询公司积累的可复用知识，包括案例库、行业报告、最佳实践、工具模板等"},{"id":"CaseStudy","label_en":"Case Study","label_zh":"案例研究","parent":"Document","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A structured summary of past engagements used for knowledge retention, business development, and brand showcase","def_zh":"过往项目的结构化总结，用于知识沉淀、业务开发和品牌展示"},{"id":"ClientAccount","label_en":"Client Account","label_zh":"客户账户","parent":"Resource","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A client entity record maintained by a consulting firm, tracking relationship history, engagement records, and revenue contribution","def_zh":"咨询公司维护的客户主体记录，跟踪关系历史、项目记录和收入贡献"},{"id":"ClientRelationship","label_en":"Client Relationship","label_zh":"客户关系","parent":"Resource","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A long-term strategic partnership with a client, encompassing trust levels, contact frequency, and opportunity pipeline","def_zh":"与客户之间的长期战略合作关系，包含信任层级、接触频率和商机管道"},{"id":"Pipeline","label_en":"Pipeline","label_zh":"商机管道","parent":"Resource","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A sales funnel of potential consulting engagements, tracking the full process from lead identification to contract signing","def_zh":"潜在咨询项目的销售漏斗，跟踪从线索识别到签约的全流程"},{"id":"ConsultingService","label_en":"Consulting Service","label_zh":"咨询服务产品","parent":"ProductService","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"Standardized or customized service offerings provided by a consulting firm, such as strategic assessment, organizational diagnostics, and digital roadmaps","def_zh":"咨询公司对外提供的标准化或定制化服务产品，如战略评估、组织诊断、数字化路线图等"},{"id":"PartnerRole","label_en":"Partner","label_zh":"合伙人角色","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A senior leadership role bearing ultimate responsibility for client relationships, engagement quality, and revenue targets","def_zh":"对客户关系、项目质量和营收目标负最终责任的高级领导角色"},{"id":"PrincipalRole","label_en":"Principal / Associate Partner","label_zh":"总监/副合伙人角色","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A senior advisory role between partner and manager, responsible for program management and business development","def_zh":"介于合伙人和经理之间的高级顾问角色，负责项目群管理和业务拓展"},{"id":"EngagementManagerRole","label_en":"Engagement Manager","label_zh":"项目经理角色","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A role responsible for day-to-day management, team coordination, and client communication for a single engagement","def_zh":"负责单个项目日常管理、团队协调和客户沟通的角色"},{"id":"ConsultantRole","label_en":"Consultant","label_zh":"顾问角色","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A professional role performing specific analysis, research, solution design, and delivery work","def_zh":"执行具体分析、调研、方案设计和交付工作的专业角色"},{"id":"AnalystRole","label_en":"Analyst","label_zh":"分析师角色","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A junior role responsible for data collection, analytical modeling, and material preparation","def_zh":"负责数据收集、分析建模和材料准备的初级角色"},{"id":"SubjectMatterExpertRole","label_en":"Subject Matter Expert","label_zh":"领域专家角色","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"An advisory role with deep expertise in a specific industry or functional domain, providing expert opinions and quality assurance","def_zh":"在特定行业或职能领域拥有深度专长的顾问角色，提供专家意见和质量把关"},{"id":"SubcontractorRole","label_en":"Subcontractor","label_zh":"外部分包顾问角色","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A project subcontracting role undertaken by external partners or independent consultants, providing specialized services under contract","def_zh":"由外部合作方或独立顾问承担的项目分包角色，按合同提供专项服务"},{"id":"ClientStakeholder","label_en":"Client Stakeholder","label_zh":"客户利益相关方","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"Key stakeholders within the client organization related to the consulting engagement, including project leads, business owners, and IT leaders","def_zh":"客户组织中与咨询项目相关的关键干系人，包括项目负责人、业务负责人、IT负责人等"},{"id":"ClientSponsor","label_en":"Client Sponsor","label_zh":"客户项目发起人","parent":"Role","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"An executive sponsor on the client side who provides budget approval and senior-level support for the consulting engagement","def_zh":"客户方为咨询项目提供预算审批和高层支持的行政发起人角色"},{"id":"StaffingRequest","label_en":"Staffing Request","label_zh":"人员配置需求","parent":"Resource","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A human resource request specifying required skills, experience, and availability for project team assembly","def_zh":"项目团队组建中对特定技能、经验和可用性的人力需求申请"},{"id":"UtilizationMetric","label_en":"Utilization Metric","label_zh":"利用率指标","parent":"KPI","layer":"L2","domain":"measurement","abstract":false,"status":"stable","def_en":"A core operational metric measuring the ratio of a consultant's billable hours to total working hours","def_zh":"衡量顾问可计费时间与总工时比率的核心运营指标"},{"id":"RevenueMetric","label_en":"Revenue Metric","label_zh":"收入指标","parent":"KPI","layer":"L2","domain":"measurement","abstract":false,"status":"stable","def_en":"A financial metric measuring revenue performance at the firm, practice line, or engagement level","def_zh":"衡量咨询公司、业务线或项目层面收入表现的财务指标"},{"id":"MarginMetric","label_en":"Margin Metric","label_zh":"利润率指标","parent":"KPI","layer":"L2","domain":"measurement","abstract":false,"status":"stable","def_en":"A financial metric measuring profit margin at the engagement or practice line level, reflecting delivery efficiency and pricing strategy effectiveness","def_zh":"衡量项目或业务线利润率的财务指标，反映交付效率和定价策略的有效性"},{"id":"BillableRate","label_en":"Billable Rate","label_zh":"计费费率","parent":"Rule","layer":"L2","domain":"governance","abstract":false,"status":"stable","def_en":"A billing standard rule determined by consultant grade, engagement type, and client agreement for hourly or daily rates","def_zh":"按顾问等级、项目类型和客户协议确定的小时/天计费标准规则"},{"id":"QualityReview","label_en":"Quality Review","label_zh":"质量评审","parent":"Control","layer":"L2","domain":"governance","abstract":false,"status":"stable","def_en":"Quality gates and review mechanisms during engagement delivery to ensure deliverables meet standards","def_zh":"项目交付过程中的质量关口和审核机制，确保交付物达标"},{"id":"ClientSatisfactionSurvey","label_en":"Client Satisfaction Survey","label_zh":"客户满意度调查","parent":"Document","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"Client feedback collected after engagement completion, measuring service quality and client experience","def_zh":"项目结束后收集的客户反馈，衡量服务质量和客户体验"},{"id":"ThoughtLeadership","label_en":"Thought Leadership","label_zh":"思想领导力内容","parent":"Asset","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"Industry insight white papers, research reports, and opinion articles published by a consulting firm for brand building and client attraction","def_zh":"咨询公司发布的行业洞察白皮书、研究报告和观点文章，用于品牌建设和客户吸引"},{"id":"ChangeManagementPlan","label_en":"Change Management Plan","label_zh":"变革管理计划","parent":"Document","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"An organizational change and personnel transformation plan developed for clients within a consulting engagement","def_zh":"咨询项目中为客户制定的组织变革和人员转型方案"},{"id":"BenchmarkStudy","label_en":"Benchmark Study","label_zh":"对标研究","parent":"Document","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A performance benchmarking analysis report based on industry data and best practices","def_zh":"基于行业数据和最佳实践的性能对标分析报告"},{"id":"ConflictOfInterestRisk","label_en":"Conflict of Interest Risk","label_zh":"利益冲突风险","parent":"Risk","layer":"L2","domain":"governance","abstract":false,"status":"stable","def_en":"A risk of conflicts and reputational damage arising from simultaneously serving competing clients or related parties","def_zh":"同时服务竞争客户或关联方可能导致的利益冲突和声誉风险"},{"id":"ScopeCreepRisk","label_en":"Scope Creep Risk","label_zh":"范围蔓延风险","parent":"Risk","layer":"L2","domain":"governance","abstract":false,"status":"stable","def_en":"A risk of requirements scope expanding during engagement execution without corresponding adjustments to budget and timeline","def_zh":"项目执行过程中需求范围不断扩大但未相应调整预算和时间的风险"},{"id":"IndependencePolicy","label_en":"Independence Policy","label_zh":"独立性政策","parent":"Policy","layer":"L2","domain":"governance","abstract":false,"status":"stable","def_en":"An internal governance policy ensuring objectivity and neutrality of consulting advice, particularly applicable to audit and risk management domains","def_zh":"确保咨询建议客观中立的内部治理政策，特别适用于审计和风控领域"},{"id":"ConfidentialityPolicy","label_en":"Confidentiality Policy","label_zh":"保密政策","parent":"Policy","layer":"L2","domain":"governance","abstract":false,"status":"stable","def_en":"An information security policy governing the protection of client information, engagement data, and trade secrets","def_zh":"规范客户信息、项目数据和商业机密保护要求的信息安全政策"},{"id":"BusinessDevelopmentCapability","label_en":"Business Development Capability","label_zh":"业务开发能力","parent":"Capability","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A market expansion capability for identifying opportunities, building client relationships, and converting leads into signed engagements","def_zh":"识别商机、建立客户关系和转化签约的市场拓展能力"},{"id":"KnowledgeManagementCapability","label_en":"Knowledge Management Capability","label_zh":"知识管理能力","parent":"Capability","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A systematic capability for collecting, organizing, sharing, and reusing engagement experiences, industry knowledge, and methodologies","def_zh":"对项目经验、行业知识和方法论的系统化收集、整理、分享与复用能力"},{"id":"TalentDevelopmentCapability","label_en":"Talent Development Capability","label_zh":"人才发展能力","parent":"Capability","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A capability encompassing the selection, development, evaluation, and promotion of consulting talent, representing a core competitive advantage","def_zh":"咨询人才的选拔、培养、评估和晋升体系能力，是咨询公司核心竞争力"},{"id":"DigitalDeliveryCapability","label_en":"Digital Delivery Capability","label_zh":"数字化交付能力","parent":"Capability","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A capability leveraging data analytics, AI, and automation tools to enhance delivery efficiency and output quality","def_zh":"利用数据分析、AI、自动化工具提升交付效率和成果质量的能力"},{"id":"StaffingProcess","label_en":"Staffing Process","label_zh":"人员配置流程","parent":"Process","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A process for matching and allocating consultant resources based on engagement requirements","def_zh":"根据项目需求匹配和调配顾问资源的流程"},{"id":"EngagementDeliveryProcess","label_en":"Engagement Delivery Process","label_zh":"项目交付流程","parent":"Process","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"An end-to-end process from engagement kickoff, research and analysis, solution design, to final delivery","def_zh":"从项目启动、调研分析、方案设计到最终交付的端到端流程"},{"id":"BusinessDevelopmentProcess","label_en":"Business Development Process","label_zh":"业务开发流程","parent":"Process","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"An opportunity conversion process from market intelligence, client outreach, requirements identification, to proposal and bidding","def_zh":"从市场情报、客户接洽、需求识别到提案竞标的商机转化流程"},{"id":"KnowledgeCaptureProcess","label_en":"Knowledge Capture Process","label_zh":"知识沉淀流程","parent":"Process","layer":"L2","domain":"operational","abstract":false,"status":"stable","def_en":"A post-engagement process for knowledge extraction, case summarization, and experience archiving","def_zh":"项目结束后的知识提炼、案例总结和经验入库流程"},{"id":"CRMSystem","label_en":"CRM System","label_zh":"客户关系管理系统","parent":"SystemApplication","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A system platform for managing client information, opportunity tracking, and relationship maintenance","def_zh":"管理客户信息、商机追踪和关系维护的系统平台"},{"id":"KnowledgePortal","label_en":"Knowledge Portal","label_zh":"知识管理门户","parent":"SystemApplication","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A knowledge platform for storing and retrieving methodologies, case libraries, industry reports, and best practices","def_zh":"存储和检索方法论、案例库、行业报告和最佳实践的知识平台"},{"id":"ResourceManagementSystem","label_en":"Resource Management System","label_zh":"资源管理系统","parent":"SystemApplication","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A staffing system tracking consultant skills, availability, and engagement assignments","def_zh":"跟踪顾问技能、可用性和项目分配的人员配置系统"},{"id":"TimeTrackingSystem","label_en":"Time Tracking System","label_zh":"工时管理系统","parent":"SystemApplication","layer":"L2","domain":"resource","abstract":false,"status":"stable","def_en":"A time management system for recording consultant billable hours and expense reimbursements","def_zh":"记录顾问计费时间和费用报销的工时系统"},{"id":"IndustryGroup","label_en":"Industry Group","label_zh":"行业组","parent":"OrgUnit","layer":"L3","domain":"entity","abstract":false,"status":"stable","def_en":"Cross-functional teams by industry: Consumer, FSI, TMT, GPS, etc.","def_zh":"按行业划分的跨职能团队，如消费品、金融、TMT、政府与公共服务等"},{"id":"SOEReformEngagement","label_en":"SOE Reform Engagement","label_zh":"国企改革项目","parent":"Engagement","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"SOE reform consulting: mixed-ownership reform, three-system reform, governance, world-class benchmarking","def_zh":"面向中国国有企业的改革咨询项目，涵盖混改、三项制度改革、国企治理和对标一流"},{"id":"DigitalTransformationEngagement","label_en":"Digital Transformation Engagement","label_zh":"数字化转型项目","parent":"Engagement","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"Digital strategy consulting: roadmaps, data middle platforms, smart manufacturing","def_zh":"帮助客户制定和实施数字化战略，覆盖路线图、数据中台、智能制造"},{"id":"DualCarbonStrategyEngagement","label_en":"Dual Carbon Strategy Engagement","label_zh":"双碳战略项目","parent":"Engagement","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"Consulting around China's Carbon Peak & Carbon Neutrality goals","def_zh":"围绕中国'碳达峰、碳中和'的企业可持续发展和绿色转型咨询"},{"id":"ERPImplementationEngagement","label_en":"ERP Implementation Engagement","label_zh":"ERP 实施项目","parent":"Engagement","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"ERP system selection, planning, and implementation (SAP, Oracle)","def_zh":"SAP、Oracle 等 ERP 系统的选型、规划和实施"},{"id":"OrgDesignEngagement","label_en":"Organization Design Engagement","label_zh":"组织设计项目","parent":"Engagement","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"Org structure design, job grading, position valuation, incentive optimization","def_zh":"组织架构设计、职级体系、岗位价值评估和薪酬激励优化"},{"id":"SupplyChainEngagement","label_en":"Supply Chain Optimization Engagement","label_zh":"供应链优化项目","parent":"Engagement","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"E2E supply chain diagnostics, network planning, inventory optimization","def_zh":"端到端供应链诊断、网络规划、库存优化和数字供应链建设"},{"id":"ManagingDirectorRole","label_en":"Managing Director (MD)","label_zh":"董事总经理角色","parent":"PartnerRole","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Most senior role: key client relationships, P&L, strategic direction","def_zh":"最高级别角色之一，负责大客户关系、业务线 P&L 和战略方向"},{"id":"SeniorManagerRole","label_en":"Senior Manager","label_zh":"高级经理角色","parent":"EngagementManagerRole","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Multi-engagement management with BD and team coaching","def_zh":"同时管理多个项目，承担业务发展和团队辅导职责"},{"id":"ManagerRole","label_en":"Manager","label_zh":"经理角色","parent":"EngagementManagerRole","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Day-to-day management, client communication, delivery quality","def_zh":"负责单个项目日常管理、客户沟通和交付质量"},{"id":"SeniorConsultantRole","label_en":"Senior Consultant","label_zh":"高级顾问角色","parent":"ConsultantRole","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Independent work stream analysis and solution design, mentoring juniors","def_zh":"独立承担工作模块的分析和方案设计，指导初级顾问"},{"id":"DeloitteConsultantRole","label_en":"Consultant","label_zh":"顾问角色","parent":"ConsultantRole","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Data analysis, research, material development, presentations","def_zh":"执行数据分析、调研、材料编写和汇报"},{"id":"BusinessAnalystRole","label_en":"Business Analyst","label_zh":"商业分析师角色","parent":"AnalystRole","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Entry-level campus hire: data collection, industry research, slides","def_zh":"校招入职起点，负责数据收集、行业研究和 PPT"},{"id":"CounselorRole","label_en":"Counselor / Career Coach","label_zh":"辅导员/导师角色","parent":"Role","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Career mentor: performance coaching, promotion guidance, career planning","def_zh":"每位员工的职业发展导师，负责绩效辅导、晋升建议和职业规划"},{"id":"TrainingProgram","label_en":"Training Program","label_zh":"培训项目","parent":"Resource","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"DU tiered programs: New Joiner Bootcamp, Manager Leadership, etc.","def_zh":"德勤大学分级培训项目，如新员工训练营、经理领导力项目"},{"id":"PerformanceSnapshot","label_en":"Performance Snapshot","label_zh":"绩效快照","parent":"Document","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"Instant performance feedback record after each engagement","def_zh":"每个项目结束后的即时绩效反馈记录"},{"id":"PromotionReviewDocument","label_en":"Promotion Review Document","label_zh":"晋升评审文件","parent":"Document","layer":"L3","domain":"resource","abstract":false,"status":"stable","def_en":"Annual promotion review materials with snapshots and counselor recommendations","def_zh":"年度晋升评审的综合材料，含绩效快照、项目贡献和 Counselor 推荐"},{"id":"SOEEngagementPolicy","label_en":"SOE Engagement Policy","label_zh":"国企项目特殊政策","parent":"Policy","layer":"L3","domain":"governance","abstract":false,"status":"stable","def_en":"SOE-specific governance: CPC cooperation, sensitive info, gov relations","def_zh":"服务国企的特殊治理要求，含党建配合、敏感信息和政府关系"},{"id":"AuditConsultingConflictRisk","label_en":"Audit-Consulting Conflict Risk","label_zh":"审计-咨询利益冲突风险","parent":"ConflictOfInterestRisk","layer":"L3","domain":"governance","abstract":false,"status":"stable","def_en":"Independence risk from dual audit-consulting services to same client","def_zh":"同时向同一客户提供审计和咨询服务的独立性风险"},{"id":"TalentAttritionRisk","label_en":"Talent Attrition Risk","label_zh":"人才流失风险","parent":"Risk","layer":"L3","domain":"governance","abstract":false,"status":"stable","def_en":"Attrition from work intensity, compensation, or career bottlenecks","def_zh":"因工作强度、薪酬竞争力或职业瓶颈导致的人才流失"},{"id":"GreenhouseWorkshop","label_en":"Greenhouse Workshop","label_zh":"Greenhouse 创新工坊","parent":"Workshop","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Immersive innovation workshop with facilitated executive sessions","def_zh":"沉浸式创新工坊，通过引导式研讨帮助高管团队突破思维定式"},{"id":"UpOrOutPromotion","label_en":"Up-or-Out Promotion Process","label_zh":"晋升淘汰流程","parent":"Process","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Up-or-Out mechanism with standard tenure and promotion reviews","def_zh":"\"Up or Out\"晋升机制，每级设有标准任职年限和晋升评审"},{"id":"CounselorProcess","label_en":"Counselor Process","label_zh":"导师辅导流程","parent":"Process","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Regular coaching: quarterly check-ins, annual goals, performance reviews","def_zh":"定期职业发展辅导：季度 Check-in、年度目标和绩效回顾"},{"id":"ClientIndependenceCheckProcess","label_en":"Client Independence Check Process","label_zh":"客户独立性审查流程","parent":"Process","layer":"L3","domain":"operational","abstract":false,"status":"stable","def_en":"Pre-engagement independence and conflict-of-interest review","def_zh":"新项目承接前的客户独立性和利益冲突审查"},{"id":"DeloitteUtilizationKPI","label_en":"Deloitte Utilization KPI","label_zh":"德勤利用率 KPI","parent":"UtilizationMetric","layer":"L3","domain":"measurement","abstract":false,"status":"stable","def_en":"Annual billable-to-total hours ratio, targets by grade","def_zh":"年度可计费时间占总工时比率，按职级设不同目标"},{"id":"WinRateKPI","label_en":"Win Rate KPI","label_zh":"项目中标率","parent":"KPI","layer":"L3","domain":"measurement","abstract":false,"status":"stable","def_en":"Proposal bid success rate, tracked by service line and industry group","def_zh":"提案竞标成功率，按服务线和行业组跟踪"},{"id":"RevenuePerPartner","label_en":"Revenue Per Partner","label_zh":"合伙人人均收入","parent":"RevenueMetric","layer":"L3","domain":"measurement","abstract":false,"status":"stable","def_en":"Annual revenue contribution per partner/MD","def_zh":"合伙人/MD 人均年度收入贡献"},{"id":"EngagementMarginKPI","label_en":"Engagement Margin KPI","label_zh":"项目利润率 KPI","parent":"MarginMetric","layer":"L3","domain":"measurement","abstract":false,"status":"stable","def_en":"Engagement/service line margin, target 25%-40%","def_zh":"项目或服务线利润率，目标 25%-40%"},{"id":"ClientSatisfactionNPS","label_en":"Client Satisfaction NPS","label_zh":"客户满意度 NPS","parent":"KPI","layer":"L3","domain":"measurement","abstract":false,"status":"stable","def_en":"Post-engagement client Net Promoter Score","def_zh":"项目结束后客户净推荐值"},{"id":"TalentRetentionRate","label_en":"Talent Retention Rate","label_zh":"人才留存率","parent":"KPI","layer":"L3","domain":"measurement","abstract":false,"status":"stable","def_en":"Annual retention proportion across grade levels","def_zh":"各职级顾问年度留存比例"}],"links":[{"source":"Party","target":"Entity","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Person","target":"Party","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Organization","target":"Party","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"OrgUnit","target":"Organization","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Resource","target":"Entity","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"ProductService","target":"Resource","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Asset","target":"Resource","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"DataObject","target":"Resource","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Document","target":"DataObject","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"SystemApplication","target":"Resource","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Policy","target":"Governance","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Rule","target":"Governance","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Control","target":"Governance","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Risk","target":"Governance","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Role","target":"Operational","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Capability","target":"Operational","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Process","target":"Operational","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Event","target":"Operational","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"Goal","target":"Measurement","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"KPI","target":"Measurement","type":"inheritance","label":"subClassOf","layer":"L1"},{"source":"ConsultingFirm","target":"Organization","type":"inheritance","label":"subClassOf","layer":""},{"source":"ConsultingOffice","target":"OrgUnit","type":"inheritance","label":"subClassOf","layer":""},{"source":"PracticeLine","target":"OrgUnit","type":"inheritance","label":"subClassOf","layer":""},{"source":"CompetencyCenter","target":"OrgUnit","type":"inheritance","label":"subClassOf","layer":""},{"source":"Engagement","target":"Resource","type":"inheritance","label":"subClassOf","layer":""},{"source":"EngagementMilestone","target":"Resource","type":"inheritance","label":"subClassOf","layer":""},{"source":"Proposal","target":"Document","type":"inheritance","label":"subClassOf","layer":""},{"source":"StatementOfWork","target":"Document","type":"inheritance","label":"subClassOf","layer":""},{"source":"Deliverable","target":"Resource","type":"inheritance","label":"subClassOf","layer":""},{"source":"WorkStream","target":"Resource","type":"inheritance","label":"subClassOf","layer":""},{"source":"Workshop","target":"Process","type":"inheritance","label":"subClassOf","layer":""},{"source":"Methodology","target":"KnowledgeAsset","type":"inheritance","label":"subClassOf","layer":""},{"source":"Framework","target":"KnowledgeAsset","type":"inheritance","label":"subClassOf","layer":""},{"source":"KnowledgeAsset","target":"Asset","type":"inheritance","label":"subClassOf","layer":""},{"source":"CaseStudy","target":"Document","type":"inheritance","label":"subClassOf","layer":""},{"source":"ClientAccount","target":"Resource","type":"inheritance","label":"subClassOf","layer":""},{"source":"ClientRelationship","target":"Resource","type":"inheritance","label":"subClassOf","layer":""},{"source":"Pipeline","target":"Resource","type":"inheritance","label":"subClassOf","layer":""},{"source":"ConsultingService","target":"ProductService","type":"inheritance","label":"subClassOf","layer":""},{"source":"PartnerRole","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"PrincipalRole","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"EngagementManagerRole","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"ConsultantRole","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"AnalystRole","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"SubjectMatterExpertRole","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"SubcontractorRole","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"ClientStakeholder","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"ClientSponsor","target":"Role","type":"inheritance","label":"subClassOf","layer":""},{"source":"StaffingRequest","target":"Resource","type":"inheritance","label":"subClassOf","layer":""},{"source":"UtilizationMetric","target":"KPI","type":"inheritance","label":"subClassOf","layer":""},{"source":"RevenueMetric","target":"KPI","type":"inheritance","label":"subClassOf","layer":""},{"source":"MarginMetric","target":"KPI","type":"inheritance","label":"subClassOf","layer":""},{"source":"BillableRate","target":"Rule","type":"inheritance","label":"subClassOf","layer":""},{"source":"QualityReview","target":"Control","type":"inheritance","label":"subClassOf","layer":""},{"source":"ClientSatisfactionSurvey","target":"Document","type":"inheritance","label":"subClassOf","layer":""},{"source":"ThoughtLeadership","target":"Asset","type":"inheritance","label":"subClassOf","layer":""},{"source":"ChangeManagementPlan","target":"Document","type":"inheritance","label":"subClassOf","layer":""},{"source":"BenchmarkStudy","target":"Document","type":"inheritance","label":"subClassOf","layer":""},{"source":"ConflictOfInterestRisk","target":"Risk","type":"inheritance","label":"subClassOf","layer":""},{"source":"ScopeCreepRisk","target":"Risk","type":"inheritance","label":"subClassOf","layer":""},{"source":"IndependencePolicy","target":"Policy","type":"inheritance","label":"subClassOf","layer":""},{"source":"ConfidentialityPolicy","target":"Policy","type":"inheritance","label":"subClassOf","layer":""},{"source":"BusinessDevelopmentCapability","target":"Capability","type":"inheritance","label":"subClassOf","layer":""},{"source":"KnowledgeManagementCapability","target":"Capability","type":"inheritance","label":"subClassOf","layer":""},{"source":"TalentDevelopmentCapability","target":"Capability","type":"inheritance","label":"subClassOf","layer":""},{"source":"DigitalDeliveryCapability","target":"Capability","type":"inheritance","label":"subClassOf","layer":""},{"source":"StaffingProcess","target":"Process","type":"inheritance","label":"subClassOf","layer":""},{"source":"EngagementDeliveryProcess","target":"Process","type":"inheritance","label":"subClassOf","layer":""},{"source":"BusinessDevelopmentProcess","target":"Process","type":"inheritance","label":"subClassOf","layer":""},{"source":"KnowledgeCaptureProcess","target":"Process","type":"inheritance","label":"subClassOf","layer":""},{"source":"CRMSystem","target":"SystemApplication","type":"inheritance","label":"subClassOf","layer":""},{"source":"KnowledgePortal","target":"SystemApplication","type":"inheritance","label":"subClassOf","layer":""},{"source":"ResourceManagementSystem","target":"SystemApplication","type":"inheritance","label":"subClassOf","layer":""},{"source":"TimeTrackingSystem","target":"SystemApplication","type":"inheritance","label":"subClassOf","layer":""},{"source":"IndustryGroup","target":"OrgUnit","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"SOEReformEngagement","target":"Engagement","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"DigitalTransformationEngagement","target":"Engagement","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"DualCarbonStrategyEngagement","target":"Engagement","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"ERPImplementationEngagement","target":"Engagement","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"OrgDesignEngagement","target":"Engagement","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"SupplyChainEngagement","target":"Engagement","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"ManagingDirectorRole","target":"PartnerRole","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"SeniorManagerRole","target":"EngagementManagerRole","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"ManagerRole","target":"EngagementManagerRole","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"SeniorConsultantRole","target":"ConsultantRole","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"DeloitteConsultantRole","target":"ConsultantRole","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"BusinessAnalystRole","target":"AnalystRole","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"CounselorRole","target":"Role","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"TrainingProgram","target":"Resource","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"PerformanceSnapshot","target":"Document","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"PromotionReviewDocument","target":"Document","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"SOEEngagementPolicy","target":"Policy","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"AuditConsultingConflictRisk","target":"ConflictOfInterestRisk","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"TalentAttritionRisk","target":"Risk","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"GreenhouseWorkshop","target":"Workshop","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"UpOrOutPromotion","target":"Process","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"CounselorProcess","target":"Process","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"ClientIndependenceCheckProcess","target":"Process","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"DeloitteUtilizationKPI","target":"UtilizationMetric","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"WinRateKPI","target":"KPI","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"RevenuePerPartner","target":"RevenueMetric","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"EngagementMarginKPI","target":"MarginMetric","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"ClientSatisfactionNPS","target":"KPI","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"TalentRetentionRate","target":"KPI","type":"inheritance","label":"subClassOf","layer":"L3"},{"source":"Party","target":"Role","type":"relation","label":"plays role","rid":"plays_role","cardinality":"N:M","layer":"L1","def_en":"A party plays a specific role"},{"source":"Entity","target":"Entity","type":"relation","label":"part of","rid":"part_of","cardinality":"N:1","layer":"L1","def_en":"An entity is part of another entity (unifies belongs_to and composed_of)"},{"source":"Party","target":"Resource","type":"relation","label":"owns","rid":"owns","cardinality":"1:N","layer":"L1","def_en":"A party owns or is responsible for a resource"},{"source":"Role","target":"Operational","type":"relation","label":"accountable for","rid":"accountable_for","cardinality":"N:M","layer":"L1","def_en":"A role is accountable for an operational element (capability, process, etc.)"},{"source":"Capability","target":"Process","type":"relation","label":"realized by","rid":"realized_by","cardinality":"N:M","layer":"L1","def_en":"A capability is realized by a process"},{"source":"Process","target":"Resource","type":"relation","label":"consumes","rid":"consumes","cardinality":"N:M","layer":"L1","def_en":"A process consumes resources"},{"source":"Process","target":"Resource","type":"relation","label":"produces","rid":"produces","cardinality":"N:M","layer":"L1","def_en":"A process produces resources"},{"source":"DataObject","target":"SystemApplication","type":"relation","label":"recorded in","rid":"recorded_in","cardinality":"N:M","layer":"L1","def_en":"A data object is recorded in a system application"},{"source":"Operational","target":"Governance","type":"relation","label":"governed by","rid":"governed_by","cardinality":"N:M","layer":"L1","def_en":"An operational element is governed by a governance element (generalizes both governed_by and constrained_by)"},{"source":"Risk","target":"Control","type":"relation","label":"mitigated by","rid":"mitigated_by","cardinality":"N:M","layer":"L1","def_en":"A risk is mitigated by a control measure"},{"source":"Event","target":"Process","type":"relation","label":"triggered by","rid":"triggered_by","cardinality":"N:M","layer":"L1","def_en":"An event triggers a process"},{"source":"Operational","target":"KPI","type":"relation","label":"measured by","rid":"measured_by","cardinality":"N:M","layer":"L1","def_en":"An operational element is measured by a KPI (generalizes the former Goal-only constraint)"},{"source":"ConsultingFirm","target":"PracticeLine","type":"relation","label":"has_practice_line","rid":"has_practice_line","cardinality":"","layer":"","def_en":"A consulting firm has a practice line"},{"source":"ConsultingFirm","target":"CompetencyCenter","type":"relation","label":"has_competency_center","rid":"has_competency_center","cardinality":"","layer":"","def_en":"A consulting firm establishes a competency center"},{"source":"ConsultingFirm","target":"ConsultingOffice","type":"relation","label":"has_office","rid":"has_office","cardinality":"","layer":"","def_en":"A consulting firm has a branch office"},{"source":"ConsultingFirm","target":"ClientAccount","type":"relation","label":"serves_client","rid":"serves_client","cardinality":"","layer":"","def_en":"A consulting firm serves a client"},{"source":"PartnerRole","target":"ClientRelationship","type":"relation","label":"manages_relationship","rid":"manages_relationship","cardinality":"","layer":"","def_en":"A partner manages a client relationship"},{"source":"PartnerRole","target":"Engagement","type":"relation","label":"leads_engagement","rid":"leads_engagement","cardinality":"","layer":"","def_en":"A partner leads an engagement"},{"source":"EngagementManagerRole","target":"Engagement","type":"relation","label":"manages_engagement","rid":"manages_engagement","cardinality":"","layer":"","def_en":"An engagement manager manages the day-to-day operations of an engagement"},{"source":"ConsultantRole","target":"Engagement","type":"relation","label":"staffed_on","rid":"staffed_on","cardinality":"","layer":"","def_en":"A consultant is staffed on an engagement"},{"source":"Engagement","target":"ConsultantRole","type":"relation","label":"has_team_member","rid":"has_team_member","cardinality":"","layer":"","def_en":"An engagement has a team member (inverse of staffed_on)"},{"source":"SubjectMatterExpertRole","target":"Engagement","type":"relation","label":"provides_expertise","rid":"provides_expertise","cardinality":"","layer":"","def_en":"A subject matter expert provides expertise to an engagement"},{"source":"Engagement","target":"SubcontractorRole","type":"relation","label":"subcontracted_to","rid":"subcontracted_to","cardinality":"","layer":"","def_en":"An engagement subcontracts work to an external consultant"},{"source":"Engagement","target":"ClientAccount","type":"relation","label":"engaged_by","rid":"engaged_by","cardinality":"","layer":"","def_en":"An engagement is engaged by a client"},{"source":"Engagement","target":"ClientSponsor","type":"relation","label":"sponsored_by","rid":"sponsored_by","cardinality":"","layer":"","def_en":"An engagement is sponsored by a client executive sponsor"},{"source":"ClientAccount","target":"ClientStakeholder","type":"relation","label":"has_client_stakeholder","rid":"has_client_stakeholder","cardinality":"","layer":"","def_en":"A client account has key stakeholders"},{"source":"Engagement","target":"StatementOfWork","type":"relation","label":"scoped_by","rid":"scoped_by","cardinality":"","layer":"","def_en":"An engagement's scope is defined by a statement of work"},{"source":"Engagement","target":"Proposal","type":"relation","label":"proposed_through","rid":"proposed_through","cardinality":"","layer":"","def_en":"An engagement is won through a proposal"},{"source":"Engagement","target":"WorkStream","type":"relation","label":"has_workstream","rid":"has_workstream","cardinality":"","layer":"","def_en":"An engagement contains work streams"},{"source":"Engagement","target":"EngagementMilestone","type":"relation","label":"has_milestone","rid":"has_milestone","cardinality":"","layer":"","def_en":"An engagement has key milestones"},{"source":"Engagement","target":"Workshop","type":"relation","label":"conducts_workshop","rid":"conducts_workshop","cardinality":"","layer":"","def_en":"An engagement conducts workshop activities"},{"source":"WorkStream","target":"Deliverable","type":"relation","label":"produces_deliverable","rid":"produces_deliverable","cardinality":"","layer":"","def_en":"A work stream produces deliverables"},{"source":"Engagement","target":"Methodology","type":"relation","label":"applies_methodology","rid":"applies_methodology","cardinality":"","layer":"","def_en":"An engagement applies a methodology"},{"source":"Deliverable","target":"Framework","type":"relation","label":"uses_framework","rid":"uses_framework","cardinality":"","layer":"","def_en":"A deliverable uses an analytical framework"},{"source":"ConsultantRole","target":"StaffingRequest","type":"relation","label":"fulfills_staffing_request","rid":"fulfills_staffing_request","cardinality":"","layer":"","def_en":"A consultant fulfills a staffing request"},{"source":"ClientRelationship","target":"Pipeline","type":"relation","label":"generates_pipeline","rid":"generates_pipeline","cardinality":"","layer":"","def_en":"A client relationship generates a pipeline opportunity"},{"source":"Pipeline","target":"Engagement","type":"relation","label":"converts_to_engagement","rid":"converts_to_engagement","cardinality":"","layer":"","def_en":"A pipeline opportunity converts into a signed engagement"},{"source":"Deliverable","target":"QualityReview","type":"relation","label":"reviewed_by","rid":"reviewed_by","cardinality":"","layer":"","def_en":"A deliverable is reviewed through quality review"},{"source":"Engagement","target":"ClientSatisfactionSurvey","type":"relation","label":"assessed_by_survey","rid":"assessed_by_survey","cardinality":"","layer":"","def_en":"An engagement is assessed by a client satisfaction survey"},{"source":"Engagement","target":"KnowledgeAsset","type":"relation","label":"contributes_to_knowledge","rid":"contributes_to_knowledge","cardinality":"","layer":"","def_en":"An engagement contributes to knowledge assets"},{"source":"Engagement","target":"CaseStudy","type":"relation","label":"documented_as_case","rid":"documented_as_case","cardinality":"","layer":"","def_en":"An engagement is documented as a case study"},{"source":"PracticeLine","target":"ThoughtLeadership","type":"relation","label":"publishes_thought_leadership","rid":"publishes_thought_leadership","cardinality":"","layer":"","def_en":"A practice line publishes thought leadership content"},{"source":"Deliverable","target":"BenchmarkStudy","type":"relation","label":"benchmarked_against","rid":"benchmarked_against","cardinality":"","layer":"","def_en":"A deliverable is benchmarked against a benchmark study"},{"source":"Engagement","target":"ChangeManagementPlan","type":"relation","label":"includes_change_plan","rid":"includes_change_plan","cardinality":"","layer":"","def_en":"An engagement includes a change management plan"},{"source":"Engagement","target":"Risk","type":"relation","label":"has_risk","rid":"has_risk","cardinality":"","layer":"","def_en":"Risks faced by an engagement, including conflict of interest, scope creep, and other risk types"},{"source":"Engagement","target":"Policy","type":"relation","label":"governed_by_policy","rid":"governed_by_policy","cardinality":"","layer":"","def_en":"An engagement is governed by policies, including independence policy, confidentiality policy, etc."},{"source":"ConsultantRole","target":"UtilizationMetric","type":"relation","label":"measured_by_utilization","rid":"measured_by_utilization","cardinality":"","layer":"","def_en":"Consultant performance is measured by utilization metrics"},{"source":"PracticeLine","target":"RevenueMetric","type":"relation","label":"measured_by_revenue","rid":"measured_by_revenue","cardinality":"","layer":"","def_en":"Practice line performance is measured by revenue metrics"},{"source":"ConsultantRole","target":"BillableRate","type":"relation","label":"billed_at","rid":"billed_at","cardinality":"","layer":"","def_en":"A consultant is billed at a specific billable rate"},{"source":"ClientAccount","target":"CRMSystem","type":"relation","label":"tracked_in_crm","rid":"tracked_in_crm","cardinality":"","layer":"","def_en":"A client account is tracked in the CRM system"},{"source":"KnowledgeAsset","target":"KnowledgePortal","type":"relation","label":"stored_in_portal","rid":"stored_in_portal","cardinality":"","layer":"","def_en":"Knowledge assets are stored in the knowledge portal"},{"source":"StaffingRequest","target":"ResourceManagementSystem","type":"relation","label":"scheduled_in_rms","rid":"scheduled_in_rms","cardinality":"","layer":"","def_en":"Staffing requests are scheduled through the resource management system"},{"source":"Engagement","target":"TimeTrackingSystem","type":"relation","label":"logged_in_timesheet","rid":"logged_in_timesheet","cardinality":"","layer":"","def_en":"Engagement hours are logged in the time tracking system"},{"source":"BusinessDevelopmentCapability","target":"BusinessDevelopmentProcess","type":"relation","label":"bd_capability_realized_by","rid":"bd_capability_realized_by","cardinality":"","layer":"","def_en":"Business development capability is realized by the business development process"},{"source":"KnowledgeManagementCapability","target":"KnowledgeCaptureProcess","type":"relation","label":"km_capability_realized_by","rid":"km_capability_realized_by","cardinality":"","layer":"","def_en":"Knowledge management capability is realized by the knowledge capture process"},{"source":"TalentDevelopmentCapability","target":"StaffingProcess","type":"relation","label":"talent_capability_realized_by","rid":"talent_capability_realized_by","cardinality":"","layer":"","def_en":"Talent development capability is realized by the staffing process"},{"source":"DigitalDeliveryCapability","target":"EngagementDeliveryProcess","type":"relation","label":"digital_capability_realized_by","rid":"digital_capability_realized_by","cardinality":"","layer":"","def_en":"Digital delivery capability is realized by the engagement delivery process"},{"source":"ConsultingFirm","target":"PracticeLine","type":"relation","label":"has service line","rid":"has_service_line","cardinality":"","layer":"L3","def_en":"MC contains service lines / sub-service lines"},{"source":"ConsultingFirm","target":"IndustryGroup","type":"relation","label":"has industry group","rid":"has_industry_group","cardinality":"","layer":"L3","def_en":"MC has cross-functional industry groups"},{"source":"ConsultantRole","target":"CounselorRole","type":"relation","label":"counseled by","rid":"counseled_by","cardinality":"","layer":"L3","def_en":"Each consultant is mentored by an assigned counselor"},{"source":"ConsultantRole","target":"UpOrOutPromotion","type":"relation","label":"promoted through","rid":"promoted_through","cardinality":"","layer":"L3","def_en":"Consultants promoted through Up-or-Out mechanism"},{"source":"ConsultantRole","target":"OrgUnit","type":"relation","label":"trained at","rid":"trained_at","cardinality":"","layer":"L3","def_en":"Consultants attend tiered training at Deloitte University"},{"source":"ConsultantRole","target":"PerformanceSnapshot","type":"relation","label":"reviewed by snapshot","rid":"reviewed_by_snapshot","cardinality":"","layer":"L3","def_en":"Consultants receive performance snapshot after each engagement"},{"source":"Engagement","target":"ClientIndependenceCheckProcess","type":"relation","label":"independence checked by","rid":"independence_checked_by","cardinality":"","layer":"L3","def_en":"New engagements require independence check approval"},{"source":"Engagement","target":"GreenhouseWorkshop","type":"relation","label":"facilitated by Greenhouse","rid":"facilitated_by_greenhouse","cardinality":"","layer":"L3","def_en":"Complex issues addressed through Greenhouse workshops"},{"source":"OrgDesignEngagement","target":"Framework","type":"relation","label":"applies TOM framework","rid":"applies_tom_framework","cardinality":"","layer":"L3","def_en":"Org design engagements apply TOM framework"},{"source":"DigitalTransformationEngagement","target":"Framework","type":"relation","label":"applies DMA framework","rid":"applies_dma_framework","cardinality":"","layer":"L3","def_en":"Digital transformation engagements apply DMA framework"},{"source":"IndustryGroup","target":"Asset","type":"relation","label":"insights published by","rid":"insights_published_by","cardinality":"","layer":"L3","def_en":"Industry groups publish Deloitte Insights reports"},{"source":"ConsultingFirm","target":"Policy","type":"relation","label":"governed by DTTL","rid":"governed_by_dttl","cardinality":"","layer":"L3","def_en":"MC is governed by DTTL independence policies"},{"source":"SOEReformEngagement","target":"SOEEngagementPolicy","type":"relation","label":"SOE engagement governed by","rid":"soe_governed_by","cardinality":"","layer":"L3","def_en":"SOE reform engagements follow SOE-specific governance"}],"instances":[{"id":"org_acme_corp","label":"Acme Corporation","label_zh":"示例公司","type":"Organization","layer":"L1"},{"id":"ou_operations_dept","label":"Operations Department","label_zh":"运营部","type":"OrgUnit","layer":"L1"},{"id":"role_ceo","label":"Chief Executive Officer","label_zh":"首席执行官","type":"Role","layer":"L1"},{"id":"cap_supply_chain","label":"Supply Chain Management","label_zh":"供应链管理","type":"Capability","layer":"L1"},{"id":"proc_order_to_cash","label":"Order to Cash","label_zh":"订单到回款","type":"Process","layer":"L1"},{"id":"sys_erp","label":"Enterprise Resource Planning System","label_zh":"企业资源计划系统","type":"SystemApplication","layer":"L1"},{"id":"goal_revenue_growth","label":"Revenue Growth","label_zh":"营收增长","type":"Goal","layer":"L1"},{"id":"kpi_customer_satisfaction","label":"Customer Satisfaction Score","label_zh":"客户满意度评分","type":"KPI","layer":"L1"},{"id":"firm_apex_consulting","label":"Apex Consulting Group","label_zh":"","type":"ConsultingFirm","layer":""},{"id":"office_beijing","label":"Apex Consulting - Beijing Office","label_zh":"","type":"ConsultingOffice","layer":""},{"id":"office_new_york","label":"Apex Consulting - New York Office","label_zh":"","type":"ConsultingOffice","layer":""},{"id":"practice_strategy","label":"Strategy & Corporate Finance","label_zh":"","type":"PracticeLine","layer":""},{"id":"practice_digital","label":"Digital Transformation & Technology","label_zh":"","type":"PracticeLine","layer":""},{"id":"practice_operations","label":"Operations & Supply Chain","label_zh":"","type":"PracticeLine","layer":""},{"id":"practice_org_hr","label":"Organization & Human Capital","label_zh":"","type":"PracticeLine","layer":""},{"id":"center_ai_analytics","label":"AI & Advanced Analytics Center","label_zh":"","type":"CompetencyCenter","layer":""},{"id":"client_fortune500_mfg","label":"Fortune 500 Manufacturing Co.","label_zh":"","type":"ClientAccount","layer":""},{"id":"stakeholder_cio","label":"Client CIO - Manufacturing Co.","label_zh":"","type":"ClientStakeholder","layer":""},{"id":"sponsor_ceo","label":"Client CEO Sponsor - Manufacturing Co.","label_zh":"","type":"ClientSponsor","layer":""},{"id":"engagement_digital_roadmap","label":"Digital Transformation Roadmap for Manufacturing Co.","label_zh":"","type":"Engagement","layer":""},{"id":"milestone_phase1_complete","label":"Phase 1 - Current State Assessment Complete","label_zh":"","type":"EngagementMilestone","layer":""},{"id":"milestone_final_delivery","label":"Final Delivery & Knowledge Transfer","label_zh":"","type":"EngagementMilestone","layer":""},{"id":"ws_current_state","label":"Current State Assessment","label_zh":"","type":"WorkStream","layer":""},{"id":"ws_target_architecture","label":"Target State Architecture Design","label_zh":"","type":"WorkStream","layer":""},{"id":"ws_implementation_plan","label":"Implementation Roadmap & Business Case","label_zh":"","type":"WorkStream","layer":""},{"id":"workshop_stakeholder_alignment","label":"Stakeholder Alignment Workshop","label_zh":"","type":"Workshop","layer":""},{"id":"workshop_design_thinking","label":"Digital Vision Design Thinking Workshop","label_zh":"","type":"Workshop","layer":""},{"id":"deliverable_maturity_assessment","label":"Digital Maturity Assessment Report","label_zh":"","type":"Deliverable","layer":""},{"id":"deliverable_roadmap_deck","label":"3-Year Digital Transformation Roadmap","label_zh":"","type":"Deliverable","layer":""},{"id":"deliverable_business_case","label":"ROI Business Case & Investment Plan","label_zh":"","type":"Deliverable","layer":""},{"id":"methodology_design_thinking","label":"Human-Centered Design Thinking","label_zh":"","type":"Methodology","layer":""},{"id":"framework_value_chain","label":"Porter's Value Chain Analysis","label_zh":"","type":"Framework","layer":""},{"id":"framework_digital_maturity","label":"Digital Maturity Model (DMM)","label_zh":"","type":"Framework","layer":""},{"id":"ka_industry_benchmark","label":"Manufacturing Industry Digital Benchmark 2026","label_zh":"","type":"KnowledgeAsset","layer":""},{"id":"pipeline_ops_improvement","label":"Operations Improvement Opportunity - Manufacturing Co.","label_zh":"","type":"Pipeline","layer":""},{"id":"role_lead_partner","label":"Lead Engagement Partner","label_zh":"","type":"PartnerRole","layer":""},{"id":"role_em","label":"Engagement Manager","label_zh":"","type":"EngagementManagerRole","layer":""},{"id":"role_senior_consultant","label":"Senior Consultant - Digital","label_zh":"","type":"ConsultantRole","layer":""},{"id":"role_data_sme","label":"Data & AI Subject Matter Expert","label_zh":"","type":"SubjectMatterExpertRole","layer":""},{"id":"role_external_cloud_consultant","label":"External Cloud Architecture Consultant","label_zh":"","type":"SubcontractorRole","layer":""},{"id":"sys_salesforce_crm","label":"Salesforce CRM","label_zh":"","type":"CRMSystem","layer":""},{"id":"sys_knowledge_hub","label":"Internal Knowledge Hub","label_zh":"","type":"KnowledgePortal","layer":""},{"id":"kpi_utilization_rate","label":"Consultant Utilization Rate (Target: 75-85%)","label_zh":"","type":"UtilizationMetric","layer":""},{"id":"kpi_practice_revenue","label":"Practice Line Annual Revenue","label_zh":"","type":"RevenueMetric","layer":""},{"id":"kpi_engagement_margin","label":"Engagement Profit Margin (Target: 30-40%)","label_zh":"","type":"MarginMetric","layer":""},{"id":"cap_biz_dev","label":"Client Business Development","label_zh":"","type":"BusinessDevelopmentCapability","layer":""},{"id":"cap_km","label":"Enterprise Knowledge Management","label_zh":"","type":"KnowledgeManagementCapability","layer":""},{"id":"org_deloitte_china","label":"Deloitte China","label_zh":"德勤中国","type":"ConsultingFirm","layer":"L3"},{"id":"practice_mc","label":"Deloitte China Management Consulting","label_zh":"德勤中国管理咨询","type":"PracticeLine","layer":"L3"},{"id":"service_sam","label":"Strategy, Analytics & M&A","label_zh":"战略、分析与并购","type":"PracticeLine","layer":"L3"},{"id":"service_cm","label":"Customer & Marketing","label_zh":"客户与营销","type":"PracticeLine","layer":"L3"},{"id":"service_hc","label":"Human Capital","label_zh":"人力资本","type":"PracticeLine","layer":"L3"},{"id":"service_etp","label":"Enterprise Technology & Performance","label_zh":"企业技术与绩效","type":"PracticeLine","layer":"L3"},{"id":"center_monitor","label":"Monitor Deloitte China","label_zh":"Monitor Deloitte 中国","type":"CompetencyCenter","layer":"L3"},{"id":"center_digital","label":"Deloitte Digital China","label_zh":"德勤数字化中国","type":"CompetencyCenter","layer":"L3"},{"id":"center_ai","label":"Deloitte AI Institute China","label_zh":"德勤 AI 研究院中国","type":"CompetencyCenter","layer":"L3"},{"id":"du_china","label":"Deloitte University China Program","label_zh":"德勤大学中国项目","type":"OrgUnit","layer":"L3"},{"id":"office_shanghai","label":"Deloitte Shanghai Office","label_zh":"德勤上海办公室","type":"ConsultingOffice","layer":"L3"},{"id":"office_beijing","label":"Deloitte Beijing Office","label_zh":"德勤北京办公室","type":"ConsultingOffice","layer":"L3"},{"id":"office_guangzhou","label":"Deloitte Guangzhou Office","label_zh":"德勤广州办公室","type":"ConsultingOffice","layer":"L3"},{"id":"office_shenzhen","label":"Deloitte Shenzhen Office","label_zh":"德勤深圳办公室","type":"ConsultingOffice","layer":"L3"},{"id":"office_chengdu","label":"Deloitte Chengdu Office","label_zh":"德勤成都办公室","type":"ConsultingOffice","layer":"L3"},{"id":"office_hangzhou","label":"Deloitte Hangzhou Office","label_zh":"德勤杭州办公室","type":"ConsultingOffice","layer":"L3"},{"id":"ig_consumer","label":"Consumer Industry Group","label_zh":"消费品行业组","type":"IndustryGroup","layer":"L3"},{"id":"ig_fsi","label":"Financial Services Industry Group","label_zh":"金融服务行业组","type":"IndustryGroup","layer":"L3"},{"id":"ig_tmt","label":"TMT Industry Group","label_zh":"科技、传媒和电信行业组","type":"IndustryGroup","layer":"L3"},{"id":"ig_gps","label":"Government & Public Services","label_zh":"政府及公共服务行业组","type":"IndustryGroup","layer":"L3"},{"id":"ig_energy","label":"Energy, Resources & Industrials","label_zh":"能源、资源与工业行业组","type":"IndustryGroup","layer":"L3"},{"id":"ig_lshc","label":"Life Sciences & Health Care","label_zh":"生命科学与医疗行业组","type":"IndustryGroup","layer":"L3"},{"id":"methodology_monitor","label":"Monitor Deloitte Strategy Cascade","label_zh":"Monitor Deloitte 战略级联","type":"Methodology","layer":"L3"},{"id":"methodology_greenhouse","label":"Deloitte Greenhouse Innovation Lab","label_zh":"德勤 Greenhouse 创新工坊方法论","type":"Methodology","layer":"L3"},{"id":"methodology_biz_chem","label":"Business Chemistry Assessment","label_zh":"Business Chemistry 团队协作评估","type":"Methodology","layer":"L3"},{"id":"framework_tom","label":"Target Operating Model (TOM) Framework","label_zh":"目标运营模型 (TOM) 框架","type":"Framework","layer":"L3"},{"id":"framework_dma","label":"Digital Maturity Assessment Framework","label_zh":"数字化成熟度评估框架","type":"Framework","layer":"L3"},{"id":"framework_soe_benchmark","label":"SOE World-Class Management Benchmarking","label_zh":"国企对标世界一流管理框架","type":"Framework","layer":"L3"},{"id":"policy_dttl_independence","label":"DTTL Independence Policy (China)","label_zh":"DTTL 独立性政策（中国执行）","type":"IndependencePolicy","layer":"L3"},{"id":"policy_data_localization","label":"China Data Localization Policy","label_zh":"中国数据本地化政策","type":"ConfidentialityPolicy","layer":"L3"},{"id":"report_deloitte_insights","label":"Deloitte Insights Report Series","label_zh":"Deloitte Insights 研究报告系列","type":"ThoughtLeadership","layer":"L3"},{"id":"report_china_whitepaper","label":"China Industry White Paper Series","label_zh":"中国行业白皮书系列","type":"ThoughtLeadership","layer":"L3"},{"id":"sys_crm","label":"Deloitte China Client 360 CRM","label_zh":"德勤中国客户 360 CRM","type":"CRMSystem","layer":"L3"},{"id":"sys_dknowledge","label":"D-Knowledge Global Portal","label_zh":"D-Knowledge 全球知识门户","type":"KnowledgePortal","layer":"L3"},{"id":"sys_rms","label":"Deloitte RMS China","label_zh":"德勤中国资源管理系统","type":"ResourceManagementSystem","layer":"L3"},{"id":"sys_time","label":"Deloitte Time & Expense","label_zh":"德勤工时与费用系统","type":"TimeTrackingSystem","layer":"L3"},{"id":"sys_independence","label":"DTTL Independence Check System","label_zh":"DTTL 独立性审查系统","type":"SystemApplication","layer":"L3"},{"id":"engagement_soe","label":"[Anonymized Central SOE A] Governance Optimization","label_zh":"[匿名央企 A] 治理优化项目","type":"SOEReformEngagement","layer":"L3"},{"id":"engagement_digital","label":"[Anonymized Retailer B] Omni-Channel Strategy","label_zh":"[匿名零售商 B] 全渠道战略项目","type":"DigitalTransformationEngagement","layer":"L3"},{"id":"engagement_carbon","label":"[Anonymized Energy Co C] Net Zero Roadmap","label_zh":"[匿名能源公司 C] 碳中和路线图","type":"DualCarbonStrategyEngagement","layer":"L3"},{"id":"engagement_erp","label":"[Anonymized Manufacturer D] SAP S/4HANA","label_zh":"[匿名制造商 D] SAP S/4HANA 项目","type":"ERPImplementationEngagement","layer":"L3"},{"id":"kpi_utilization","label":"Utilization Rate (Mgr 75%+, SC 80%+)","label_zh":"利用率（经理 75%+, 高顾 80%+）","type":"DeloitteUtilizationKPI","layer":"L3"},{"id":"kpi_win_rate","label":"Proposal Win Rate (Target: 40%+)","label_zh":"提案中标率（40%+）","type":"WinRateKPI","layer":"L3"},{"id":"kpi_rpp","label":"Revenue Per Partner (Target: ¥15M+)","label_zh":"合伙人人均收入（¥1500万+）","type":"RevenuePerPartner","layer":"L3"},{"id":"kpi_margin","label":"Engagement Margin (Target: 30%+)","label_zh":"项目利润率（30%+）","type":"EngagementMarginKPI","layer":"L3"},{"id":"kpi_nps","label":"Client NPS (Target: 60+)","label_zh":"客户 NPS（60+）","type":"ClientSatisfactionNPS","layer":"L3"},{"id":"kpi_retention","label":"Talent Retention SC+ (Target: 85%+)","label_zh":"高顾以上留存率（85%+）","type":"TalentRetentionRate","layer":"L3"}],"axioms":[{"id":"ax_person_org_disjoint","type":"disjoint","label_zh":"人员与组织不相交","label_en":"Person and Organization are disjoint","classes":["Person","Organization"],"status":"stable","since":"2.0.0","definition":"一个实例不能同时是人员和组织","definition_en":"An instance cannot be both a Person and an Organization","source_layer":"L1_universal_organization_ontology"},{"id":"ax_entity_governance_disjoint","type":"disjoint","label_zh":"实体域与治理域不相交","label_en":"Entity and Governance domains are disjoint","classes":["Entity","Governance"],"status":"stable","since":"2.0.0","definition":"实体域和治理域的实例互斥","definition_en":"Entity domain and Governance domain instances are mutually exclusive","source_layer":"L1_universal_organization_ontology"},{"id":"ax_entity_operational_disjoint","type":"disjoint","label_zh":"实体域与运营域不相交","label_en":"Entity and Operational domains are disjoint","classes":["Entity","Operational"],"status":"stable","since":"2.0.0","definition":"实体域和运营域的实例互斥","definition_en":"Entity domain and Operational domain instances are mutually exclusive","source_layer":"L1_universal_organization_ontology"},{"id":"ax_entity_measurement_disjoint","type":"disjoint","label_zh":"实体域与度量域不相交","label_en":"Entity and Measurement domains are disjoint","classes":["Entity","Measurement"],"status":"stable","since":"2.0.0","definition":"实体域和度量域的实例互斥","definition_en":"Entity domain and Measurement domain instances are mutually exclusive","source_layer":"L1_universal_organization_ontology"},{"id":"ax_governance_operational_disjoint","type":"disjoint","label_zh":"治理域与运营域不相交","label_en":"Governance and Operational domains are disjoint","classes":["Governance","Operational"],"status":"stable","since":"2.0.0","definition":"治理域和运营域的实例互斥","definition_en":"Governance domain and Operational domain instances are mutually exclusive","source_layer":"L1_universal_organization_ontology"},{"id":"ax_governance_measurement_disjoint","type":"disjoint","label_zh":"治理域与度量域不相交","label_en":"Governance and Measurement domains are disjoint","classes":["Governance","Measurement"],"status":"stable","since":"2.0.0","definition":"治理域和度量域的实例互斥","definition_en":"Governance domain and Measurement domain instances are mutually exclusive","source_layer":"L1_universal_organization_ontology"},{"id":"ax_operational_measurement_disjoint","type":"disjoint","label_zh":"运营域与度量域不相交","label_en":"Operational and Measurement domains are disjoint","classes":["Operational","Measurement"],"status":"stable","since":"2.0.0","definition":"运营域和度量域的实例互斥","definition_en":"Operational domain and Measurement domain instances are mutually exclusive","source_layer":"L1_universal_organization_ontology"},{"id":"ax_policy_rule_disjoint","type":"disjoint","label_zh":"政策与规则不相交","label_en":"Policy and Rule are disjoint","classes":["Policy","Rule"],"status":"stable","since":"2.0.0","definition":"一个实例不能同时是政策和规则","definition_en":"An instance cannot be both a Policy and a Rule","source_layer":"L1_universal_organization_ontology"},{"id":"ax_part_of_transitive","type":"transitive","label_zh":"part_of 具有传递性","label_en":"part_of is transitive","relation":"part_of","status":"stable","since":"2.0.0","definition":"如果 A 是 B 的一部分，B 是 C 的一部分，则 A 是 C 的一部分","definition_en":"If A is part of B and B is part of C, then A is part of C","source_layer":"L1_universal_organization_ontology"},{"id":"ax_part_of_asymmetric","type":"asymmetric","label_zh":"part_of 具有非对称性","label_en":"part_of is asymmetric","relation":"part_of","status":"stable","since":"2.0.0","definition":"如果 A 是 B 的一部分，则 B 不能是 A 的一部分","definition_en":"If A is part of B, then B cannot be part of A","source_layer":"L1_universal_organization_ontology"},{"id":"ax_owns_domain_party","type":"universal","label_zh":"只有主体可以拥有资源","label_en":"Only Party subclasses can own Resources","subject_class":"Party","relation":"owns","object_class":"Resource","status":"stable","since":"2.0.0","definition":"owns 关系的域限制为 Party 子类，值域限制为 Resource 子类","definition_en":"The owns relation is restricted to Party subclasses as domain and Resource subclasses as range","source_layer":"L1_universal_organization_ontology"},{"id":"ax_governed_by_range_governance","type":"universal","label_zh":"governed_by 的值域必须是治理子类","label_en":"governed_by range restricted to Governance subclasses","subject_class":"Operational","relation":"governed_by","object_class":"Governance","status":"stable","since":"2.0.0","definition":"所有通过 governed_by 关联的对象必须是 Governance 域的子类","definition_en":"All objects linked via governed_by must be subclasses of the Governance domain","source_layer":"L1_universal_organization_ontology"},{"id":"ax_process_realizes_capability","type":"existential","label_zh":"每个能力必须由流程实现","label_en":"Every Capability must be realized by some Process","subject_class":"Capability","relation":"realized_by","object_class":"Process","status":"stable","since":"2.0.0","definition":"每个能力至少由一个流程实现","definition_en":"Every Capability is realized by at least one Process","source_layer":"L1_universal_organization_ontology"},{"id":"ax_risk_mitigated_by_control","type":"existential","label_zh":"每个风险必须有控制措施","label_en":"Every Risk must be mitigated by some Control","subject_class":"Risk","relation":"mitigated_by","object_class":"Control","status":"stable","since":"2.0.0","definition":"每个风险至少由一个控制措施缓释","definition_en":"Every Risk is mitigated by at least one Control measure","source_layer":"L1_universal_organization_ontology"},{"id":"ax_kpi_measures_operational","type":"existential","label_zh":"每个KPI必须衡量某个运营元素","label_en":"Every KPI must measure some Operational element","subject_class":"KPI","relation":"measured_by","object_class":"Operational","status":"stable","since":"2.0.0","definition":"每个关键指标至少关联一个被衡量的运营元素","definition_en":"Every KPI is linked to at least one Operational element it measures","source_layer":"L1_universal_organization_ontology"},{"id":"ax_org_min_one_role","type":"cardinality_min","label_zh":"组织至少有一个角色","label_en":"Organization has at least one Role","subject_class":"Organization","relation":"plays_role","value":1,"status":"stable","since":"2.0.0","definition":"每个组织至少扮演一个角色","definition_en":"Every Organization plays at least one Role","source_layer":"L1_universal_organization_ontology"},{"id":"ax_composed_of_sub_part_of","type":"subproperty","label_zh":"composed_of 是 part_of 的子属性","label_en":"composed_of is a subproperty of part_of","relation":"composed_of","parent_relation":"part_of","status":"stable","since":"2.0.0","definition":"组成关系是部分关系的特化形式","definition_en":"The composition relation is a specialization of the part-of relation","source_layer":"L1_universal_organization_ontology"},{"id":"ax_plays_role_domain_party","type":"existential","label_zh":"每个角色必须被某个主体扮演","label_en":"Every Role is played by some Party","subject_class":"Role","relation":"plays_role","object_class":"Party","status":"stable","since":"2.0.0","definition":"每个角色至少被一个主体扮演","definition_en":"Every Role is played by at least one Party","source_layer":"L1_universal_organization_ontology"}],"stats":{"classes":108,"relations":70,"instances":94,"axioms":18,"L1_count":24,"L2_count":54,"L3_count":30},"domain_meta":{"entity":{"label":"Entity","color":"#5C6BC0","bg":"#E8EAF6"},"resource":{"label":"Resource","color":"#00897B","bg":"#E0F2F1"},"governance":{"label":"Governance","color":"#E53935","bg":"#FFEBEE"},"operational":{"label":"Operational","color":"#F57C00","bg":"#FFF3E0"},"measurement":{"label":"Measurement","color":"#7B1FA2","bg":"#F3E5F5"},"unknown":{"label":"Other","color":"#78909C","bg":"#ECEFF1"}},"layer_meta":{"L1":{"label":"L1 Core","color":"#3949AB","bg":"#E8EAF6"},"L2":{"label":"L2 Consulting","color":"#00897B","bg":"#E0F2F1"},"L3":{"label":"L3 Enterprise","color":"#E65100","bg":"#FFF3E0"}}};
+
+// ── State ────────────────────────────────────────────────────────────────────
+const state = {
+  activeLayers:  new Set(['L1','L2','L3']),
+  activeDomains: new Set(['entity','resource','governance','operational','measurement','unknown']),
+  showRelations: true,
+  showInstances: false,
+  showLabels:    true,
+  treeHorizontal: true,
+  searchQuery:   '',
+  currentView:   'force',
+};
+
+const LAYER_COLORS = { L1:'#3949AB', L2:'#00897B', L3:'#E65100' };
+const DOMAIN_COLORS = {
+  entity:'#5C6BC0', resource:'#00897B', governance:'#E53935',
+  operational:'#F57C00', measurement:'#7B1FA2', unknown:'#78909C'
+};
+
+// Build lookup maps
+const nodeById    = Object.fromEntries(D.nodes.map(n => [n.id, n]));
+const instancesByType = {};
+D.instances.forEach(i => {
+  if (!instancesByType[i.type]) instancesByType[i.type] = [];
+  instancesByType[i.type].push(i);
+});
+const relsByDomain = {}, relsByRange = {};
+D.links.filter(l=>l.type==='relation').forEach(l => {
+  if (!relsByDomain[l.source.id||l.source]) relsByDomain[l.source.id||l.source]=[];
+  relsByDomain[l.source.id||l.source].push(l);
+  if (!relsByRange[l.target.id||l.target]) relsByRange[l.target.id||l.target]=[];
+  relsByRange[l.target.id||l.target].push(l);
+});
+
+// ── View Switching ────────────────────────────────────────────────────────────
+const HINTS = {
+  force: 'Drag nodes · scroll to zoom · click to inspect',
+  tree:  'Scroll/pinch to zoom · click any node to inspect',
+  grid:  'All classes grouped by layer and domain · search to filter',
+};
+function switchView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.tab')[['force','tree','grid'].indexOf(name)].classList.add('active');
+  state.currentView = name;
+  if (name==='force' && !forceInitialized) initForce();
+  if (name==='tree'  && !treeInitialized)  initTree();
+  if (name==='grid')  renderGrid();
+  // Update description hint
+  const hintEl = document.getElementById('desc-hint');
+  if (hintEl && typeof HINTS !== 'undefined') hintEl.textContent = HINTS[name] || '';
+}
+
+// ── Filters ───────────────────────────────────────────────────────────────────
+function toggleLayer(l, btn) {
+  btn.classList.toggle('active');
+  if (state.activeLayers.has(l)) state.activeLayers.delete(l);
+  else state.activeLayers.add(l);
+  applyFilters();
+}
+function toggleDomain(d, btn) {
+  btn.classList.toggle('active');
+  if (state.activeDomains.has(d)) state.activeDomains.delete(d);
+  else state.activeDomains.add(d);
+  applyFilters();
+}
+function toggleRelations(el) {
+  el.classList.toggle('on');
+  state.showRelations = el.classList.contains('on');
+  applyFilters();
+}
+function toggleInstances(el) {
+  el.classList.toggle('on');
+  state.showInstances = el.classList.contains('on');
+  applyFilters();
+}
+function toggleLabels(el) {
+  el.classList.toggle('on');
+  state.showLabels = el.classList.contains('on');
+  d3.selectAll('.node text').style('display', state.showLabels ? null : 'none');
+}
+function nodeVisible(n) {
+  const layer = n.layer || (n.id ? nodeById[n.id.id||n.id]?.layer : '');
+  const domain = n.domain || (n.id ? nodeById[n.id.id||n.id]?.domain : '');
+  if (!state.activeLayers.has(layer)) return false;
+  if (!state.activeDomains.has(domain||'unknown')) return false;
+  if (state.searchQuery) {
+    const q = state.searchQuery.toLowerCase();
+    const id = (n.id?.id||n.id||'').toLowerCase();
+    const le = (n.label_en||'').toLowerCase();
+    const lz = (n.label_zh||'').toLowerCase();
+    if (!id.includes(q) && !le.includes(q) && !lz.includes(q)) return false;
+  }
+  return true;
+}
+function applyFilters() {
+  if (state.currentView==='force') updateForceVisibility();
+  if (state.currentView==='tree')  updateTreeVisibility();
+  if (state.currentView==='grid')  renderGrid();
+}
+
+document.getElementById('search-box').addEventListener('input', e => {
+  state.searchQuery = e.target.value.trim();
+  applyFilters();
+  if (state.currentView==='grid') renderGrid();
+});
+
+// ── Details Panel ─────────────────────────────────────────────────────────────
+function showDetail(nodeId) {
+  const n = nodeById[nodeId];
+  if (!n) return;
+  document.getElementById('detail-empty').style.display = 'none';
+  const dc = document.getElementById('detail-content');
+  dc.style.display = 'block';
+  document.getElementById('sidebar').classList.add('open');
+  const lc = LAYER_COLORS[n.layer]||'#666';
+  const dc2 = DOMAIN_COLORS[n.domain]||'#666';
+  // Children
+  const children = D.nodes.filter(c => c.parent === n.id);
+  // Relations where this node is domain or range
+  const asD = D.links.filter(l=>l.type==='relation' && (l.source?.id||l.source)===n.id);
+  const asR = D.links.filter(l=>l.type==='relation' && (l.target?.id||l.target)===n.id);
+  const insts = instancesByType[n.id]||[];
+
+  dc.innerHTML = `
+    <div class="detail-id">${n.id}</div>
+    <div class="detail-zh">${n.label_zh} / ${n.label_en}</div>
+    <div style="margin-bottom:10px">
+      <span class="detail-tag" style="background:${lc}">${n.layer}</span>
+      <span class="detail-tag" style="background:${dc2}">${n.domain}</span>
+      ${n.abstract?'<span class="detail-tag" style="background:#9E9E9E">abstract</span>':''}
+      ${n.status!=='stable'?`<span class="detail-tag" style="background:#FF7043">${n.status}</span>`:''}
+    </div>
+    ${n.def_en?`<div class="detail-section">
+      <div class="detail-section-title">Definition</div>
+      <div class="detail-def">${n.def_en}</div>
+    </div>`:''}
+    ${n.parent?`<div class="detail-section">
+      <div class="detail-section-title">Parent</div>
+      <span class="chip" style="border-color:${LAYER_COLORS[nodeById[n.parent]?.layer]||'#ccc'};color:${LAYER_COLORS[nodeById[n.parent]?.layer]||'#666'}"
+        onclick="showDetail('${n.parent}')">${n.parent}</span>
+    </div>`:''}
+    ${children.length?`<div class="detail-section">
+      <div class="detail-section-title">Children (${children.length})</div>
+      ${children.map(c=>`<span class="chip" style="border-color:${LAYER_COLORS[c.layer]||'#ccc'};color:${LAYER_COLORS[c.layer]||'#666'}" onclick="showDetail('${c.id}')">${c.id}</span>`).join('')}
+    </div>`:''}
+    ${asD.length?`<div class="detail-section">
+      <div class="detail-section-title">Outgoing Relations (${asD.length})</div>
+      ${asD.map(l=>`<div class="detail-rel">
+        <span class="rel-name">.${l.label}</span> → <span class="chip" style="border-color:#ccc;color:#555" onclick="showDetail('${l.target?.id||l.target}')">${l.target?.id||l.target}</span>
+        <span style="color:#9E9E9E;font-size:10px"> ${l.cardinality}</span>
+      </div>`).join('')}
+    </div>`:''}
+    ${asR.length?`<div class="detail-section">
+      <div class="detail-section-title">Incoming Relations (${asR.length})</div>
+      ${asR.map(l=>`<div class="detail-rel">
+        <span class="chip" style="border-color:#ccc;color:#555" onclick="showDetail('${l.source?.id||l.source}')">${l.source?.id||l.source}</span>
+        <span class="rel-name"> .${l.label}</span> →
+      </div>`).join('')}
+    </div>`:''}
+    ${insts.length?`<div class="detail-section">
+      <div class="detail-section-title">Instances (${insts.length})</div>
+      ${insts.map(i=>`<div class="detail-inst">· ${i.label} ${i.label_zh?`<span style="color:#9E9E9E">(${i.label_zh})</span>`:''}</div>`).join('')}
+    </div>`:''}
+  `;
+}
+
+// ── TOOLTIP ───────────────────────────────────────────────────────────────────
+const tooltip = document.getElementById('tooltip');
+function showTooltip(e, n) {
+  tooltip.style.display = 'block';
+  tooltip.style.left = (e.clientX + 12) + 'px';
+  tooltip.style.top  = (e.clientY - 10) + 'px';
+  tooltip.innerHTML = `<strong>${n.id}</strong> <span style="opacity:.7">${n.layer}</span><br>${n.label_zh} / ${n.label_en}<br><span style="opacity:.7;font-size:11px">${(n.def_en||'').slice(0,80)}${n.def_en?.length>80?'…':''}</span>`;
+}
+function hideTooltip() { tooltip.style.display = 'none'; }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// VIEW 1: Force-Directed Graph
+// ══════════════════════════════════════════════════════════════════════════════
+let forceInitialized = false, forceSim, forceZoomBehavior, forceG;
+
+function initForce() {
+  forceInitialized = true;
+  const svg = d3.select('#force-svg');
+  const el  = document.getElementById('force-svg');
+  const W = el.clientWidth, H = el.clientHeight;
+
+  svg.selectAll('*').remove();
+  const defs = svg.append('defs');
+
+  // Arrow markers for each layer
+  ['L1','L2','L3','rel'].forEach(k => {
+    const color = k==='rel' ? '#5C6BC0' : LAYER_COLORS[k];
+    defs.append('marker')
+      .attr('id', 'arrow-'+k)
+      .attr('viewBox','0 -4 10 8').attr('refX',18).attr('refY',0)
+      .attr('markerWidth',6).attr('markerHeight',6).attr('orient','auto')
+      .append('path').attr('d','M0,-4L10,0L0,4').attr('fill',color).attr('opacity',0.6);
+  });
+
+  forceG = svg.append('g');
+  forceZoomBehavior = d3.zoom().scaleExtent([0.1,4])
+    .on('zoom', e => forceG.attr('transform', e.transform));
+  svg.call(forceZoomBehavior);
+
+  // Prepare nodes & links
+  const nodes = D.nodes.map(n => ({...n}));
+  const links = D.links.map(l => ({...l}));
+
+  forceSim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id)
+      .distance(l => l.type==='inheritance' ? 70 : 140)
+      .strength(l => l.type==='inheritance' ? 0.9 : 0.3))
+    .force('charge', d3.forceManyBody().strength(-180))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collide', d3.forceCollide(22));
+
+  // Links
+  const linkSel = forceG.append('g').selectAll('line')
+    .data(links).join('line')
+    .attr('class', l => 'link ' + l.type)
+    .attr('stroke', l => l.type==='inheritance' ? '#BDBDBD' : LAYER_COLORS[l.layer]||'#9C9C9C')
+    .attr('stroke-width', l => l.type==='inheritance' ? 1 : 1.5)
+    .attr('stroke-dasharray', l => l.type==='inheritance' ? '4 2' : null)
+    .attr('marker-end', l => l.type==='inheritance' ? 'url(#arrow-'+(LAYER_COLORS[l.layer]?l.layer:'rel')+')' : 'url(#arrow-rel)');
+
+  // Nodes
+  const nodeSel = forceG.append('g').selectAll('g.node')
+    .data(nodes).join('g').attr('class', n => 'node'+(n.abstract?' abstract':''))
+    .call(d3.drag()
+      .on('start', (e,d) => { if(!e.active) forceSim.alphaTarget(.3).restart(); d.fx=d.x; d.fy=d.y; })
+      .on('drag',  (e,d) => { d.fx=e.x; d.fy=e.y; })
+      .on('end',   (e,d) => { if(!e.active) forceSim.alphaTarget(0); d.fx=null; d.fy=null; }))
+    .on('mouseover', (e,d) => showTooltip(e,d))
+    .on('mousemove', (e,d) => showTooltip(e,d))
+    .on('mouseout',  ()    => hideTooltip())
+    .on('click', (e,d) => showDetail(d.id));
+
+  nodeSel.append('circle')
+    .attr('r', n => n.abstract ? 14 : (n.layer==='L1'?12 : n.layer==='L2'?10 : 8))
+    .attr('fill', n => LAYER_COLORS[n.layer]||'#78909C')
+    .attr('fill-opacity', n => n.abstract ? 0.25 : 0.85)
+    .attr('stroke', n => LAYER_COLORS[n.layer]||'#78909C')
+    .attr('stroke-dasharray', n => n.abstract ? '4 2' : null);
+
+  nodeSel.append('text')
+    .attr('dy', 20).attr('text-anchor','middle')
+    .attr('font-size', n => n.layer==='L1' ? 11 : 9)
+    .attr('font-weight', n => n.layer==='L1' ? 600 : 400)
+    .text(n => n.id);
+
+  forceSim.on('tick', () => {
+    linkSel
+      .attr('x1', l=>l.source.x).attr('y1', l=>l.source.y)
+      .attr('x2', l=>l.target.x).attr('y2', l=>l.target.y);
+    nodeSel.attr('transform', n=>`translate(${n.x},${n.y})`);
+  });
+
+  // Initial filter
+  updateForceVisibility();
+
+  // Center after settle — read live dimensions so layout is guaranteed complete
+  forceSim.on('end', () => {
+    const cW = el.clientWidth || 800, cH = el.clientHeight || 600;
+    const b = forceG.node().getBBox();
+    if (!b.width || !b.height) return;
+    const scale = Math.min(0.88, (cW - 80) / b.width, (cH - 80) / b.height);
+    const tx = cW/2 - scale*(b.x + b.width/2);
+    const ty = cH/2 - scale*(b.y + b.height/2);
+    svg.transition().duration(700)
+      .call(forceZoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+  });
+}
+
+function updateForceVisibility() {
+  if (!forceInitialized) return;
+  forceG.selectAll('g.node').each(function(d) {
+    const vis = nodeVisible(d);
+    d3.select(this).style('display', vis?null:'none');
+  });
+  forceG.selectAll('line.link').each(function(l) {
+    const sId = l.source?.id||l.source, tId = l.target?.id||l.target;
+    const sn = nodeById[sId], tn = nodeById[tId];
+    const vis = sn && tn && nodeVisible(sn) && nodeVisible(tn)
+      && (l.type==='inheritance' || state.showRelations)
+      && (l.type!=='instance'   || state.showInstances);
+    d3.select(this).style('display', vis?null:'none');
+  });
+}
+
+function forceZoom(factor) {
+  d3.select('#force-svg').transition().duration(250)
+    .call(forceZoomBehavior.scaleBy, factor);
+}
+function forceReset() {
+  const svgEl = document.getElementById('force-svg');
+  if (!forceG) return;
+  const cW = svgEl.clientWidth || 800, cH = svgEl.clientHeight || 600;
+  const b = forceG.node().getBBox();
+  if (!b.width || !b.height) return;
+  const scale = Math.min(0.88, (cW - 80) / b.width, (cH - 80) / b.height);
+  const tx = cW/2 - scale*(b.x + b.width/2);
+  const ty = cH/2 - scale*(b.y + b.height/2);
+  d3.select('#force-svg').transition().duration(500)
+    .call(forceZoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// VIEW 2: Hierarchy Tree
+// ══════════════════════════════════════════════════════════════════════════════
+let treeInitialized = false;
+let treeNodeSel = null, treeLinkSel = null;
+
+function updateTreeVisibility() {
+  if (!treeInitialized || !treeNodeSel) return;
+  treeNodeSel.each(function(d) {
+    const n = d.data.data;
+    const match = nodeVisible(n);
+    d3.select(this).select('circle')
+      .attr('fill-opacity', match ? (n.abstract ? 0.2 : 0.82) : 0.07)
+      .attr('stroke-opacity', match ? 1 : 0.15);
+    d3.select(this).select('text')
+      .attr('opacity', match ? 1 : 0.12);
+  });
+  // Also dim links whose source node is filtered out
+  if (treeLinkSel) {
+    treeLinkSel.attr('stroke-opacity', d => {
+      const n = d.data.data;
+      return nodeVisible(n) ? 0.4 : 0.06;
+    });
+  }
+}
+
+function initTree() {
+  treeInitialized = true;
+  const svg = d3.select('#tree-svg');
+  const el  = document.getElementById('tree-svg');
+  const W = el.clientWidth, H = el.clientHeight;
+  svg.selectAll('*').remove();
+
+  // Build child map
+  const childMap = {};
+  D.nodes.forEach(n => {
+    if (n.parent) {
+      if (!childMap[n.parent]) childMap[n.parent] = [];
+      childMap[n.parent].push(n);
+    }
+  });
+
+  function buildTree(node) {
+    const kids = (childMap[node.id]||[]).map(buildTree);
+    return { data: node, children: kids.length ? kids : null };
+  }
+
+  // Virtual root connects the 4 domain roots
+  const domainRoots = D.nodes.filter(n => !n.parent);
+  const treeData = {
+    data: { id: D.meta.name, label_en:'', label_zh:'', abstract:true, layer:'L1', domain:'unknown' },
+    children: domainRoots.map(buildTree)
+  };
+
+  // Fixed node size: nodeSize([dx, dy]) gives each node its own slot
+  const NODE_DX = state.treeHorizontal ? 30 : 48;
+  const NODE_DY = state.treeHorizontal ? 200 : 90;
+
+  const zoomBehavior = d3.zoom().scaleExtent([0.04, 3])
+    .on('zoom', e => g.attr('transform', e.transform));
+  svg.call(zoomBehavior);
+  window.treeZoomBehavior = zoomBehavior;
+
+  const g = svg.append('g');
+  window.treeG = g;
+
+  const root = d3.hierarchy(treeData);
+  window.treeRoot = root;
+  const treeLayout = d3.tree()
+    .nodeSize([NODE_DX, NODE_DY])
+    .separation((a, b) => a.parent === b.parent ? 1 : 1.4);
+  treeLayout(root);
+
+  // Populate tree title bar
+  document.getElementById('tree-title-name').textContent = D.meta.name;
+  const pillsEl = document.getElementById('tree-title-pills');
+  pillsEl.innerHTML = ['L1','L2','L3'].map(k => {
+    const cnt = D.stats[k+'_count']||0;
+    if (!cnt) return '';
+    const color = LAYER_COLORS[k]||'#666';
+    return `<span class="tree-pill" style="background:${color}">${k}: ${cnt}</span>`;
+  }).join('');
+
+  // Links (skip link from virtual root to its children — draw them plain)
+  treeLinkSel = g.append('g').selectAll('path')
+    .data(root.descendants().slice(1))
+    .join('path')
+    .attr('class','tree-link')
+    .attr('stroke', d => d.data.data.id === D.meta.name ? '#E0E0E0'
+          : LAYER_COLORS[d.data.data.layer]||'#BDBDBD')
+    .attr('stroke-opacity', d => d.parent?.data.data.id === D.meta.name ? 0.3 : 0.4)
+    .attr('d', d => {
+      const px = d.parent.x, py = d.parent.y;
+      if (state.treeHorizontal) {
+        return `M${d.y},${d.x}C${(d.y+py)/2},${d.x} ${(d.y+py)/2},${px} ${py},${px}`;
+      } else {
+        return `M${d.x},${d.y}C${d.x},${(d.y+py)/2} ${px},${(d.y+py)/2} ${px},${py}`;
+      }
+    });
+
+  // Nodes — include the virtual root for display
+  const visNodes = root.descendants();
+
+  treeNodeSel = g.append('g').selectAll('g')
+    .data(visNodes).join('g')
+    .attr('class','tree-node');
+
+  const drag = d3.drag()
+    .on('drag', function(e, d) {
+      if (state.treeHorizontal) {
+        d.x += e.dy;
+        d.y += e.dx;
+        d3.select(this).attr('transform', `translate(${d.y},${d.x})`);
+      } else {
+        d.x += e.dx;
+        d.y += e.dy;
+        d3.select(this).attr('transform', `translate(${d.x},${d.y})`);
+      }
+      treeLinkSel.filter(l => l === d || l.parent === d)
+        .attr('d', l => {
+          const px = l.parent.x, py = l.parent.y;
+          if (state.treeHorizontal) {
+            return `M${l.y},${l.x}C${(l.y+py)/2},${l.x} ${(l.y+py)/2},${px} ${py},${px}`;
+          } else {
+            return `M${l.x},${l.y}C${l.x},${(l.y+py)/2} ${px},${(l.y+py)/2} ${px},${py}`;
+          }
+        });
+    });
+
+  const node = treeNodeSel
+    .attr('transform', d => state.treeHorizontal ? `translate(${d.y},${d.x})` : `translate(${d.x},${d.y})`)
+    .style('cursor','pointer')
+    .on('click',     (e,d) => showDetail(d.data.data.id))
+    .on('mouseover', (e,d) => showTooltip(e, d.data.data))
+    .on('mousemove', (e,d) => showTooltip(e, d.data.data))
+    .on('mouseout',  ()    => hideTooltip())
+    .call(drag);
+
+  // Depth-based radius: L1 abstract=13, L1 concrete=10, L2=8, L3=6
+  node.append('circle')
+    .attr('r', d => {
+      const nd = d.data.data;
+      if (nd.abstract) return 13;
+      if (nd.layer==='L1') return 10;
+      if (nd.layer==='L2') return 8;
+      return 6;
+    })
+    .attr('fill', d => LAYER_COLORS[d.data.data.layer]||'#78909C')
+    .attr('fill-opacity', d => d.data.data.abstract ? 0.2 : 0.82)
+    .attr('stroke', d => LAYER_COLORS[d.data.data.layer]||'#78909C')
+    .attr('stroke-width', d => d.data.data.abstract ? 1.5 : 1)
+    .attr('stroke-dasharray', d => d.data.data.abstract ? '4 2' : null);
+
+  // Labels: adaptive based on tree orientation
+  node.append('text')
+    .attr('dy', d => state.treeHorizontal ? 4 : (d.children ? -14 : 16))
+    .attr('dx', d => state.treeHorizontal ? (d.children ? -14 : 14) : 0)
+    .attr('text-anchor', d => state.treeHorizontal ? (d.children ? 'end' : 'start') : 'middle')
+    .attr('font-size', d => {
+      if (d.data.data.abstract) return 13;
+      if (d.data.data.layer==='L1') return 11;
+      if (d.data.data.layer==='L2') return 9;
+      return 8;
+    })
+    .attr('font-weight', d => (d.data.data.layer==='L1'||d.data.data.abstract) ? 700 : 400)
+    .attr('fill', d => DOMAIN_COLORS[d.data.data.domain]||'#424242')
+    .attr('paint-order','stroke')
+    .attr('stroke','#fff')
+    .attr('stroke-width', 3)
+    .text(d => d.data.data.id);
+
+  // Auto-fit: center the tree, handling orientation orientation
+  updateTreeVisibility();
+
+  requestAnimationFrame(() => {
+    const b = g.node().getBBox();
+    const pad = 56; // extra top pad for title bar
+    const scale = Math.min(0.95, (W-pad*2)/(b.width||1), (H-pad*2)/(b.height||1));
+    const tx = state.treeHorizontal ? pad - scale*b.x : W/2 - scale*(b.x + b.width/2);
+    const ty = state.treeHorizontal ? H/2 - scale*(b.y + b.height/2) : pad - scale*b.y;
+    svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+  });
+}
+
+function toggleTreeOrientation() {
+  state.treeHorizontal = !state.treeHorizontal;
+  if (!window.treeRoot || !window.treeZoomBehavior || !window.treeG) return initTree();
+
+  const NODE_DX = state.treeHorizontal ? 30 : 48;
+  const NODE_DY = state.treeHorizontal ? 200 : 90;
+  
+  const treeLayout = d3.tree()
+    .nodeSize([NODE_DX, NODE_DY])
+    .separation((a, b) => a.parent === b.parent ? 1 : 1.4);
+  treeLayout(window.treeRoot);
+
+  const t = d3.transition().duration(750).ease(d3.easeCubicInOut);
+
+  treeLinkSel.transition(t)
+    .attr('d', d => {
+      const px = d.parent.x, py = d.parent.y;
+      if (state.treeHorizontal) {
+        return `M${d.y},${d.x}C${(d.y+py)/2},${d.x} ${(d.y+py)/2},${px} ${py},${px}`;
+      } else {
+        return `M${d.x},${d.y}C${d.x},${(d.y+py)/2} ${px},${(d.y+py)/2} ${px},${py}`;
+      }
+    });
+
+  treeNodeSel.transition(t)
+    .attr('transform', d => state.treeHorizontal ? `translate(${d.y},${d.x})` : `translate(${d.x},${d.y})`);
+
+  treeNodeSel.selectAll('text').transition(t)
+    .attr('dy', d => state.treeHorizontal ? 4 : (d.children ? -14 : 16))
+    .attr('dx', d => state.treeHorizontal ? (d.children ? -14 : 14) : 0)
+    .attr('text-anchor', d => state.treeHorizontal ? (d.children ? 'end' : 'start') : 'middle');
+
+  const el = document.getElementById('tree-svg');
+  const W = el.clientWidth, H = el.clientHeight;
+  const pad = 56;
+  
+  let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
+  window.treeRoot.descendants().forEach(d => {
+    let px = state.treeHorizontal ? d.y : d.x;
+    let py = state.treeHorizontal ? d.x : d.y;
+    if(px < minX) minX = px;
+    if(px > maxX) maxX = px;
+    if(py < minY) minY = py;
+    if(py > maxY) maxY = py;
+  });
+  
+  const bW = maxX - minX + 150;
+  const bH = maxY - minY + 40;
+  const scale = Math.min(0.95, (W-pad*2)/(bW||1), (H-pad*2)/(bH||1));
+  const tx = state.treeHorizontal ? pad - scale*(minX - 50) : W/2 - scale*(minX + (maxX-minX)/2);
+  const ty = state.treeHorizontal ? H/2 - scale*(minY + (maxY-minY)/2) : pad - scale*(minY - 20);
+
+  d3.select('#tree-svg').transition(t)
+    .call(window.treeZoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// VIEW 3: Card Grid
+// ══════════════════════════════════════════════════════════════════════════════
+function renderGrid() {
+  const layers = ['L1','L2','L3'];
+  const domains = ['entity','resource','governance','operational','measurement','unknown'];
+  const q = state.searchQuery.toLowerCase();
+
+  const subtitle = document.getElementById('grid-subtitle');
+  const layerMeta = D.layer_meta || {};
+
+  let html = '';
+  for (const layer of layers) {
+    if (!state.activeLayers.has(layer)) continue;
+    const lm = layerMeta[layer]||{};
+    const lColor = LAYER_COLORS[layer]||'#666';
+    const nodesInLayer = D.nodes.filter(n => n.layer===layer && state.activeDomains.has(n.domain||'unknown')
+      && (!q || n.id.toLowerCase().includes(q) || (n.label_en||'').toLowerCase().includes(q)
+              || (n.label_zh||'').toLowerCase().includes(q)));
+    if (!nodesInLayer.length) continue;
+
+    html += `<div class="layer-section">
+      <div class="layer-header" style="border-color:${lColor}">
+        <span class="layer-badge" style="background:${lColor}">${layer}</span>
+        <span class="layer-title">${lm.label||layer}</span>
+        <span class="layer-count">${nodesInLayer.length} classes</span>
+      </div>`;
+
+    for (const domain of domains) {
+      if (!state.activeDomains.has(domain)) continue;
+      const nodes = nodesInLayer.filter(n => n.domain===domain);
+      if (!nodes.length) continue;
+      const dm = D.domain_meta?.[domain]||{};
+      const dColor = dm.color||DOMAIN_COLORS[domain]||'#666';
+      const dBg    = dm.bg||'#F5F5F5';
+      html += `<div class="domain-group">
+        <span class="domain-label" style="background:${dBg};color:${dColor}">${(dm.label||domain).toUpperCase()}</span>
+        <div class="cards">
+          ${nodes.map(n => `<div class="card" style="border-left-color:${lColor}" onclick="showDetail('${n.id}')">
+            <div class="card-title">${n.id}</div>
+            <div class="card-zh">${n.label_zh} / ${n.label_en}</div>
+            <div class="card-def">${n.def_en||''}</div>
+            <div class="card-badges">
+              ${n.abstract?'<span class="badge badge-abstract">abstract</span>':''}
+              ${n.status!=='stable'?`<span class="badge" style="background:#FF7043;color:#fff">${n.status}</span>`:''}
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>`;
+    }
+    html += '</div>';
+  }
+  document.getElementById('grid-content').innerHTML = html || '<p style="color:#9E9E9E;font-size:13px">No classes match current filters.</p>';
+  subtitle.textContent = `${D.stats.classes} classes across ${['L1','L2','L3'].filter(l=>state.activeLayers.has(l)).join(' · ')}`;
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+// Desc bar — populate static text
+(function() {
+  const lm = D.layer_meta || {};
+  const s  = D.stats;
+  const nameEl = document.getElementById('desc-name');
+  if (nameEl) nameEl.textContent = D.meta.name;
+  const layersEl = document.getElementById('desc-layers');
+  if (layersEl) {
+    const parts = ['L1','L2','L3'].map(k => {
+      const cnt = s[k+'_count']||0;
+      const label = (lm[k]||{}).label || k;
+      return cnt ? label + ': ' + cnt : null;
+    }).filter(Boolean);
+    layersEl.textContent = parts.join('  ·  ');
+  }
+})();
+
+// Desc hint — set initial hint
+(function() {
+  const el = document.getElementById('desc-hint');
+  if (el) el.textContent = HINTS[state.currentView] || '';
+})();
+
+// Defer initForce until layout is computed (clientWidth > 0)
+requestAnimationFrame(() => initForce());
+</script>
+</body>
+</html>

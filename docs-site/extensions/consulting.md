@@ -27,11 +27,11 @@ This extension covers:
 
 | Class | Parent (L1) | Description |
 |:---|:---|:---|
-| `ConsultingFirm` | `Organization` | An enterprise providing professional consulting services |
+| `ConsultingFirm` | `Organization` | A professional services firm |
 | `PracticeLine` | `OrgUnit` | Major business division (e.g., Strategy, Digital, Operations) |
-| `Engagement` | `BusinessObject` | A contracted consulting project |
-| `Deliverable` | `BusinessObject` | A work product delivered to the client |
-| `Methodology` | `BusinessObject` | A structured approach to solving business problems |
+| `Engagement` | `Resource` | A contracted consulting project |
+| `Deliverable` | `Resource` | A work product delivered to the client |
+| `Methodology` | `Resource` | A structured approach to solving business problems |
 | `Partner` | `Role` | Senior leader who owns client relationships |
 | `ClientAccount` | `Party` | A client organization managed by the firm |
 

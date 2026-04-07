@@ -29,11 +29,11 @@ An L3 implementation follows this pattern:
   ],
   "classes": [
     {
-      "id": "EnterpriseSpecificEntity",
-      "label_zh": "企业特定实体",
-      "label_en": "Enterprise Specific Entity",
-      "parent": "BusinessObject",
-      "definition": "A placeholder for entities unique to this enterprise."
+      "id": "CustomPricingModel",
+      "label_zh": "定制化定价模型",
+      "label_en": "Custom Pricing Model",
+      "parent": "Resource",
+      "definition": "Acme 的内部计费与定价模型"
     }
   ],
   "relations": [

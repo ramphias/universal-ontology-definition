@@ -393,6 +393,35 @@ body {{ font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
 }}
 .zoom-btn:hover {{ background: #F5F5F5; }}
 
+/* ── Tree Title Bar ── */
+#tree-title-bar {{
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  padding: 10px 20px; display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(to bottom, rgba(248,249,250,0.97) 70%, transparent);
+  pointer-events: none;
+}}
+#tree-title-name {{
+  font-size: 15px; font-weight: 700; color: #1A237E;
+}}
+#tree-title-pills {{ display: flex; gap: 6px; }}
+.tree-pill {{
+  padding: 2px 10px; border-radius: 10px; font-size: 11px;
+  font-weight: 600; color: #fff;
+}}
+#view-tree {{ position: relative; }}
+
+/* ── Description Bar ── */
+#desc-bar {{
+  background: #E8EAF6; border-bottom: 1px solid #C5CAE9;
+  padding: 5px 20px; font-size: 12px; color: #3949AB;
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  white-space: nowrap; overflow: hidden;
+}}
+#desc-name {{ font-weight: 600; }}
+.desc-sep {{ color: #9FA8DA; }}
+#desc-layers {{ color: #5C6BC0; }}
+#desc-hint {{ color: #7986CB; font-style: italic; flex: 1; overflow: hidden; text-overflow: ellipsis; }}
+
 /* ── Legend ── */
 #legend {{
   position: absolute; bottom: 16px; left: 12px; background: rgba(255,255,255,.95);
@@ -426,6 +455,14 @@ body {{ font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
   <button class="tab" onclick="switchView('grid')">&#9783; Layer Overview</button>
 </div>
 
+<div id="desc-bar">
+  <span id="desc-name"></span>
+  <span class="desc-sep">·</span>
+  <span id="desc-layers"></span>
+  <span class="desc-sep">·</span>
+  <span id="desc-hint"></span>
+</div>
+
 <div id="main">
   <div id="viz-area">
 
@@ -450,6 +487,10 @@ body {{ font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
 
     <!-- View 2: Tree -->
     <div id="view-tree" class="view">
+      <div id="tree-title-bar">
+        <span id="tree-title-name"></span>
+        <span id="tree-title-pills"></span>
+      </div>
       <svg id="tree-svg"></svg>
     </div>
 
@@ -545,6 +586,11 @@ D.links.filter(l=>l.type==='relation').forEach(l => {{
 }});
 
 // ── View Switching ────────────────────────────────────────────────────────────
+const HINTS = {{
+  force: 'Drag nodes \u00b7 scroll to zoom \u00b7 click to inspect',
+  tree:  'Scroll/pinch to zoom \u00b7 click any node to inspect',
+  grid:  'All classes grouped by layer and domain \u00b7 search to filter',
+}};
 function switchView(name) {{
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -554,6 +600,9 @@ function switchView(name) {{
   if (name==='force' && !forceInitialized) initForce();
   if (name==='tree'  && !treeInitialized)  initTree();
   if (name==='grid')  renderGrid();
+  // Update description hint
+  const hintEl = document.getElementById('desc-hint');
+  if (hintEl && typeof HINTS !== 'undefined') hintEl.textContent = HINTS[name] || '';
 }}
 
 // ── Filters ───────────────────────────────────────────────────────────────────
@@ -600,6 +649,7 @@ function nodeVisible(n) {{
 }}
 function applyFilters() {{
   if (state.currentView==='force') updateForceVisibility();
+  if (state.currentView==='tree')  updateTreeVisibility();
   if (state.currentView==='grid')  renderGrid();
 }}
 
@@ -763,14 +813,16 @@ function initForce() {{
   // Initial filter
   updateForceVisibility();
 
-  // Center after settle
+  // Center after settle — read live dimensions so layout is guaranteed complete
   forceSim.on('end', () => {{
+    const cW = el.clientWidth || 800, cH = el.clientHeight || 600;
     const b = forceG.node().getBBox();
-    const scale = Math.min(0.9, W/(b.width+80), H/(b.height+80));
-    const tx = W/2 - scale*(b.x+b.width/2);
-    const ty = H/2 - scale*(b.y+b.height/2);
-    svg.transition().duration(600)
-      .call(forceZoomBehavior.transform, d3.zoomIdentity.translate(tx,ty).scale(scale));
+    if (!b.width || !b.height) return;
+    const scale = Math.min(0.88, (cW - 80) / b.width, (cH - 80) / b.height);
+    const tx = cW/2 - scale*(b.x + b.width/2);
+    const ty = cH/2 - scale*(b.y + b.height/2);
+    svg.transition().duration(700)
+      .call(forceZoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
   }});
 }}
 
@@ -805,16 +857,36 @@ function forceReset() {{
 // VIEW 2: Hierarchy Tree
 // ══════════════════════════════════════════════════════════════════════════════
 let treeInitialized = false;
+let treeNodeSel = null, treeLinkSel = null;
+
+function updateTreeVisibility() {{
+  if (!treeInitialized || !treeNodeSel) return;
+  treeNodeSel.each(function(d) {{
+    const n = d.data.data;
+    const match = nodeVisible(n);
+    d3.select(this).select('circle')
+      .attr('fill-opacity', match ? (n.abstract ? 0.2 : 0.82) : 0.07)
+      .attr('stroke-opacity', match ? 1 : 0.15);
+    d3.select(this).select('text')
+      .attr('opacity', match ? 1 : 0.12);
+  }});
+  // Also dim links whose source node is filtered out
+  if (treeLinkSel) {{
+    treeLinkSel.attr('stroke-opacity', d => {{
+      const n = d.data.data;
+      return nodeVisible(n) ? 0.4 : 0.06;
+    }});
+  }}
+}}
 
 function initTree() {{
   treeInitialized = true;
-  const svg  = d3.select('#tree-svg');
-  const el   = document.getElementById('tree-svg');
+  const svg = d3.select('#tree-svg');
+  const el  = document.getElementById('tree-svg');
   const W = el.clientWidth, H = el.clientHeight;
   svg.selectAll('*').remove();
 
-  // Build forest: multiple root trees (one per domain root)
-  const roots = D.nodes.filter(n => !n.parent);
+  // Build child map
   const childMap = {{}};
   D.nodes.forEach(n => {{
     if (n.parent) {{
@@ -824,64 +896,114 @@ function initTree() {{
   }});
 
   function buildTree(node) {{
-    return {{ data: node, children: (childMap[node.id]||[]).map(buildTree) }};
+    const kids = (childMap[node.id]||[]).map(buildTree);
+    return {{ data: node, children: kids.length ? kids : null }};
   }}
 
-  // Combine all roots under a virtual root
-  const virtual = {{ id:'__root__', label_en:'', label_zh:'' }};
-  const treeData = {{ data: virtual, children: roots.map(buildTree) }};
+  // Virtual root connects the 4 domain roots
+  const domainRoots = D.nodes.filter(n => !n.parent);
+  const treeData = {{
+    data: {{ id:'__root__', label_en:'', label_zh:'', abstract:true, layer:'L1', domain:'unknown' }},
+    children: domainRoots.map(buildTree)
+  }};
 
-  const margin = {{top:30, right:20, bottom:20, left:20}};
-  const iW = W - margin.left - margin.right;
-  const iH = H - margin.top  - margin.bottom;
+  // Fixed node size: nodeSize([dx, dy]) gives each node its own slot
+  // dx=48px horizontal breathing room, dy=90px vertical level gap
+  const NODE_DX = 48, NODE_DY = 90;
 
-  const zoomBehavior = d3.zoom().scaleExtent([0.05,3])
+  const zoomBehavior = d3.zoom().scaleExtent([0.04, 3])
     .on('zoom', e => g.attr('transform', e.transform));
   svg.call(zoomBehavior);
 
-  const g = svg.append('g').attr('transform', `translate(${{margin.left}},${{margin.top}})`);
+  const g = svg.append('g');
 
   const root = d3.hierarchy(treeData);
-  const treeLayout = d3.tree().size([iW, iH]);
+  const treeLayout = d3.tree()
+    .nodeSize([NODE_DX, NODE_DY])
+    .separation((a, b) => a.parent === b.parent ? 1 : 1.4);
   treeLayout(root);
 
-  // Links
-  g.append('g').selectAll('path')
-    .data(root.descendants().slice(1)).join('path')
-    .attr('class','tree-link')
-    .attr('d', d => `M${{d.x}},${{d.y}}C${{d.x}},${{(d.y+d.parent.y)/2}} ${{d.parent.x}},${{(d.y+d.parent.y)/2}} ${{d.parent.x}},${{d.parent.y}}`);
+  // Populate tree title bar
+  document.getElementById('tree-title-name').textContent = D.meta.name;
+  const pillsEl = document.getElementById('tree-title-pills');
+  pillsEl.innerHTML = ['L1','L2','L3'].map(k => {{
+    const cnt = D.stats[k+'_count']||0;
+    if (!cnt) return '';
+    const color = LAYER_COLORS[k]||'#666';
+    return `<span class="tree-pill" style="background:${{color}}">${{k}}: ${{cnt}}</span>`;
+  }}).join('');
 
-  // Nodes
-  const node = g.append('g').selectAll('g')
-    .data(root.descendants().filter(d=>d.data.data.id!=='__root__'))
-    .join('g').attr('class','tree-node')
-    .attr('transform', d=>`translate(${{d.x}},${{d.y}})`)
-    .on('click', (e,d) => showDetail(d.data.data.id))
+  // Links (skip link from virtual root to its children — draw them plain)
+  treeLinkSel = g.append('g').selectAll('path')
+    .data(root.descendants().slice(1))
+    .join('path')
+    .attr('class','tree-link')
+    .attr('stroke', d => d.data.data.id==='__root__' ? '#E0E0E0'
+          : LAYER_COLORS[d.data.data.layer]||'#BDBDBD')
+    .attr('stroke-opacity', d => d.parent?.data.data.id==='__root__' ? 0.3 : 0.4)
+    .attr('d', d => {{
+      const px = d.parent.x, py = d.parent.y;
+      return `M${{d.x}},${{d.y}}C${{d.x}},${{(d.y+py)/2}} ${{px}},${{(d.y+py)/2}} ${{px}},${{py}}`;
+    }});
+
+  // Nodes — exclude the invisible virtual root from rendering
+  const visNodes = root.descendants().filter(d => d.data.data.id !== '__root__');
+
+  treeNodeSel = g.append('g').selectAll('g')
+    .data(visNodes).join('g')
+    .attr('class','tree-node')
+  const node = treeNodeSel;
+    .attr('transform', d => `translate(${{d.x}},${{d.y}})`)
+    .style('cursor','pointer')
+    .on('click',     (e,d) => showDetail(d.data.data.id))
     .on('mouseover', (e,d) => showTooltip(e, d.data.data))
     .on('mousemove', (e,d) => showTooltip(e, d.data.data))
     .on('mouseout',  ()    => hideTooltip());
 
-  node.append('circle').attr('r', d => d.data.data.abstract?10:7)
+  // Depth-based radius: L1 abstract=13, L1 concrete=10, L2=8, L3=6
+  node.append('circle')
+    .attr('r', d => {{
+      const nd = d.data.data;
+      if (nd.abstract) return 13;
+      if (nd.layer==='L1') return 10;
+      if (nd.layer==='L2') return 8;
+      return 6;
+    }})
     .attr('fill', d => LAYER_COLORS[d.data.data.layer]||'#78909C')
-    .attr('fill-opacity', d => d.data.data.abstract?0.3:0.85)
+    .attr('fill-opacity', d => d.data.data.abstract ? 0.2 : 0.82)
     .attr('stroke', d => LAYER_COLORS[d.data.data.layer]||'#78909C')
-    .attr('stroke-width', 1.5)
-    .attr('stroke-dasharray', d => d.data.data.abstract?'3 2':null);
+    .attr('stroke-width', d => d.data.data.abstract ? 1.5 : 1)
+    .attr('stroke-dasharray', d => d.data.data.abstract ? '4 2' : null);
 
+  // Labels: show above node for parents, below for leaves
+  // Alternate left/right for leaf siblings to reduce overlap
   node.append('text')
-    .attr('dy', d => d.children ? -12 : 18)
-    .attr('text-anchor','middle')
-    .attr('font-size', d => d.data.data.layer==='L1'?12:10)
-    .attr('font-weight', d => d.data.data.layer==='L1'?600:400)
+    .attr('dy', d => d.children ? -14 : 16)
+    .attr('text-anchor', 'middle')
+    .attr('font-size', d => {{
+      if (d.data.data.abstract) return 13;
+      if (d.data.data.layer==='L1') return 11;
+      if (d.data.data.layer==='L2') return 9;
+      return 8;
+    }})
+    .attr('font-weight', d => (d.data.data.layer==='L1'||d.data.data.abstract) ? 700 : 400)
     .attr('fill', d => DOMAIN_COLORS[d.data.data.domain]||'#424242')
+    .attr('paint-order','stroke')
+    .attr('stroke','#fff')
+    .attr('stroke-width', 3)
     .text(d => d.data.data.id);
 
-  // Auto-fit
-  const b = g.node().getBBox();
-  const scale = Math.min(1, W/(b.width+60), H/(b.height+60));
-  const tx = W/2 - scale*(b.x+b.width/2);
-  const ty = 30 - scale*b.y + 10;
-  svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(tx,ty).scale(scale));
+  // Auto-fit: center the tree with slight top padding
+  updateTreeVisibility();
+
+  requestAnimationFrame(() => {{
+    const b = g.node().getBBox();
+    const pad = 56; // extra top pad for title bar
+    const scale = Math.min(0.95, (W-pad*2)/(b.width||1), (H-pad*2)/(b.height||1));
+    const tx = W/2 - scale*(b.x + b.width/2);
+    const ty = pad - scale*b.y;
+    svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+  }});
 }}
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -941,7 +1063,32 @@ function renderGrid() {{
 }}
 
 // ── Init ──────────────────────────────────────────────────────────────────────
-initForce();
+
+// Desc bar — populate static text
+(function() {{
+  const lm = D.layer_meta || {{}};
+  const s  = D.stats;
+  const nameEl = document.getElementById('desc-name');
+  if (nameEl) nameEl.textContent = D.meta.name;
+  const layersEl = document.getElementById('desc-layers');
+  if (layersEl) {{
+    const parts = ['L1','L2','L3'].map(k => {{
+      const cnt = s[k+'_count']||0;
+      const label = (lm[k]||{{}}).label || k;
+      return cnt ? label + ': ' + cnt : null;
+    }}).filter(Boolean);
+    layersEl.textContent = parts.join('  \u00b7  ');
+  }}
+}})();
+
+// Desc hint — set initial hint
+(function() {{
+  const el = document.getElementById('desc-hint');
+  if (el) el.textContent = HINTS[state.currentView] || '';
+}})();
+
+// Defer initForce until layout is computed (clientWidth > 0)
+requestAnimationFrame(() => initForce());
 </script>
 </body>
 </html>"""
