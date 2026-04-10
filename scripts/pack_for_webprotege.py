@@ -22,7 +22,7 @@ from pathlib import Path
 def find_project_root(start_path):
     p = Path(start_path).resolve()
     for _ in range(10):
-        if (p / "core").is_dir() and (p / "addons").is_dir():
+        if (p / "core").is_dir() and (p / "extensions").is_dir():
             return str(p)
         p = p.parent
     return str(Path(start_path).resolve())
@@ -45,9 +45,9 @@ def collect_imports(ttl_path, project_root):
     # Map URIs to local .ttl files
     uri_to_file = {
         "https://w3id.org/uod/core/": os.path.join(project_root, "core", "universal_ontology_v1.ttl"),
-        "https://w3id.org/uod/addon/luxury-goods/": os.path.join(project_root, "addons", "luxury-goods", "luxury_goods_addon_v1.ttl"),
-        "https://w3id.org/uod/addon/consulting/": os.path.join(project_root, "addons", "consulting", "consulting_addon_v1.ttl"),
-        "https://w3id.org/uod/addon/common/": os.path.join(project_root, "addons", "common", "common_enterprise_addon_v1.ttl"),
+        "https://w3id.org/uod/addon/luxury-goods/": os.path.join(project_root, "extensions", "luxury-goods", "luxury_goods_extension_v1.ttl"),
+        "https://w3id.org/uod/addon/consulting/": os.path.join(project_root, "extensions", "consulting", "consulting_extension_v1.ttl"),
+        "https://w3id.org/uod/addon/common/": os.path.join(project_root, "extensions", "common", "common_enterprise_extension_v1.ttl"),
     }
 
     local_files = []
@@ -117,7 +117,7 @@ def main():
         # Pack all non-core ontologies (L2 + L3)
         patterns = [
             os.path.join(project_root, "core", "*.ttl"),
-            os.path.join(project_root, "addons", "*", "*.ttl"),
+            os.path.join(project_root, "extensions", "*", "*.ttl"),
             os.path.join(project_root, "enterprise", "*", "*.ttl"),
             os.path.join(project_root, "private_enterprise", "*", "*.ttl"),
         ]

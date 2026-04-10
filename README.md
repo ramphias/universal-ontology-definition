@@ -4,13 +4,13 @@
 
 **An Open, Standardized Four-Layer Enterprise Ontology Framework**
 
-**Anti-entropy by design — structured, governed, and built to scale.**
+> *Anti-entropy by design — structured, governed, and built to scale.*
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Version](https://img.shields.io/badge/Version-2.0.0-green.svg)](#)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
+[![Version](https://img.shields.io/badge/Version-2.0.0-success.svg?style=for-the-badge)](#)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](#contributing)
 
-[中文](./README_CN.md) | **English**
+*[中文](./README_CN.md) | **English***
 
 </div>
 
@@ -20,63 +20,64 @@
 
 Universal Ontology Definition (UOD) is an **open, standardized four-layer enterprise ontology framework** designed to provide a unified conceptual modeling foundation for enterprise knowledge graphs, semantic layers, master data management, and AI Agent knowledge bases.
 
-### The Problem
+### 🔴 The Problem
 
 Enterprise digitalization commonly faces:
 
-- 🔴 **Inconsistent concept definitions** — Different teams use different terms for the same objects, making cross-system reuse difficult
-- 🔴 **Industry knowledge silos** — Industry-specific knowledge is scattered with no standardized extension mechanism
-- 🔴 **Customization vs. standardization conflicts** — Enterprise-specific needs continuously erode the underlying structure
-- 🔴 **Platform lock-in** — Ontology definitions tied to a single serialization format, limiting interoperability
+- **Inconsistent concept definitions** — Different teams use different terms for the same objects, making cross-system reuse difficult.
+- **Industry knowledge silos** — Industry-specific knowledge is scattered with no standardized extension mechanism.
+- **Customization vs. standardization conflicts** — Enterprise-specific needs continuously erode the underlying structure.
+- **Platform lock-in** — Ontology definitions tied to a single serialization format, limiting interoperability.
 
-### The Solution: Four-Layer Architecture
+### 🟢 The Solution: Four-Layer Architecture
 
+```mermaid
+flowchart TD
+    classDef layer3 fill:#f8f9fa,stroke:#dee2e6,stroke-width:2px,stroke-dasharray: 5 5,color:#495057
+    classDef layer2 fill:#e9ecef,stroke:#ced4da,stroke-width:2px,color:#495057
+    classDef layer1 fill:#e0f3ff,stroke:#0d6efd,stroke-width:2px,color:#0a58ca,font-weight:bold
+    classDef layer0 fill:#f8f9fa,stroke:#dee2e6,stroke-width:2px,color:#6c757d
+    classDef label fill:none,stroke:none,color:#6c757d,font-size:12px
+    
+    L3["<b>L3: Enterprise Customization Layer</b><br/><span style='font-size:13px'>Company A | Company B | Company C</span>"]:::layer3
+    L2["<b>L2: Industry & Domain Extensions</b><br/><span style='font-size:13px'>Common | Consulting | Luxury | Finance | Manufacturing</span>"]:::layer2
+    L1["<b>L1: Universal Enterprise Ontology Core (v2.0)</b><br/>Entity 🔸 Governance 🔸 Operational 🔸 Measurement"]:::layer1
+    L0["<b>L0: Platform & Syntax Bindings</b><br/><span style='font-size:13px'>OWL/RDF | JSON-LD | GraphQL | SQL DDL</span>"]:::layer0
+
+    L3 -. "Private extensions (Optional)" .-> L2
+    L3 -. "Mandatory inheritance" .-> L1
+    L2 -- "Pluggable domain models" --> L1
+    L1 == "Binds to" ==> L0
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│         L3: Enterprise Customization Layer                       │  ← Private extensions
-│    (Company A)    (Company B)    (Company C)                     │
-├──────────────────────────────────────────────────────────────────┤
-│         L2: Industry & Domain Extensions                             │  ← Optional, pluggable
-│  (Common)  (Consulting)  (Luxury)  (Finance)  (Manufacturing)   │
-├──────────────────────────────────────────────────────────────────┤
-│         L1: Universal Enterprise Ontology Core (v2.0)            │  ← Mandatory inheritance
-│  ┌──────────┐ ┌──────────┐ ┌─────────────┐ ┌─────────────┐      │
-│  │  Entity   │ │Governance│ │ Operational  │ │ Measurement │      │
-│  │Party/Org/ │ │Policy/   │ │Role/Process/ │ │ Goal / KPI  │      │
-│  │Resource   │ │Rule/Risk │ │Capability    │ │             │      │
-│  └──────────┘ └──────────┘ └─────────────┘ └─────────────┘      │
-├═════════════════════════════════════════════════════════════╤════╡
-│    L0: Platform & Syntax Bindings                           │    │
-│  (OWL/RDF)  (JSON-LD)  (GraphQL)  (SQL DDL)                │    │
-└─────────────────────────────────────────────────────────────┘    │
-```
+
+---
 
 ## ✨ Key Features
 
-- 🏗️ **Four-Layer Separation** — Stable semantic core, pluggable Industry and Domain Extension, free enterprise customization, multi-platform bindings
-- 🛡️ **Anti-Entropy by Design** — 4 abstract domain roots, hard class caps, governance rules, and CI validation prevent ontology sprawl
-- 📐 **Standardized Definition Format** — Unified JSON Schema with lifecycle management (status, since, deprecated_since)
-- 🔗 **Inheritance & Extension** — L2 extends L1, L3 extends L1+L2, with generalized domain/range relations
-- ⚙️ **Platform Bindings** — L0 provides ready-to-use OWL/RDF, JSON-LD, GraphQL, and SQL mappings
-- 🌍 **Bilingual Support** — All concepts include Chinese and English labels
-- 🤝 **Community-Driven** — Anyone can contribute Industry and Domain Extension, platform bindings, or improve core definitions
+- 🏗️ **Four-Layer Separation** — Stable semantic core, pluggable Industry and Domain Extension, free enterprise customization, and multi-platform bindings.
+- 🛡️ **Anti-Entropy by Design** — 4 abstract domain roots, hard class caps, governance rules, and CI validation prevent ontology sprawl.
+- 📐 **Standardized Definition Format** — Unified JSON Schema with lifecycle management (`status`, `since`, `deprecated_since`).
+- 🔗 **Inheritance & Extension** — L2 extends L1, L3 extends L1+L2, with generalized domain/range relations.
+- ⚙️ **Platform Bindings** — L0 provides ready-to-use OWL/RDF, JSON-LD, GraphQL, and SQL mappings.
+- 🌍 **Bilingual Support** — All concepts include Chinese and English labels and definitions.
+- 🤝 **Community-Driven** — Anyone can contribute Industry and Domain Extensions, platform bindings, or improve core definitions.
+
+---
 
 ## 📁 Repository Structure
 
-```
+```text
 .
 ├── core/                       # L1 Universal Enterprise Ontology Core
 │   └── universal_ontology_v1.json
-├── extensions/                     # L2 Industry & Domain Extensions
-│   ├── common/                 #   └── Common Enterprise Extension (demoted L1 classes)
-│   ├── consulting/             #   └── Consulting Industry and Domain Extension
-│   ├── luxury-goods/           #   └── Luxury Goods Industry and Domain Extension
+├── extensions/                 # L2 Industry & Domain Extensions
+│   ├── consulting/             #   └── Consulting Industry Extension
+│   ├── luxury-goods/           #   └── Luxury Goods Industry Extension
 │   └── _template/              #   └── Extension Contribution Template
-├── enterprise/                 # L3 Enterprise Customization Layer (public samples)
-│   ├── acme-tech-solutions/    #   └── Sample Virtual Enterprise (L3 demo)
+├── enterprise/                 # L3 Enterprise Example
+│   ├── acme-tech-solutions/    #   └── Sample Virtual Enterprise
 │   ├── _template/              #   └── Enterprise Layer Template
 │   └── README.md
-├── private_enterprise/         # L3 Private Enterprise Layer (.gitignore excluded)
 ├── platform/                   # L0 Platform & Syntax Bindings
 │   ├── owl-rdf/                #   └── OWL 2 / RDF Turtle Serialization
 │   ├── json-ld/                #   └── JSON-LD Context Definition
@@ -86,40 +87,39 @@ Enterprise digitalization commonly faces:
 ├── scripts/                    # CI & Governance Automation
 │   ├── validate_governance.py  #   └── L1 Governance Rule Validator
 │   └── json_to_owl.py          #   └── JSON → OWL/RDF Turtle Converter
-├── legacy/                     # Archived legacy tools and apps
-├── docs/                       # Design Documentation & Specs
+├── docs-site/                  # MkDocs Documentation Site Source
 └── schema/                     # JSON Schema Validation
     ├── core_schema.json
     └── extension_schema.json
 ```
 
+---
+
 ## 🚀 Quick Start
 
-### Understanding Core Ontology
+### 1️⃣ Understanding Core Ontology
 
 L1 v2.0 defines **24 classes** (4 abstract domains + 20 concrete) and **12 generalized relations**, organized into 4 semantic domains:
 
-| Domain (Abstract) | Concrete Classes |
-|:---|:---|
-| 🟦 **Entity** | Party, Person, Organization, OrgUnit, Resource, ProductService, Asset, DataObject, Document, SystemApplication |
-| 🟨 **Governance** | Policy, Rule, Control, Risk |
-| 🟩 **Operational** | Role, Capability, Process, Event |
-| 🟪 **Measurement** | Goal, KPI |
+| Domain | Semantic Focus | Classes |
+|:---|:---|:---|
+| 🟦 **Entity** | Physical & logical entities | `Party`, `Person`, `Organization`, `OrgUnit`, `Resource`, `ProductService`, `Asset`, `DataObject`, `Document`, `SystemApplication` |
+| 🟨 **Governance** | Control & compliance | `Policy`, `Rule`, `Control`, `Risk` |
+| 🟩 **Operational** | Execution & capabilities | `Role`, `Capability`, `Process`, `Event` |
+| 🟪 **Measurement** | Outcomes & metrics | `Goal`, `KPI` |
 
-> Classes like Channel, Location, MarketSegment, Decision, and Activity have been moved to the [`extensions/common/`](extensions/common/) L2 extension for better separation of concerns.
-
-### Using Platform Bindings (L0)
+### 2️⃣ Using Platform Bindings (L0)
 
 Choose the binding that matches your technology stack:
 
-| Platform | Use Case | File |
+| Platform | Use Case | Directory |
 |:---|:---|:---|
-| OWL/RDF | Knowledge graphs, SPARQL queries, Semantic Web | [`platform/owl-rdf/`](platform/owl-rdf/) |
-| JSON-LD | REST APIs, Linked Data, Web standards | [`platform/json-ld/`](platform/json-ld/) |
-| GraphQL | Modern API layers, Frontend integration | [`platform/graphql/`](platform/graphql/) |
-| SQL DDL | Relational databases, Data warehouses | [`platform/sql/`](platform/sql/) |
+| **OWL/RDF** | Knowledge graphs, SPARQL queries | [`platform/owl-rdf/`](platform/owl-rdf/) |
+| **JSON-LD** | REST APIs, Linked Data | [`platform/json-ld/`](platform/json-ld/) |
+| **GraphQL** | Modern API layers, Frontend | [`platform/graphql/`](platform/graphql/) |
+| **SQL DDL** | Relational DBs, Data warehouses | [`platform/sql/`](platform/sql/) |
 
-### Using Industry and Domain Extension
+### 3️⃣ Using Industry & Domain Extensions
 
 Browse the `extensions/` directory and select the appropriate industry package. Each extension declares its parent through the `extends` field:
 
@@ -139,64 +139,68 @@ Browse the `extensions/` directory and select the appropriate industry package. 
 }
 ```
 
-### Contributing a New Industry and Domain Extension
+### 4️⃣ Contributing a New Extension
 
-1. Copy `extensions/_template/` as your starting point
-2. Follow the [Extension Development Guide](docs/extension-development-guide.md)
-3. Validate against `schema/extension_schema.json`
-4. Submit a Pull Request
+1. Copy `extensions/_template/` as your starting point.
+2. Follow the [Extension Development Guide](docs-site/extensions/create-extension.md).
+3. Validate against `schema/extension_schema.json`.
+4. Submit a Pull Request! *(See [CONTRIBUTING.md](CONTRIBUTING.md))*
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+---
 
-### 📋 Full Ontology Creation & Update Guide
+## 📚 Full Ontology Creation & Update Guide
 
 For a comprehensive, step-by-step guide on creating or updating ontologies at any layer (L2/L3), including inheritance, validation, format conversion, and version management, see **[README_CN.md — Ontology 创建与更新完整指南](README_CN.md#-ontology-创建与更新完整指南)**.
 
-A working L3 sample is available at [`enterprise/acme-tech-solutions/`](enterprise/acme-tech-solutions/) — a fictional technology consulting company demonstrating the full workflow.
+> 💡 **Pro Tip**: A working L3 sample is available at [`enterprise/acme-tech-solutions/`](enterprise/acme-tech-solutions/) — a fictional technology consulting company demonstrating the full workflow.
 
-## 🗂️ Available Industry and Domain Extension
+---
+
+## 🗂️ Available Industry & Domain Extensions
 
 | Industry | Directory | Classes | Relations | Status |
 |:---|:---|:---:|:---:|:---|
-| Common Enterprise | [`extensions/common/`](extensions/common/) | 10 | 5 | ✅ v1.0.0 |
-| Consulting | [`extensions/consulting/`](extensions/consulting/) | 40+ | 34 | ✅ v1.0.0 |
-| Luxury Goods | [`extensions/luxury-goods/`](extensions/luxury-goods/) | 38 | 14 | ✅ v2.0.0 |
+| **Consulting** | [`extensions/consulting/`](extensions/consulting/) | 40+ | 34 | ![v1.1.0](https://img.shields.io/badge/v1.1.0-blue) |
+| **Luxury Goods** | [`extensions/luxury-goods/`](extensions/luxury-goods/) | 38 | 14 | ![v2.0.0](https://img.shields.io/badge/v2.0.0-blue) |
 
-**We're looking for community contributions!** Finance, Manufacturing, Retail, Healthcare, Education, and more.
+*🌟 **We're looking for community contributions!** Finance, Manufacturing, Retail, Healthcare, Education, and more.*
+
+---
 
 ## ⚙️ Available Platform Bindings
 
 | Platform | Directory | Format | Status |
 |:---|:---|:---|:---|
-| OWL/RDF | [`platform/owl-rdf/`](platform/owl-rdf/) | Turtle (.ttl) | ✅ v1.0.0 |
-| JSON-LD | [`platform/json-ld/`](platform/json-ld/) | JSON-LD Context (.jsonld) | ✅ v1.0.0 |
-| GraphQL | [`platform/graphql/`](platform/graphql/) | GraphQL Schema (.graphql) | ✅ v1.0.0 |
-| SQL DDL | [`platform/sql/`](platform/sql/) | PostgreSQL DDL (.sql) | ✅ v1.0.0 |
+| **OWL/RDF** | [`platform/owl-rdf/`](platform/owl-rdf/) | Turtle (`.ttl`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
+| **JSON-LD** | [`platform/json-ld/`](platform/json-ld/) | Context (`.jsonld`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
+| **GraphQL** | [`platform/graphql/`](platform/graphql/) | Schema (`.graphql`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
+| **SQL DDL** | [`platform/sql/`](platform/sql/) | PG DDL (`.sql`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
 
-**Want more?** Protobuf, Avro, Neo4j Cypher, and more are welcome contributions!
+*🌟 **Want more?** Protobuf, Avro, Neo4j Cypher, and more are welcome contributions!*
+
+---
 
 ## 🤝 Contributing
 
 We welcome all contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) to learn about:
 
-- How to propose changes to the Core Ontology
-- How to submit new Industry and Domain Extension
-- How to contribute new Platform Bindings
+- Proposing changes to the Core Ontology
+- Submitting new Industry & Domain Extensions
+- Contributing new Platform Bindings
 - Coding standards and PR workflow
 
-## 📄 License
+---
 
-This project is licensed under the [Apache License 2.0](LICENSE).
+## 📄 License & Acknowledgments
 
-You are free to:
+### License
+This project is licensed under the [Apache License 2.0](LICENSE). You are free to:
 - ✅ Use commercially
 - ✅ Modify and distribute
 - ✅ Build private L3 enterprise layers on top
 
-## 🙏 Acknowledgments
-
+### Acknowledgments
 The ontology design draws inspiration from:
-
 - [OWL 2 Web Ontology Language](https://www.w3.org/TR/owl2-overview/)
 - [RDF 1.1 Concepts and Abstract Syntax](https://www.w3.org/TR/rdf11-concepts/)
 - [Schema.org](https://schema.org/)
@@ -205,7 +209,5 @@ The ontology design draws inspiration from:
 ---
 
 <div align="center">
-
-**If this project helps you, please give it a ⭐ Star!**
-
+<b>If this project helps you, please give it a ⭐ Star!</b>
 </div>

@@ -56,3 +56,4 @@ private_enterprise/
 
 # Local Netlify folder
 .netlify
+.netlify-deploy/

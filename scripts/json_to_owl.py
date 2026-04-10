@@ -130,7 +130,7 @@ def build_class_registry(project_root):
         registry[cls_id] = ("uod", f"{BASE_URI}/core/")
 
     # Scan addon files
-    addon_pattern = os.path.join(project_root, "addons", "*", "*.json")
+    addon_pattern = os.path.join(project_root, "extensions", "*", "*.json")
     for fpath in glob.glob(addon_pattern):
         try:
             with open(fpath, "r", encoding="utf-8") as f:
@@ -490,10 +490,10 @@ def generate_turtle(data, project_root):
 # ─── File Discovery ──────────────────────────────────────────────────────────
 
 def find_project_root(start_path):
-    """Find project root by looking for the core/ directory."""
+    """Find project root by looking for core/ and extensions/ directories."""
     p = Path(start_path).resolve()
     for _ in range(10):
-        if (p / "core").is_dir() and (p / "addons").is_dir():
+        if (p / "core").is_dir() and (p / "extensions").is_dir():
             return str(p)
         p = p.parent
     return str(Path(start_path).resolve())
@@ -503,7 +503,7 @@ def find_all_ontology_jsons(project_root):
     """Find all JSON ontology files in the project."""
     patterns = [
         os.path.join(project_root, "core", "*.json"),
-        os.path.join(project_root, "addons", "*", "*.json"),
+        os.path.join(project_root, "extensions", "*", "*.json"),
         os.path.join(project_root, "enterprise", "*", "*.json"),
         os.path.join(project_root, "private_enterprise", "*", "*.json"),
     ]

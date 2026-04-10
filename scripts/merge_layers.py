@@ -8,7 +8,7 @@ and generates output in all 5 platform formats (JSON, OWL/RDF, JSON-LD, GraphQL,
 Usage:
     python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
     python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json -o output/
-    python scripts/merge_layers.py addons/consulting/consulting_addon_v1.json  # merge L2+L1 only
+    python scripts/merge_layers.py extensions/consulting/consulting_extension_v1.json  # merge L2+L1 only
 """
 
 import json
@@ -34,10 +34,10 @@ from json_to_owl import generate_turtle, find_project_root
 # ─── Project Root Detection ─────────────────────────────────────────────────
 
 def detect_project_root(start_path):
-    """Find project root by looking for core/ and addons/ directories."""
+    """Find project root by looking for core/ and extensions/ directories."""
     p = Path(start_path).resolve()
     for _ in range(10):
-        if (p / "core").is_dir() and (p / "addons").is_dir():
+        if (p / "core").is_dir() and (p / "extensions").is_dir():
             return p
         p = p.parent
     return Path(start_path).resolve()
@@ -50,7 +50,7 @@ def build_layer_index(project_root):
     index = {}
     patterns = [
         project_root / "core" / "*.json",
-        project_root / "addons" / "*" / "*.json",
+        project_root / "extensions" / "*" / "*.json",
         project_root / "enterprise" / "*" / "*.json",
     ]
     for pattern in patterns:

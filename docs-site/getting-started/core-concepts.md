@@ -77,3 +77,6 @@ An **extension** is a packaged set of industry-specific classes and relations th
 ### Platform Binding
 
 A **platform binding** is a technical serialization of the L1 semantic model. It translates abstract concepts into concrete, technology-specific formats that can be directly used by downstream systems.
+
+!!! tip "Complete Glossary / 完整术语表"
+    For the full glossary of all concepts across all layers — including ontology fundamentals, architecture terms, L1/L2 class and relation references, governance rules, technical terms, and a disambiguation guide for commonly confused concepts — see the [Glossary](../glossary/index.md).
