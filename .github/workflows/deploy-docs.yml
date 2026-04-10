@@ -41,15 +41,13 @@ jobs:
 
       - name: Assemble final site
         run: |
-          mkdir -p site/docs
-          # Create a root redirect to the docs folder since the old landing page is archived
-          echo '<meta http-equiv="refresh" content="0; url=/universal-ontology-definition/docs/" />' > site/index.html
-          # Copy mkdocs site to /docs subfolder
-          cp -r _mkdocs_site/* site/docs/
+          mkdir -p site
+          # Copy mkdocs site directly to root
+          cp -r _mkdocs_site/* site/
           touch site/.nojekyll
           # Verify structure
           echo "--- Site Layout ---"
-          find site -maxdepth 2
+          find site -maxdepth 1
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
