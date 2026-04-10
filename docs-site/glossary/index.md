@@ -27,9 +27,9 @@ These are the core building blocks of any ontology. Understanding them is a prer
 
 ### Class / 类
 
-**EN**: A class defines a **type** or **category** of entity. It is a template that describes what something *is*. Classes are organized into hierarchies through inheritance. In UOD JSON files, classes appear in the `"classes"` array.
+**EN**: A class defines a **type** or **category** of concept. It is a template that describes what something *is*. Classes are organized into hierarchies through inheritance and serve as the building blocks across all four domains (Entity, Governance, Operational, Measurement). In UOD JSON files, classes appear in the `"classes"` array.
 
-**ZH**: 类定义实体的**类型**或**分类**。它是描述某类事物"是什么"的模板。类通过继承组织成层次结构。在 UOD 的 JSON 文件中，类出现在 `"classes"` 数组中。
+**ZH**: 类定义某一概念的**类型**或**分类**。它是描述某类事物"是什么"的模板。类通过继承组织成层次结构，是四大域（Entity、Governance、Operational、Measurement）的共同建模基础。在 UOD 的 JSON 文件中，类出现在 `"classes"` 数组中。
 
 **Example**: `Organization` is a class; "Acme Corporation" is an instance of that class.
 
