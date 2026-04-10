@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-04-10 — Documentation Bilingual Overhaul & Cleanup
+
+### ⚠️ Breaking Changes
+- **Removed `extensions/common/`** — The Common Enterprise Extension has been entirely removed from the ontology architecture to enforce stricter domain-specific extension boundaries.
+
+### Changed
+- **Documentation Overhauled (MkDocs)** — Completely refactored the project's documentation structure into `docs-site/` with native, section-by-section English-Chinese bilingual integration. The frontend language toggle has been removed for a unified reading experience.
+- **Architecture Guide Restructured** — Split the monolithic architecture manual into dedicated, granular guides (`four-layer-model.md`, `inheritance.md`, `platform-bindings.md`).
+- **README Redesign** — Modernized `README.md` and `README_CN.md` with beautiful shields.io badges, cleaner tables, responsive Mermaid flowcharts, and correct MkDocs documentation links.
+- **Repository Cleanup** — Removed legacy static documentation (`docs/`) and private enterprise example references. Updated `.gitignore` to prevent committing `.netlify-deploy/` artifacts.
+
 ## [2.0.0] - 2026-04-03 — Anti-Entropy Refactoring
 
 ### ⚠️ Breaking Changes
