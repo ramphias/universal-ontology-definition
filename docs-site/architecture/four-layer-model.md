@@ -6,61 +6,45 @@ Universal Ontology Definition 采用**技术层—通用层—行业层—企业
 ## Layer Overview | 架构总览
 
 ```mermaid
-block-beta
-    columns 1
-    
-    block:l3:1
-        L3Text["L3: Enterprise Customization Layer (企业层)"]
-        block:l3col
-            columns 3
-            Oa["Org A"] Ob["Org B"] Oc["Org C"]
-        end
+graph TB
+    subgraph L3["L3: Enterprise Customization Layer (企业定制层)"]
+        direction LR
+        Oa["Org A"] 
+        Ob["Org B"] 
+        Oc["Org C"]
     end
     
-    block:l2:1
-        L2Text["L2: Industry & Domain Extensions (行业层)"]
-        block:l2col
-            columns 5
-            C["Consulting"] L["Luxury"] F["Finance"] M["Manuf."] R["Retail"]
-        end
+    subgraph L2["L2: Industry & Domain Extensions (行业扩展层)"]
+        direction LR
+        C["Consulting"]
+        L["Luxury"]
+        F["Finance"]
+        M["Manufacturing"]
+        R["Retail"]
     end
     
-    block:l1:1
-        L1Text["L1: Universal Enterprise Ontology Core (通用层)"]
+    subgraph L1["L1: Universal Enterprise Ontology Core (通用核心)"]
+        direction LR
         L1Subs["Entity • Governance • Operational • Measurement"]
     end
     
-    block:l0:1
-        L0Text["L0: Platform & Syntax Bindings (技术层)"]
-        block:l0col
-            columns 4
-            OWL["OWL/RDF"] JLD["JSON-LD"] GQL["GraphQL"] SQL["SQL DDL"]
-        end
+    subgraph L0["L0: Platform & Syntax Bindings (技术平台层)"]
+        direction LR
+        OWL["OWL/RDF"]
+        JLD["JSON-LD"]
+        GQL["GraphQL"]
+        SQL["SQL DDL"]
     end
     
-    style l3 fill:#f4f6f8,stroke:#90a4ae,stroke-dasharray:5 5
-    style l2 fill:#e3f2fd,stroke:#64b5f6,stroke-dasharray:5 5
-    style l1 fill:#c8e6c9,stroke:#388e3c
-    style l0 fill:#fff9c4,stroke:#f9a825
-    style L3Text fill:transparent,stroke:none,font-weight:bold
-    style L2Text fill:transparent,stroke:none,font-weight:bold
-    style L1Text fill:transparent,stroke:none,font-weight:bold
-    style L0Text fill:transparent,stroke:none,font-weight:bold
-    style L1Subs fill:transparent,stroke:none
+    L3 -->|Tenant isolation| L2
+    L2 -->|Community driven| L1
+    L1 -->|Serialization| L0
     
-    Oa-->C
-    Ob-->L
-    Oc-->F
-    C-->L1Text
-    L-->L1Text
-    F-->L1Text
-    M-->L1Text
-    R-->L1Text
-    
-    L1Text-->OWL
-    L1Text-->JLD
-    L1Text-->GQL
-    L1Text-->SQL
+    style L3 fill:#f4f6f8,stroke:#90a4ae,stroke-dasharray:5 5
+    style L2 fill:#e3f2fd,stroke:#64b5f6,stroke-dasharray:5 5
+    style L1 fill:#c8e6c9,stroke:#388e3c
+    style L0 fill:#fff9c4,stroke:#f9a825
+    style L1Subs fill:transparent,stroke:none,font-weight:bold
 ```
 
 ## L0 — Platform & Syntax Bindings | 技术平台绑定层
