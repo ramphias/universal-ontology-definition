@@ -18,6 +18,7 @@
       "definition": "A placeholder for entities unique to this enterprise's business model."
     }
   ],
+  "attributes": [],
   "relations": [
     {
       "id": "isManagedByDepartment",

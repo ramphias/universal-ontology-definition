@@ -321,6 +321,7 @@
       "definition_en": "Metric measuring the proportion of inventory sold within a specific period, key to evaluating assortment accuracy and product appeal"
     }
   ],
+  "attributes": [],
   "relations": [
     {
       "id": "belongs_to_collection",

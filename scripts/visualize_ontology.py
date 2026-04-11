@@ -60,6 +60,7 @@ LAYER_META = {
 
 LAYER_KEY = {
     "L1_universal_organization_ontology": "L1",
+    "L2_consulting_industry_extension":   "L2",
     "L2_consulting_industry_addon":       "L2",
     "L3_enterprise_customization":        "L3",
 }
@@ -91,6 +92,7 @@ def build_viz_data(merged):
     relations = merged.get("relations", [])
     instances = merged.get("sample_instances", [])
     axioms = merged.get("axioms", [])
+    attributes = merged.get("attributes", [])
     meta = merged.get("metadata", {})
 
     node_ids = {c["id"] for c in classes}
@@ -103,10 +105,12 @@ def build_viz_data(merged):
             "label_en":     c.get("label_en", c["id"]),
             "label_zh":     c.get("label_zh", ""),
             "parent":       c.get("parent"),
+            "alias_of":     c.get("alias_of"),
             "layer":        LAYER_KEY.get(lr, lr[:2] if lr else "?"),
             "domain":       c.get("domain", "unknown"),
             "abstract":     c.get("abstract", False),
             "status":       c.get("status", "stable"),
+            "since":        c.get("since", ""),
             "def_en":       c.get("definition_en", ""),
             "def_zh":       c.get("definition", ""),
         })
@@ -156,6 +160,7 @@ def build_viz_data(merged):
         "nodes":     nodes,
         "links":     links,
         "instances": inst_list,
+        "attributes": attributes,
         "axioms":    axioms,
         "stats": {
             "classes":    len(nodes),
@@ -255,6 +260,24 @@ body {{ font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
 .node circle:hover {{ stroke-width: 3px; }}
 .node.abstract circle {{ stroke-dasharray: 4 2; }}
 .node text {{ font-size: 10px; pointer-events: none; fill: #333; }}
+.node.instance circle {{ opacity: 0.7; }}
+.node.instance text {{ font-size: 8px; fill: #999; }}
+.tree-node.inst circle {{ opacity: 0.55; }}
+.tree-node.inst text {{ font-style: italic; }}
+
+/* ── Instance chips in Grid ── */
+.inst-strip {{ margin-top: 8px; padding-top: 6px; border-top: 1px dashed var(--border);
+               display: flex; flex-wrap: wrap; gap: 3px; }}
+.inst-chip {{
+  font-size: 9px; padding: 1px 6px; border-radius: 6px;
+  background: #F5F5F5; color: #616161; border: 1px solid #E0E0E0;
+  white-space: nowrap; max-width: 190px; overflow: hidden; text-overflow: ellipsis;
+}}
+.inst-chip:hover {{ background: #EEEEEE; }}
+.inst-count {{
+  font-size: 9px; color: var(--text-sec); margin-top: 4px; cursor: pointer;
+}}
+.inst-count:hover {{ color: var(--text); }}
 .link {{ stroke-opacity: 0.6; }}
 .link.inheritance {{ stroke: #9E9E9E; stroke-dasharray: 4 2; }}
 .link.relation {{ stroke-opacity: 0.5; }}
@@ -304,6 +327,8 @@ body {{ font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
   font-weight: 500; white-space: nowrap;
 }}
 .badge-abstract {{ background: #F5F5F5; color: #616161; border: 1px solid #E0E0E0; }}
+.badge-new {{ background: #E3F2FD; color: #1565C0; border: 1px solid #90CAF9; }}
+.badge-alias {{ background: #FFF3E0; color: #E65100; border: 1px solid #FFCC80; }}
 
 /* ── Sidebar ── */
 #filter-panel {{ padding: 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; }}
@@ -366,6 +391,11 @@ body {{ font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
 .detail-rel:last-child {{ border-bottom: none; }}
 .detail-rel .rel-name {{ font-weight: 600; color: #1A237E; }}
 .detail-inst {{ font-size: 11px; padding: 2px 0; color: #424242; }}
+.detail-attr {{ font-size: 11px; padding: 4px 0; border-bottom: 1px solid var(--border); color: #424242; display: flex; gap: 6px; align-items: baseline; }}
+.detail-attr:last-child {{ border-bottom: none; }}
+.detail-attr .attr-name {{ font-weight: 600; color: #00897B; min-width: 80px; }}
+.detail-attr .attr-type {{ font-size: 10px; color: #9E9E9E; }}
+.detail-attr .attr-req {{ font-size: 9px; padding: 0 4px; border-radius: 4px; background: #FFEBEE; color: #E53935; }}
 .chip {{
   display: inline-block; padding: 1px 8px; border-radius: 10px;
   font-size: 10px; font-weight: 600; margin: 1px; cursor: pointer;
@@ -396,17 +426,19 @@ body {{ font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
 /* ── Tree Title Bar ── */
 #tree-title-bar {{
   position: absolute; top: 0; left: 0; right: 0; z-index: 10;
-  padding: 10px 20px; display: flex; align-items: center; gap: 10px;
-  background: linear-gradient(to bottom, rgba(248,249,250,0.97) 70%, transparent);
+  padding: 8px 16px; display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(to bottom, rgba(248,249,250,0.95) 60%, transparent);
   pointer-events: none;
 }}
 #tree-title-name {{
-  font-size: 15px; font-weight: 700; color: #1A237E;
+  font-size: 13px; font-weight: 600; color: #1A237E;
+  max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }}
-#tree-title-pills {{ display: flex; gap: 6px; }}
+#tree-title-pills {{ display: flex; gap: 5px; }}
 .tree-pill {{
-  padding: 2px 10px; border-radius: 10px; font-size: 11px;
-  font-weight: 600; color: #fff;
+  padding: 2px 8px; border-radius: 10px; font-size: 10px;
+  font-weight: 600; color: #fff; letter-spacing: 0.3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
 }}
 #view-tree {{ position: relative; }}
 
@@ -492,6 +524,10 @@ body {{ font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg);
         <span id="tree-title-pills"></span>
       </div>
       <svg id="tree-svg"></svg>
+      <div id="zoom-controls-tree" style="position:absolute;bottom:16px;right:8px;display:flex;flex-direction:column;gap:4px;">
+        <button class="zoom-btn" onclick="toggleTreeOrientation()" title="Toggle Horizontal/Vertical">&#8634;</button>
+        <button class="zoom-btn" onclick="initTree()" title="Reset Layout">&#9850;</button>
+      </div>
     </div>
 
     <!-- View 3: Grid -->
@@ -560,6 +596,7 @@ const state = {{
   showRelations: true,
   showInstances: false,
   showLabels:    true,
+  treeHorizontal: true,
   searchQuery:   '',
   currentView:   'force',
 }};
@@ -577,6 +614,25 @@ D.instances.forEach(i => {{
   if (!instancesByType[i.type]) instancesByType[i.type] = [];
   instancesByType[i.type].push(i);
 }});
+// Attributes indexed by owner_class (walk up parent chain to inherit)
+const attrsByClass = {{}};
+(D.attributes||[]).forEach(a => {{
+  const owner = a.owner_class;
+  if (!attrsByClass[owner]) attrsByClass[owner] = [];
+  attrsByClass[owner].push(a);
+}});
+function getAttrsForClass(classId) {{
+  // Collect own + inherited attributes
+  const result = [];
+  const seen = new Set();
+  let cur = classId;
+  while (cur) {{
+    (attrsByClass[cur]||[]).forEach(a => {{ if (!seen.has(a.id)) {{ seen.add(a.id); result.push(a); }} }});
+    const node = nodeById[cur];
+    cur = node ? node.parent : null;
+  }}
+  return result;
+}}
 const relsByDomain = {{}}, relsByRange = {{}};
 D.links.filter(l=>l.type==='relation').forEach(l => {{
   if (!relsByDomain[l.source.id||l.source]) relsByDomain[l.source.id||l.source]=[];
@@ -626,6 +682,8 @@ function toggleRelations(el) {{
 function toggleInstances(el) {{
   el.classList.toggle('on');
   state.showInstances = el.classList.contains('on');
+  // Tree structure changes when instances are added/removed — must rebuild
+  if (state.currentView === 'tree' && treeInitialized) initTree();
   applyFilters();
 }}
 function toggleLabels(el) {{
@@ -682,14 +740,22 @@ function showDetail(nodeId) {{
       <span class="detail-tag" style="background:${{lc}}">${{n.layer}}</span>
       <span class="detail-tag" style="background:${{dc2}}">${{n.domain}}</span>
       ${{n.abstract?'<span class="detail-tag" style="background:#9E9E9E">abstract</span>':''}}
+      ${{n.alias_of?'<span class="detail-tag" style="background:#E65100">\u2261 alias</span>':''}}
+      ${{n.since?`<span class="detail-tag" style="background:#1565C0">v${{n.since}}</span>`:''}}
       ${{n.status!=='stable'?`<span class="detail-tag" style="background:#FF7043">${{n.status}}</span>`:''}}
     </div>
+    ${{n.alias_of?`<div class="detail-section">
+      <div class="detail-section-title">\u2261 Equivalent To (owl:equivalentClass)</div>
+      <span class="chip" style="border-color:#E65100;color:#E65100"
+        onclick="showDetail('${{n.alias_of}}')">${{n.alias_of}}</span>
+      <div style="font-size:10px;color:#9E9E9E;margin-top:4px">Enterprise-specific term for the same concept</div>
+    </div>`:''}}
     ${{n.def_en?`<div class="detail-section">
       <div class="detail-section-title">Definition</div>
       <div class="detail-def">${{n.def_en}}</div>
     </div>`:''}}
     ${{n.parent?`<div class="detail-section">
-      <div class="detail-section-title">Parent</div>
+      <div class="detail-section-title">${{n.alias_of ? 'Tree Parent (for hierarchy display)' : 'Parent'}}</div>
       <span class="chip" style="border-color:${{LAYER_COLORS[nodeById[n.parent]?.layer]||'#ccc'}};color:${{LAYER_COLORS[nodeById[n.parent]?.layer]||'#666'}}"
         onclick="showDetail('${{n.parent}}')">${{n.parent}}</span>
     </div>`:''}}
@@ -711,6 +777,18 @@ function showDetail(nodeId) {{
         <span class="rel-name"> .${{l.label}}</span> →
       </div>`).join('')}}
     </div>`:''}}
+    ${{(() => {{
+      const attrs = getAttrsForClass(n.id);
+      if (!attrs.length) return '';
+      return `<div class="detail-section">
+        <div class="detail-section-title">Attributes (${{attrs.length}})</div>
+        ${{attrs.map(a => `<div class="detail-attr">
+          <span class="attr-name">${{a.id}}</span>
+          <span class="attr-type">${{a.datatype}}${{a.enum_values ? ' ['+a.enum_values.join(', ')+']' : ''}}</span>
+          ${{a.required ? '<span class="attr-req">required</span>' : ''}}
+        </div>`).join('')}}
+      </div>`;
+    }})()}}
     ${{insts.length?`<div class="detail-section">
       <div class="detail-section-title">Instances (${{insts.length}})</div>
       ${{insts.map(i=>`<div class="detail-inst">· ${{i.label}} ${{i.label_zh?`<span style="color:#9E9E9E">(${{i.label_zh}})</span>`:''}}</div>`).join('')}}
@@ -757,30 +835,56 @@ function initForce() {{
     .on('zoom', e => forceG.attr('transform', e.transform));
   svg.call(forceZoomBehavior);
 
-  // Prepare nodes & links
-  const nodes = D.nodes.map(n => ({{...n}}));
-  const links = D.links.map(l => ({{...l}}));
+  // Prepare nodes & links — alias_of classes replace their targets
+  const forceAliasedIds = new Set();
+  const forceAliasMap = {{}};
+  D.nodes.forEach(n => {{ if (n.alias_of) {{ forceAliasedIds.add(n.alias_of); forceAliasMap[n.alias_of] = n.id; }} }});
+
+  const nodes = D.nodes.filter(n => !forceAliasedIds.has(n.id)).map(n => ({{...n, _inst: false}}));
+  const links = D.links.filter(l => l.source && l.target).map(l => {{
+    const copy = {{...l}};
+    // Repoint links referencing aliased class to the alias
+    if (forceAliasedIds.has(copy.source)) copy.source = forceAliasMap[copy.source];
+    if (forceAliasedIds.has(copy.target)) copy.target = forceAliasMap[copy.target];
+    return copy;
+  }});
+
+  // Add instance nodes & instance_of links so they participate in the layout
+  D.instances.forEach(inst => {{
+    const typeNode = nodeById[inst.type];
+    nodes.push({{
+      id: inst.id, label_en: inst.label || inst.id, label_zh: inst.label_zh || '',
+      layer: inst.layer || (typeNode ? typeNode.layer : '?'),
+      domain: typeNode ? typeNode.domain : 'unknown',
+      abstract: false, _inst: true, _type: inst.type,
+      def_en: '', def_zh: '',
+    }});
+    if (typeNode) {{
+      links.push({{ source: inst.id, target: inst.type, type: 'instance_of', label: 'a ' + inst.type, layer: inst.layer || '' }});
+    }}
+  }});
 
   forceSim = d3.forceSimulation(nodes)
     .force('link', d3.forceLink(links).id(d=>d.id)
-      .distance(l => l.type==='inheritance' ? 70 : 140)
-      .strength(l => l.type==='inheritance' ? 0.9 : 0.3))
-    .force('charge', d3.forceManyBody().strength(-180))
+      .distance(l => l.type==='instance_of' ? 35 : l.type==='inheritance' ? 70 : 140)
+      .strength(l => l.type==='instance_of' ? 0.6 : l.type==='inheritance' ? 0.9 : 0.3))
+    .force('charge', d3.forceManyBody().strength(d => d._inst ? -30 : -180))
     .force('center', d3.forceCenter(W/2, H/2))
-    .force('collide', d3.forceCollide(22));
+    .force('collide', d3.forceCollide(d => d._inst ? 8 : 22));
 
   // Links
   const linkSel = forceG.append('g').selectAll('line')
     .data(links).join('line')
     .attr('class', l => 'link ' + l.type)
-    .attr('stroke', l => l.type==='inheritance' ? '#BDBDBD' : LAYER_COLORS[l.layer]||'#9C9C9C')
-    .attr('stroke-width', l => l.type==='inheritance' ? 1 : 1.5)
-    .attr('stroke-dasharray', l => l.type==='inheritance' ? '4 2' : null)
-    .attr('marker-end', l => l.type==='inheritance' ? 'url(#arrow-'+(LAYER_COLORS[l.layer]?l.layer:'rel')+')' : 'url(#arrow-rel)');
+    .attr('stroke', l => l.type==='instance_of' ? '#78909C' : l.type==='inheritance' ? '#BDBDBD' : LAYER_COLORS[l.layer]||'#9C9C9C')
+    .attr('stroke-width', l => l.type==='instance_of' ? 0.7 : l.type==='inheritance' ? 1 : 1.5)
+    .attr('stroke-dasharray', l => l.type==='instance_of' ? '2 2' : l.type==='inheritance' ? '4 2' : null)
+    .attr('marker-end', l => l.type==='instance_of' ? null : l.type==='inheritance' ? 'url(#arrow-'+(LAYER_COLORS[l.layer]?l.layer:'rel')+')' : 'url(#arrow-rel)');
 
   // Nodes
   const nodeSel = forceG.append('g').selectAll('g.node')
-    .data(nodes).join('g').attr('class', n => 'node'+(n.abstract?' abstract':''))
+    .data(nodes).join('g')
+    .attr('class', n => 'node' + (n.abstract ? ' abstract' : '') + (n._inst ? ' instance' : ''))
     .call(d3.drag()
       .on('start', (e,d) => {{ if(!e.active) forceSim.alphaTarget(.3).restart(); d.fx=d.x; d.fy=d.y; }})
       .on('drag',  (e,d) => {{ d.fx=e.x; d.fy=e.y; }})
@@ -788,20 +892,20 @@ function initForce() {{
     .on('mouseover', (e,d) => showTooltip(e,d))
     .on('mousemove', (e,d) => showTooltip(e,d))
     .on('mouseout',  ()    => hideTooltip())
-    .on('click', (e,d) => showDetail(d.id));
+    .on('click', (e,d) => {{ if (!d._inst) showDetail(d.id); else if (d._type) showDetail(d._type); }});
 
   nodeSel.append('circle')
-    .attr('r', n => n.abstract ? 14 : (n.layer==='L1'?12 : n.layer==='L2'?10 : 8))
+    .attr('r', n => n._inst ? 4 : n.abstract ? 14 : (n.layer==='L1'?12 : n.layer==='L2'?10 : 8))
     .attr('fill', n => LAYER_COLORS[n.layer]||'#78909C')
-    .attr('fill-opacity', n => n.abstract ? 0.25 : 0.85)
-    .attr('stroke', n => LAYER_COLORS[n.layer]||'#78909C')
+    .attr('fill-opacity', n => n._inst ? 0.5 : n.abstract ? 0.25 : 0.85)
+    .attr('stroke', n => n._inst ? '#999' : LAYER_COLORS[n.layer]||'#78909C')
     .attr('stroke-dasharray', n => n.abstract ? '4 2' : null);
 
   nodeSel.append('text')
-    .attr('dy', 20).attr('text-anchor','middle')
-    .attr('font-size', n => n.layer==='L1' ? 11 : 9)
-    .attr('font-weight', n => n.layer==='L1' ? 600 : 400)
-    .text(n => n.id);
+    .attr('dy', n => n._inst ? 12 : 20).attr('text-anchor','middle')
+    .attr('font-size', n => n._inst ? 7 : n.layer==='L1' ? 11 : 9)
+    .attr('font-weight', n => n._inst ? 400 : n.layer==='L1' ? 600 : 400)
+    .text(n => n._inst ? (n.label_zh || n.label_en || n.id).slice(0, 20) : n.id);
 
   forceSim.on('tick', () => {{
     linkSel
@@ -828,17 +932,26 @@ function initForce() {{
 
 function updateForceVisibility() {{
   if (!forceInitialized) return;
+  // Build a set of currently visible node ids for link filtering
+  const visibleIds = new Set();
   forceG.selectAll('g.node').each(function(d) {{
-    const vis = nodeVisible(d);
-    d3.select(this).style('display', vis?null:'none');
+    let vis;
+    if (d._inst) {{
+      // Instance: visible only when toggle is on AND its type class's layer/domain is active
+      const typeNode = nodeById[d._type];
+      vis = state.showInstances && typeNode && nodeVisible(typeNode);
+    }} else {{
+      vis = nodeVisible(d);
+    }}
+    d3.select(this).style('display', vis ? null : 'none');
+    if (vis) visibleIds.add(d.id);
   }});
   forceG.selectAll('line.link').each(function(l) {{
     const sId = l.source?.id||l.source, tId = l.target?.id||l.target;
-    const sn = nodeById[sId], tn = nodeById[tId];
-    const vis = sn && tn && nodeVisible(sn) && nodeVisible(tn)
-      && (l.type==='inheritance' || state.showRelations)
-      && (l.type!=='instance'   || state.showInstances);
-    d3.select(this).style('display', vis?null:'none');
+    let vis = visibleIds.has(sId) && visibleIds.has(tId);
+    // Additionally: relation links respect the showRelations toggle
+    if (vis && l.type === 'relation') vis = state.showRelations;
+    d3.select(this).style('display', vis ? null : 'none');
   }});
 }}
 
@@ -863,17 +976,18 @@ function updateTreeVisibility() {{
   if (!treeInitialized || !treeNodeSel) return;
   treeNodeSel.each(function(d) {{
     const n = d.data.data;
+    if (n._root) return; // root always visible
     const match = nodeVisible(n);
     d3.select(this).select('circle')
-      .attr('fill-opacity', match ? (n.abstract ? 0.2 : 0.82) : 0.07)
+      .attr('fill-opacity', match ? (n._inst ? 0.45 : n.abstract ? 0.2 : 0.82) : 0.07)
       .attr('stroke-opacity', match ? 1 : 0.15);
     d3.select(this).select('text')
       .attr('opacity', match ? 1 : 0.12);
   }});
-  // Also dim links whose source node is filtered out
   if (treeLinkSel) {{
     treeLinkSel.attr('stroke-opacity', d => {{
       const n = d.data.data;
+      if (d.parent?.data?.data?._root) return 0.5; // root links always visible
       return nodeVisible(n) ? 0.4 : 0.06;
     }});
   }}
@@ -886,34 +1000,74 @@ function initTree() {{
   const W = el.clientWidth, H = el.clientHeight;
   svg.selectAll('*').remove();
 
-  // Build child map
+  const hz = state.treeHorizontal;
+
+  // Build child map, handling alias_of: alias replaces the aliased class
+  const aliasedIds = new Set();  // classes replaced by an alias
+  const aliasMap = {{}};          // aliased_id → alias node
+  D.nodes.forEach(n => {{
+    if (n.alias_of) {{
+      aliasedIds.add(n.alias_of);
+      aliasMap[n.alias_of] = n;
+    }}
+  }});
+
   const childMap = {{}};
   D.nodes.forEach(n => {{
+    if (aliasedIds.has(n.id)) return; // skip aliased class — replaced by alias
     if (n.parent) {{
       if (!childMap[n.parent]) childMap[n.parent] = [];
       childMap[n.parent].push(n);
     }}
   }});
 
+  // Reparent any children of aliased classes to the alias
+  D.nodes.forEach(n => {{
+    if (n.parent && aliasedIds.has(n.parent) && !aliasedIds.has(n.id)) {{
+      const alias = aliasMap[n.parent];
+      if (alias) {{
+        if (!childMap[alias.id]) childMap[alias.id] = [];
+        childMap[alias.id].push(n);
+      }}
+    }}
+  }});
+
+  // When showInstances is on, attach instances as leaf children of their type class
+  if (state.showInstances) {{
+    D.instances.forEach(inst => {{
+      const typeId = inst.type;
+      if (!nodeById[typeId]) return;
+      if (!childMap[typeId]) childMap[typeId] = [];
+      childMap[typeId].push({{
+        id: inst.id, label_en: inst.label || inst.id, label_zh: inst.label_zh || '',
+        layer: inst.layer || nodeById[typeId].layer,
+        domain: nodeById[typeId].domain || 'unknown',
+        abstract: false, _inst: true,
+      }});
+    }});
+  }}
+
   function buildTree(node) {{
     const kids = (childMap[node.id]||[]).map(buildTree);
     return {{ data: node, children: kids.length ? kids : null }};
   }}
 
-  // Virtual root connects the 4 domain roots
+  // Virtual root connects the 4 domain roots — show it as the ontology name
+  const rootLabel = (D.meta.name || 'Ontology').replace(/\\s*—.*$/, '').trim();
   const domainRoots = D.nodes.filter(n => !n.parent);
   const treeData = {{
-    data: {{ id:'__root__', label_en:'', label_zh:'', abstract:true, layer:'L1', domain:'unknown' }},
+    data: {{ id:'__root__', label_en: rootLabel, label_zh:'', abstract:false, layer:'', domain:'unknown', _root:true }},
     children: domainRoots.map(buildTree)
   }};
 
-  // Fixed node size: nodeSize([dx, dy]) gives each node its own slot
-  // dx=48px horizontal breathing room, dy=90px vertical level gap
-  const NODE_DX = 48, NODE_DY = 90;
+  // Node spacing depends on orientation
+  const NODE_DX = hz ? 28 : 48;
+  const NODE_DY = hz ? 180 : 90;
 
   const zoomBehavior = d3.zoom().scaleExtent([0.04, 3])
     .on('zoom', e => g.attr('transform', e.transform));
   svg.call(zoomBehavior);
+  window._treeZoom = zoomBehavior;
 
   const g = svg.append('g');
 
@@ -933,77 +1087,117 @@ function initTree() {{
     return `<span class="tree-pill" style="background:${{color}}">${{k}}: ${{cnt}}</span>`;
   }}).join('');
 
-  // Links (skip link from virtual root to its children — draw them plain)
+  // Bezier curve helper
+  function linkPath(d) {{
+    const px = d.parent.x, py = d.parent.y;
+    if (hz) {{
+      return `M${{d.y}},${{d.x}}C${{(d.y+py)/2}},${{d.x}} ${{(d.y+py)/2}},${{px}} ${{py}},${{px}}`;
+    }} else {{
+      return `M${{d.x}},${{d.y}}C${{d.x}},${{(d.y+py)/2}} ${{px}},${{(d.y+py)/2}} ${{px}},${{py}}`;
+    }}
+  }}
+
+  // Links
   treeLinkSel = g.append('g').selectAll('path')
     .data(root.descendants().slice(1))
     .join('path')
     .attr('class','tree-link')
-    .attr('stroke', d => d.data.data.id==='__root__' ? '#E0E0E0'
+    .attr('stroke', d => d.parent?.data.data._root ? '#9E9E9E'
           : LAYER_COLORS[d.data.data.layer]||'#BDBDBD')
-    .attr('stroke-opacity', d => d.parent?.data.data.id==='__root__' ? 0.3 : 0.4)
-    .attr('d', d => {{
-      const px = d.parent.x, py = d.parent.y;
-      return `M${{d.x}},${{d.y}}C${{d.x}},${{(d.y+py)/2}} ${{px}},${{(d.y+py)/2}} ${{px}},${{py}}`;
-    }});
+    .attr('stroke-opacity', d => d.parent?.data.data._root ? 0.5 : 0.4)
+    .attr('d', linkPath);
 
-  // Nodes — exclude the invisible virtual root from rendering
-  const visNodes = root.descendants().filter(d => d.data.data.id !== '__root__');
+  // All nodes including the root
+  const visNodes = root.descendants();
 
   treeNodeSel = g.append('g').selectAll('g')
     .data(visNodes).join('g')
-    .attr('class','tree-node')
-  const node = treeNodeSel;
-    .attr('transform', d => `translate(${{d.x}},${{d.y}})`)
+    .attr('class', d => 'tree-node' + (d.data.data._inst ? ' inst' : ''))
+    .attr('transform', d => hz ? `translate(${{d.y}},${{d.x}})` : `translate(${{d.x}},${{d.y}})`)
     .style('cursor','pointer')
-    .on('click',     (e,d) => showDetail(d.data.data.id))
+    .on('click',     (e,d) => showDetail(d.data.data._inst ? (nodeById[d.parent?.data?.data?.id] ? d.parent.data.data.id : d.data.data.id) : d.data.data.id))
     .on('mouseover', (e,d) => showTooltip(e, d.data.data))
     .on('mousemove', (e,d) => showTooltip(e, d.data.data))
     .on('mouseout',  ()    => hideTooltip());
 
-  // Depth-based radius: L1 abstract=13, L1 concrete=10, L2=8, L3=6
+  const node = treeNodeSel;
+
+  // Node circles — root gets a distinct style
   node.append('circle')
     .attr('r', d => {{
       const nd = d.data.data;
+      if (nd._root) return 16;
+      if (nd._inst) return 3.5;
       if (nd.abstract) return 13;
       if (nd.layer==='L1') return 10;
       if (nd.layer==='L2') return 8;
       return 6;
     }})
-    .attr('fill', d => LAYER_COLORS[d.data.data.layer]||'#78909C')
-    .attr('fill-opacity', d => d.data.data.abstract ? 0.2 : 0.82)
-    .attr('stroke', d => LAYER_COLORS[d.data.data.layer]||'#78909C')
-    .attr('stroke-width', d => d.data.data.abstract ? 1.5 : 1)
+    .attr('fill', d => {{
+      const nd = d.data.data;
+      if (nd._root) return '#1A237E';
+      if (nd._inst) return LAYER_COLORS[nd.layer]||'#78909C';
+      return LAYER_COLORS[nd.layer]||'#78909C';
+    }})
+    .attr('fill-opacity', d => d.data.data._root ? 0.9 : d.data.data._inst ? 0.45 : d.data.data.abstract ? 0.2 : 0.82)
+    .attr('stroke', d => d.data.data._root ? '#283593' : d.data.data._inst ? '#999' : LAYER_COLORS[d.data.data.layer]||'#78909C')
+    .attr('stroke-width', d => d.data.data._root ? 2 : d.data.data._inst ? 0.8 : d.data.data.abstract ? 1.5 : 1)
     .attr('stroke-dasharray', d => d.data.data.abstract ? '4 2' : null);
 
-  // Labels: show above node for parents, below for leaves
-  // Alternate left/right for leaf siblings to reduce overlap
+  // Labels: adapt to orientation; root gets bold name, instances get italic
   node.append('text')
-    .attr('dy', d => d.children ? -14 : 16)
-    .attr('text-anchor', 'middle')
+    .attr('dy', d => {{
+      const nd = d.data.data;
+      if (nd._root) return hz ? 5 : -22;
+      return hz ? 4 : (d.children ? -14 : 16);
+    }})
+    .attr('dx', d => {{
+      const nd = d.data.data;
+      if (nd._root) return hz ? -24 : 0;
+      return hz ? (d.children ? -14 : 14) : 0;
+    }})
+    .attr('text-anchor', d => {{
+      const nd = d.data.data;
+      if (nd._root) return hz ? 'end' : 'middle';
+      return hz ? (d.children ? 'end' : 'start') : 'middle';
+    }})
     .attr('font-size', d => {{
-      if (d.data.data.abstract) return 13;
-      if (d.data.data.layer==='L1') return 11;
-      if (d.data.data.layer==='L2') return 9;
+      const nd = d.data.data;
+      if (nd._root) return 14;
+      if (nd._inst) return 7;
+      if (nd.abstract) return 13;
+      if (nd.layer==='L1') return 11;
+      if (nd.layer==='L2') return 9;
       return 8;
     }})
-    .attr('font-weight', d => (d.data.data.layer==='L1'||d.data.data.abstract) ? 700 : 400)
-    .attr('fill', d => DOMAIN_COLORS[d.data.data.domain]||'#424242')
+    .attr('font-weight', d => d.data.data._root ? 800 : (d.data.data.layer==='L1'||d.data.data.abstract) && !d.data.data._inst ? 700 : 400)
+    .attr('fill', d => d.data.data._root ? '#1A237E' : d.data.data._inst ? '#999' : DOMAIN_COLORS[d.data.data.domain]||'#424242')
     .attr('paint-order','stroke')
     .attr('stroke','#fff')
-    .attr('stroke-width', 3)
-    .text(d => d.data.data.id);
+    .attr('stroke-width', d => d.data.data._root ? 4 : d.data.data._inst ? 2 : 3)
+    .text(d => {{
+      const nd = d.data.data;
+      if (nd._root) return nd.label_en;
+      if (nd._inst) {{ const lbl = nd.label_zh || nd.label_en || nd.id; return lbl.length > 24 ? lbl.slice(0,22)+'…' : lbl; }}
+      return nd.id;
+    }});
 
-  // Auto-fit: center the tree with slight top padding
+  // Auto-fit
   updateTreeVisibility();
 
   requestAnimationFrame(() => {{
     const b = g.node().getBBox();
-    const pad = 56; // extra top pad for title bar
+    const pad = 56;
     const scale = Math.min(0.95, (W-pad*2)/(b.width||1), (H-pad*2)/(b.height||1));
-    const tx = W/2 - scale*(b.x + b.width/2);
-    const ty = pad - scale*b.y;
+    const tx = hz ? pad - scale*b.x : W/2 - scale*(b.x + b.width/2);
+    const ty = hz ? H/2 - scale*(b.y + b.height/2) : pad - scale*b.y;
     svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
   }});
+}}
+
+function toggleTreeOrientation() {{
+  state.treeHorizontal = !state.treeHorizontal;
+  initTree();
 }}
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -1044,15 +1238,25 @@ function renderGrid() {{
       html += `<div class="domain-group">
         <span class="domain-label" style="background:${{dBg}};color:${{dColor}}">${{(dm.label||domain).toUpperCase()}}</span>
         <div class="cards">
-          ${{nodes.map(n => `<div class="card" style="border-left-color:${{lColor}}" onclick="showDetail('${{n.id}}')">
+          ${{nodes.map(n => {{
+            const insts = state.showInstances ? (instancesByType[n.id]||[]) : [];
+            const instHtml = insts.length ? `<div class="inst-strip">${{
+              insts.slice(0, 6).map(i => `<span class="inst-chip" title="${{i.label}}">${{i.label_zh || i.label}}</span>`).join('')
+            }}${{insts.length > 6 ? `<span class="inst-count">+${{insts.length-6}} more</span>` : ''}}</div>` : '';
+            return `<div class="card" style="border-left-color:${{lColor}}" onclick="showDetail('${{n.id}}')">
             <div class="card-title">${{n.id}}</div>
             <div class="card-zh">${{n.label_zh}} / ${{n.label_en}}</div>
             <div class="card-def">${{n.def_en||''}}</div>
             <div class="card-badges">
               ${{n.abstract?'<span class="badge badge-abstract">abstract</span>':''}}
+              ${{n.alias_of?`<span class="badge badge-alias">\u2261 ${{n.alias_of}}</span>`:''}}
+              ${{n.since?`<span class="badge badge-new">v${{n.since}}</span>`:''}}
               ${{n.status!=='stable'?`<span class="badge" style="background:#FF7043;color:#fff">${{n.status}}</span>`:''}}
+              ${{insts.length?`<span class="badge" style="background:#E8EAF6;color:#3949AB">${{insts.length}} inst</span>`:''}}
             </div>
-          </div>`).join('')}}
+            ${{instHtml}}
+          </div>`;
+          }}).join('')}}
         </div>
       </div>`;
     }}
@@ -1130,10 +1334,9 @@ def main():
     args = parser.parse_args()
 
     if args.all or not args.target:
-        root = Path(__file__).parent.parent
-        files = (list(root.glob('**/output/merged_ontology.json'))
-                 + list(root.glob('enterprise/**/output/merged_ontology.json'))
-                 + list(root.glob('private_enterprise/**/output/merged_ontology.json')))
+        import uod_core
+        root = Path(uod_core.find_project_root(os.getcwd()))
+        files = list(root.glob('**/output/merged_ontology*.json'))
         if not files:
             print("No merged_ontology.json files found. Run merge_layers.py first.")
             sys.exit(1)

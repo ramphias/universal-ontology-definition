@@ -4,7 +4,7 @@
   "title": "Industry and Domain Extension Ontology Schema",
   "description": "JSON Schema for validating L2 Industry and Domain Extension Ontology definitions",
   "type": "object",
-  "required": ["layer", "version", "extends", "description", "classes", "relations"],
+  "required": ["layer", "version", "extends", "description", "classes", "relations", "attributes"],
   "properties": {
     "$schema": {
       "type": "string",
@@ -81,6 +81,45 @@
           "definition_en": {
             "type": "string",
             "description": "English definition"
+          }
+        }
+      }
+    },
+    "attributes": {
+      "type": "array",
+      "description": "Data properties (attributes) defined or extended by this layer",
+      "items": {
+        "type": "object",
+        "required": ["id", "owner_class", "datatype", "definition"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "snake_case attribute identifier"
+          },
+          "owner_class": {
+            "type": "string",
+            "description": "Class this attribute belongs to"
+          },
+          "datatype": {
+            "type": "string",
+            "enum": ["string", "integer", "decimal", "boolean", "date", "datetime", "uri", "enum"],
+            "description": "Primitive data type"
+          },
+          "required": {
+            "type": "boolean",
+            "default": false
+          },
+          "enum_values": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "definition": {
+            "type": "string",
+            "minLength": 5
+          },
+          "definition_en": {
+            "type": "string"
           }
         }
       }

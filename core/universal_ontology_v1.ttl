@@ -31,7 +31,8 @@ uod:Party a owl:Class ;
     rdfs:label "Party"@en ;
     rdfs:label "主体"@zh ;
     rdfs:comment "The superclass of all entities that can participate in business and governance relationships"@en ;
-    rdfs:comment "可参与业务关系与治理关系的主体总类"@zh .
+    rdfs:comment "可参与业务关系与治理关系的主体总类"@zh ;
+    uod:abstract "true"^^xsd:boolean .
 
 uod:Person a owl:Class ;
     rdfs:subClassOf uod:Party ;

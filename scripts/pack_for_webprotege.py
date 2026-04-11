@@ -16,55 +16,60 @@ import sys
 import os
 import zipfile
 import glob
+import json
 from pathlib import Path
 
-
-def find_project_root(start_path):
-    p = Path(start_path).resolve()
-    for _ in range(10):
-        if (p / "core").is_dir() and (p / "extensions").is_dir():
-            return str(p)
-        p = p.parent
-    return str(Path(start_path).resolve())
+import uod_core
 
 
-def collect_imports(ttl_path, project_root):
+
+def build_uri_to_file_map(project_root):
+    """Dynamically build the imported URI to local TTL file map."""
+    uri_to_file = {}
+    files = uod_core.discover_ontology_files(project_root)
+    # We need the global registry to get the exact URI for each layer
+    registry = uod_core.build_global_registry(project_root)
+    
+    for json_path in files:
+        ttl_path = json_path.replace(".json", ".ttl")
+        if not os.path.isfile(ttl_path):
+            continue
+        try:
+            with open(json_path, "r", encoding="utf-8") as f:
+                d = json.load(f)
+            layer = d.get("layer") or d.get("metadata", {}).get("layer", "")
+            ns = registry["layers"].get(layer)
+            if ns:
+                uri_to_file[ns[1]] = ttl_path
+        except:
+            pass
+    return uri_to_file
+
+def collect_imports(ttl_path, uri_to_file):
     """Read a .ttl file and find all owl:imports URIs, then map to local files."""
     import_uris = []
     with open(ttl_path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if "owl:imports" in line:
-                # Extract URI from: owl:imports <https://...> ;
                 start = line.find("<")
                 end = line.find(">")
                 if start >= 0 and end > start:
                     uri = line[start + 1:end]
                     import_uris.append(uri)
 
-    # Map URIs to local .ttl files
-    uri_to_file = {
-        "https://w3id.org/uod/core/": os.path.join(project_root, "core", "universal_ontology_v1.ttl"),
-        "https://w3id.org/uod/addon/luxury-goods/": os.path.join(project_root, "extensions", "luxury-goods", "luxury_goods_extension_v1.ttl"),
-        "https://w3id.org/uod/addon/consulting/": os.path.join(project_root, "extensions", "consulting", "consulting_extension_v1.ttl"),
-        "https://w3id.org/uod/addon/common/": os.path.join(project_root, "extensions", "common", "common_enterprise_extension_v1.ttl"),
-    }
-
     local_files = []
     for uri in import_uris:
         if uri in uri_to_file:
             fpath = uri_to_file[uri]
-            if os.path.isfile(fpath):
+            if fpath not in local_files:
                 local_files.append(fpath)
-            else:
-                print(f"  [WARN] Import file not found: {fpath}")
         else:
             print(f"  [WARN] Unknown import URI: {uri}")
 
-    # Recursively collect imports of imports
     more_files = []
     for f in local_files:
-        sub = collect_imports(f, project_root)
+        sub = collect_imports(f, uri_to_file)
         for sf in sub:
             if sf not in local_files and sf not in more_files:
                 more_files.append(sf)
@@ -72,14 +77,14 @@ def collect_imports(ttl_path, project_root):
     return local_files + more_files
 
 
-def pack_zip(ttl_path, project_root):
+def pack_zip(ttl_path, project_root, uri_to_file):
     """Create a WebProtégé-compatible ZIP from a .ttl file and its imports."""
     ttl_path = os.path.abspath(ttl_path)
     basename = Path(ttl_path).stem
     zip_dir = os.path.dirname(ttl_path)
     zip_name = os.path.join(zip_dir, f"{basename}_webprotege.zip")
 
-    imports = collect_imports(ttl_path, project_root)
+    imports = collect_imports(ttl_path, uri_to_file)
 
     with zipfile.ZipFile(zip_name, "w", zipfile.ZIP_DEFLATED) as zf:
         # Root ontology must be named root-ontology.owl
@@ -105,30 +110,24 @@ def pack_zip(ttl_path, project_root):
 
 
 def main():
-    project_root = find_project_root(os.getcwd())
+    project_root = uod_core.find_project_root(os.getcwd())
+    uri_to_file = build_uri_to_file_map(project_root)
 
     if len(sys.argv) > 1 and sys.argv[1] != "--all":
         for fpath in sys.argv[1:]:
             if not os.path.isfile(fpath):
                 print(f"  [ERR] File not found: {fpath}")
                 continue
-            pack_zip(fpath, project_root)
+            pack_zip(fpath, project_root, uri_to_file)
     else:
         # Pack all non-core ontologies (L2 + L3)
-        patterns = [
-            os.path.join(project_root, "core", "*.ttl"),
-            os.path.join(project_root, "extensions", "*", "*.ttl"),
-            os.path.join(project_root, "enterprise", "*", "*.ttl"),
-            os.path.join(project_root, "private_enterprise", "*", "*.ttl"),
-        ]
-        ttl_files = []
-        for pat in patterns:
-            ttl_files.extend(sorted(glob.glob(pat)))
+        json_files = uod_core.discover_ontology_files(project_root)
+        ttl_files = [f.replace(".json", ".ttl") for f in json_files if os.path.isfile(f.replace(".json", ".ttl"))]
 
         print(f"Packaging {len(ttl_files)} ontology file(s) for WebProtege...\n")
         for fpath in ttl_files:
             try:
-                pack_zip(fpath, project_root)
+                pack_zip(fpath, project_root, uri_to_file)
                 print()
             except Exception as e:
                 print(f"  [ERR] {os.path.relpath(fpath, project_root)}: {e}\n")

@@ -15,23 +15,15 @@ import sys
 import os
 import glob
 import io
+import re
 from pathlib import Path
 from datetime import datetime
+
+import uod_core
 
 # Fix Windows console encoding
 if sys.stdout.encoding != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-
-# ─── Namespace Registry ──────────────────────────────────────────────────────
-
-BASE_URI = "https://w3id.org/uod"
-
-LAYER_NS = {
-    "L1_universal_organization_ontology": ("uod", f"{BASE_URI}/core/"),
-    "L2_luxury_goods_addon": ("uod-lux", f"{BASE_URI}/addon/luxury-goods/"),
-    "L2_consulting_industry_addon": ("uod-con", f"{BASE_URI}/addon/consulting/"),
-    "L2_common_enterprise_addon": ("uod-cmn", f"{BASE_URI}/addon/common/"),
-}
 
 STANDARD_PREFIXES = [
     ("owl", "http://www.w3.org/2002/07/owl#"),
@@ -41,108 +33,35 @@ STANDARD_PREFIXES = [
     ("skos", "http://www.w3.org/2004/02/skos/core#"),
 ]
 
-# L1 Core class IDs (used for cross-layer reference resolution)
-L1_CLASSES = {
-    "Entity", "Party", "Person", "Organization", "OrgUnit",
-    "Resource", "ProductService", "Asset", "DataObject", "Document",
-    "SystemApplication", "Governance", "Policy", "Rule", "Control", "Risk",
-    "Operational", "Role", "Capability", "Process", "Event",
-    "Measurement", "Goal", "KPI",
-}
-
-L1_RELATIONS = {
-    "plays_role", "part_of", "owns", "accountable_for", "realized_by",
-    "consumes", "produces", "recorded_in", "governed_by", "mitigated_by",
-    "triggered_by", "measured_by",
-}
-
-
-# ─── Layer Detection ─────────────────────────────────────────────────────────
-
-def detect_layer(data):
-    """Detect ontology layer from JSON content."""
-    layer = data.get("layer")
-    if not layer:
-        meta = data.get("metadata", {})
-        layer = meta.get("layer", "")
-    return layer or ""
-
-
-def get_namespace_for_layer(layer, data=None):
-    """Get (prefix, uri) for a given layer identifier."""
-    if layer in LAYER_NS:
-        return LAYER_NS[layer]
-    if layer == "L3_enterprise_customization" and data:
-        ent = data.get("enterprise", {})
-        eid = ent.get("id", "unknown").lower().replace("_", "-")
-        return (f"ent", f"{BASE_URI}/enterprise/{eid}/")
-    return ("uod", f"{BASE_URI}/core/")
-
-
-def get_extends_namespaces(data):
+def get_extends_namespaces(data, global_registry):
     """Get namespace prefixes for all extended layers."""
-    import re as _re
     extends = data.get("extends", [])
     if isinstance(extends, str):
         extends = [extends]
     result = []
+    
+    # Map stripped IDs to actual IDs
+    layer_map = {}
+    for lid in global_registry["layers"]:
+        stripped = re.sub(r'[_\-]v\d+(\.\d+)*$', '', lid)
+        layer_map[stripped] = lid
+        layer_map[lid] = lid
+        
     for ext in extends:
-        # Step 1: exact match
-        if ext in LAYER_NS:
-            result.append(LAYER_NS[ext])
+        stripped = re.sub(r'[_\-]v\d+(\.\d+)*$', '', ext)
+        if stripped in layer_map:
+            actual_layer = layer_map[stripped]
+            result.append(global_registry["layers"][actual_layer])
             continue
-        # Step 2: strip trailing version suffix (_v1, _v2, _v1.0, etc.) then exact match
-        ext_stripped = _re.sub(r'[_\-]v\d+(\.\d+)*$', '', ext)
-        if ext_stripped in LAYER_NS:
-            result.append(LAYER_NS[ext_stripped])
-            continue
-        # Step 3: find the LAYER_NS key that is a prefix of ext (longest match wins)
-        best = None
-        best_len = 0
-        for layer_id in LAYER_NS:
-            if ext.startswith(layer_id) and len(layer_id) > best_len:
-                best = layer_id
-                best_len = len(layer_id)
-        if best:
-            result.append(LAYER_NS[best])
-            continue
-        # Step 4: fallback guess from L-level prefix
-        ext_key = ext
-        if ext_key in LAYER_NS:
-            result.append(LAYER_NS[ext_key])
-        else:
-            # Guess from layer prefix
-            if ext.startswith("L1"):
-                result.append(("uod", f"{BASE_URI}/core/"))
-            elif ext.startswith("L2"):
-                slug = ext.replace("L2_", "").replace("_addon", "").replace("_", "-")
-                result.append((f"uod-{slug[:6]}", f"{BASE_URI}/addon/{slug}/"))
+            
+        # fallback guess
+        if ext.startswith("L1"):
+            result.append(("uod", f"{uod_core.BASE_URI}/core/"))
+        elif ext.startswith("L2"):
+            slug = ext.replace("L2_", "").replace("_addon", "").replace("_", "-")
+            result.append((f"uod-{slug[:6]}", f"{uod_core.BASE_URI}/addon/{slug}/"))
+            
     return result
-
-
-# ─── Class Registry (cross-layer resolution) ────────────────────────────────
-
-def build_class_registry(project_root):
-    """Scan all JSON ontology files to build a class→namespace registry."""
-    registry = {}
-    # L1 core
-    for cls_id in L1_CLASSES:
-        registry[cls_id] = ("uod", f"{BASE_URI}/core/")
-
-    # Scan addon files
-    addon_pattern = os.path.join(project_root, "extensions", "*", "*.json")
-    for fpath in glob.glob(addon_pattern):
-        try:
-            with open(fpath, "r", encoding="utf-8") as f:
-                d = json.load(f)
-            layer = detect_layer(d)
-            ns = get_namespace_for_layer(layer, d)
-            for cls in d.get("classes", []):
-                registry[cls["id"]] = ns
-        except Exception:
-            pass
-
-    return registry
 
 
 # ─── Turtle Generation ───────────────────────────────────────────────────────
@@ -165,12 +84,12 @@ def resolve_class_ref(cls_id, local_classes, local_ns, registry):
     return f"uod:{cls_id}"
 
 
-def generate_turtle(data, project_root):
+def generate_turtle(data, global_registry):
     """Generate OWL 2 Turtle string from JSON ontology data."""
-    layer = detect_layer(data)
-    local_ns = get_namespace_for_layer(layer, data)
-    extends_ns = get_extends_namespaces(data)
-    registry = build_class_registry(project_root)
+    layer = data.get("layer") or data.get("metadata", {}).get("layer", "")
+    local_ns = uod_core.get_namespace_for_layer(layer, data)
+    extends_ns = get_extends_namespaces(data, global_registry)
+    registry = global_registry["classes"]
 
     # Collect local class IDs
     local_classes = {c["id"] for c in data.get("classes", [])}
@@ -181,10 +100,10 @@ def generate_turtle(data, project_root):
 
     lines = []
 
-    # ── Prefixes ──
+    # Prefixes
     all_ns = dict(STANDARD_PREFIXES)
     all_ns[local_ns[0]] = local_ns[1]
-    all_ns["uod"] = f"{BASE_URI}/core/"  # always include core
+    all_ns["uod"] = f"{uod_core.BASE_URI}/core/"  # always include core
     for prefix, uri in extends_ns:
         all_ns[prefix] = uri
 
@@ -237,7 +156,11 @@ def generate_turtle(data, project_root):
         lines.append(f"{full_id} a owl:Class ;")
 
         parent = cls.get("parent")
-        if parent:
+        alias_of = cls.get("alias_of")
+        if alias_of:
+            alias_ref = resolve_class_ref(alias_of, local_classes, local_ns, registry)
+            lines.append(f"    owl:equivalentClass {alias_ref} ;")
+        if parent and parent != alias_of:
             parent_ref = resolve_class_ref(parent, local_classes, local_ns, registry)
             lines.append(f"    rdfs:subClassOf {parent_ref} ;")
 
@@ -261,14 +184,64 @@ def generate_turtle(data, project_root):
         lines[-1] = lines[-1].rstrip(" ;") + " ."
         lines.append("")
 
-    # ── Deprecated Classes ──
-    deprecated = data.get("deprecated_classes", [])
-    if deprecated:
+    # ── Data Properties (Attributes) ──
+    attributes = data.get("attributes", [])
+    if attributes:
         lines.append("# " + "─" * 40)
-        lines.append("# DEPRECATED CLASSES")
+        lines.append("# DATA PROPERTIES (Attributes)")
         lines.append("# " + "─" * 40)
         lines.append("")
-        for dep in deprecated:
+
+    XSD_MAP = {
+        "string": "xsd:string",
+        "integer": "xsd:integer",
+        "decimal": "xsd:decimal",
+        "boolean": "xsd:boolean",
+        "date": "xsd:date",
+        "datetime": "xsd:dateTime",
+        "uri": "xsd:anyURI",
+        "enum": "xsd:string",
+    }
+
+    for attr in attributes:
+        aid = attr["id"]
+        full_id = f"{local_ns[0]}:{aid}"
+        lines.append(f"{full_id} a owl:DatatypeProperty ;")
+
+        owner = attr.get("owner_class", "")
+        if owner:
+            owner_ref = resolve_class_ref(owner, local_classes, local_ns, registry)
+            lines.append(f"    rdfs:domain {owner_ref} ;")
+
+        dt = attr.get("datatype", "string")
+        xsd_type = XSD_MAP.get(dt, "xsd:string")
+        lines.append(f"    rdfs:range {xsd_type} ;")
+
+        label_en = attr.get("label_en", aid.replace("_", " "))
+        label_zh = attr.get("label_zh", "")
+        lines.append(f'    rdfs:label "{escape_turtle(label_en)}"@en ;')
+        if label_zh:
+            lines.append(f'    rdfs:label "{escape_turtle(label_zh)}"@zh ;')
+
+        def_en = attr.get("definition_en", "")
+        def_zh = attr.get("definition", "")
+        if def_en:
+            lines.append(f'    rdfs:comment "{escape_turtle(def_en)}"@en ;')
+        if def_zh:
+            lines.append(f'    rdfs:comment "{escape_turtle(def_zh)}"@zh ;')
+
+        lines[-1] = lines[-1].rstrip(" ;") + " ."
+        lines.append("")
+
+    # ── Migration Registry (Deprecated Items) ──
+    migration = data.get("migration_registry", [])
+    deprecated_classes = [m for m in migration if m.get("kind") == "class"]
+    if deprecated_classes:
+        lines.append("# " + "─" * 40)
+        lines.append("# DEPRECATED CLASSES (migration registry)")
+        lines.append("# " + "─" * 40)
+        lines.append("")
+        for dep in deprecated_classes:
             full_id = f"{local_ns[0]}:{dep['id']}"
             lines.append(f"{full_id} a owl:Class ;")
             lines.append(f"    owl:deprecated true ;")
@@ -300,8 +273,11 @@ def generate_turtle(data, project_root):
         if spec and spec != "null":
             # Parse "relation_name (L1)" or "relation_name (L2)" format
             spec_name = spec.split("(")[0].strip().split(" ")[0]
-            if spec_name in L1_RELATIONS:
-                lines.append(f"    rdfs:subPropertyOf uod:{spec_name} ;")
+            
+            # Check global relations registry
+            if spec_name in global_registry["relations"]:
+                ns = global_registry["relations"][spec_name]
+                lines.append(f"    rdfs:subPropertyOf {ns[0]}:{spec_name} ;")
             else:
                 # Try to find in extends namespaces
                 for prefix, _ in extends_ns:
@@ -489,47 +465,23 @@ def generate_turtle(data, project_root):
 
 # ─── File Discovery ──────────────────────────────────────────────────────────
 
-def find_project_root(start_path):
-    """Find project root by looking for core/ and extensions/ directories."""
-    p = Path(start_path).resolve()
-    for _ in range(10):
-        if (p / "core").is_dir() and (p / "extensions").is_dir():
-            return str(p)
-        p = p.parent
-    return str(Path(start_path).resolve())
 
-
-def find_all_ontology_jsons(project_root):
-    """Find all JSON ontology files in the project."""
-    patterns = [
-        os.path.join(project_root, "core", "*.json"),
-        os.path.join(project_root, "extensions", "*", "*.json"),
-        os.path.join(project_root, "enterprise", "*", "*.json"),
-        os.path.join(project_root, "private_enterprise", "*", "*.json"),
-    ]
-    results = []
-    for pat in patterns:
-        for fpath in sorted(glob.glob(pat)):
-            # Skip schema files and templates
-            basename = os.path.basename(fpath)
-            if basename.startswith("_") or "schema" in basename or "template" in basename.lower():
-                continue
-            results.append(fpath)
-    return results
 
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
-def convert_file(json_path, project_root=None):
+def convert_file(json_path, global_registry=None, project_root=None):
     """Convert a single JSON ontology file to OWL Turtle."""
     json_path = os.path.abspath(json_path)
     if not project_root:
-        project_root = find_project_root(json_path)
+        project_root = uod_core.find_project_root(json_path)
+    if not global_registry:
+        global_registry = uod_core.build_global_registry(project_root)
 
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    turtle = generate_turtle(data, project_root)
+    turtle = generate_turtle(data, global_registry)
 
     # Output path: same directory, .ttl extension
     ttl_path = os.path.splitext(json_path)[0] + ".ttl"
@@ -552,8 +504,9 @@ def main():
             convert_file(fpath)
     else:
         # Convert all ontology files
-        project_root = find_project_root(os.getcwd())
-        files = find_all_ontology_jsons(project_root)
+        project_root = uod_core.find_project_root(os.getcwd())
+        files = uod_core.discover_ontology_files(project_root)
+        global_registry = uod_core.build_global_registry(project_root)
 
         if not files:
             print("No ontology JSON files found.")
@@ -562,7 +515,7 @@ def main():
         print(f"Converting {len(files)} ontology file(s) to OWL/RDF Turtle...\n")
         for fpath in files:
             try:
-                convert_file(fpath, project_root)
+                convert_file(fpath, global_registry, project_root)
             except Exception as e:
                 rel = os.path.relpath(fpath, project_root)
                 print(f"  [ERR] {rel}: {e}")

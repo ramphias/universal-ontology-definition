@@ -232,6 +232,8 @@
     }
   ],
 
+  "attributes": [],
+
   "relations": [
     {
       "id": "has_tech_division",

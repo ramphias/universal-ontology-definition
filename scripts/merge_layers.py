@@ -28,19 +28,16 @@ if sys.stdout.encoding != 'utf-8':
 # Add scripts dir to path so we can import json_to_owl
 SCRIPT_DIR = Path(__file__).parent
 sys.path.insert(0, str(SCRIPT_DIR))
-from json_to_owl import generate_turtle, find_project_root
+from json_to_owl import generate_turtle
 
+
+import uod_core
 
 # ─── Project Root Detection ─────────────────────────────────────────────────
 
 def detect_project_root(start_path):
     """Find project root by looking for core/ and extensions/ directories."""
-    p = Path(start_path).resolve()
-    for _ in range(10):
-        if (p / "core").is_dir() and (p / "extensions").is_dir():
-            return p
-        p = p.parent
-    return Path(start_path).resolve()
+    return Path(uod_core.find_project_root(start_path))
 
 
 # ─── Layer Index ─────────────────────────────────────────────────────────────
@@ -48,24 +45,17 @@ def detect_project_root(start_path):
 def build_layer_index(project_root):
     """Scan all JSON ontology files and build a layer_id → file_path index."""
     index = {}
-    patterns = [
-        project_root / "core" / "*.json",
-        project_root / "extensions" / "*" / "*.json",
-        project_root / "enterprise" / "*" / "*.json",
-    ]
-    for pattern in patterns:
-        for fpath in glob.glob(str(pattern)):
-            basename = os.path.basename(fpath)
-            if basename.startswith("_") or "schema" in basename or "template" in basename.lower():
-                continue
-            try:
-                with open(fpath, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                layer = data.get("layer") or data.get("metadata", {}).get("layer", "")
-                if layer:
-                    index[layer] = fpath
-            except Exception:
-                pass
+    files = uod_core.discover_ontology_files(str(project_root))
+    
+    for fpath in files:
+        try:
+            with open(fpath, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            layer = data.get("layer") or data.get("metadata", {}).get("layer", "")
+            if layer:
+                index[layer] = fpath
+        except Exception:
+            pass
     return index
 
 
@@ -164,15 +154,17 @@ def merge_layers(layers):
             "version": "merged",
         },
         "classes": [],
+        "attributes": [],
         "relations": [],
         "axioms": [],
-        "deprecated_classes": [],
-        "deprecated_relations": [],
+        "migration_registry": [],
         "sample_instances": [],
     }
 
     class_ids = set()
     relation_ids = set()
+
+    target_layer_id = layers[-1][0] if layers else None
 
     for layer_id, fpath, data in layers:
         layer_short = layer_id or os.path.basename(fpath)
@@ -206,28 +198,30 @@ def merge_layers(layers):
             rel_copy["source_layer"] = layer_short
             merged["relations"].append(rel_copy)
 
+        # Merge attributes
+        for attr in data.get("attributes", []):
+            attr_copy = dict(attr)
+            attr_copy["source_layer"] = layer_short
+            merged["attributes"].append(attr_copy)
+
         # Merge axioms (L1 only typically)
         for ax in data.get("axioms", []):
             ax_copy = dict(ax)
             ax_copy["source_layer"] = layer_short
             merged["axioms"].append(ax_copy)
 
-        # Merge deprecated items
-        for dep in data.get("deprecated_classes", []):
-            dep_copy = dict(dep)
-            dep_copy["source_layer"] = layer_short
-            merged["deprecated_classes"].append(dep_copy)
+        # Merge migration registry
+        for entry in data.get("migration_registry", []):
+            entry_copy = dict(entry)
+            entry_copy["source_layer"] = layer_short
+            merged["migration_registry"].append(entry_copy)
 
-        for dep in data.get("deprecated_relations", []):
-            dep_copy = dict(dep)
-            dep_copy["source_layer"] = layer_short
-            merged["deprecated_relations"].append(dep_copy)
-
-        # Merge instances
-        for inst in data.get("sample_instances", []):
-            inst_copy = dict(inst)
-            inst_copy["source_layer"] = layer_short
-            merged["sample_instances"].append(inst_copy)
+        # Merge instances (only from the target layer, skip examples from dependencies)
+        if layer_id == target_layer_id:
+            for inst in data.get("sample_instances", []):
+                inst_copy = dict(inst)
+                inst_copy["source_layer"] = layer_short
+                merged["sample_instances"].append(inst_copy)
 
     return merged
 
@@ -282,7 +276,10 @@ def generate_merged_owl(merged, output_dir, project_root):
     owl_data["metadata"] = dict(merged["metadata"])
     owl_data["metadata"]["layer"] = "L1_universal_organization_ontology"
 
-    turtle = generate_turtle(owl_data, str(project_root))
+    # We need the registry to resolve URIs correctly
+    import uod_core
+    registry = uod_core.build_global_registry(project_root)
+    turtle = generate_turtle(owl_data, registry)
 
     path = os.path.join(output_dir, "merged_ontology.ttl")
     with open(path, "w", encoding="utf-8") as f:
@@ -529,6 +526,8 @@ def generate_merged_sql(merged, output_dir):
 
 def _to_snake(pascal_str):
     """Convert PascalCase to snake_case."""
+    if not pascal_str:
+        return ""
     result = []
     for i, ch in enumerate(pascal_str):
         if ch.isupper() and i > 0:

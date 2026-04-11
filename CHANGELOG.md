@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-04-11 — Tooling Enhancements & F&B Extension
+
+### ⚠️ Breaking Changes
+- **`Party` is now `abstract: true`** — Party can no longer be directly instantiated. All instances must use a concrete subclass (`Person`, `Organization`, `OrgUnit`). This aligns Party with the same pattern as `Resource` (both are abstract children of `Entity`) and matches its own definition as a "主体总类" (superclass).
+
+### Added
+- **Food & Beverage (F&B) Extension** — Provided a new `extensions/fnb/` extension covering industry specific classes for restaurants, menus, supply chains, etc.
+- **Enterprise Build Pipeline Integration** — Introduced new components into the builder scripts to elegantly merge core, extensions, and private enterprise datasets.
+
+### Changed
+- **Visualizer Engine (`visualize_ontology.py`)** — Overhauled the HTML output for mobile-responsiveness, better navigation, search optimization, and dynamic node rendering.
+- **OWL Generator (`json_to_owl.py`)** — Refactored to seamlessly ingest multiple extension layers and robustly map them into TTL formats.
+
 ## [2.1.0] - 2026-04-10 — Documentation Bilingual Overhaul & Cleanup
 
 ### ⚠️ Breaking Changes
@@ -33,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **4 Abstract Domain Root Classes**: `Entity`, `Governance`, `Operational`, `Measurement` — organizes all classes into a structured tree instead of a flat list
 - **`Resource` abstract class** — replaces `BusinessObject` as parent for ProductService, Asset, DataObject, Document, SystemApplication
-- **`deprecated_classes` and `deprecated_relations` registries** — provides migration guidance for breaking changes
+- **`migration_registry`** — unified registry providing migration guidance for removed classes, relations, and attributes
 - **Schema lifecycle fields**: `abstract`, `status`, `since`, `deprecated_since`, `replaced_by` for versioned evolution
 - **Relation metadata**: `cardinality` (1:1, 1:N, N:1, N:M), `inverse_of` for bidirectional relation declarations
 - **`extensions/common/` L2 extension** — Common Enterprise Extension containing demoted L1 classes plus new universally useful classes (Contract, Report, Project, Stakeholder, Regulation)

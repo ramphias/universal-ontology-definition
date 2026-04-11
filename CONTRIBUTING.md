@@ -81,7 +81,7 @@ Core Ontology (L1) 是整个框架的基础，修改需要谨慎审核。
 | **G-04** | 跨行业验证 | 新增 L1 类需 ≥ **3 个行业** 证明 | 提议者必须论证该概念在至少 3 个不同行业中是通用且必要的。 |
 | **G-05** | 关系密度控制 | 关系数量 ≤ 类数量 × **1.0** | 避免关系爆炸。当前 12 关系 / 24 类 = 0.5，健康范围内。 |
 | **G-06** | 变更速度限制 | 单次版本迭代最多变更 **3 个类** | 每个 minor 版本最多新增/修改/删除 3 个类定义，确保下游有充分适配时间。 |
-| **G-07** | 废弃过渡期 | Deprecated → Removed 至少 **2 个 minor 版本** | 标记 `deprecated` 后，必须在至少 2 个后续版本中保留 `deprecated_classes` 记录，才能最终移除。 |
+| **G-07** | 废弃过渡期 | Deprecated → Removed 至少 **2 个 minor 版本** | 标记 `deprecated` 后，必须在至少 2 个后续版本中保留 `migration_registry` 记录，才能最终移除。 |
 | **G-08** | 示例行业中立 | `sample_instances` 不得暗示特定行业 | 使用通用企业名称（如 "Acme Corp"）和通用流程（如 "Order to Cash"），避免引导用户误认为 L1 面向特定领域。 |
 
 ### 治理检查清单 (Core PR Checklist)
@@ -96,7 +96,7 @@ Core Ontology (L1) 是整个框架的基础，修改需要谨慎审核。
 - [ ] G-04: 新增类已提供 ≥3 行业通用性论证
 - [ ] G-05: 关系数 ≤ 类数
 - [ ] G-06: 本次变更涉及 ≤ 3 个类
-- [ ] G-07: 废弃的类/关系记录在 deprecated_classes/deprecated_relations 中
+- [ ] G-07: 废弃的类/关系/属性已通过 status 字段标记，或记录在 migration_registry 中
 - [ ] G-08: sample_instances 不含行业特定示例
 - [ ] 通过 `schema/core_schema.json` 校验
 - [ ] 通过 `scripts/validate_governance.py` 自动化检查

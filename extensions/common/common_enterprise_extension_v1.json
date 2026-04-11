@@ -86,6 +86,7 @@
       "definition_en": "Legal and regulatory requirements from external regulatory bodies"
     }
   ],
+  "attributes": [],
   "relations": [
     {
       "id": "serves_through",

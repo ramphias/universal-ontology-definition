@@ -225,10 +225,13 @@ def validate_referential_integrity(ontology: dict, report: GovernanceReport):
     # Check relation domain/range references
     bad_refs = []
     for r in relations:
-        if r.get("domain") not in class_ids:
-            bad_refs.append(f"Relation '{r['id']}' domain '{r['domain']}' not found")
-        if r.get("range") not in class_ids:
-            bad_refs.append(f"Relation '{r['id']}' range '{r['range']}' not found")
+        domain = r.get("domain")
+        if domain is not None and domain != "null" and domain not in class_ids:
+            bad_refs.append(f"Relation '{r['id']}' domain '{domain}' not found")
+            
+        rng = r.get("range")
+        if rng is not None and rng != "null" and rng not in class_ids:
+            bad_refs.append(f"Relation '{r['id']}' range '{rng}' not found")
 
     if not bad_refs:
         report.ok("REF", "All relation domain/range references are valid")
@@ -300,9 +303,10 @@ def validate_axioms(ontology: dict, report: GovernanceReport):
     relations = ontology.get("relations", [])
     class_ids = {c["id"] for c in classes}
     relation_ids = {r["id"] for r in relations}
-    # Include deprecated relations for subproperty axioms
-    deprecated_rels = ontology.get("deprecated_relations", [])
-    all_relation_ids = relation_ids | {r["id"] for r in deprecated_rels}
+    # Include migration registry relations for subproperty axioms
+    migration = ontology.get("migration_registry", [])
+    migrated_rel_ids = {m["id"] for m in migration if m.get("kind") == "relation"}
+    all_relation_ids = relation_ids | migrated_rel_ids
 
     ax_prefix = re.compile(r"^ax_[a-z][a-z0-9_]*$")
 

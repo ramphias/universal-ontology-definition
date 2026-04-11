@@ -440,6 +440,7 @@
       "definition_en": "A time management system for recording consultant billable hours and expense reimbursements"
     }
   ],
+  "attributes": [],
   "relations": [
     {
       "id": "has_practice_line",

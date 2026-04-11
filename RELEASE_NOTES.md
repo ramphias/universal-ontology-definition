@@ -19,7 +19,7 @@
 ### Structural Improvements
 - **4 Abstract Domain Root Classes**: `Entity`, `Governance`, `Operational`, `Measurement` — organizes all classes into a clear tree
 - **`Resource` abstract class** — replaces `BusinessObject` as parent for ProductService, Asset, DataObject, Document, SystemApplication
-- **`deprecated_classes` and `deprecated_relations` registries** — migration guidance built into the ontology
+- **`migration_registry`** — unified registry providing migration guidance for removed classes, relations, and attributes
 - **Schema lifecycle fields**: `abstract`, `status`, `since`, `deprecated_since`, `replaced_by`
 - **Relation metadata**: `cardinality` (1:1, 1:N, N:1, N:M), `inverse_of` declarations
 
@@ -51,7 +51,8 @@
 ```
 L1 Core (24 classes)
 ├── Entity (abstract)
-│   ├── Party, Organization, Role
+│   ├── Party (abstract)
+│   │   ├── Person, Organization, OrgUnit
 │   └── Resource (abstract)
 │       ├── ProductService, Asset, DataObject, Document, SystemApplication
 ├── Governance (abstract)
