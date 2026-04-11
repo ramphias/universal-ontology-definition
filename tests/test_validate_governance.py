@@ -425,7 +425,7 @@ class TestAxiomValidation:
                 {"id": "B", "parent": None},
             ],
             "relations": [],
-            "deprecated_relations": [],
+            "migration_registry": [],
             "axioms": [
                 {
                     "id": "ax_disjoint_ab",
@@ -444,7 +444,7 @@ class TestAxiomValidation:
         ontology = {
             "classes": [{"id": "A"}],
             "relations": [],
-            "deprecated_relations": [],
+            "migration_registry": [],
             "axioms": [
                 {
                     "id": "BadName",
@@ -463,7 +463,7 @@ class TestAxiomValidation:
         ontology = {
             "classes": [{"id": "A"}],
             "relations": [],
-            "deprecated_relations": [],
+            "migration_registry": [],
             "axioms": [
                 {
                     "id": "ax_bad_ref",

@@ -59,6 +59,7 @@
     "mitigated_by": { "@id": "uod:mitigated_by", "@type": "@id" },
     "triggered_by": { "@id": "uod:triggered_by", "@type": "@id" },
     "measured_by": { "@id": "uod:measured_by", "@type": "@id" },
+    "evaluates": { "@id": "uod:evaluates", "@type": "@id" },
 
     "axioms": { "@id": "uod:axioms", "@container": "@set" },
     "disjointWith": { "@id": "owl:disjointWith", "@type": "@id" },

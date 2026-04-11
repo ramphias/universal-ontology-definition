@@ -203,8 +203,6 @@ uod:plays_role a owl:ObjectProperty ;
 uod:part_of a owl:ObjectProperty ;
     rdfs:label "part of"@en ;
     rdfs:label "属于/组成"@zh ;
-    rdfs:domain uod:Entity ;
-    rdfs:range uod:Entity ;
     rdfs:comment "An entity is part of another entity (unifies belongs_to and composed_of)"@en .
 
 uod:owns a owl:ObjectProperty ;
@@ -277,6 +275,13 @@ uod:measured_by a owl:ObjectProperty ;
     rdfs:range uod:KPI ;
     rdfs:comment "An operational element is measured by a KPI"@en .
 
+uod:evaluates a owl:ObjectProperty ;
+    rdfs:label "evaluates"@en ;
+    rdfs:label "评估"@zh ;
+    rdfs:domain uod:KPI ;
+    rdfs:range uod:Goal ;
+    rdfs:comment "A KPI evaluates the achievement of a specific business goal"@en .
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # AXIOMS — OWL 2 Formal Semantic Constraints
@@ -323,6 +328,13 @@ uod:KPI rdfs:subClassOf [
     a owl:Restriction ;
     owl:onProperty uod:measured_by ;
     owl:someValuesFrom uod:Operational
+] .
+
+# ax_kpi_evaluates_goal: Every KPI evaluates some Goal
+uod:KPI rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty uod:evaluates ;
+    owl:someValuesFrom uod:Goal
 ] .
 
 # ax_plays_role_domain_party: Every Role is played by some Party

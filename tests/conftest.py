@@ -54,6 +54,18 @@ def minimal_ontology():
                 "definition_en": "Party",
             },
         ],
+        "attributes": [
+            {
+                "id": "name",
+                "label_zh": "名称",
+                "label_en": "Name",
+                "owner_class": "Entity",
+                "datatype": "string",
+                "required": True,
+                "definition": "名称",
+                "definition_en": "Name",
+            }
+        ],
         "relations": [
             {
                 "id": "part_of",

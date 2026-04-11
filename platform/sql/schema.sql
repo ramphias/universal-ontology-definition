@@ -247,10 +247,17 @@ CREATE TABLE event_process (
 
 -- measured_by: Operational ↔ KPI (M:N) — generalized domain
 CREATE TABLE operational_kpi (
-    subject_type VARCHAR(20) NOT NULL CHECK (subject_type IN ('Role', 'Capability', 'Process', 'Event', 'Goal')),
+    subject_type VARCHAR(20) NOT NULL CHECK (subject_type IN ('Role', 'Capability', 'Process', 'Event')),
     subject_id   UUID NOT NULL,
     kpi_id       UUID NOT NULL REFERENCES kpi(id) ON DELETE CASCADE,
     PRIMARY KEY (subject_type, subject_id, kpi_id)
+);
+
+-- evaluates: KPI ↔ Goal (M:N)
+CREATE TABLE kpi_goal (
+    kpi_id   UUID NOT NULL REFERENCES kpi(id) ON DELETE CASCADE,
+    goal_id  UUID NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
+    PRIMARY KEY (kpi_id, goal_id)
 );
 
 -- ═══════════════════════════════════════════════════════════════════════════════

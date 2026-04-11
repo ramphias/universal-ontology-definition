@@ -243,6 +243,21 @@ These axioms ensure that instances cannot belong to multiple conflicting classes
 
 ---
 
+### ax_kpi_evaluates_goal
+
+| Field | Value |
+|:---|:---|
+| **Type** | `existential` |
+| **Subject** | `KPI` |
+| **Relation** | `evaluates` |
+| **Object** | `Goal` |
+
+**EN**: Every KPI evaluates at least one Goal.
+
+**ZH**: 每个关键指标至少评估一个目标。
+
+---
+
 ### ax_plays_role_domain_party
 
 | Field | Value |

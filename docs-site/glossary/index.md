@@ -77,6 +77,19 @@ These are the core building blocks of any ontology. Understanding them is a prer
 
 ---
 
+### Attribute / 属性（数据属性）
+
+**EN**: A **data property** that describes an intrinsic characteristic of a class using a primitive value (string, number, date, boolean, etc.). Unlike a relation (which links class to class), an attribute assigns a typed value to instances of its owner class. Subclasses inherit their parent's attributes. In UOD JSON files, attributes appear in the `"attributes"` array.
+
+**ZH**: 用原始值（字符串、数值、日期、布尔等）描述类自身特征的**数据属性**。与关系（类到类的连接）不同，属性为所属类的实例赋予类型化的值。子类继承父类的属性。在 UOD 的 JSON 文件中，属性出现在 `"attributes"` 数组中。
+
+**Example**: `email` is an attribute of `Person` with datatype `string`; `severity` is an attribute of `Risk` with datatype `enum` and allowed values `["low", "medium", "high", "critical"]`.
+
+!!! warning "Not to confuse with / 不要混淆"
+    An attribute (data property) assigns a **primitive value** to an instance. A relation (object property) links an instance to **another instance**. For example, a Person's `email` is an attribute, but a Person's `plays_role` is a relation.
+
+---
+
 ### Domain / 域（关系的源端类）
 
 **EN**: The **source class** of a relation — the class where the relationship starts. When we say `plays_role` has domain `Party`, it means only Party (and its subclasses) can be the subject of this relationship.
@@ -628,7 +641,7 @@ Connected via `measured_by`: Operational elements are measured by KPIs, which tr
 
 ### part_of vs belongs_to (deprecated)
 
-`belongs_to` and `composed_of` were **merged into `part_of`** in v2.0.0. Use `part_of` for all containment/composition relationships. The deprecated relations are listed in `"deprecated_relations"` with migration notes.
+`belongs_to` and `composed_of` were **merged into `part_of`** in v2.0.0. Use `part_of` for all containment/composition relationships. The deprecated relations are listed in the `"migration_registry"` with migration notes.
 
 `belongs_to` 和 `composed_of` 在 v2.0.0 中**合并为 `part_of`**。所有包含/组成关系请使用 `part_of`。
 

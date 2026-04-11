@@ -216,8 +216,7 @@ class TestGenerateTurtle:
         data = {
             "metadata": {"layer": "L1_universal_organization_ontology", "version": "1.0.0"},
             "classes": [],
-            "relations": [{"id": "part_of", "label_en": "part of", "label_zh": "属于",
-                           "domain": "Entity", "range": "Entity", "definition": "d", "definition_en": "d"}],
+            "relations": [{"id": "part_of", "label_en": "part of", "label_zh": "属于", "domain": None, "range": None, "definition": "d", "definition_en": "d"}],
             "axioms": [
                 {"id": "ax_trans", "type": "transitive", "relation": "part_of",
                  "definition": "d", "definition_en": "d"}
@@ -246,14 +245,15 @@ class TestGenerateTurtle:
         turtle = generate_turtle(data, str(project_root))
         assert "owl:someValuesFrom" in turtle
 
-    def test_deprecated_classes(self, project_root):
+    def test_deprecated_classes_via_migration_registry(self, project_root):
         data = {
             "metadata": {"layer": "L1_universal_organization_ontology", "version": "1.0.0"},
             "classes": [{"id": "NewClass", "label_en": "New", "label_zh": "新"}],
+            "attributes": [],
             "relations": [],
             "axioms": [],
-            "deprecated_classes": [
-                {"id": "OldClass", "replaced_by": "NewClass", "note": "Use NewClass instead"}
+            "migration_registry": [
+                {"id": "OldClass", "kind": "class", "replaced_by": "NewClass", "deprecated_since": "2.0.0", "note": "Use NewClass instead"}
             ],
             "sample_instances": [],
         }

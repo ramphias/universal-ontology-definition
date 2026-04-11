@@ -264,7 +264,7 @@ type Goal {
   labelZh: String!
   labelEn: String!
   definition: String
-  measuredBy: [KPI!]!
+  evaluatedBy: [KPI!]!
 }
 
 """
@@ -275,6 +275,7 @@ type KPI {
   labelZh: String!
   labelEn: String!
   definition: String
+  evaluates: [Goal!]!
 }
 
 # ─── Input Filters ───────────────────────────────────────────────────────────

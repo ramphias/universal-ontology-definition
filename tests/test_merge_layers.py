@@ -82,15 +82,15 @@ class TestNormalizeLayerRef:
 # ─── Merge Logic ─────────────────────────────────────────────────────────────
 
 
-def _make_layer(layer_id, classes, relations=None, axioms=None, instances=None):
+def _make_layer(layer_id, classes, relations=None, axioms=None, instances=None, attributes=None):
     """Helper to create a layer tuple for merge_layers()."""
     data = {
         "metadata": {"name": f"Test {layer_id}"},
         "classes": classes,
+        "attributes": attributes or [],
         "relations": relations or [],
         "axioms": axioms or [],
-        "deprecated_classes": [],
-        "deprecated_relations": [],
+        "migration_registry": [],
         "sample_instances": instances or [],
     }
     return (layer_id, f"/fake/{layer_id}.json", data)
@@ -126,10 +126,10 @@ class TestMergeLayers:
 
     def test_duplicate_relation_skipped(self, capsys):
         l1 = _make_layer("L1", [], relations=[
-            {"id": "part_of", "domain": "A", "range": "B", "definition": "d"},
+            {"id": "part_of", "domain": None, "range": None, "definition": "d"},
         ])
         l2 = _make_layer("L2", [], relations=[
-            {"id": "part_of", "domain": "C", "range": "D", "definition": "d"},
+            {"id": "part_of", "domain": None, "range": None, "definition": "d"},
         ])
         merged = merge_layers([l1, l2])
         assert len(merged["relations"]) == 1
@@ -164,20 +164,20 @@ class TestMergeLayers:
             "metadata": {"name": "Core"},
             "enterprise": {},
             "classes": [],
+            "attributes": [],
             "relations": [],
             "axioms": [],
-            "deprecated_classes": [],
-            "deprecated_relations": [],
+            "migration_registry": [],
             "sample_instances": [],
         }
         l3_data = {
             "metadata": {"name": "L3"},
             "enterprise": {"name": "Acme Corp"},
             "classes": [],
+            "attributes": [],
             "relations": [],
             "axioms": [],
-            "deprecated_classes": [],
-            "deprecated_relations": [],
+            "migration_registry": [],
             "sample_instances": [],
         }
         merged = merge_layers([
@@ -198,7 +198,7 @@ class TestValidateMerged:
                 {"id": "Party", "parent": "Entity", "abstract": False},
             ],
             "relations": [
-                {"id": "part_of", "domain": "Party", "range": "Entity"},
+                {"id": "part_of", "domain": None, "range": None},
             ],
             "sample_instances": [
                 {"id": "inst1", "type": "Party"},
@@ -265,16 +265,16 @@ def sample_merged():
              "label_en": "Party", "source_layer": "L1", "definition": "d", "definition_en": "d"},
         ],
         "relations": [
-            {"id": "part_of", "domain": "Party", "range": "Entity", "label_zh": "属于",
+            {"id": "part_of", "domain": None, "range": None, "label_zh": "属于",
              "label_en": "part of", "source_layer": "L1", "definition": "d", "definition_en": "d"},
         ],
+        "attributes": [],
         "axioms": [
             {"id": "ax_test", "type": "disjoint", "classes": ["Entity", "Party"],
              "definition": "d", "definition_en": "d", "source_layer": "L1",
              "label_zh": "互斥", "label_en": "disjoint"},
         ],
-        "deprecated_classes": [],
-        "deprecated_relations": [],
+        "migration_registry": [],
         "sample_instances": [],
     }
 

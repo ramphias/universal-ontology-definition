@@ -9,7 +9,7 @@ L1 Core v2.0 中定义的全部 12 个标准关系，以及 6 个废弃关系及
 ```mermaid
 graph LR
     Party -->|plays_role| Role
-    Entity -->|part_of| Entity
+    Any -->|part_of| Any
     Party -->|owns| Resource
     Role -->|accountable_for| Operational
     Capability -->|realized_by| Process
@@ -20,6 +20,7 @@ graph LR
     Risk -->|mitigated_by| Control
     Event -->|triggered_by| Process
     Operational -->|measured_by| KPI
+    KPI -->|evaluates| Goal
 ```
 
 ---
@@ -50,8 +51,8 @@ graph LR
 | **ID** | `part_of` |
 | **ZH** | 属于/组成 |
 | **EN** | part of |
-| **Domain** | `Entity` |
-| **Range** | `Entity` |
+| **Domain** | `Any` (null) |
+| **Range** | `Any` (null) |
 | **Cardinality** | N:1 |
 | **Inverse** | `has_part` |
 | **Since** | v2.0.0 |
@@ -232,6 +233,24 @@ graph LR
 **EN**: An operational element is measured by a KPI. This generalizes the former Goal-only constraint — now any Operational element (Role, Capability, Process, Event) can be measured.
 
 **ZH**: 运营元素由指标衡量。泛化了原仅限 Goal 的约束 — 现在任何运营元素（Role、Capability、Process、Event）都可被衡量。
+
+---
+
+### evaluates / 评估
+
+| Field | Value |
+|:---|:---|
+| **ID** | `evaluates` |
+| **ZH** | 评估 |
+| **EN** | evaluates |
+| **Domain** | `KPI` |
+| **Range** | `Goal` |
+| **Cardinality** | N:M |
+| **Since** | v2.1.0 |
+
+**EN**: A KPI evaluates the achievement of a specific business goal.
+
+**ZH**: 关键指标用于评估特定业务目标的达成情况。
 
 ---
 
