@@ -71,6 +71,7 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
+      slugify: !!python/name:pymdownx.slugs.uslugify
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.betterem
@@ -126,15 +127,15 @@ nav:
     - OWL/RDF: l0/owl-rdf.md
   - Core Ontology (L1):
     - l1-core/index.md
-    - Classes Reference: core/classes.md
-    - Relations Reference: core/relations.md
-    - Axioms Reference: core/axioms.md
-    - Sample Instances: core/instances.md
+    - Classes Reference: l1-core/classes.md
+    - Relations Reference: l1-core/relations.md
+    - Axioms Reference: l1-core/axioms.md
+    - Sample Instances: l1-core/instances.md
   - Industry and Domain Extension (L2):
     - l2-extensions/index.md
-    - Consulting: extensions/consulting.md
-    - Luxury Goods: extensions/luxury-goods.md
-    - Create Your Own: extensions/create-extension.md
+    - Consulting: l2-extensions/consulting.md
+    - Luxury Goods: l2-extensions/luxury-goods.md
+    - Create Your Own: l2-extensions/create-extension.md
   - Enterprise Layer (L3):
     - l3-enterprise/index.md
   - Glossary:

@@ -47,7 +47,7 @@ We highly welcome new Industry and Domain Extension!
 6. Validate against `schema/extension_schema.json`
 7. Submit a PR
 
-See the detailed [Extension Development Guide](../extensions/create-extension.md).
+See the detailed [Extension Development Guide](../l2-extensions/create-extension.md).
 
 ## Pull Request Workflow
 

@@ -83,8 +83,8 @@ Browse the `extensions/` directory for industry-specific extensions:
 
 | Industry | Classes | Relations | Status |
 |:---|:---:|:---:|:---|
-| [Consulting](../extensions/consulting.md) | 40+ | 34 | ✅ v1.0.0 |
-| [Luxury Goods](../extensions/luxury-goods.md) | 21 | 10 | ✅ v1.0.0 |
+| [Consulting](../l2-extensions/consulting.md) | 40+ | 34 | ✅ v1.0.0 |
+| [Luxury Goods](../l2-extensions/luxury-goods.md) | 21 | 10 | ✅ v1.0.0 |
 
 Each extension extends L1 through the `extends` field:
 
@@ -116,4 +116,4 @@ If you need company-specific customizations, use the L3 template:
 
 - [Core Concepts](core-concepts.md) — Understand key UOD terminology
 - [Architecture Deep Dive](../architecture/four-layer-model.md) — Learn the full four-layer design
-- [Create an Extension](../extensions/create-extension.md) — Contribute your own industry package
+- [Create an Extension](../l2-extensions/create-extension.md) — Contribute your own industry package

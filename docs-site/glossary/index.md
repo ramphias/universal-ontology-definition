@@ -180,7 +180,7 @@ See [L1 Axioms Reference](l1-axioms.md) for the full list of 18 axioms and 12 ax
 | **Operational** | 运营域 | `Operational` | How does the organization operate? / 组织如何运作？ |
 | **Measurement** | 度量域 | `Measurement` | How do we measure success? / 如何衡量成功？ |
 
-See [Part 3: Semantic Domains in Detail](#part-3-semantic-domains-in-detail) for full breakdowns.
+See [Part 3: Semantic Domains in Detail](#part-3-semantic-domains-in-detail-四大语义域详解) for full breakdowns.
 
 ---
 
