@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **4 Abstract Domain Root Classes**: `Entity`, `Governance`, `Operational`, `Measurement` — organizes all classes into a structured tree instead of a flat list
 - **`Resource` abstract class** — replaces `BusinessObject` as parent for ProductService, Asset, DataObject, Document, SystemApplication
-- **`deprecated_classes` and `deprecated_relations` registries** — provides migration guidance for breaking changes
+- **`migration_registry`** — unified registry providing migration guidance for removed classes, relations, and attributes (replaces the former `deprecated_classes` / `deprecated_relations` arrays)
 - **Schema lifecycle fields**: `abstract`, `status`, `since`, `deprecated_since`, `replaced_by` for versioned evolution
 - **Relation metadata**: `cardinality` (1:1, 1:N, N:1, N:M), `inverse_of` for bidirectional relation declarations
 - **`extensions/common/` L2 extension** — Common Enterprise Extension containing demoted L1 classes plus new universally useful classes (Contract, Report, Project, Stakeholder, Regulation)

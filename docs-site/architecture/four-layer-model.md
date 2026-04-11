@@ -5,29 +5,62 @@ Universal Ontology Definition 采用**技术层—通用层—行业层—企业
 
 ## Layer Overview | 架构总览
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│  L3: Enterprise Customization Layer (企业个性化定制层)             │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐                       │
-│  │  Org A    │  │  Org B    │  │  Org C    │   ← Tenant isolation │
-│  └──────────┘  └──────────┘  └──────────┘                       │
-├──────────────────────────────────────────────────────────────────┤
-│  L2: Industry & Domain Extensions (行业与业务领域扩展)               │
-│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐                  │
-│  │Conslt│ │Luxury│ │Financ│ │Manuf │ │Retail│  ← Community      │
-│  └──────┘ └──────┘ └──────┘ └──────┘ └──────┘                  │
-├──────────────────────────────────────────────────────────────────┤
-│  L1: Universal Enterprise Ontology Core (通用企业 Ontology Core) │
-│  ┌────────────────────────────────────────────────────────────┐  │
-│  │  Entity · Governance · Operational · Measurement           │  │
-│  └────────────────────────────────────────────────────────────┘  │
-│                                     ← Mandatory, stable          │
-├══════════════════════════════════════════════════════════════════┤
-│  L0: Platform & Syntax Bindings (技术平台绑定层)                    │
-│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐                   │
-│  │OWL/RDF │ │JSON-LD │ │GraphQL │ │SQL DDL │  ← Serialization  │
-│  └────────┘ └────────┘ └────────┘ └────────┘                   │
-└──────────────────────────────────────────────────────────────────┘
+```mermaid
+block-beta
+    columns 1
+    
+    block:l3:1
+        L3Text["L3: Enterprise Customization Layer (企业层)"]
+        block:l3col
+            columns 3
+            Oa["Org A"] Ob["Org B"] Oc["Org C"]
+        end
+    end
+    
+    block:l2:1
+        L2Text["L2: Industry & Domain Extensions (行业层)"]
+        block:l2col
+            columns 5
+            C["Consulting"] L["Luxury"] F["Finance"] M["Manuf."] R["Retail"]
+        end
+    end
+    
+    block:l1:1
+        L1Text["L1: Universal Enterprise Ontology Core (通用层)"]
+        L1Subs["Entity • Governance • Operational • Measurement"]
+    end
+    
+    block:l0:1
+        L0Text["L0: Platform & Syntax Bindings (技术层)"]
+        block:l0col
+            columns 4
+            OWL["OWL/RDF"] JLD["JSON-LD"] GQL["GraphQL"] SQL["SQL DDL"]
+        end
+    end
+    
+    style l3 fill:#f4f6f8,stroke:#90a4ae,stroke-dasharray:5 5
+    style l2 fill:#e3f2fd,stroke:#64b5f6,stroke-dasharray:5 5
+    style l1 fill:#c8e6c9,stroke:#388e3c
+    style l0 fill:#fff9c4,stroke:#f9a825
+    style L3Text fill:transparent,stroke:none,font-weight:bold
+    style L2Text fill:transparent,stroke:none,font-weight:bold
+    style L1Text fill:transparent,stroke:none,font-weight:bold
+    style L0Text fill:transparent,stroke:none,font-weight:bold
+    style L1Subs fill:transparent,stroke:none
+    
+    Oa-->C
+    Ob-->L
+    Oc-->F
+    C-->L1Text
+    L-->L1Text
+    F-->L1Text
+    M-->L1Text
+    R-->L1Text
+    
+    L1Text-->OWL
+    L1Text-->JLD
+    L1Text-->GQL
+    L1Text-->SQL
 ```
 
 ## L0 — Platform & Syntax Bindings | 技术平台绑定层

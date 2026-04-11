@@ -37,7 +37,7 @@
 | **关系爆炸** | 关系数量接近或超过类数量 | 每对类之间都有专属关系，无泛型复用 |
 | **层次混淆** | L2/L3 概念渗入 L1；L3 覆盖 L2 语义 | 行业特定概念出现在 Core 层 |
 | **文档漂移** | 代码/Schema 与文档描述不一致 | JSON 中的 class 定义与 docs-site 中的说明不符 |
-| **版本腐蚀** | 废弃项未清理，历史包袱积累 | `deprecated_classes` 列表持续增长无人清理 |
+| **版本腐蚀** | 废弃项未清理，历史包袱积累 | `migration_registry` 列表持续增长无人清理 |
 | **孤岛碎片化** | 多个 L2 extension 之间存在语义重叠但无复用 | `consulting` 和 `common` 都定义了 `Project` |
 
 ### 1.2 为什么 Ontology 比普通代码更容易熵增
@@ -211,7 +211,7 @@ platform/owl-rdf/core_ontology.ttl skos:definition = "威胁或机会"
 发现某个 L1 类需要废弃？
     │
     Step 1: 在该类添加 "status": "deprecated", "deprecated_since": "X.Y.0"
-    Step 2: 在 deprecated_classes[] 中添加完整的迁移记录（replaced_by, migration_note）
+    Step 2: 在 migration_registry[] 中添加完整的迁移记录（kind, replaced_by, note）
     Step 3: 等待 ≥2 个 minor 版本（G-07）
     Step 4: 在下游 L2 extensions 中完成 parent 字段迁移
     Step 5: 在下一个 major 版本中物理删除该类
@@ -420,7 +420,7 @@ PR 变更类型
 - [ ] G-06: 本次变更涉及类数量 ≤ 3（变更: ___ 个类）
 
 **语义完整性**
-- [ ] G-07: 所有废弃项已记录在 deprecated_classes / deprecated_relations 中
+- [ ] G-07: 所有废弃项已通过 status 字段标记，或已记录在 migration_registry 中
 - [ ] G-08: sample_instances 不含行业特定词汇
 
 **自动化校验**
@@ -489,14 +489,15 @@ L1 PR Reviewer 在审核时，除技术正确性外，需重点检查：
 
 ### 10.2 废弃注册表维护规则
 
-`deprecated_classes` 和 `deprecated_relations` 数组是**版本间迁移的契约**，必须严格维护：
+`migration_registry` 数组是**版本间迁移的契约**，必须严格维护。每条记录包含 `kind`（class / relation / attribute）以标识类型：
 
 ```json
 {
   "id": "BusinessObject",
+  "kind": "class",
   "deprecated_since": "2.0.0",
   "replaced_by": "Resource",
-  "migration_note": "将所有 L2/L3 中 parent: BusinessObject 替换为 parent: Resource"
+  "note": "将所有 L2/L3 中 parent: BusinessObject 替换为 parent: Resource"
 }
 ```
 
@@ -534,7 +535,7 @@ L1 PR Reviewer 在审核时，除技术正确性外，需重点检查：
 | L1 根类数量 | ≤ 3 | 4 | = 5 | **4** (警戒边缘) |
 | 最大继承深度 | ≤ 3 | 4 | > 4 | **3** (健康) |
 | 关系密度比 | ≤ 0.6 | 0.7–1.0 | > 1.0 | **0.50** (健康) |
-| deprecated_classes 积压数 | ≤ 3 | 4–7 | > 7 | — |
+| migration_registry 积压数 | ≤ 5 | 6–10 | > 10 | — |
 | L2 extension 间语义重叠类数 | 0 | 1–2 | > 2 | — |
 | 无双语定义的类数 | 0 | 1–3 | > 3 | **0** (健康) |
 
@@ -582,7 +583,7 @@ L1 PR Reviewer 在审核时，除技术正确性外，需重点检查：
 #### 结构健康
 - [ ] L1 类总数 ≤ 25，关系密度 ≤ 1.0
 - [ ] 所有继承链深度 ≤ 4
-- [ ] deprecated_classes 中的项是否已满足 2-minor 过渡期，可以在 CHANGELOG 中公告移除时间表
+- [ ] migration_registry 中的项是否已满足 2-minor 过渡期，可以在 CHANGELOG 中公告移除时间表
 
 #### 语义一致性
 - [ ] 随机抽查 5 个类：JSON definition 与 docs-site 说明是否一致
@@ -604,7 +605,7 @@ L1 PR Reviewer 在审核时，除技术正确性外，需重点检查：
 
 ```markdown
 #### 破坏性变更影响评估
-- [ ] 所有 deprecated_classes 下游迁移路径已在文档中说明
+- [ ] migration_registry 中所有项的下游迁移路径已在文档中说明
 - [ ] 已通知/更新所有已知的 L2/L3 使用者
 - [ ] Migration Guide 文档已发布
 

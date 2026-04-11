@@ -118,7 +118,12 @@ nav:
     - architecture/index.md
     - Four-Layer Model: architecture/four-layer-model.md
     - Inheritance & Extension: architecture/inheritance.md
-    - Platform Bindings (L0): architecture/platform-bindings.md
+  - Platform Bindings (L0):
+    - l0/index.md
+    - SQL DDL: l0/sql-ddl.md
+    - GraphQL Schema: l0/graphql.md
+    - JSON-LD Context: l0/json-ld.md
+    - OWL/RDF: l0/owl-rdf.md
   - Core Ontology (L1):
     - core/index.md
     - Classes Reference: core/classes.md
