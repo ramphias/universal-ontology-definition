@@ -7,7 +7,7 @@ Run as part of CI/CD or locally before submitting PRs.
 
 Usage:
     python scripts/validate_governance.py
-    python scripts/validate_governance.py --core core/universal_ontology_v1.json
+    python scripts/validate_governance.py --core l1-core/universal_ontology_v1.json
 """
 
 import json
@@ -369,7 +369,7 @@ def main():
     parser = argparse.ArgumentParser(description="L1 Core Governance Validator")
     parser.add_argument(
         "--core",
-        default="core/universal_ontology_v1.json",
+        default="l1-l1-core/universal_ontology_v1.json",
         help="Path to the L1 Core ontology JSON file",
     )
     args = parser.parse_args()

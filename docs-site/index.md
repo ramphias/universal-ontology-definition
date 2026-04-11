@@ -161,7 +161,7 @@ An Open, Standardized Four-Layer Enterprise Ontology Framework<br>
   </div>
 </a>
 
-<a class="quick-link-card" href="core/classes/">
+<a class="quick-link-card" href="l1-core/classes/">
   <span class="ql-icon">📦</span>
   <div class="ql-info">
     <strong>Core Classes | 核心类参考</strong>
@@ -177,7 +177,7 @@ An Open, Standardized Four-Layer Enterprise Ontology Framework<br>
   </div>
 </a>
 
-<a class="quick-link-card" href="extensions/">
+<a class="quick-link-card" href="l2-extensions/">
   <span class="ql-icon">🧩</span>
   <div class="ql-info">
     <strong>Extensions | 行业垂直扩展</strong>
@@ -185,7 +185,7 @@ An Open, Standardized Four-Layer Enterprise Ontology Framework<br>
   </div>
 </a>
 
-<a class="quick-link-card" href="extensions/create-extension/">
+<a class="quick-link-card" href="l2-extensions/create-extension/">
   <span class="ql-icon">🛠️</span>
   <div class="ql-info">
     <strong>Create Extension | 创建所属扩展</strong>

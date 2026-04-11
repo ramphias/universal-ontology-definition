@@ -16,7 +16,7 @@ def find_project_root(start_path):
     """Find project root by looking for core/ and extensions/ directories."""
     p = Path(start_path).resolve()
     for _ in range(10):
-        if (p / "core").is_dir() and (p / "extensions").is_dir():
+        if (p / "l1-core").is_dir() and (p / "l2-extensions").is_dir():
             return str(p)
         p = p.parent
     return str(Path(start_path).resolve())
@@ -24,9 +24,9 @@ def find_project_root(start_path):
 def discover_ontology_files(project_root):
     """Find all JSON ontology files in the project."""
     patterns = [
-        os.path.join(project_root, "core", "*.json"),
-        os.path.join(project_root, "extensions", "*", "*.json"),
-        os.path.join(project_root, "enterprise", "*", "*.json"),
+        os.path.join(project_root, "l1-core", "*.json"),
+        os.path.join(project_root, "l2-extensions", "*", "*.json"),
+        os.path.join(project_root, "l3-enterprise", "*", "*.json"),
         os.path.join(project_root, "private_enterprise", "*", "*.json"),
     ]
     results = []

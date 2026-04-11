@@ -14,7 +14,7 @@ def project_root():
 
 @pytest.fixture
 def core_ontology_path(project_root):
-    return project_root / "core" / "universal_ontology_v1.json"
+    return project_root / "l1-core" / "universal_ontology_v1.json"
 
 
 @pytest.fixture

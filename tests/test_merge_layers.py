@@ -327,10 +327,10 @@ class TestOutputGenerators:
 class TestDetectProjectRoot:
     def test_finds_root_from_scripts(self, project_root):
         result = detect_project_root(project_root / "scripts")
-        assert (result / "core").is_dir()
-        assert (result / "extensions").is_dir()
+        assert (result / "l1-core").is_dir()
+        assert (result / "l2-extensions").is_dir()
 
     def test_finds_root_from_core(self, project_root):
-        result = detect_project_root(project_root / "core")
-        assert (result / "core").is_dir()
-        assert (result / "extensions").is_dir()
+        result = detect_project_root(project_root / "l1-core")
+        assert (result / "l1-core").is_dir()
+        assert (result / "l2-extensions").is_dir()

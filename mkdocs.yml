@@ -125,18 +125,18 @@ nav:
     - JSON-LD Context: l0/json-ld.md
     - OWL/RDF: l0/owl-rdf.md
   - Core Ontology (L1):
-    - core/index.md
+    - l1-core/index.md
     - Classes Reference: core/classes.md
     - Relations Reference: core/relations.md
     - Axioms Reference: core/axioms.md
     - Sample Instances: core/instances.md
   - Industry and Domain Extension (L2):
-    - extensions/index.md
+    - l2-extensions/index.md
     - Consulting: extensions/consulting.md
     - Luxury Goods: extensions/luxury-goods.md
     - Create Your Own: extensions/create-extension.md
   - Enterprise Layer (L3):
-    - enterprise/index.md
+    - l3-enterprise/index.md
   - Glossary:
     - glossary/index.md
     - L1 Classes: glossary/l1-classes.md

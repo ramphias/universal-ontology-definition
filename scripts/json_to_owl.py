@@ -7,7 +7,7 @@ Generated .ttl files can be directly imported into Protégé, TopBraid, Stardog,
 
 Usage:
     python scripts/json_to_owl.py                          # Convert ALL ontology JSONs
-    python scripts/json_to_owl.py core/universal_ontology_v1.json   # Convert single file
+    python scripts/json_to_owl.py l1-core/universal_ontology_v1.json   # Convert single file
 """
 
 import json

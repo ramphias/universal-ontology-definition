@@ -114,10 +114,10 @@ Choose the binding that matches your technology stack:
 
 | Platform | Use Case | Directory |
 |:---|:---|:---|
-| **OWL/RDF** | Knowledge graphs, SPARQL queries | [`platform/owl-rdf/`](platform/owl-rdf/) |
-| **JSON-LD** | REST APIs, Linked Data | [`platform/json-ld/`](platform/json-ld/) |
-| **GraphQL** | Modern API layers, Frontend | [`platform/graphql/`](platform/graphql/) |
-| **SQL DDL** | Relational DBs, Data warehouses | [`platform/sql/`](platform/sql/) |
+| **OWL/RDF** | Knowledge graphs, SPARQL queries | [`platform/owl-rdf/`](l0-platform/owl-rdf/) |
+| **JSON-LD** | REST APIs, Linked Data | [`platform/json-ld/`](l0-platform/json-ld/) |
+| **GraphQL** | Modern API layers, Frontend | [`platform/graphql/`](l0-platform/graphql/) |
+| **SQL DDL** | Relational DBs, Data warehouses | [`platform/sql/`](l0-platform/sql/) |
 
 ### 3️⃣ Using Industry & Domain Extensions
 
@@ -152,7 +152,7 @@ Browse the `extensions/` directory and select the appropriate industry package. 
 
 For a comprehensive, step-by-step guide on creating or updating ontologies at any layer (L2/L3), including inheritance, validation, format conversion, and version management, see **[README_CN.md — Ontology 创建与更新完整指南](README_CN.md#-ontology-创建与更新完整指南)**.
 
-> 💡 **Pro Tip**: A working L3 sample is available at [`enterprise/acme-tech-solutions/`](enterprise/acme-tech-solutions/) — a fictional technology consulting company demonstrating the full workflow.
+> 💡 **Pro Tip**: A working L3 sample is available at [`enterprise/acme-tech-solutions/`](l3-enterprise/acme-tech-solutions/) — a fictional technology consulting company demonstrating the full workflow.
 
 ---
 
@@ -160,8 +160,9 @@ For a comprehensive, step-by-step guide on creating or updating ontologies at an
 
 | Industry | Directory | Classes | Relations | Status |
 |:---|:---|:---:|:---:|:---|
-| **Consulting** | [`extensions/consulting/`](extensions/consulting/) | 40+ | 34 | ![v1.1.0](https://img.shields.io/badge/v1.1.0-blue) |
-| **Luxury Goods** | [`extensions/luxury-goods/`](extensions/luxury-goods/) | 38 | 14 | ![v2.0.0](https://img.shields.io/badge/v2.0.0-blue) |
+| **Food & Beverage** | [`l2-extensions/fnb/`](l2-extensions/fnb/) | 14+ | 6+ | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
+| **Consulting** | [`l2-extensions/consulting/`](l2-extensions/consulting/) | 40+ | 34 | ![v1.1.0](https://img.shields.io/badge/v1.1.0-blue) |
+| **Luxury Goods** | [`l2-extensions/luxury-goods/`](l2-extensions/luxury-goods/) | 38 | 14 | ![v2.0.0](https://img.shields.io/badge/v2.0.0-blue) |
 
 *🌟 **We're looking for community contributions!** Finance, Manufacturing, Retail, Healthcare, Education, and more.*
 
@@ -171,10 +172,10 @@ For a comprehensive, step-by-step guide on creating or updating ontologies at an
 
 | Platform | Directory | Format | Status |
 |:---|:---|:---|:---|
-| **OWL/RDF** | [`platform/owl-rdf/`](platform/owl-rdf/) | Turtle (`.ttl`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
-| **JSON-LD** | [`platform/json-ld/`](platform/json-ld/) | Context (`.jsonld`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
-| **GraphQL** | [`platform/graphql/`](platform/graphql/) | Schema (`.graphql`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
-| **SQL DDL** | [`platform/sql/`](platform/sql/) | PG DDL (`.sql`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
+| **OWL/RDF** | [`platform/owl-rdf/`](l0-platform/owl-rdf/) | Turtle (`.ttl`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
+| **JSON-LD** | [`platform/json-ld/`](l0-platform/json-ld/) | Context (`.jsonld`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
+| **GraphQL** | [`platform/graphql/`](l0-platform/graphql/) | Schema (`.graphql`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
+| **SQL DDL** | [`platform/sql/`](l0-platform/sql/) | PG DDL (`.sql`) | ![v1.0.0](https://img.shields.io/badge/v1.0.0-green) |
 
 *🌟 **Want more?** Protobuf, Avro, Neo4j Cypher, and more are welcome contributions!*
 

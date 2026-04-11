@@ -7,7 +7,7 @@ WebProtégé requires a ZIP archive with:
   - imported .owl/.ttl files
 
 Usage:
-    python scripts/pack_for_webprotege.py core/universal_ontology_v1.ttl
+    python scripts/pack_for_webprotege.py l1-core/universal_ontology_v1.ttl
     python scripts/pack_for_webprotege.py private_enterprise/chanel-china/chanel_china_ontology_v1.ttl
     python scripts/pack_for_webprotege.py --all
 """
