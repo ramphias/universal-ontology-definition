@@ -3,13 +3,13 @@
   "metadata": {
     "name": "Universal Enterprise Ontology Core",
     "layer": "L1_universal_organization_ontology",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "Apache-2.0",
     "namespace": "https://github.com/ramphias/universal-ontology-definition/core/",
     "description": "适用于所有企业的组织通用 ontology 核心，定义了跨行业、跨企业的核心概念、关系与实例。v2.0 引入抽象域根类、泛型关系与版本演进机制。",
     "description_en": "Universal organization ontology core applicable to all enterprises. v2.0 introduces abstract domain roots, generalized relations, and lifecycle management.",
     "created": "2026-03-29",
-    "updated": "2026-04-03",
+    "updated": "2026-04-11",
     "contributors": ["Universal Ontology Definition Contributors"]
   },
   "classes": [
@@ -29,7 +29,7 @@
       "label_zh": "主体",
       "label_en": "Party",
       "parent": "Entity",
-      "abstract": false,
+      "abstract": true,
       "status": "stable",
       "since": "1.0.0",
       "definition": "可参与业务关系与治理关系的主体总类",
@@ -279,48 +279,103 @@
       "definition_en": "Metrics that measure the degree of goal achievement"
     }
   ],
-  "deprecated_classes": [
+  "attributes": [
     {
-      "id": "BusinessObject",
-      "replaced_by": "Resource",
-      "deprecated_since": "2.0.0",
-      "note": "BusinessObject was overly broad; replaced by Resource as a more precise abstract parent"
+      "id": "name",
+      "label_zh": "名称",
+      "label_en": "Name",
+      "owner_class": "Entity",
+      "datatype": "string",
+      "required": true,
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "实体的正式名称，所有子类继承",
+      "definition_en": "Formal name of the entity; inherited by all subclasses"
     },
     {
-      "id": "DocumentRecord",
-      "replaced_by": "Document",
-      "deprecated_since": "2.0.0",
-      "note": "Simplified naming; Document conveys the same semantics"
+      "id": "description",
+      "label_zh": "描述",
+      "label_en": "Description",
+      "owner_class": "Entity",
+      "datatype": "string",
+      "required": false,
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "对实体的自由文本描述",
+      "definition_en": "Free-text description of the entity"
     },
     {
-      "id": "Activity",
-      "replaced_by": null,
-      "deprecated_since": "2.0.0",
-      "note": "Sub-activities are now expressed via part_of relation on Process; no standalone class needed"
+      "id": "email",
+      "label_zh": "电子邮箱",
+      "label_en": "Email",
+      "owner_class": "Person",
+      "datatype": "string",
+      "required": false,
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "人员的电子邮箱地址",
+      "definition_en": "Email address of a person"
     },
     {
-      "id": "Channel",
-      "replaced_by": null,
-      "deprecated_since": "2.0.0",
-      "note": "Demoted to L2 common extension; not universally applicable to all enterprises"
+      "id": "effective_date",
+      "label_zh": "生效日期",
+      "label_en": "Effective Date",
+      "owner_class": "Policy",
+      "datatype": "date",
+      "required": false,
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "政策开始生效的日期",
+      "definition_en": "Date when the policy becomes effective"
     },
     {
-      "id": "MarketSegment",
-      "replaced_by": null,
-      "deprecated_since": "2.0.0",
-      "note": "Demoted to L2 common extension; marketing-domain concept"
+      "id": "severity",
+      "label_zh": "严重程度",
+      "label_en": "Severity",
+      "owner_class": "Risk",
+      "datatype": "enum",
+      "required": false,
+      "enum_values": ["low", "medium", "high", "critical"],
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "风险的严重程度等级",
+      "definition_en": "Severity level of the risk"
     },
     {
-      "id": "Location",
-      "replaced_by": null,
-      "deprecated_since": "2.0.0",
-      "note": "Demoted to L2 common extension; can be modeled as an attribute or a common extension"
+      "id": "target_value",
+      "label_zh": "目标值",
+      "label_en": "Target Value",
+      "owner_class": "KPI",
+      "datatype": "decimal",
+      "required": false,
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "KPI 的目标数值",
+      "definition_en": "Target numeric value for the KPI"
     },
     {
-      "id": "Decision",
-      "replaced_by": "Event",
-      "deprecated_since": "2.0.0",
-      "note": "Can be modeled as an Event subtype in L2; semantically a state change"
+      "id": "unit",
+      "label_zh": "计量单位",
+      "label_en": "Unit",
+      "owner_class": "KPI",
+      "datatype": "string",
+      "required": false,
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "KPI 的计量单位（如百分比、金额、数量）",
+      "definition_en": "Unit of measurement for the KPI (e.g., percentage, currency, count)"
+    },
+    {
+      "id": "is_automated",
+      "label_zh": "是否自动化",
+      "label_en": "Is Automated",
+      "owner_class": "Process",
+      "datatype": "boolean",
+      "required": false,
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "标识流程是否已自动化",
+      "definition_en": "Indicates whether the process is automated"
     }
   ],
   "relations": [
@@ -338,8 +393,8 @@
       "id": "part_of",
       "label_zh": "属于/组成",
       "label_en": "part of",
-      "domain": "Entity",
-      "range": "Entity",
+      "domain": null,
+      "range": null,
       "cardinality": "N:1",
       "inverse_of": "has_part",
       "since": "2.0.0",
@@ -448,37 +503,107 @@
       "since": "2.0.0",
       "definition": "运营元素由指标衡量（泛化了原 Goal→KPI 的限制）",
       "definition_en": "An operational element is measured by a KPI (generalizes the former Goal-only constraint)"
+    },
+    {
+      "id": "evaluates",
+      "label_zh": "评估",
+      "label_en": "evaluates",
+      "domain": "KPI",
+      "range": "Goal",
+      "cardinality": "N:M",
+      "since": "2.1.0",
+      "definition": "关键指标用于评估特定业务目标的达成情况",
+      "definition_en": "A KPI evaluates the achievement of a specific business goal"
     }
   ],
-  "deprecated_relations": [
+  "migration_registry": [
+    {
+      "id": "BusinessObject",
+      "kind": "class",
+      "replaced_by": "Resource",
+      "deprecated_since": "2.0.0",
+      "note": "BusinessObject was overly broad; replaced by Resource as a more precise abstract parent"
+    },
+    {
+      "id": "DocumentRecord",
+      "kind": "class",
+      "replaced_by": "Document",
+      "deprecated_since": "2.0.0",
+      "note": "Simplified naming; Document conveys the same semantics"
+    },
+    {
+      "id": "Activity",
+      "kind": "class",
+      "replaced_by": null,
+      "deprecated_since": "2.0.0",
+      "note": "Sub-activities are now expressed via part_of relation on Process; no standalone class needed"
+    },
+    {
+      "id": "Channel",
+      "kind": "class",
+      "replaced_by": null,
+      "deprecated_since": "2.0.0",
+      "note": "Demoted to L2 common extension; not universally applicable to all enterprises"
+    },
+    {
+      "id": "MarketSegment",
+      "kind": "class",
+      "replaced_by": null,
+      "deprecated_since": "2.0.0",
+      "note": "Demoted to L2 common extension; marketing-domain concept"
+    },
+    {
+      "id": "Location",
+      "kind": "class",
+      "replaced_by": null,
+      "deprecated_since": "2.0.0",
+      "note": "Demoted to L2 common extension; can be modeled as an attribute or a common extension"
+    },
+    {
+      "id": "Decision",
+      "kind": "class",
+      "replaced_by": "Event",
+      "deprecated_since": "2.0.0",
+      "note": "Can be modeled as an Event subtype in L2; semantically a state change"
+    },
     {
       "id": "belongs_to",
+      "kind": "relation",
       "replaced_by": "part_of",
-      "deprecated_since": "2.0.0"
+      "deprecated_since": "2.0.0",
+      "note": "Merged into part_of as a general-purpose containment relation"
     },
     {
       "id": "composed_of",
+      "kind": "relation",
       "replaced_by": "part_of",
-      "deprecated_since": "2.0.0"
+      "deprecated_since": "2.0.0",
+      "note": "Merged into part_of as a general-purpose containment relation"
     },
     {
       "id": "is_accountable_for",
+      "kind": "relation",
       "replaced_by": "accountable_for",
-      "deprecated_since": "2.0.0"
+      "deprecated_since": "2.0.0",
+      "note": "Renamed to accountable_for for brevity"
     },
     {
       "id": "constrained_by",
+      "kind": "relation",
       "replaced_by": "governed_by",
-      "deprecated_since": "2.0.0"
+      "deprecated_since": "2.0.0",
+      "note": "Renamed to governed_by for semantic clarity"
     },
     {
       "id": "supports",
+      "kind": "relation",
       "replaced_by": null,
       "deprecated_since": "2.0.0",
       "note": "Expressible via measured_by inverse reasoning or Goal-Capability mapping in L2"
     },
     {
       "id": "requires_decision",
+      "kind": "relation",
       "replaced_by": null,
       "deprecated_since": "2.0.0",
       "note": "Decision demoted to L2; expressible as Event subtype"
@@ -697,6 +822,19 @@
       "since": "2.0.0",
       "definition": "每个角色至少被一个主体扮演",
       "definition_en": "Every Role is played by at least one Party"
+    },
+    {
+      "id": "ax_kpi_evaluates_goal",
+      "type": "existential",
+      "label_zh": "每个KPI必须评估某个目标",
+      "label_en": "Every KPI must evaluate some Goal",
+      "subject_class": "KPI",
+      "relation": "evaluates",
+      "object_class": "Goal",
+      "status": "stable",
+      "since": "2.1.0",
+      "definition": "每个关键指标至少关联一个其试图评估的目标",
+      "definition_en": "Every KPI evaluates at least one Goal"
     }
   ],
   "sample_instances": [

@@ -4,7 +4,7 @@
   "title": "Universal Ontology Core Schema",
   "description": "JSON Schema for validating L1 Universal Enterprise Ontology Core definitions. v2.0 adds abstract classes, lifecycle status, cardinality, and deprecation tracking.",
   "type": "object",
-  "required": ["metadata", "classes", "relations"],
+  "required": ["metadata", "classes", "relations", "attributes"],
   "properties": {
     "$schema": {
       "type": "string",
@@ -124,28 +124,74 @@
         }
       }
     },
-    "deprecated_classes": {
+    "attributes": {
       "type": "array",
-      "description": "Registry of classes removed or demoted from L1, with migration guidance",
+      "description": "Data properties (attributes) that describe intrinsic characteristics of classes. Unlike relations (which link class to class), attributes assign primitive-typed values to instances.",
       "items": {
         "type": "object",
-        "required": ["id", "deprecated_since"],
+        "required": ["id", "owner_class", "datatype", "definition"],
         "properties": {
           "id": {
             "type": "string",
-            "pattern": "^[A-Z][a-zA-Z0-9]*$"
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "snake_case attribute identifier"
           },
-          "replaced_by": {
-            "type": ["string", "null"],
-            "description": "Replacement class ID, or null if demoted to L2"
+          "label_zh": {
+            "type": "string",
+            "description": "Chinese label"
+          },
+          "label_en": {
+            "type": "string",
+            "description": "English label"
+          },
+          "owner_class": {
+            "type": "string",
+            "pattern": "^[A-Z][a-zA-Z0-9]*$",
+            "description": "The class this attribute belongs to. Subclasses inherit it."
+          },
+          "datatype": {
+            "type": "string",
+            "enum": ["string", "integer", "decimal", "boolean", "date", "datetime", "uri", "enum"],
+            "description": "Primitive data type of the attribute value"
+          },
+          "required": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether this attribute is mandatory for instances of the owner class"
+          },
+          "enum_values": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Allowed values when datatype is 'enum'"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["stable", "experimental", "deprecated"],
+            "default": "stable",
+            "description": "Lifecycle status"
+          },
+          "since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "description": "Version when this attribute was first introduced"
           },
           "deprecated_since": {
             "type": "string",
-            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "description": "Version when this attribute was deprecated"
           },
-          "note": {
+          "replaced_by": {
+            "type": ["string", "null"],
+            "description": "ID of the attribute that replaces this one, if deprecated"
+          },
+          "definition": {
             "type": "string",
-            "description": "Migration guidance for downstream consumers"
+            "minLength": 1,
+            "description": "Chinese definition"
+          },
+          "definition_en": {
+            "type": "string",
+            "description": "English definition"
           }
         }
       }
@@ -168,12 +214,12 @@
             "type": "string"
           },
           "domain": {
-            "type": "string",
-            "description": "Source class ID — prefer abstract parent classes to enable L2 reuse"
+            "type": ["string", "null"],
+            "description": "Source class ID — prefer abstract parent classes to enable L2 reuse. Null implies universal applicability."
           },
           "range": {
-            "type": "string",
-            "description": "Target class ID — prefer abstract parent classes to enable L2 reuse"
+            "type": ["string", "null"],
+            "description": "Target class ID — prefer abstract parent classes to enable L2 reuse. Null implies universal applicability."
           },
           "cardinality": {
             "type": "string",
@@ -208,26 +254,33 @@
         }
       }
     },
-    "deprecated_relations": {
+    "migration_registry": {
       "type": "array",
-      "description": "Registry of relations removed or merged, with migration guidance",
+      "description": "Historical registry of classes, relations, or attributes that have been removed from their arrays. Provides migration guidance for downstream consumers. Items still present in their arrays with status='deprecated' do NOT need an entry here — this is only for fully removed items.",
       "items": {
         "type": "object",
-        "required": ["id", "deprecated_since"],
+        "required": ["id", "kind", "deprecated_since"],
         "properties": {
           "id": {
             "type": "string",
-            "pattern": "^[a-z][a-z0-9_]*$"
+            "description": "Original ID of the removed item"
+          },
+          "kind": {
+            "type": "string",
+            "enum": ["class", "relation", "attribute"],
+            "description": "What type of item was removed"
           },
           "replaced_by": {
-            "type": ["string", "null"]
+            "type": ["string", "null"],
+            "description": "Replacement ID, or null if demoted to L2 / removed entirely"
           },
           "deprecated_since": {
             "type": "string",
             "pattern": "^\\d+\\.\\d+\\.\\d+$"
           },
           "note": {
-            "type": "string"
+            "type": "string",
+            "description": "Migration guidance for downstream consumers"
           }
         }
       }
@@ -344,6 +397,17 @@
           "label_zh": {
             "type": "string",
             "description": "Chinese label"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["stable", "experimental", "deprecated"],
+            "default": "stable",
+            "description": "Lifecycle status"
+          },
+          "since": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "description": "Version when this instance was first introduced"
           }
         }
       }

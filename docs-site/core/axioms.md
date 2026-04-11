@@ -73,6 +73,7 @@ All axiom IDs use the `ax_` prefix with snake_case naming (e.g., `ax_part_of_tra
 | `ax_process_realizes_capability` | Capability | `realized_by` | Process | Every Capability is realized by at least one Process |
 | `ax_risk_mitigated_by_control` | Risk | `mitigated_by` | Control | Every Risk is mitigated by at least one Control |
 | `ax_kpi_measures_operational` | KPI | `measured_by` | Operational | Every KPI measures at least one Operational element |
+| `ax_kpi_evaluates_goal` | KPI | `evaluates` | Goal | Every KPI evaluates at least one Goal |
 | `ax_plays_role_domain_party` | Role | `plays_role` | Party | Every Role is played by at least one Party |
 
 ### Universal Constraints

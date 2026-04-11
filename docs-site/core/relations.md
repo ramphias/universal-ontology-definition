@@ -9,7 +9,7 @@ All 12 standard relations defined in L1 v2.0. Each relation connects a **domain*
 ```mermaid
 graph LR
     Party -->|plays_role| Role
-    Entity -->|part_of| Entity
+    Any -->|part_of| Any
     Party -->|owns| Resource
     Role -->|accountable_for| Operational
     Capability -->|realized_by| Process
@@ -20,6 +20,7 @@ graph LR
     Risk -->|mitigated_by| Control
     Event -->|triggered_by| Process
     Operational -->|measured_by| KPI
+    KPI -->|evaluates| Goal
 ```
 
 ---
@@ -44,8 +45,8 @@ graph LR
 |:---|:---|
 | **ID** | `part_of` |
 | **中文** | 属于/组成 |
-| **Domain** | `Entity` |
-| **Range** | `Entity` |
+| **Domain** | `Any` (null) |
+| **Range** | `Any` (null) |
 | **Cardinality** | N:1 |
 | **Definition** | An entity is part of another entity (unifies belongs_to and composed_of) |
 | **定义** | 一个实体是另一个实体的组成部分（合并了 belongs_to 和 composed_of） |
@@ -181,3 +182,15 @@ graph LR
 | **Cardinality** | N:M |
 | **Definition** | An operational element is measured by a KPI (generalizes the former Goal-only constraint) |
 | **定义** | 运营元素由指标衡量（泛化了原 Goal→KPI 的限制） |
+
+### evaluates
+
+| Field | Value |
+|:---|:---|
+| **ID** | `evaluates` |
+| **中文** | 评估 |
+| **Domain** | `KPI` |
+| **Range** | `Goal` |
+| **Cardinality** | N:M |
+| **Definition** | A KPI evaluates the achievement of a specific business goal |
+| **定义** | 关键指标用于评估特定业务目标的达成情况 |
