@@ -7,44 +7,19 @@ Universal Ontology Definition 采用**技术层—通用层—行业层—企业
 
 ```mermaid
 graph TB
-    subgraph L3["L3: Enterprise Customization Layer (企业定制层)"]
-        direction LR
-        Oa["Org A"] 
-        Ob["Org B"] 
-        Oc["Org C"]
-    end
-    
-    subgraph L2["L2: Industry & Domain Extensions (行业扩展层)"]
-        direction LR
-        C["Consulting"]
-        L["Luxury"]
-        F["Finance"]
-        M["Manufacturing"]
-        R["Retail"]
-    end
-    
-    subgraph L1["L1: Universal Enterprise Ontology Core (通用核心)"]
-        direction LR
-        L1Subs["Entity • Governance • Operational • Measurement"]
-    end
-    
-    subgraph L0["L0: Platform & Syntax Bindings (技术平台层)"]
-        direction LR
-        OWL["OWL/RDF"]
-        JLD["JSON-LD"]
-        GQL["GraphQL"]
-        SQL["SQL DDL"]
-    end
+    L3["**L3: Enterprise Customization Layer (企业定制层)**<br/>Org A &nbsp;&nbsp;|&nbsp;&nbsp; Org B &nbsp;&nbsp;|&nbsp;&nbsp; Org C"]
+    L2["**L2: Industry & Domain Extensions (行业扩展层)**<br/>Consulting &nbsp;&nbsp;|&nbsp;&nbsp; Luxury &nbsp;&nbsp;|&nbsp;&nbsp; Finance &nbsp;&nbsp;|&nbsp;&nbsp; Manufacturing &nbsp;&nbsp;|&nbsp;&nbsp; Retail"]
+    L1["**L1: Universal Enterprise Ontology Core (通用核心)**<br/>Entity &nbsp;•&nbsp; Governance &nbsp;•&nbsp; Operational &nbsp;•&nbsp; Measurement"]
+    L0["**L0: Platform & Syntax Bindings (技术平台层)**<br/>OWL/RDF &nbsp;&nbsp;|&nbsp;&nbsp; JSON-LD &nbsp;&nbsp;|&nbsp;&nbsp; GraphQL &nbsp;&nbsp;|&nbsp;&nbsp; SQL DDL"]
     
     L3 -->|Tenant isolation| L2
     L2 -->|Community driven| L1
     L1 -->|Serialization| L0
     
-    style L3 fill:#f4f6f8,stroke:#90a4ae,stroke-dasharray:5 5
-    style L2 fill:#e3f2fd,stroke:#64b5f6,stroke-dasharray:5 5
-    style L1 fill:#c8e6c9,stroke:#388e3c
-    style L0 fill:#fff9c4,stroke:#f9a825
-    style L1Subs fill:transparent,stroke:none,font-weight:bold
+    style L3 fill:#f4f6f8,stroke:#90a4ae,stroke-dasharray:5 5,stroke-width:2px,padding:15px
+    style L2 fill:#e3f2fd,stroke:#64b5f6,stroke-dasharray:5 5,stroke-width:2px,padding:15px
+    style L1 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,padding:15px
+    style L0 fill:#fff9c4,stroke:#f9a825,stroke-width:2px,padding:15px
 ```
 
 ## L0 — Platform & Syntax Bindings | 技术平台绑定层
