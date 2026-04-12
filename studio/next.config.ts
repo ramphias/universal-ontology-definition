@@ -24,8 +24,8 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            // Hardened: Removed unsafe-eval and unsafe-inline as requested. (Requires nonces for full React hydration compatibility).
-            value: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://avatars.githubusercontent.com; base-uri 'self'; object-src 'none';",
+            // Restored unsafe-inline to style-src (Required for Next.js React hydration)
+            value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://avatars.githubusercontent.com; base-uri 'self'; object-src 'none';",
           },
         ],
       },

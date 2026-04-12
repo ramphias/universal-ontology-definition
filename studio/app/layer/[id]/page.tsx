@@ -123,7 +123,7 @@ async function OntologyContent({ layerId }: { layerId: string }) {
          <h3 className="text-base text-red-400 mb-2 font-medium flex gap-2 items-center">
             <span className="bg-red-500/20 px-2 py-0.5 rounded">Error</span> Fetch failed
          </h3>
-         <p className="mb-4 text-red-300 font-mono">{error?.message || "Unknown Error"}</p>
+         <p className="mb-4 text-red-300 font-mono">Failed to load layer details from repository.</p>
          <div className="bg-black/40 p-4 rounded text-xs text-red-300 leading-relaxed max-w-2xl">
            If it says "file mapping is not yet fully configured", it means we haven't linked this layer to a specific JSON file in <code className="text-white px-1">lib/github.ts</code> yet.<br/><br/>
            If it says "API Rate Limit" or "Not Found", ensure your <code className="text-white px-1">GITHUB_TOKEN</code> is set correctly in <code className="text-white px-1">.env.local</code>.
