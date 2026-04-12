@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SidebarNav } from "@/components/SidebarNav";
+import SessionWrapper from "@/components/SessionWrapper";
+import { AuthWidget } from "@/components/AuthWidget";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,6 +31,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex h-full overflow-hidden bg-background text-foreground">
+        <SessionWrapper>
         {/* Sidebar */}
         <aside className="w-64 bg-surface border-r border-[#333] flex flex-col">
           <div className="h-16 px-6 flex items-center border-b border-[#333]">
@@ -51,9 +54,7 @@ export default function RootLayout({
               Universal Ontology Definition
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-xs px-3 py-1.5 bg-[#333] rounded text-white font-medium hover:bg-[#444] cursor-pointer transition-colors">
-                Connect GitHub Account
-              </span>
+              <AuthWidget />
             </div>
           </header>
           {/* Page */}
@@ -61,6 +62,7 @@ export default function RootLayout({
             {children}
           </main>
         </div>
+        </SessionWrapper>
       </body>
     </html>
   );

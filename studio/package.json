@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@netlify/blobs": "^10.7.4",
     "@octokit/rest": "^22.0.1",
     "@types/d3-force": "^3.0.10",
     "@types/dagre": "^0.7.54",
@@ -19,6 +20,7 @@
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
     "next": "16.2.3",
+    "next-auth": "^4.24.13",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "tailwind-merge": "^3.5.0"
