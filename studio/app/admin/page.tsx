@@ -87,7 +87,7 @@ export default function AdminPage() {
                                 value={newUsername}
                                 onChange={(e) => setNewUsername(e.target.value)}
                                 className="w-full bg-[#222] border border-[#333] rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-deloitte-green"
-                                placeholder="e.g. ramphias"
+                                placeholder="e.g. username"
                             />
                         </div>
                         <div>
@@ -140,7 +140,6 @@ export default function AdminPage() {
                                                 <button 
                                                     onClick={() => handleRemoveUser(username)}
                                                     className="text-xs text-red-500 hover:text-red-400 disabled:opacity-50"
-                                                    disabled={username.toLowerCase() === 'ramphias'}
                                                 >
                                                     Revoke
                                                 </button>
