@@ -67,7 +67,7 @@ export async function getAvailableL2Extensions() {
     const headers: Record<string, string> = { "User-Agent": "Ontology-Studio-App" };
     if (process.env.GITHUB_TOKEN) headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
 
-    const response = await fetch(url, { headers, next: { revalidate: 60 } });
+    const response = await fetch(url, { headers, cache: "no-store" });
     if (!response.ok) return [];
     
     const data = await response.json();
@@ -132,16 +132,18 @@ export async function getAvailableL3Enterprises() {
   if (localData) return localData;
 
   try {
-    const response = await octokit.repos.getContent({
-      owner: REPO_OWNER,
-      repo: REPO_NAME,
-      path: "l3-enterprise",
-    });
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/l3-enterprise`;
+    const headers: Record<string, string> = { "User-Agent": "Ontology-Studio-App" };
+    if (process.env.GITHUB_TOKEN) headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
 
-    if (Array.isArray(response.data)) {
-      return response.data
-        .filter((item) => item.type === "dir" && !item.name.startsWith("_"))
-        .map((dir) => ({
+    const response = await fetch(url, { headers, cache: "no-store" });
+    if (!response.ok) return [];
+
+    const data = await response.json();
+    if (Array.isArray(data)) {
+      return data
+        .filter((item: any) => item.type === "dir" && !item.name.startsWith("_"))
+        .map((dir: any) => ({
           id: dir.name,
           name: dir.name.toUpperCase().replace("-", " "),
         }));

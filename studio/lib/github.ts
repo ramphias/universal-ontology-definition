@@ -46,7 +46,7 @@ export async function getOntologyLayer(layerId: string) {
       headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
 
-    const response = await fetch(url, { headers, next: { revalidate: 0 } });
+    const response = await fetch(url, { headers, cache: "no-store" });
     
     if (!response.ok) {
       throw new Error(`GitHub API returned ${response.status} ${response.statusText}`);
