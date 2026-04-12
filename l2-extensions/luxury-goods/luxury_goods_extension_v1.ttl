@@ -3,17 +3,17 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix uod: <https://w3id.org/uod/core/> .
-@prefix uod-lux: <https://w3id.org/uod/addon/luxury-goods/> .
+@prefix uod-lux: <https://w3id.org/uod/addon/luxury/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ════════════════════════════════════════════════════════════════════════════
-# Luxury goods industry addon ontology covering brand manageme — OWL 2 / RDF Turtle
-# Auto-generated from JSON by json_to_owl.py on 2026-04-05 00:36
+# Luxury goods Industry and Domain Extension ontology covering — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
 # ════════════════════════════════════════════════════════════════════════════
 
 uod-lux:Ontology a owl:Ontology ;
-    rdfs:label "Luxury goods industry addon ontology covering brand manageme"@en ;
-    rdfs:label "奢侈品行业 addon ontology 数据，覆盖品牌管理、产品生命周期、全渠道零售、客户体验、供应链溯源与鉴真、稀缺性管控与行业合规"@zh ;
+    rdfs:label "Luxury goods Industry and Domain Extension ontology covering"@en ;
+    rdfs:label "奢侈品行业 extension ontology 数据，覆盖品牌管理、产品生命周期、全渠道零售、客户体验、供应链溯源与鉴真、稀缺性管控与行业合规"@zh ;
     owl:imports <https://w3id.org/uod/core/> ;
     owl:versionInfo "2.0.0" .
 

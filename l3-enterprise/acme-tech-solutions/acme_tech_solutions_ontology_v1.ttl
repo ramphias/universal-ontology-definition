@@ -4,19 +4,19 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix uod: <https://w3id.org/uod/core/> .
-@prefix uod-lux: <https://w3id.org/uod/addon/luxury-goods/> .
+@prefix uod-con: <https://w3id.org/uod/addon/consulting/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ════════════════════════════════════════════════════════════════════════════
 # Acme Tech Solutions — OWL 2 / RDF Turtle
-# Auto-generated from JSON by json_to_owl.py on 2026-04-05 00:39
+# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
 # ════════════════════════════════════════════════════════════════════════════
 
 ent:Ontology a owl:Ontology ;
     rdfs:label "Acme Tech Solutions"@en ;
     rdfs:label "极客方舟科技 L3 企业定制 ontology — 示例虚拟企业，演示 L3 层的完整创建流程"@zh ;
     owl:imports <https://w3id.org/uod/core/> ;
-    owl:imports <https://w3id.org/uod/addon/luxury-goods/> ;
+    owl:imports <https://w3id.org/uod/addon/consulting/> ;
     owl:versionInfo "1.0.0" .
 
 # ────────────────────────────────────────
@@ -219,7 +219,7 @@ ent:has_tech_division a owl:ObjectProperty ;
     rdfs:comment "公司设有按技术方向划分的事业部"@zh .
 
 ent:designs_solution_for a owl:ObjectProperty ;
-    rdfs:subPropertyOf uod:staffed_on ;
+    rdfs:subPropertyOf uod-con:staffed_on ;
     rdfs:label "designs solution for"@en ;
     rdfs:label "为…设计解决方案"@zh ;
     rdfs:domain ent:SolutionArchitectRole ;
@@ -245,7 +245,7 @@ ent:assessed_by_readiness a owl:ObjectProperty ;
     rdfs:comment "云迁移项目起始阶段须经云就绪评估"@zh .
 
 ent:reviewed_by_arb a owl:ObjectProperty ;
-    rdfs:subPropertyOf uod:reviewed_by ;
+    rdfs:subPropertyOf uod-con:reviewed_by ;
     rdfs:label "reviewed by ARB"@en ;
     rdfs:label "经架构评审委员会审核"@zh ;
     rdfs:domain ent:ArchitectureBlueprint ;
@@ -254,7 +254,7 @@ ent:reviewed_by_arb a owl:ObjectProperty ;
     rdfs:comment "架构蓝图须经架构评审委员会审核通过"@zh .
 
 ent:uses_accelerator a owl:ObjectProperty ;
-    rdfs:subPropertyOf uod:contributes_to_knowledge ;
+    rdfs:subPropertyOf uod-con:contributes_to_knowledge ;
     rdfs:label "uses accelerator"@en ;
     rdfs:label "使用技术加速器"@zh ;
     rdfs:domain uod-con:Engagement ;
@@ -271,7 +271,7 @@ ent:certified_through a owl:ObjectProperty ;
     rdfs:comment "顾问通过技术认证流程获取资质"@zh .
 
 ent:publishes_radar a owl:ObjectProperty ;
-    rdfs:subPropertyOf uod:publishes_thought_leadership ;
+    rdfs:subPropertyOf uod-con:publishes_thought_leadership ;
     rdfs:label "publishes tech radar"@en ;
     rdfs:label "发布技术雷达"@zh ;
     rdfs:domain ent:TechConsultingDivision ;
@@ -280,7 +280,7 @@ ent:publishes_radar a owl:ObjectProperty ;
     rdfs:comment "技术事业部定期发布技术雷达报告"@zh .
 
 ent:governed_by_oss_policy a owl:ObjectProperty ;
-    rdfs:subPropertyOf uod:governed_by_policy ;
+    rdfs:subPropertyOf uod-con:governed_by_policy ;
     rdfs:label "governed by OSS policy"@en ;
     rdfs:label "受开源合规策略约束"@zh ;
     rdfs:domain uod-con:Engagement ;

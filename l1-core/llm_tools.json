@@ -1,0 +1,97 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "get_class",
+      "description": "Get detailed information about an ontology class, including its parent, children, attributes, and relations.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "class_id": {
+            "type": "string",
+            "description": "The class ID. Available: Asset, Capability, Control, DataObject, Document, Entity, Event, Goal, Governance, KPI, Measurement, Operational, OrgUnit, Organization, Party, Person, Policy, Process, ProductService, Resource, Risk, Role, Rule, SystemApplication"
+          }
+        },
+        "required": [
+          "class_id"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "find_path",
+      "description": "Find the shortest relationship path between two classes in the ontology.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "from_class": {
+            "type": "string",
+            "description": "Source class ID"
+          },
+          "to_class": {
+            "type": "string",
+            "description": "Target class ID"
+          },
+          "max_hops": {
+            "type": "integer",
+            "description": "Maximum path length (default: 4)",
+            "default": 4
+          }
+        },
+        "required": [
+          "from_class",
+          "to_class"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "list_instances",
+      "description": "List all instances of a given class, including instances of its subclasses.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "class_id": {
+            "type": "string",
+            "description": "The class ID to query instances for"
+          }
+        },
+        "required": [
+          "class_id"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "query_relations",
+      "description": "Get all outgoing or incoming relations for a class.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "class_id": {
+            "type": "string",
+            "description": "The class ID"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "outgoing",
+              "incoming",
+              "both"
+            ],
+            "default": "both"
+          }
+        },
+        "required": [
+          "class_id"
+        ]
+      }
+    }
+  }
+]

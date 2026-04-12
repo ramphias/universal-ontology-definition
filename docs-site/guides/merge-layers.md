@@ -23,15 +23,15 @@ L3 Acme Tech (26)     ─┘                       ├── merged_ontology.jso
 python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
 
 # Merge L2 extension + L1 core only
-python scripts/merge_layers.py extensions/consulting/consulting_extension_v1.json
+python scripts/merge_layers.py l2-extensions/consulting/consulting_extension_v1.json
 
 # Specify output directory
-python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json -o output/acme
+python scripts/merge_layers.py l3-enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json -o output/acme
 ```
 
 ## How It Works
 
-1. **Dependency Resolution** — Reads the target file's `extends` field, recursively follows the chain (L3 -> L2 -> L1), auto-discovers referenced JSON files by scanning `core/`, `extensions/*/`, `enterprise/*/`
+1. **Dependency Resolution** — Reads the target file's `extends` field, recursively follows the chain (L3 -> L2 -> L1), auto-discovers referenced JSON files by scanning `l1-core/`, `l2-extensions/*/`, `l3-enterprise/*/`
 
 2. **Ordered Merge** — Merges layers bottom-up: L1 first, then L2 extensions, then L3 enterprise. Each element gets a `source_layer` field for traceability
 

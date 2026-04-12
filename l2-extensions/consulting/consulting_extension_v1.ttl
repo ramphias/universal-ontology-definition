@@ -7,13 +7,13 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ════════════════════════════════════════════════════════════════════════════
-# Consulting industry addon ontology covering engagements, pra — OWL 2 / RDF Turtle
-# Auto-generated from JSON by json_to_owl.py on 2026-04-05 00:36
+# Consulting Industry and Domain Extension ontology covering e — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
 # ════════════════════════════════════════════════════════════════════════════
 
 uod-con:Ontology a owl:Ontology ;
-    rdfs:label "Consulting industry addon ontology covering engagements, pra"@en ;
-    rdfs:label "咨询行业 addon ontology 数据，覆盖咨询项目、业务实践、方法论、交付物、客户关系、知识管理与人才配置"@zh ;
+    rdfs:label "Consulting Industry and Domain Extension ontology covering e"@en ;
+    rdfs:label "咨询行业 extension ontology 数据，覆盖咨询项目、业务实践、方法论、交付物、客户关系、知识管理与人才配置"@zh ;
     owl:imports <https://w3id.org/uod/core/> ;
     owl:versionInfo "1.1.0" .
 

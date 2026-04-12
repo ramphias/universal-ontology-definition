@@ -1,0 +1,338 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix uod-techno: <https://w3id.org/uod/addon/technology/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# Technology industry extension covering SaaS products, platfo — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
+# ════════════════════════════════════════════════════════════════════════════
+
+uod-techno:Ontology a owl:Ontology ;
+    rdfs:label "Technology industry extension covering SaaS products, platfo"@en ;
+    rdfs:label "科技行业扩展 ontology，覆盖 SaaS 产品、平台工程、DevOps、AI/ML、云基础设施和技术团队管理"@zh ;
+    owl:imports <https://w3id.org/uod/core/> ;
+    owl:versionInfo "1.0.0" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+uod-techno:TechCompany a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Technology Company"@en ;
+    rdfs:label "科技公司"@zh ;
+    rdfs:comment "An enterprise with technology products or platforms as its core business"@en ;
+    rdfs:comment "以技术产品或平台为核心业务的企业"@zh .
+
+uod-techno:EngineeringTeam a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Engineering Team"@en ;
+    rdfs:label "工程团队"@zh ;
+    rdfs:comment "An organizational unit responsible for product development and technical delivery"@en ;
+    rdfs:comment "负责产品研发和技术交付的工程组织单元"@zh .
+
+uod-techno:SaaSProduct a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "SaaS Product"@en ;
+    rdfs:label "SaaS 产品"@zh ;
+    rdfs:comment "Cloud-based software-as-a-service product delivered via subscription model"@en ;
+    rdfs:comment "以订阅模式交付的云端软件即服务产品"@zh .
+
+uod-techno:PlatformService a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Platform Service"@en ;
+    rdfs:label "平台服务"@zh ;
+    rdfs:comment "Platform products providing foundational capabilities, e.g., API platforms, data platforms, AI platforms"@en ;
+    rdfs:comment "为开发者或企业提供基础能力的平台类产品，如 API 平台、数据平台、AI 平台"@zh .
+
+uod-techno:APIEndpoint a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "API Endpoint"@en ;
+    rdfs:label "API 接口"@zh ;
+    rdfs:comment "An externally exposed application programming interface endpoint"@en ;
+    rdfs:comment "对外暴露的应用程序编程接口端点"@zh .
+
+uod-techno:Microservice a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Microservice"@en ;
+    rdfs:label "微服务"@zh ;
+    rdfs:comment "A fine-grained service unit that can be independently deployed and scaled"@en ;
+    rdfs:comment "独立部署和扩展的细粒度服务单元"@zh .
+
+uod-techno:CloudInfrastructure a owl:Class ;
+    rdfs:subClassOf uod:Asset ;
+    rdfs:label "Cloud Infrastructure"@en ;
+    rdfs:label "云基础设施"@zh ;
+    rdfs:comment "Compute, storage, and networking resources running on public or private cloud"@en ;
+    rdfs:comment "在公有云或私有云上运行的计算、存储和网络资源"@zh .
+
+uod-techno:DataPipeline a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Data Pipeline"@en ;
+    rdfs:label "数据管道"@zh ;
+    rdfs:comment "Automated data flow from ingestion, transformation, to loading into target systems"@en ;
+    rdfs:comment "从数据源采集、转换和加载到目标系统的自动化数据流程"@zh .
+
+uod-techno:MLModel a owl:Class ;
+    rdfs:subClassOf uod:Asset ;
+    rdfs:label "ML Model"@en ;
+    rdfs:label "机器学习模型"@zh ;
+    rdfs:comment "A trained machine learning model asset used for prediction or classification"@en ;
+    rdfs:comment "训练后用于预测或分类的机器学习模型资产"@zh .
+
+uod-techno:Sprint a owl:Class ;
+    rdfs:subClassOf uod:Event ;
+    rdfs:label "Sprint"@en ;
+    rdfs:label "迭代"@zh ;
+    rdfs:comment "A fixed time-box work iteration in agile development, typically 1-4 weeks"@en ;
+    rdfs:comment "敏捷开发中固定时间窗口的工作迭代，通常 1-4 周"@zh .
+
+uod-techno:FeatureRequest a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Feature Request"@en ;
+    rdfs:label "需求工单"@zh ;
+    rdfs:comment "A structured ticket describing a new product feature or enhancement request"@en ;
+    rdfs:comment "描述产品新功能或改进需求的结构化工单"@zh .
+
+uod-techno:Incident a owl:Class ;
+    rdfs:subClassOf uod:Event ;
+    rdfs:label "Incident"@en ;
+    rdfs:label "故障事件"@zh ;
+    rdfs:comment "An abnormal production event affecting service availability or performance"@en ;
+    rdfs:comment "影响服务可用性或性能的生产环境异常事件"@zh .
+
+uod-techno:Deployment a owl:Class ;
+    rdfs:subClassOf uod:Event ;
+    rdfs:label "Deployment"@en ;
+    rdfs:label "部署"@zh ;
+    rdfs:comment "An operational event releasing code changes to the production environment"@en ;
+    rdfs:comment "将代码变更发布到生产环境的操作事件"@zh .
+
+uod-techno:TechDebt a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Technical Debt"@en ;
+    rdfs:label "技术债务"@zh ;
+    rdfs:comment "Code quality issues accumulated from short-term compromises, increasing future maintenance cost and failure risk"@en ;
+    rdfs:comment "因短期妥协积累的代码质量问题，增加未来维护成本和系统故障风险"@zh .
+
+uod-techno:SecurityVulnerability a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Security Vulnerability"@en ;
+    rdfs:label "安全漏洞"@zh ;
+    rdfs:comment "Exploitable weaknesses in systems, e.g., code vulnerabilities, misconfigurations, dependency CVEs"@en ;
+    rdfs:comment "系统中可被利用的安全弱点，如代码漏洞、配置错误、依赖库漏洞"@zh .
+
+uod-techno:ProductManager a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Product Manager"@en ;
+    rdfs:label "产品经理"@zh ;
+    rdfs:comment "A role responsible for product strategy, roadmap, and requirement prioritization"@en ;
+    rdfs:comment "负责产品战略、路线图和需求优先级的角色"@zh .
+
+uod-techno:SoftwareEngineer a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Software Engineer"@en ;
+    rdfs:label "软件工程师"@zh ;
+    rdfs:comment "A technical role designing, writing, and maintaining software code"@en ;
+    rdfs:comment "设计、编写和维护软件代码的技术角色"@zh .
+
+uod-techno:SREEngineer a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Site Reliability Engineer"@en ;
+    rdfs:label "SRE 工程师"@zh ;
+    rdfs:comment "An engineering role responsible for system reliability, observability, and operational automation"@en ;
+    rdfs:comment "负责系统可靠性、可观测性和自动化运维的工程角色"@zh .
+
+uod-techno:DataEngineer a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Data Engineer"@en ;
+    rdfs:label "数据工程师"@zh ;
+    rdfs:comment "A technical role building and maintaining data pipelines, warehouses, and data lakes"@en ;
+    rdfs:comment "构建和维护数据管道、数据仓库和数据湖的技术角色"@zh .
+
+uod-techno:SLAPolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Service Level Agreement Policy"@en ;
+    rdfs:label "SLA 策略"@zh ;
+    rdfs:comment "Policy defining service availability, response time, and recovery commitments"@en ;
+    rdfs:comment "定义服务可用性、响应时间和故障恢复承诺的策略"@zh .
+
+uod-techno:CICDProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "CI/CD Process"@en ;
+    rdfs:label "CI/CD 流程"@zh ;
+    rdfs:comment "Continuous integration and delivery pipeline from commit, build, test to automated deployment"@en ;
+    rdfs:comment "从代码提交、自动构建、测试到自动部署的持续集成和交付流程"@zh .
+
+uod-techno:IncidentResponseProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Incident Response Process"@en ;
+    rdfs:label "故障响应流程"@zh ;
+    rdfs:comment "Emergency response from detection, triage, mitigation, recovery to post-mortem review"@en ;
+    rdfs:comment "从故障检测、分级、处置、恢复到事后复盘的应急响应流程"@zh .
+
+uod-techno:ProductDevelopmentCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Product Development Capability"@en ;
+    rdfs:label "产品研发能力"@zh ;
+    rdfs:comment "Organizational capability to rapidly iterate and deliver high-quality software products"@en ;
+    rdfs:comment "快速迭代和交付高质量软件产品的组织能力"@zh .
+
+uod-techno:ObservabilityPlatform a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Observability Platform"@en ;
+    rdfs:label "可观测性平台"@zh ;
+    rdfs:comment "Monitoring platform integrating logs, metrics, and distributed tracing"@en ;
+    rdfs:comment "集成日志、指标和链路追踪的系统运维监控平台"@zh .
+
+uod-techno:ServiceUptime a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Service Uptime"@en ;
+    rdfs:label "服务可用率"@zh ;
+    rdfs:comment "Ratio of service uptime to total time, typically targeting 99.9%+"@en ;
+    rdfs:comment "服务在线正常运行时间占总时间的比率，通常以 99.9%+ 为目标"@zh .
+
+uod-techno:DeploymentFrequency a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Deployment Frequency"@en ;
+    rdfs:label "部署频率"@zh ;
+    rdfs:comment "Number of code releases to production per unit time"@en ;
+    rdfs:comment "单位时间内向生产环境发布代码的次数"@zh .
+
+uod-techno:MTTR a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Mean Time to Recovery"@en ;
+    rdfs:label "平均恢复时间"@zh ;
+    rdfs:comment "Average duration from incident occurrence to service recovery"@en ;
+    rdfs:comment "从故障发生到服务恢复的平均时长"@zh .
+
+uod-techno:MRR a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Monthly Recurring Revenue"@en ;
+    rdfs:label "月度经常性收入"@zh ;
+    rdfs:comment "Monthly subscription recurring revenue for SaaS products"@en ;
+    rdfs:comment "SaaS 产品每月的订阅经常性收入"@zh .
+
+uod-techno:CustomerChurnRate a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Customer Churn Rate"@en ;
+    rdfs:label "客户流失率"@zh ;
+    rdfs:comment "Rate of customers who stop using the product or cancel subscriptions in a period"@en ;
+    rdfs:comment "一定期间内停止使用产品或取消订阅的客户比率"@zh .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+uod-techno:has_engineering_team a owl:ObjectProperty ;
+    rdfs:label "has engineering team"@en ;
+    rdfs:domain uod-techno:TechCompany ;
+    rdfs:range uod-techno:EngineeringTeam ;
+    rdfs:comment "A tech company has engineering teams"@en ;
+    rdfs:comment "科技公司设有工程团队"@zh .
+
+uod-techno:develops_product a owl:ObjectProperty ;
+    rdfs:label "develops product"@en ;
+    rdfs:domain uod-techno:EngineeringTeam ;
+    rdfs:range uod-techno:SaaSProduct ;
+    rdfs:comment "An engineering team develops a product"@en ;
+    rdfs:comment "工程团队研发产品"@zh .
+
+uod-techno:exposes_api a owl:ObjectProperty ;
+    rdfs:label "exposes api"@en ;
+    rdfs:domain uod-techno:SaaSProduct ;
+    rdfs:range uod-techno:APIEndpoint ;
+    rdfs:comment "A product exposes API endpoints"@en ;
+    rdfs:comment "产品暴露 API 接口"@zh .
+
+uod-techno:composed_of_microservices a owl:ObjectProperty ;
+    rdfs:label "composed of microservices"@en ;
+    rdfs:domain uod-techno:PlatformService ;
+    rdfs:range uod-techno:Microservice ;
+    rdfs:comment "A platform is composed of microservices"@en ;
+    rdfs:comment "平台由微服务组成"@zh .
+
+uod-techno:runs_on a owl:ObjectProperty ;
+    rdfs:label "runs on"@en ;
+    rdfs:domain uod-techno:Microservice ;
+    rdfs:range uod-techno:CloudInfrastructure ;
+    rdfs:comment "A microservice runs on cloud infrastructure"@en ;
+    rdfs:comment "微服务运行在云基础设施上"@zh .
+
+uod-techno:trains_model a owl:ObjectProperty ;
+    rdfs:label "trains model"@en ;
+    rdfs:domain uod-techno:DataPipeline ;
+    rdfs:range uod-techno:MLModel ;
+    rdfs:comment "A data pipeline trains an ML model"@en ;
+    rdfs:comment "数据管道训练 ML 模型"@zh .
+
+uod-techno:planned_in_sprint a owl:ObjectProperty ;
+    rdfs:label "planned in sprint"@en ;
+    rdfs:domain uod-techno:FeatureRequest ;
+    rdfs:range uod-techno:Sprint ;
+    rdfs:comment "A feature request is planned and delivered in a sprint"@en ;
+    rdfs:comment "需求在迭代中计划和交付"@zh .
+
+uod-techno:deployed_via a owl:ObjectProperty ;
+    rdfs:label "deployed via"@en ;
+    rdfs:domain uod-techno:Microservice ;
+    rdfs:range uod-techno:CICDProcess ;
+    rdfs:comment "A microservice is deployed via the CI/CD process"@en ;
+    rdfs:comment "微服务通过 CI/CD 流程部署"@zh .
+
+uod-techno:triggers_incident a owl:ObjectProperty ;
+    rdfs:label "triggers incident"@en ;
+    rdfs:domain uod-techno:Deployment ;
+    rdfs:range uod-techno:Incident ;
+    rdfs:comment "A deployment may trigger an incident"@en ;
+    rdfs:comment "部署可能触发故障事件"@zh .
+
+uod-techno:resolved_by a owl:ObjectProperty ;
+    rdfs:label "resolved by"@en ;
+    rdfs:domain uod-techno:Incident ;
+    rdfs:range uod-techno:IncidentResponseProcess ;
+    rdfs:comment "An incident is resolved through the incident response process"@en ;
+    rdfs:comment "故障由应急响应流程处理"@zh .
+
+uod-techno:monitored_by a owl:ObjectProperty ;
+    rdfs:label "monitored by"@en ;
+    rdfs:domain uod-techno:Microservice ;
+    rdfs:range uod-techno:ObservabilityPlatform ;
+    rdfs:comment "A microservice is monitored by the observability platform"@en ;
+    rdfs:comment "微服务由可观测性平台监控"@zh .
+
+uod-techno:governed_by_sla a owl:ObjectProperty ;
+    rdfs:label "governed by sla"@en ;
+    rdfs:domain uod-techno:SaaSProduct ;
+    rdfs:range uod-techno:SLAPolicy ;
+    rdfs:comment "A SaaS product is governed by an SLA policy"@en ;
+    rdfs:comment "SaaS 产品受 SLA 策略约束"@zh .
+
+# ────────────────────────────────────────
+# NAMED INDIVIDUALS (Instances)
+# ────────────────────────────────────────
+
+uod-techno:inst_saas_startup a owl:NamedIndividual, uod-techno:TechCompany ;
+    rdfs:label "Example SaaS Startup"@en .
+
+uod-techno:inst_backend_team a owl:NamedIndividual, uod-techno:EngineeringTeam ;
+    rdfs:label "Backend Platform Team"@en .
+
+uod-techno:inst_crm_saas a owl:NamedIndividual, uod-techno:SaaSProduct ;
+    rdfs:label "Cloud CRM Platform"@en .
+
+uod-techno:inst_data_platform a owl:NamedIndividual, uod-techno:PlatformService ;
+    rdfs:label "Unified Data Platform"@en .
+
+uod-techno:inst_user_service a owl:NamedIndividual, uod-techno:Microservice ;
+    rdfs:label "User Authentication Service"@en .
+
+uod-techno:inst_uptime_kpi a owl:NamedIndividual, uod-techno:ServiceUptime ;
+    rdfs:label "Service Uptime (Target: 99.95%)"@en .
+
+uod-techno:inst_mrr_kpi a owl:NamedIndividual, uod-techno:MRR ;
+    rdfs:label "MRR (Target: $500K+)"@en .

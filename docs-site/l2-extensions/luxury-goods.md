@@ -43,4 +43,4 @@ This extension covers:
 
 ## Source File
 
-:material-file-code: [`luxury_goods_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/extensions/luxury-goods/luxury_goods_extension_v1.json)
+:material-file-code: [`luxury_goods_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/l2-extensions/luxury-goods/luxury_goods_extension_v1.json)

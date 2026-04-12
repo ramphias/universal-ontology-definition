@@ -44,4 +44,4 @@ This extension covers:
 
 ## Source File
 
-:material-file-code: [`consulting_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/extensions/consulting/consulting_extension_v1.json)
+:material-file-code: [`consulting_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/l2-extensions/consulting/consulting_extension_v1.json)

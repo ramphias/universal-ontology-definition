@@ -8,8 +8,8 @@ This guide walks you through creating a new Industry and Domain Extension for UO
 ### Step 1: Copy the Template | 第一步：复制模板
 
 ```bash
-cp -r extensions/_template extensions/your-industry
-mv extensions/your-industry/extension_template.json extensions/your-industry/your_industry_extension_v1.json
+cp -r l2-extensions/_template l2-extensions/your-industry
+mv l2-extensions/your-industry/extension_template.json l2-extensions/your-industry/your_industry_extension_v1.json
 ```
 
 ### Step 2: Edit Metadata | 第二步：修改元数据
@@ -102,7 +102,7 @@ Provide at least 5 real-world examples:
 ### Step 6: Write README | 第六步：编写 README
 
 Include: overview, coverage, statistics, use cases.
-修改 `extensions/your-industry/README.md`，包含：扩展概述、覆盖范围说明、统计信息（类数量、关系数量）、适用场景。
+修改 `l2-extensions/your-industry/README.md`，包含：扩展概述、覆盖范围说明、统计信息（类数量、关系数量）、适用场景。
 
 ## Quality Checklist | 质量标准
 

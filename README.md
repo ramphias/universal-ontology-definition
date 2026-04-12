@@ -7,7 +7,7 @@
 > *Anti-entropy by design — structured, governed, and built to scale.*
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
-[![Version](https://img.shields.io/badge/Version-2.0.0-success.svg?style=for-the-badge)](#)
+[![Version](https://img.shields.io/badge/Version-2.4.0-success.svg?style=for-the-badge)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](#contributing)
 
 *[中文](./README_CN.md) | **English***
@@ -61,6 +61,19 @@ flowchart TD
 - ⚙️ **Platform Bindings** — L0 provides ready-to-use OWL/RDF, JSON-LD, GraphQL, and SQL mappings.
 - 🌍 **Bilingual Support** — All concepts include Chinese and English labels and definitions.
 - 🤝 **Community-Driven** — Anyone can contribute Industry and Domain Extensions, platform bindings, or improve core definitions.
+- 🖥️ **Ontology Studio** — Production-ready visual web workspace for browsing and managing all ontology layers.
+---
+
+## 🖥️ Ontology Studio
+
+A production-ready **Next.js web application** for visually browsing, searching, and managing the ontology across all four layers.
+
+- **Multi-Layer Visual Editors** — Interactive node graphs for L0 (Platform), L1 (Core), L2 (Extensions), and L3 (Enterprise) layers.
+- **Live GitHub Sync** — Reads ontology data directly from the repository via GitHub API in real time.
+- **Role-Based Access Control** — GitHub OAuth with three roles (Admin / Editor / Viewer) backed by Netlify Blobs.
+- **Public Read-Only Access** — Anonymous users can browse the full ontology; only the admin panel requires login.
+
+> Deployed on Netlify. Source code in [`studio/`](studio/).
 
 ---
 
@@ -68,7 +81,7 @@ flowchart TD
 
 ```text
 .
-├── core/                       # L1 Universal Enterprise Ontology Core
+├── l1-core/                    # L1 Universal Enterprise Ontology Core
 │   └── universal_ontology_v1.json
 ├── l2-extensions/              # L2 Industry & Domain Extensions
 │   ├── consulting/             #   └── Consulting Industry
@@ -97,9 +110,10 @@ flowchart TD
 │   ├── export_for_llm.py       #   └── LLM Export (System Prompt, Tools, RAG Chunks)
 │   ├── export_neo4j.py         #   └── Neo4j Cypher Import Generator
 │   └── json_to_owl.py          #   └── JSON → OWL/RDF Turtle Converter
-├── uod/                        # Python SDK
-│   ├── __init__.py             #   └── from uod import load_ontology
-│   └── graph.py                #   └── OntologyGraph: query, path, search, export
+├── studio/                     # Ontology Studio (Next.js Web App)
+│   ├── app/                    #   └── Pages, layouts, API routes
+│   ├── components/             #   └── React components (editors, flow graphs)
+│   └── lib/                    #   └── Auth, permissions, GitHub integration
 ├── docs-site/                  # MkDocs Documentation Site Source
 └── schema/                     # JSON Schema Validation
     ├── core_schema.json
@@ -134,7 +148,7 @@ Choose the binding that matches your technology stack:
 
 ### 3️⃣ Using Industry & Domain Extensions
 
-Browse the `extensions/` directory and select the appropriate industry package. Each extension declares its parent through the `extends` field:
+Browse the `l2-extensions/` directory and select the appropriate industry package. Each extension declares its parent through the `extends` field:
 
 ```json
 {
@@ -154,7 +168,7 @@ Browse the `extensions/` directory and select the appropriate industry package. 
 
 ### 4️⃣ Contributing a New Extension
 
-1. Copy `extensions/_template/` as your starting point.
+1. Copy `l2-extensions/_template/` as your starting point.
 2. Follow the [Extension Development Guide](docs-site/extensions/create-extension.md).
 3. Validate against `schema/extension_schema.json`.
 4. Submit a Pull Request! *(See [CONTRIBUTING.md](CONTRIBUTING.md))*

@@ -1,7 +1,16 @@
 """
-uod.graph — Core OntologyGraph class
+ontology_graph.py — OntologyGraph SDK
 ======================================
-Loads a merged ontology JSON and provides query, traversal, and export methods.
+Loads a merged ontology JSON and provides query, traversal, search, and export methods.
+
+Usage:
+    from ontology_graph import load_ontology
+
+    g = load_ontology("l1-core/universal_ontology_v1.json")
+    g.get_class("Organization")
+    g.search("risk")
+    g.ancestors("OrgUnit")
+    g.path("Person", "Organization")
 """
 
 import json

@@ -39,7 +39,7 @@ Core Ontology is the foundation of the entire framework. Changes require careful
 
 We highly welcome new Industry and Domain Extension!
 
-1. Copy `extensions/_template/` to `extensions/your-industry/`
+1. Copy `l2-extensions/_template/` to `l2-extensions/your-industry/`
 2. Follow naming convention: lowercase + hyphens (e.g., `financial-services`)
 3. All classes must inherit from L1 via `parent` field
 4. Include at least 10 classes, 5 relations, 5 sample instances

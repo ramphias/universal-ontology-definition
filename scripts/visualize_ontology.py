@@ -20,6 +20,7 @@ Usage:
 
 import json
 import sys
+import os
 import io
 import argparse
 import glob

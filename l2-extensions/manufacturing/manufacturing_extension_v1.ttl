@@ -1,0 +1,314 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix uod-manufa: <https://w3id.org/uod/addon/manufacturing/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# Manufacturing industry extension covering factory operations — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
+# ════════════════════════════════════════════════════════════════════════════
+
+uod-manufa:Ontology a owl:Ontology ;
+    rdfs:label "Manufacturing industry extension covering factory operations"@en ;
+    rdfs:label "制造业行业扩展 ontology，覆盖工厂运营、生产管理、供应链、质量控制、设备维护和智能制造"@zh ;
+    owl:imports <https://w3id.org/uod/core/> ;
+    owl:versionInfo "1.0.0" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+uod-manufa:Factory a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Factory"@en ;
+    rdfs:label "工厂"@zh ;
+    rdfs:comment "A physical entity engaged in product manufacturing, comprising one or more workshops and production lines"@en ;
+    rdfs:comment "从事产品生产制造的实体单位，含一个或多个车间和产线"@zh .
+
+uod-manufa:Workshop a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Workshop"@en ;
+    rdfs:label "车间"@zh ;
+    rdfs:comment "A production area within a factory organized by process or product type"@en ;
+    rdfs:comment "工厂内按工艺或产品划分的生产区域"@zh .
+
+uod-manufa:ProductionLine a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Production Line"@en ;
+    rdfs:label "产线"@zh ;
+    rdfs:comment "A sequence of equipment and workstations arranged for mass production of a specific product"@en ;
+    rdfs:comment "按工序连续排列的设备和工位组合，完成特定产品的批量生产"@zh .
+
+uod-manufa:Warehouse a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Warehouse"@en ;
+    rdfs:label "仓库"@zh ;
+    rdfs:comment "Physical storage for raw materials, work-in-progress, and finished goods"@en ;
+    rdfs:comment "存储原材料、在制品和成品的物理空间"@zh .
+
+uod-manufa:ManufacturedProduct a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Manufactured Product"@en ;
+    rdfs:label "制造产品"@zh ;
+    rdfs:comment "Finished or semi-finished goods produced by a factory"@en ;
+    rdfs:comment "工厂生产的最终产品或半成品"@zh .
+
+uod-manufa:RawMaterial a owl:Class ;
+    rdfs:subClassOf uod:Asset ;
+    rdfs:label "Raw Material"@en ;
+    rdfs:label "原材料"@zh ;
+    rdfs:comment "Input materials for manufacturing, including metals, chemicals, electronic components"@en ;
+    rdfs:comment "用于生产制造的输入物料，含金属、化工原料、电子元器件等"@zh .
+
+uod-manufa:BillOfMaterials a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Bill of Materials (BOM)"@en ;
+    rdfs:label "物料清单"@zh ;
+    rdfs:comment "Structured list of all components and raw materials required for a product"@en ;
+    rdfs:comment "产品所需全部零部件和原材料的结构化清单"@zh .
+
+uod-manufa:WorkOrder a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Work Order"@en ;
+    rdfs:label "工单"@zh ;
+    rdfs:comment "A manufacturing instruction to produce a specific quantity of a product"@en ;
+    rdfs:comment "指示生产特定数量产品的制造指令"@zh .
+
+uod-manufa:QualityInspectionReport a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Quality Inspection Report"@en ;
+    rdfs:label "质检报告"@zh ;
+    rdfs:comment "Record of quality inspection results for a product or process"@en ;
+    rdfs:comment "产品或工序的质量检验结果记录"@zh .
+
+uod-manufa:Equipment a owl:Class ;
+    rdfs:subClassOf uod:Asset ;
+    rdfs:label "Equipment"@en ;
+    rdfs:label "生产设备"@zh ;
+    rdfs:comment "Machinery, tooling, and fixtures used for processing, assembly, and inspection"@en ;
+    rdfs:comment "用于加工、装配、检测的机械设备和工装夹具"@zh .
+
+uod-manufa:MaintenanceOrder a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Maintenance Order"@en ;
+    rdfs:label "维保工单"@zh ;
+    rdfs:comment "Work instruction for preventive maintenance or corrective repair of equipment"@en ;
+    rdfs:comment "设备预防性维护或故障维修的工作指令"@zh .
+
+uod-manufa:Supplier a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Supplier"@en ;
+    rdfs:label "供应商"@zh ;
+    rdfs:comment "External enterprise supplying raw materials, components, or services to a factory"@en ;
+    rdfs:comment "向工厂提供原材料、零部件或服务的外部企业"@zh .
+
+uod-manufa:ProductionPlanner a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Production Planner"@en ;
+    rdfs:label "生产计划员"@zh ;
+    rdfs:comment "A role responsible for creating and adjusting production plans and scheduling"@en ;
+    rdfs:comment "负责编制和调整生产计划、排程排产的角色"@zh .
+
+uod-manufa:QualityInspector a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Quality Inspector"@en ;
+    rdfs:label "质检员"@zh ;
+    rdfs:comment "A quality control role performing incoming, in-process, and final inspections"@en ;
+    rdfs:comment "执行来料检验、过程检验和成品检验的质量控制角色"@zh .
+
+uod-manufa:MaintenanceTechnician a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Maintenance Technician"@en ;
+    rdfs:label "维修技师"@zh ;
+    rdfs:comment "A technical role responsible for equipment maintenance, troubleshooting, and repair"@en ;
+    rdfs:comment "负责设备维护、故障排除和修复的技术角色"@zh .
+
+uod-manufa:QualityPolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Quality Policy"@en ;
+    rdfs:label "质量政策"@zh ;
+    rdfs:comment "Top-level quality management system policy, typically based on ISO 9001"@en ;
+    rdfs:comment "企业质量管理体系的总纲政策，通常基于 ISO 9001"@zh .
+
+uod-manufa:DefectRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Defect Risk"@en ;
+    rdfs:label "质量缺陷风险"@zh ;
+    rdfs:comment "Risk of product defects leading to rework, returns, or recalls"@en ;
+    rdfs:comment "产品质量缺陷导致返工、退货或召回的风险"@zh .
+
+uod-manufa:SupplyDisruptionRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Supply Disruption Risk"@en ;
+    rdfs:label "供应中断风险"@zh ;
+    rdfs:comment "Risk of raw material supply interruption due to supplier, logistics, or geopolitical factors"@en ;
+    rdfs:comment "因供应商、物流或地缘政治因素导致原材料供应中断的风险"@zh .
+
+uod-manufa:ProductionPlanningProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Production Planning Process"@en ;
+    rdfs:label "生产计划流程"@zh ;
+    rdfs:comment "End-to-end planning from demand forecast, master production schedule to detailed scheduling"@en ;
+    rdfs:comment "从需求预测、主生产计划到排程排产的端到端计划流程"@zh .
+
+uod-manufa:QualityControlProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Quality Control Process"@en ;
+    rdfs:label "质量控制流程"@zh ;
+    rdfs:comment "Full-chain quality management from incoming inspection, in-process control to final inspection"@en ;
+    rdfs:comment "从来料检验、过程控制到出厂检验的全链路质量管控流程"@zh .
+
+uod-manufa:MaintenanceProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Maintenance Process"@en ;
+    rdfs:label "设备维护流程"@zh ;
+    rdfs:comment "Management process for preventive, predictive, and corrective maintenance"@en ;
+    rdfs:comment "预防性维护、预测性维护和故障维修的管理流程"@zh .
+
+uod-manufa:LeanManufacturingCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Lean Manufacturing Capability"@en ;
+    rdfs:label "精益制造能力"@zh ;
+    rdfs:comment "Organizational capability to eliminate waste, continuously improve, and achieve efficient production"@en ;
+    rdfs:comment "消除浪费、持续改善、实现高效生产的组织能力"@zh .
+
+uod-manufa:MESSystem a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Manufacturing Execution System"@en ;
+    rdfs:label "制造执行系统"@zh ;
+    rdfs:comment "Information system managing and monitoring shop-floor production execution"@en ;
+    rdfs:comment "管理和监控车间层面生产执行的信息系统"@zh .
+
+uod-manufa:SCADASystem a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "SCADA System"@en ;
+    rdfs:label "数据采集与监控系统"@zh ;
+    rdfs:comment "Industrial control system for real-time equipment data acquisition and process monitoring"@en ;
+    rdfs:comment "实时采集设备数据并进行过程监控的工业控制系统"@zh .
+
+uod-manufa:OEE a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Overall Equipment Effectiveness"@en ;
+    rdfs:label "设备综合效率"@zh ;
+    rdfs:comment "Availability × Performance × Quality — measures equipment output efficiency"@en ;
+    rdfs:comment "设备可用率 × 性能率 × 良品率，衡量设备产出效率"@zh .
+
+uod-manufa:YieldRate a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Yield Rate"@en ;
+    rdfs:label "良品率"@zh ;
+    rdfs:comment "Ratio of conforming units to total units produced"@en ;
+    rdfs:comment "合格品数量占总产出数量的比率"@zh .
+
+uod-manufa:InventoryTurnover a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Inventory Turnover"@en ;
+    rdfs:label "库存周转率"@zh ;
+    rdfs:comment "Number of times inventory is consumed and replenished in a period, measuring inventory management efficiency"@en ;
+    rdfs:comment "一定期间内库存被消耗和补充的次数，衡量库存管理效率"@zh .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+uod-manufa:has_workshop a owl:ObjectProperty ;
+    rdfs:label "has workshop"@en ;
+    rdfs:domain uod-manufa:Factory ;
+    rdfs:range uod-manufa:Workshop ;
+    rdfs:comment "A factory has workshops"@en ;
+    rdfs:comment "工厂设有车间"@zh .
+
+uod-manufa:has_production_line a owl:ObjectProperty ;
+    rdfs:label "has production line"@en ;
+    rdfs:domain uod-manufa:Workshop ;
+    rdfs:range uod-manufa:ProductionLine ;
+    rdfs:comment "A workshop contains production lines"@en ;
+    rdfs:comment "车间包含产线"@zh .
+
+uod-manufa:produces_product a owl:ObjectProperty ;
+    rdfs:label "produces product"@en ;
+    rdfs:domain uod-manufa:ProductionLine ;
+    rdfs:range uod-manufa:ManufacturedProduct ;
+    rdfs:comment "A production line produces a manufactured product"@en ;
+    rdfs:comment "产线生产产品"@zh .
+
+uod-manufa:defined_by_bom a owl:ObjectProperty ;
+    rdfs:label "defined by bom"@en ;
+    rdfs:domain uod-manufa:ManufacturedProduct ;
+    rdfs:range uod-manufa:BillOfMaterials ;
+    rdfs:comment "A product is defined by a bill of materials"@en ;
+    rdfs:comment "产品由物料清单定义"@zh .
+
+uod-manufa:consumes_material a owl:ObjectProperty ;
+    rdfs:label "consumes material"@en ;
+    rdfs:domain uod-manufa:WorkOrder ;
+    rdfs:range uod-manufa:RawMaterial ;
+    rdfs:comment "A work order consumes raw materials"@en ;
+    rdfs:comment "工单消耗原材料"@zh .
+
+uod-manufa:inspected_by a owl:ObjectProperty ;
+    rdfs:label "inspected by"@en ;
+    rdfs:domain uod-manufa:ManufacturedProduct ;
+    rdfs:range uod-manufa:QualityInspectionReport ;
+    rdfs:comment "A product is inspected and documented in a quality inspection report"@en ;
+    rdfs:comment "产品经过质检"@zh .
+
+uod-manufa:maintained_by a owl:ObjectProperty ;
+    rdfs:label "maintained by"@en ;
+    rdfs:domain uod-manufa:Equipment ;
+    rdfs:range uod-manufa:MaintenanceOrder ;
+    rdfs:comment "Equipment is maintained through maintenance orders"@en ;
+    rdfs:comment "设备通过维保工单维护"@zh .
+
+uod-manufa:supplies_to a owl:ObjectProperty ;
+    rdfs:label "supplies to"@en ;
+    rdfs:domain uod-manufa:Supplier ;
+    rdfs:range uod-manufa:Factory ;
+    rdfs:comment "A supplier provides materials to a factory"@en ;
+    rdfs:comment "供应商向工厂供货"@zh .
+
+uod-manufa:scheduled_by a owl:ObjectProperty ;
+    rdfs:label "scheduled by"@en ;
+    rdfs:domain uod-manufa:WorkOrder ;
+    rdfs:range uod-manufa:ProductionPlanningProcess ;
+    rdfs:comment "A work order is scheduled by the production planning process"@en ;
+    rdfs:comment "工单由生产计划流程排程"@zh .
+
+uod-manufa:monitored_by_mes a owl:ObjectProperty ;
+    rdfs:label "monitored by mes"@en ;
+    rdfs:domain uod-manufa:ProductionLine ;
+    rdfs:range uod-manufa:MESSystem ;
+    rdfs:comment "A production line is monitored by the MES system"@en ;
+    rdfs:comment "产线由 MES 系统监控"@zh .
+
+uod-manufa:controlled_by_scada a owl:ObjectProperty ;
+    rdfs:label "controlled by scada"@en ;
+    rdfs:domain uod-manufa:Equipment ;
+    rdfs:range uod-manufa:SCADASystem ;
+    rdfs:comment "Equipment data is collected and monitored by the SCADA system"@en ;
+    rdfs:comment "设备由 SCADA 系统采集数据和监控"@zh .
+
+# ────────────────────────────────────────
+# NAMED INDIVIDUALS (Instances)
+# ────────────────────────────────────────
+
+uod-manufa:inst_auto_factory a owl:NamedIndividual, uod-manufa:Factory ;
+    rdfs:label "Example Automotive Assembly Plant"@en .
+
+uod-manufa:inst_welding_workshop a owl:NamedIndividual, uod-manufa:Workshop ;
+    rdfs:label "Body Welding Workshop"@en .
+
+uod-manufa:inst_final_assembly a owl:NamedIndividual, uod-manufa:ProductionLine ;
+    rdfs:label "Final Assembly Line A"@en .
+
+uod-manufa:inst_steel_supplier a owl:NamedIndividual, uod-manufa:Supplier ;
+    rdfs:label "Baosteel Supply Co."@en .
+
+uod-manufa:inst_oee_kpi a owl:NamedIndividual, uod-manufa:OEE ;
+    rdfs:label "OEE (Target: 85%+)"@en .
+
+uod-manufa:inst_yield_kpi a owl:NamedIndividual, uod-manufa:YieldRate ;
+    rdfs:label "First-Pass Yield (Target: 98%+)"@en .

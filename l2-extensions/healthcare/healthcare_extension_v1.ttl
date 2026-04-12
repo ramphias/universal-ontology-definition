@@ -1,0 +1,314 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix uod-health: <https://w3id.org/uod/addon/healthcare/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# Healthcare industry extension covering medical institutions, — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
+# ════════════════════════════════════════════════════════════════════════════
+
+uod-health:Ontology a owl:Ontology ;
+    rdfs:label "Healthcare industry extension covering medical institutions,"@en ;
+    rdfs:label "医疗健康行业扩展 ontology，覆盖医疗机构、临床业务、药品研发、医疗器械、合规监管和健康数据管理"@zh ;
+    owl:imports <https://w3id.org/uod/core/> ;
+    owl:versionInfo "1.0.0" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+uod-health:HealthcareProvider a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Healthcare Provider"@en ;
+    rdfs:label "医疗服务提供者"@zh ;
+    rdfs:comment "An institution providing healthcare services, including hospitals, clinics, nursing homes, and third-party labs"@en ;
+    rdfs:comment "提供医疗健康服务的机构，含医院、诊所、养老院、第三方检测机构等"@zh .
+
+uod-health:Hospital a owl:Class ;
+    rdfs:subClassOf uod-health:HealthcareProvider ;
+    rdfs:label "Hospital"@en ;
+    rdfs:label "医院"@zh ;
+    rdfs:comment "A general or specialized medical institution with inpatient capabilities"@en ;
+    rdfs:comment "具备住院能力的综合或专科医疗机构"@zh .
+
+uod-health:ClinicalDepartment a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Clinical Department"@en ;
+    rdfs:label "临床科室"@zh ;
+    rdfs:comment "A department organized by medical specialty, e.g., cardiology, orthopedics, oncology"@en ;
+    rdfs:comment "按医学专科划分的诊疗部门，如心内科、骨科、肿瘤科等"@zh .
+
+uod-health:PharmaceuticalCompany a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Pharmaceutical Company"@en ;
+    rdfs:label "制药企业"@zh ;
+    rdfs:comment "An enterprise engaged in drug R&D, manufacturing, and commercialization"@en ;
+    rdfs:comment "从事药品研发、生产和销售的企业"@zh .
+
+uod-health:DrugProduct a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Drug Product"@en ;
+    rdfs:label "药品"@zh ;
+    rdfs:comment "A registered therapeutic or prophylactic pharmaceutical product"@en ;
+    rdfs:comment "经注册审批的治疗性或预防性药物制品"@zh .
+
+uod-health:MedicalDevice a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Medical Device"@en ;
+    rdfs:label "医疗器械"@zh ;
+    rdfs:comment "Instruments, equipment, and consumables used for diagnosis, treatment, or monitoring"@en ;
+    rdfs:comment "用于诊断、治疗或监测的仪器、设备和耗材"@zh .
+
+uod-health:ClinicalTrial a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Clinical Trial"@en ;
+    rdfs:label "临床试验"@zh ;
+    rdfs:comment "A systematic study to evaluate safety and efficacy of drugs or devices in human subjects"@en ;
+    rdfs:comment "在人体上验证药物或医疗器械安全性和有效性的系统性研究"@zh .
+
+uod-health:Patient a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Patient"@en ;
+    rdfs:label "患者"@zh ;
+    rdfs:comment "An individual role receiving healthcare services"@en ;
+    rdfs:comment "接受医疗服务的个人角色"@zh .
+
+uod-health:Physician a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Physician"@en ;
+    rdfs:label "医师"@zh ;
+    rdfs:comment "A licensed medical practitioner providing diagnosis and treatment"@en ;
+    rdfs:comment "具有执业资格的诊疗医生"@zh .
+
+uod-health:Nurse a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Nurse"@en ;
+    rdfs:label "护士"@zh ;
+    rdfs:comment "A clinical role providing nursing care and patient support"@en ;
+    rdfs:comment "提供护理服务和患者照护的临床角色"@zh .
+
+uod-health:ClinicalResearcher a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Clinical Researcher"@en ;
+    rdfs:label "临床研究员"@zh ;
+    rdfs:comment "A research role designing and conducting clinical trials"@en ;
+    rdfs:comment "设计和执行临床试验的研究角色"@zh .
+
+uod-health:Diagnosis a owl:Class ;
+    rdfs:subClassOf uod:DataObject ;
+    rdfs:label "Diagnosis"@en ;
+    rdfs:label "诊断"@zh ;
+    rdfs:comment "Disease determination based on symptoms, examinations, and lab results"@en ;
+    rdfs:comment "基于症状、检查和化验结果确定的疾病判定"@zh .
+
+uod-health:Prescription a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Prescription"@en ;
+    rdfs:label "处方"@zh ;
+    rdfs:comment "Medication instructions issued by a physician for a patient"@en ;
+    rdfs:comment "医师为患者开具的用药指示"@zh .
+
+uod-health:ElectronicHealthRecord a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Electronic Health Record"@en ;
+    rdfs:label "电子健康档案"@zh ;
+    rdfs:comment "Digitized systematic record of patient care including history, exams, medications, and procedures"@en ;
+    rdfs:comment "患者诊疗信息的数字化系统性记录，含病历、检查、用药和手术记录"@zh .
+
+uod-health:ClinicalProtocol a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Clinical Protocol"@en ;
+    rdfs:label "临床方案"@zh ;
+    rdfs:comment "Standard document defining clinical trial design, execution, and data collection"@en ;
+    rdfs:comment "规范临床试验设计、执行和数据收集的标准文件"@zh .
+
+uod-health:RegulatorySubmission a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Regulatory Submission"@en ;
+    rdfs:label "注册申报"@zh ;
+    rdfs:comment "Application materials submitted to drug or device regulatory authorities for approval"@en ;
+    rdfs:comment "向药品或医疗器械监管机构提交的审批申请材料"@zh .
+
+uod-health:PatientSafetyRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Patient Safety Risk"@en ;
+    rdfs:label "患者安全风险"@zh ;
+    rdfs:comment "Risk of patient harm due to medical errors, infection control failures, or adverse drug reactions"@en ;
+    rdfs:comment "因诊疗失误、感染控制不当或药物不良反应导致的患者伤害风险"@zh .
+
+uod-health:DataPrivacyRisk a owl:Class ;
+    rdfs:subClassOf uod:Risk ;
+    rdfs:label "Data Privacy Risk"@en ;
+    rdfs:label "数据隐私风险"@zh ;
+    rdfs:comment "Privacy compliance risk from health data breaches or inappropriate use of patient data"@en ;
+    rdfs:comment "患者健康数据泄露或不当使用的隐私合规风险"@zh .
+
+uod-health:GMPPolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Good Manufacturing Practice Policy"@en ;
+    rdfs:label "GMP 政策"@zh ;
+    rdfs:comment "Quality management standards for pharmaceutical manufacturing ensuring drug safety, efficacy, and quality"@en ;
+    rdfs:comment "药品生产质量管理规范，确保药品安全、有效和质量可控"@zh .
+
+uod-health:HIPAAPolicy a owl:Class ;
+    rdfs:subClassOf uod:Policy ;
+    rdfs:label "Health Data Protection Policy"@en ;
+    rdfs:label "健康数据保护政策"@zh ;
+    rdfs:comment "Compliance policy protecting patient health information privacy and security (e.g., HIPAA, GDPR health provisions)"@en ;
+    rdfs:comment "保护患者健康信息隐私和安全的合规政策（如 HIPAA、GDPR 健康条款）"@zh .
+
+uod-health:ClinicalCareProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Clinical Care Process"@en ;
+    rdfs:label "临床诊疗流程"@zh ;
+    rdfs:comment "End-to-end care process from registration, consultation, examination, diagnosis to treatment"@en ;
+    rdfs:comment "从挂号、问诊、检查、诊断到治疗的端到端诊疗流程"@zh .
+
+uod-health:DrugDevelopmentProcess a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Drug Development Process"@en ;
+    rdfs:label "药物研发流程"@zh ;
+    rdfs:comment "Full pipeline from target discovery, preclinical, clinical trials to NDA submission"@en ;
+    rdfs:comment "从靶点发现、临床前研究、临床试验到上市申请的全链路研发流程"@zh .
+
+uod-health:ClinicalInformaticsCapability a owl:Class ;
+    rdfs:subClassOf uod:Capability ;
+    rdfs:label "Clinical Informatics Capability"@en ;
+    rdfs:label "临床信息化能力"@zh ;
+    rdfs:comment "Capability to leverage IT for clinical decision support, medical records, and patient communication"@en ;
+    rdfs:comment "利用信息技术优化临床决策、病历管理和患者沟通的能力"@zh .
+
+uod-health:HISSystem a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Hospital Information System"@en ;
+    rdfs:label "医院信息系统"@zh ;
+    rdfs:comment "Integrated information system managing hospital administrative, clinical, and financial operations"@en ;
+    rdfs:comment "管理医院行政、临床和财务业务的综合信息系统"@zh .
+
+uod-health:LISSystem a owl:Class ;
+    rdfs:subClassOf uod:SystemApplication ;
+    rdfs:label "Laboratory Information System"@en ;
+    rdfs:label "实验室信息系统"@zh ;
+    rdfs:comment "Information system managing lab sample processing, result recording, and reporting"@en ;
+    rdfs:comment "管理检验科样本处理、结果记录和报告的信息系统"@zh .
+
+uod-health:BedOccupancyRate a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Bed Occupancy Rate"@en ;
+    rdfs:label "床位使用率"@zh ;
+    rdfs:comment "Ratio of occupied beds to total available beds"@en ;
+    rdfs:comment "实际使用床位数占开放床位总数的比率"@zh .
+
+uod-health:ReadmissionRate a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Readmission Rate"@en ;
+    rdfs:label "再入院率"@zh ;
+    rdfs:comment "Rate of unplanned readmissions within a defined period after discharge"@en ;
+    rdfs:comment "出院后一定期间内非计划再入院的患者比率"@zh .
+
+uod-health:ClinicalTrialSuccessRate a owl:Class ;
+    rdfs:subClassOf uod:KPI ;
+    rdfs:label "Clinical Trial Success Rate"@en ;
+    rdfs:label "临床试验成功率"@zh ;
+    rdfs:comment "Rate of clinical trials meeting primary endpoints, tracked by phase (I/II/III)"@en ;
+    rdfs:comment "临床试验达到主要终点的成功比率，按阶段（I/II/III）统计"@zh .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+uod-health:has_department a owl:ObjectProperty ;
+    rdfs:label "has department"@en ;
+    rdfs:domain uod-health:Hospital ;
+    rdfs:range uod-health:ClinicalDepartment ;
+    rdfs:comment "A hospital has clinical departments"@en ;
+    rdfs:comment "医院设有临床科室"@zh .
+
+uod-health:treats_patient a owl:ObjectProperty ;
+    rdfs:label "treats patient"@en ;
+    rdfs:domain uod-health:Physician ;
+    rdfs:range uod-health:Patient ;
+    rdfs:comment "A physician treats a patient"@en ;
+    rdfs:comment "医师诊治患者"@zh .
+
+uod-health:prescribes a owl:ObjectProperty ;
+    rdfs:label "prescribes"@en ;
+    rdfs:domain uod-health:Physician ;
+    rdfs:range uod-health:Prescription ;
+    rdfs:comment "A physician issues a prescription"@en ;
+    rdfs:comment "医师开具处方"@zh .
+
+uod-health:documents_in_ehr a owl:ObjectProperty ;
+    rdfs:label "documents in ehr"@en ;
+    rdfs:domain uod-health:Diagnosis ;
+    rdfs:range uod-health:ElectronicHealthRecord ;
+    rdfs:comment "A diagnosis is documented in the electronic health record"@en ;
+    rdfs:comment "诊断记录于电子健康档案"@zh .
+
+uod-health:conducted_under_protocol a owl:ObjectProperty ;
+    rdfs:label "conducted under protocol"@en ;
+    rdfs:domain uod-health:ClinicalTrial ;
+    rdfs:range uod-health:ClinicalProtocol ;
+    rdfs:comment "A clinical trial is conducted under a clinical protocol"@en ;
+    rdfs:comment "临床试验按方案执行"@zh .
+
+uod-health:develops_drug a owl:ObjectProperty ;
+    rdfs:label "develops drug"@en ;
+    rdfs:domain uod-health:PharmaceuticalCompany ;
+    rdfs:range uod-health:DrugProduct ;
+    rdfs:comment "A pharmaceutical company develops a drug product"@en ;
+    rdfs:comment "制药企业研发药品"@zh .
+
+uod-health:submitted_for_approval a owl:ObjectProperty ;
+    rdfs:label "submitted for approval"@en ;
+    rdfs:domain uod-health:DrugProduct ;
+    rdfs:range uod-health:RegulatorySubmission ;
+    rdfs:comment "A drug product is submitted for regulatory approval"@en ;
+    rdfs:comment "药品提交注册申报"@zh .
+
+uod-health:managed_in_his a owl:ObjectProperty ;
+    rdfs:label "managed in his"@en ;
+    rdfs:domain uod-health:ElectronicHealthRecord ;
+    rdfs:range uod-health:HISSystem ;
+    rdfs:comment "Electronic health records are managed in the HIS"@en ;
+    rdfs:comment "电子病历在 HIS 系统中管理"@zh .
+
+uod-health:tested_in_lis a owl:ObjectProperty ;
+    rdfs:label "tested in lis"@en ;
+    rdfs:domain uod-health:Diagnosis ;
+    rdfs:range uod-health:LISSystem ;
+    rdfs:comment "Lab results are recorded in the LIS"@en ;
+    rdfs:comment "检验结果在 LIS 系统中记录"@zh .
+
+uod-health:complies_with_gmp a owl:ObjectProperty ;
+    rdfs:label "complies with gmp"@en ;
+    rdfs:domain uod-health:DrugProduct ;
+    rdfs:range uod-health:GMPPolicy ;
+    rdfs:comment "Drug manufacturing complies with GMP policy"@en ;
+    rdfs:comment "药品生产遵循 GMP 规范"@zh .
+
+# ────────────────────────────────────────
+# NAMED INDIVIDUALS (Instances)
+# ────────────────────────────────────────
+
+uod-health:inst_general_hospital a owl:NamedIndividual, uod-health:Hospital ;
+    rdfs:label "Example General Hospital"@en .
+
+uod-health:inst_cardiology a owl:NamedIndividual, uod-health:ClinicalDepartment ;
+    rdfs:label "Cardiology Department"@en .
+
+uod-health:inst_pharma_co a owl:NamedIndividual, uod-health:PharmaceuticalCompany ;
+    rdfs:label "Example Pharma Inc."@en .
+
+uod-health:inst_vaccine a owl:NamedIndividual, uod-health:DrugProduct ;
+    rdfs:label "mRNA Vaccine Product"@en .
+
+uod-health:inst_phase3_trial a owl:NamedIndividual, uod-health:ClinicalTrial ;
+    rdfs:label "Phase III Efficacy Trial"@en .
+
+uod-health:inst_bed_occupancy a owl:NamedIndividual, uod-health:BedOccupancyRate ;
+    rdfs:label "Bed Occupancy (Target: 85-90%)"@en .

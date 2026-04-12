@@ -369,7 +369,7 @@ def main():
     parser = argparse.ArgumentParser(description="L1 Core Governance Validator")
     parser.add_argument(
         "--core",
-        default="l1-l1-core/universal_ontology_v1.json",
+        default="l1-core/universal_ontology_v1.json",
         help="Path to the L1 Core ontology JSON file",
     )
     args = parser.parse_args()

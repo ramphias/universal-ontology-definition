@@ -1,0 +1,201 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uod: <https://w3id.org/uod/core/> .
+@prefix uod-fnb: <https://w3id.org/uod/addon/fnb/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ════════════════════════════════════════════════════════════════════════════
+# MECE Framework for Food & Beverage (F&B) Industry. — OWL 2 / RDF Turtle
+# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
+# ════════════════════════════════════════════════════════════════════════════
+
+uod-fnb:Ontology a owl:Ontology ;
+    rdfs:label "MECE Framework for Food & Beverage (F&B) Industry."@en ;
+    rdfs:label "MECE Framework for Food & Beverage (F&B) Industry."@zh ;
+    owl:imports <https://w3id.org/uod/core/> ;
+    owl:versionInfo "1.0.1" .
+
+# ────────────────────────────────────────
+# CLASSES
+# ────────────────────────────────────────
+
+uod-fnb:Restaurant a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Restaurant"@en ;
+    rdfs:label "餐厅门店"@zh ;
+    rdfs:comment "A terminal physical establishment providing food, beverages, and hospitality services."@en ;
+    rdfs:comment "提供实体餐饮及接待服务的终端营业场所。"@zh .
+
+uod-fnb:CentralKitchen a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Central Kitchen"@en ;
+    rdfs:label "中央厨房"@zh ;
+    rdfs:comment "A centralized hub for preliminary processing of ingredients or semi-finished products."@en ;
+    rdfs:comment "集中进行食材初步加工或半成品制作的枢纽节点。"@zh .
+
+uod-fnb:DistributionCenter a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Distribution Center"@en ;
+    rdfs:label "物流配送中心"@zh ;
+    rdfs:comment "Regional storage center for the dispatch of catering materials and cold chain."@en ;
+    rdfs:comment "餐饮物料及冷链分发的区域仓储中心。"@zh .
+
+uod-fnb:DiningArea a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Dining Area"@en ;
+    rdfs:label "就餐区"@zh ;
+    rdfs:comment "Front-of-house area demarcated for customer dining and rest."@en ;
+    rdfs:comment "前厅即供顾客用餐及休憩的划分空间。"@zh .
+
+uod-fnb:KitchenArea a owl:Class ;
+    rdfs:subClassOf uod:OrgUnit ;
+    rdfs:label "Kitchen Area"@en ;
+    rdfs:label "后厨区"@zh ;
+    rdfs:comment "Back-of-house controlled area dedicated to food preparation and cooking."@en ;
+    rdfs:comment "后场专门进行备餐及烹饪的受控区域。"@zh .
+
+uod-fnb:MenuProduct a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Menu Product"@en ;
+    rdfs:label "菜单单品"@zh ;
+    rdfs:comment "Standalone consumable food SKU sold to end customers."@en ;
+    rdfs:comment "向终端顾客售卖的独立餐饮单品 SKU。"@zh .
+
+uod-fnb:ComboMeal a owl:Class ;
+    rdfs:subClassOf uod:ProductService ;
+    rdfs:label "Combo Meal"@en ;
+    rdfs:label "固定套餐"@zh ;
+    rdfs:comment "A composite sales unit binding multiple menu items together."@en ;
+    rdfs:comment "多个菜单单品组合绑定的销售单元。"@zh .
+
+uod-fnb:TakeawayPackaging a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Takeaway Packaging"@en ;
+    rdfs:label "包装耗材"@zh ;
+    rdfs:comment "Consumable takeaway packing applied for containment and spill prevention."@en ;
+    rdfs:comment "随餐具送出、用于包装防溢或承载的外带消耗品。"@zh .
+
+uod-fnb:Franchisee a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Franchisee"@en ;
+    rdfs:label "特许经营商"@zh ;
+    rdfs:comment "External organizations investing in and authorized to run the brand branch."@en ;
+    rdfs:comment "出资并获权实际承接品牌分店运营体系的外部组织。"@zh .
+
+uod-fnb:FoodSupplier a owl:Class ;
+    rdfs:subClassOf uod:Organization ;
+    rdfs:label "Food Supplier"@en ;
+    rdfs:label "食品供应商"@zh ;
+    rdfs:comment "External institution supplying fresh, semi-finished, or packaging materials."@en ;
+    rdfs:comment "供应生鲜、半成品或包装材料的外部机构。"@zh .
+
+uod-fnb:StoreManager a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Store Manager"@en ;
+    rdfs:label "店长"@zh ;
+    rdfs:comment "Operational leader fully accountable for an individual store's KPIs."@en ;
+    rdfs:comment "对单一门店各项人货流KPI全权负责的运营骨干。"@zh .
+
+uod-fnb:Chef a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Chef"@en ;
+    rdfs:label "厨师/制餐员"@zh ;
+    rdfs:comment "Kitchen personnel executing core culinary SOPs."@en ;
+    rdfs:comment "执行餐饮核心制作 SOP 的后厨人员。"@zh .
+
+uod-fnb:DeliveryRider a owl:Class ;
+    rdfs:subClassOf uod:Role ;
+    rdfs:label "Delivery Rider"@en ;
+    rdfs:label "外卖骑手"@zh ;
+    rdfs:comment "Dispatch personnel delivering ordered food to the end consumer."@en ;
+    rdfs:comment "承接外带订单将其物流送达C端的派送人员。"@zh .
+
+uod-fnb:FoodPreparation a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Food Preparation"@en ;
+    rdfs:label "备餐制餐"@zh ;
+    rdfs:comment "Core production activity spanning from prep to assembly and packaging."@en ;
+    rdfs:comment "从预热出库到组装打包餐品的关键生产活动。"@zh .
+
+uod-fnb:FoodOrder a owl:Class ;
+    rdfs:subClassOf uod:Event ;
+    rdfs:label "Food Order"@en ;
+    rdfs:label "餐饮订单"@zh ;
+    rdfs:comment "The fulfillment contract and transaction generated by a patron's consumption."@en ;
+    rdfs:comment "单一顾客消费行为所产生的履约合约与流水。"@zh .
+
+uod-fnb:FoodSafetyInspection a owl:Class ;
+    rdfs:subClassOf uod:Process ;
+    rdfs:label "Food Safety Inspection"@en ;
+    rdfs:label "食安飞检"@zh ;
+    rdfs:comment "Safety audits ensuring full-chain compliance and mitigating hygiene risks."@en ;
+    rdfs:comment "确保全链条合规性、控制过期或卫生风险的安全审计。"@zh .
+
+uod-fnb:Ingredient a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Ingredient"@en ;
+    rdfs:label "食材"@zh ;
+    rdfs:comment "Raw food-grade material to be consumed in preparation."@en ;
+    rdfs:comment "供制餐消耗的原始食物级物料。"@zh .
+
+uod-fnb:KitchenEquipment a owl:Class ;
+    rdfs:subClassOf uod:Resource ;
+    rdfs:label "Kitchen Equipment"@en ;
+    rdfs:label "后厨设备"@zh ;
+    rdfs:comment "Appliances or high-value fixed assets used in culinary prep."@en ;
+    rdfs:comment "用于餐饮粗细加工的电器或高值固定资产。"@zh .
+
+uod-fnb:Recipe a owl:Class ;
+    rdfs:subClassOf uod:Document ;
+    rdfs:label "Recipe"@en ;
+    rdfs:label "产品配方"@zh ;
+    rdfs:comment "Digital/text asset standardizing quantitative ingredient mixes and processing."@en ;
+    rdfs:comment "指导厨房如何搭配定量食材与加工标准的图文数字资产。"@zh .
+
+# ────────────────────────────────────────
+# OBJECT PROPERTIES (Relations)
+# ────────────────────────────────────────
+
+uod-fnb:operates_restaurant a owl:ObjectProperty ;
+    rdfs:label "operates restaurant"@en ;
+    rdfs:domain uod-fnb:Franchisee ;
+    rdfs:range uod-fnb:Restaurant ;
+    rdfs:comment "特许经营商出资并主理指定门店"@zh .
+
+uod-fnb:supplies_ingredient a owl:ObjectProperty ;
+    rdfs:label "supplies ingredient"@en ;
+    rdfs:domain uod-fnb:FoodSupplier ;
+    rdfs:range uod-fnb:Ingredient ;
+    rdfs:comment "供应商向品牌输送食品原料"@zh .
+
+uod-fnb:managed_by a owl:ObjectProperty ;
+    rdfs:label "managed by"@en ;
+    rdfs:domain uod-fnb:Restaurant ;
+    rdfs:range uod-fnb:StoreManager ;
+    rdfs:comment "门店由一位具体的店长全权管理"@zh .
+
+uod-fnb:contains_product a owl:ObjectProperty ;
+    rdfs:label "contains product"@en ;
+    rdfs:domain uod-fnb:ComboMeal ;
+    rdfs:range uod-fnb:MenuProduct ;
+    rdfs:comment "实体套餐绑定特定的单品组合"@zh .
+
+uod-fnb:requires_ingredient a owl:ObjectProperty ;
+    rdfs:label "requires ingredient"@en ;
+    rdfs:domain uod-fnb:MenuProduct ;
+    rdfs:range uod-fnb:Ingredient ;
+    rdfs:comment "单项成品售卖前需要消耗设定的原料"@zh .
+
+uod-fnb:guided_by_recipe a owl:ObjectProperty ;
+    rdfs:label "guided by recipe"@en ;
+    rdfs:domain uod-fnb:FoodPreparation ;
+    rdfs:range uod-fnb:Recipe ;
+    rdfs:comment "制餐过程必须遵循SOP配方的要求与规程"@zh .
+
+uod-fnb:includes_packaging a owl:ObjectProperty ;
+    rdfs:label "includes packaging"@en ;
+    rdfs:domain uod-fnb:FoodOrder ;
+    rdfs:range uod-fnb:TakeawayPackaging ;
+    rdfs:comment "外带/外卖订单需要使用配给的包材"@zh .

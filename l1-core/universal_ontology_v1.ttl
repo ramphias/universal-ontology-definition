@@ -7,13 +7,13 @@
 
 # ════════════════════════════════════════════════════════════════════════════
 # Universal Enterprise Ontology Core — OWL 2 / RDF Turtle
-# Auto-generated from JSON by json_to_owl.py on 2026-04-05 21:28
+# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
 # ════════════════════════════════════════════════════════════════════════════
 
 uod:Ontology a owl:Ontology ;
     rdfs:label "Universal Enterprise Ontology Core"@en ;
     rdfs:label "适用于所有企业的组织通用 ontology 核心，定义了跨行业、跨企业的核心概念、关系与实例。v2.0 引入抽象域根类、泛型关系与版本演进机制。"@zh ;
-    owl:versionInfo "2.0.0" .
+    owl:versionInfo "2.1.0" .
 
 # ────────────────────────────────────────
 # CLASSES
@@ -190,7 +190,75 @@ uod:KPI a owl:Class ;
     rdfs:comment "衡量目标达成程度的指标"@zh .
 
 # ────────────────────────────────────────
-# DEPRECATED CLASSES
+# DATA PROPERTIES (Attributes)
+# ────────────────────────────────────────
+
+uod:name a owl:DatatypeProperty ;
+    rdfs:domain uod:Entity ;
+    rdfs:range xsd:string ;
+    rdfs:label "Name"@en ;
+    rdfs:label "名称"@zh ;
+    rdfs:comment "Formal name of the entity; inherited by all subclasses"@en ;
+    rdfs:comment "实体的正式名称，所有子类继承"@zh .
+
+uod:description a owl:DatatypeProperty ;
+    rdfs:domain uod:Entity ;
+    rdfs:range xsd:string ;
+    rdfs:label "Description"@en ;
+    rdfs:label "描述"@zh ;
+    rdfs:comment "Free-text description of the entity"@en ;
+    rdfs:comment "对实体的自由文本描述"@zh .
+
+uod:email a owl:DatatypeProperty ;
+    rdfs:domain uod:Person ;
+    rdfs:range xsd:string ;
+    rdfs:label "Email"@en ;
+    rdfs:label "电子邮箱"@zh ;
+    rdfs:comment "Email address of a person"@en ;
+    rdfs:comment "人员的电子邮箱地址"@zh .
+
+uod:effective_date a owl:DatatypeProperty ;
+    rdfs:domain uod:Policy ;
+    rdfs:range xsd:date ;
+    rdfs:label "Effective Date"@en ;
+    rdfs:label "生效日期"@zh ;
+    rdfs:comment "Date when the policy becomes effective"@en ;
+    rdfs:comment "政策开始生效的日期"@zh .
+
+uod:severity a owl:DatatypeProperty ;
+    rdfs:domain uod:Risk ;
+    rdfs:range xsd:string ;
+    rdfs:label "Severity"@en ;
+    rdfs:label "严重程度"@zh ;
+    rdfs:comment "Severity level of the risk"@en ;
+    rdfs:comment "风险的严重程度等级"@zh .
+
+uod:target_value a owl:DatatypeProperty ;
+    rdfs:domain uod:KPI ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Target Value"@en ;
+    rdfs:label "目标值"@zh ;
+    rdfs:comment "Target numeric value for the KPI"@en ;
+    rdfs:comment "KPI 的目标数值"@zh .
+
+uod:unit a owl:DatatypeProperty ;
+    rdfs:domain uod:KPI ;
+    rdfs:range xsd:string ;
+    rdfs:label "Unit"@en ;
+    rdfs:label "计量单位"@zh ;
+    rdfs:comment "Unit of measurement for the KPI (e.g., percentage, currency, count)"@en ;
+    rdfs:comment "KPI 的计量单位（如百分比、金额、数量）"@zh .
+
+uod:is_automated a owl:DatatypeProperty ;
+    rdfs:domain uod:Process ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Is Automated"@en ;
+    rdfs:label "是否自动化"@zh ;
+    rdfs:comment "Indicates whether the process is automated"@en ;
+    rdfs:comment "标识流程是否已自动化"@zh .
+
+# ────────────────────────────────────────
+# DEPRECATED CLASSES (migration registry)
 # ────────────────────────────────────────
 
 uod:BusinessObject a owl:Class ;
@@ -209,15 +277,15 @@ uod:Activity a owl:Class ;
 
 uod:Channel a owl:Class ;
     owl:deprecated true ;
-    rdfs:comment "Demoted to L2 common addon; not universally applicable to all enterprises"@en .
+    rdfs:comment "Demoted to L2 common extension; not universally applicable to all enterprises"@en .
 
 uod:MarketSegment a owl:Class ;
     owl:deprecated true ;
-    rdfs:comment "Demoted to L2 common addon; marketing-domain concept"@en .
+    rdfs:comment "Demoted to L2 common extension; marketing-domain concept"@en .
 
 uod:Location a owl:Class ;
     owl:deprecated true ;
-    rdfs:comment "Demoted to L2 common addon; can be modeled as an attribute or a common extension"@en .
+    rdfs:comment "Demoted to L2 common extension; can be modeled as an attribute or a common extension"@en .
 
 uod:Decision a owl:Class ;
     owl:deprecated true ;
@@ -239,8 +307,6 @@ uod:plays_role a owl:ObjectProperty ;
 uod:part_of a owl:ObjectProperty ;
     rdfs:label "part of"@en ;
     rdfs:label "属于/组成"@zh ;
-    rdfs:domain uod:Entity ;
-    rdfs:range uod:Entity ;
     rdfs:comment "An entity is part of another entity (unifies belongs_to and composed_of)"@en ;
     rdfs:comment "一个实体是另一个实体的组成部分（合并了 belongs_to 和 composed_of）"@zh .
 
@@ -323,6 +389,14 @@ uod:measured_by a owl:ObjectProperty ;
     rdfs:range uod:KPI ;
     rdfs:comment "An operational element is measured by a KPI (generalizes the former Goal-only constraint)"@en ;
     rdfs:comment "运营元素由指标衡量（泛化了原 Goal→KPI 的限制）"@zh .
+
+uod:evaluates a owl:ObjectProperty ;
+    rdfs:label "evaluates"@en ;
+    rdfs:label "评估"@zh ;
+    rdfs:domain uod:KPI ;
+    rdfs:range uod:Goal ;
+    rdfs:comment "A KPI evaluates the achievement of a specific business goal"@en ;
+    rdfs:comment "关键指标用于评估特定业务目标的达成情况"@zh .
 
 # ────────────────────────────────────────
 # AXIOMS (OWL 2 Semantic Constraints)
@@ -408,6 +482,13 @@ uod:Role rdfs:subClassOf [
     a owl:Restriction ;
     owl:onProperty uod:plays_role ;
     owl:someValuesFrom uod:Party
+] .
+
+# ax_kpi_evaluates_goal: Every KPI evaluates at least one Goal
+uod:KPI rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty uod:evaluates ;
+    owl:someValuesFrom uod:Goal
 ] .
 
 # ────────────────────────────────────────
