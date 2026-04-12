@@ -34,19 +34,27 @@ export async function getOntologyLayer(layerId: string) {
      console.warn(`Local file fallback failed for ${layerId}, trying GitHub API...`);
   }
 
-  // 2. Fallback to GitHub API
+  // 2. Fallback to GitHub API using native fetch to avoid Netlify/Octokit promise hangs
   try {
-    const response = await octokit.repos.getContent({
-      owner: REPO_OWNER,
-      repo: REPO_NAME,
-      path: relPath,
-    });
-
-    if ("content" in response.data && response.data.type === "file") {
-      const decodedContent = Buffer.from(response.data.content, "base64").toString("utf-8");
-      return JSON.parse(decodedContent);
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${relPath}`;
+    const headers: Record<string, string> = {
+      "Accept": "application/vnd.github.v3.raw",
+      "User-Agent": "Ontology-Studio-App"
+    };
+    
+    if (process.env.GITHUB_TOKEN) {
+      headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
-    throw new Error("Target path is not a valid file.");
+
+    const response = await fetch(url, { headers, next: { revalidate: 0 } });
+    
+    if (!response.ok) {
+      throw new Error(`GitHub API returned ${response.status} ${response.statusText}`);
+    }
+
+    // Since we used v3.raw, the response is directly the file content
+    const textContent = await response.text();
+    return JSON.parse(textContent);
   } catch (error) {
     console.error(`Error fetching ontology layer ${layerId} from GitHub:`, error);
     throw new Error("Failed to load ontology data from GitHub.");
