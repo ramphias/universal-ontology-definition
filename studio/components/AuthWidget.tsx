@@ -13,14 +13,7 @@ export function AuthWidget() {
         return (
             <div className="flex items-center space-x-3">
                 <div className="text-right flex flex-col justify-center">
-                    <span className="text-sm text-foreground flex items-center justify-end gap-2">
-                        {session.user.role === 'admin' && (
-                            <a href="/admin" className="text-[10px] bg-red-900/50 text-red-300 px-1.5 py-0.5 rounded border border-red-800 hover:bg-red-800/50 transition-colors">
-                                Admin Panel
-                            </a>
-                        )}
-                        {session.user.name || session.user.login}
-                    </span>
+                    <span className="text-sm text-foreground">{session.user.name || session.user.login}</span>
                     <span className="text-xs text-[#888] flex items-center justify-end space-x-1">
                         <span className={`w-1.5 h-1.5 rounded-full ${session.user.role === 'admin' ? 'bg-red-500' : session.user.role === 'editor' ? 'bg-deloitte-green' : 'bg-gray-500'}`}></span>
                         <span className="capitalize">{session.user.role || "viewer"}</span>
