@@ -7,7 +7,7 @@ export default withAuth({
 });
 
 export const config = {
-    // Protect the root dashboard, ontology layer editors, and the admin panel.
-    // We intentionally leave /api endpoints unguarded to allow NextAuth to work!
-    matcher: ["/", "/layer/:path*", "/admin/:path*"],
+    // We now allow unauthenticated users to read the ontology dashboard.
+    // Only the /admin panel is blocked at the edge. (Data mutations will be guarded individually in Server Actions).
+    matcher: ["/admin/:path*"],
 };
