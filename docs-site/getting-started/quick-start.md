@@ -83,7 +83,6 @@ Browse the `l2-extensions/` directory for industry-specific extensions:
 
 | Industry | Classes | Relations | Status |
 |:---|:---:|:---:|:---|
-| Common Enterprise | 10 | 5 | v1.0.0 |
 | [Consulting](../l2-extensions/consulting.md) | 54 | 45 | v1.1.0 |
 | [Financial Services](../l2-extensions/financial-services.md) | 30 | 12 | v1.0.0 |
 | Food & Beverage | 19 | 7 | v1.0.0 |

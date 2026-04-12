@@ -71,7 +71,6 @@ flowchart TD
 ├── core/                       # L1 Universal Enterprise Ontology Core
 │   └── universal_ontology_v1.json
 ├── l2-extensions/              # L2 Industry & Domain Extensions
-│   ├── common/                 #   └── Common Enterprise Extension
 │   ├── consulting/             #   └── Consulting Industry
 │   ├── financial-services/     #   └── Financial Services (Banking, Insurance, Asset Mgmt)
 │   ├── fnb/                    #   └── Food & Beverage
@@ -174,7 +173,6 @@ For a comprehensive, step-by-step guide on creating or updating ontologies at an
 
 | Industry | Directory | Classes | Relations | Status |
 |:---|:---|:---:|:---:|:---|
-| **Common Enterprise** | [`l2-extensions/common/`](l2-extensions/common/) | 10 | 5 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
 | **Consulting** | [`l2-extensions/consulting/`](l2-extensions/consulting/) | 54 | 45 | ![v1.1.0](https://img.shields.io/badge/v1.1.0-blue) |
 | **Financial Services** | [`l2-extensions/financial-services/`](l2-extensions/financial-services/) | 30 | 12 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
 | **Food & Beverage** | [`l2-extensions/fnb/`](l2-extensions/fnb/) | 19 | 7 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |

@@ -6,7 +6,6 @@ Industry and Domain Extensions extend the L1 Universal Core with domain-specific
 
 | Industry | Classes | Relations | Instances | Status |
 |:---|:---:|:---:|:---:|:---|
-| Common Enterprise | 10 | 5 | 5 | v1.0.0 |
 | [Consulting](consulting.md) | 54 | 45 | 39 | v1.1.0 |
 | [Financial Services](financial-services.md) | 30 | 12 | 7 | v1.0.0 |
 | Food & Beverage | 19 | 7 | - | v1.0.0 |
@@ -15,7 +14,7 @@ Industry and Domain Extensions extend the L1 Universal Core with domain-specific
 | [Manufacturing](manufacturing.md) | 27 | 11 | 6 | v1.0.0 |
 | [Technology](technology.md) | 29 | 12 | 7 | v1.0.0 |
 
-**Total: 8 extensions, 236 classes, 116 relations**
+**Total: 7 extensions, 226 classes, 111 relations**
 
 ## Wanted Extensions
 

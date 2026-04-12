@@ -2,14 +2,14 @@
   "$schema": "../../schema/extension_schema.json",
   "layer": "L2_fnb_industry",
   "version": "1.0.1",
-  "extends": ["L1_universal_organization_ontology", "L2_common_enterprise_extension"],
+  "extends": "L1_universal_organization_ontology",
   "description": "MECE Framework for Food & Beverage (F&B) Industry.",
   "classes": [
     {
       "id": "Restaurant",
       "label_zh": "餐厅门店",
       "label_en": "Restaurant",
-      "parent": "Location",
+      "parent": "OrgUnit",
       "definition": "提供实体餐饮及接待服务的终端营业场所。",
       "definition_en": "A terminal physical establishment providing food, beverages, and hospitality services."
     },
@@ -17,7 +17,7 @@
       "id": "CentralKitchen",
       "label_zh": "中央厨房",
       "label_en": "Central Kitchen",
-      "parent": "Location",
+      "parent": "OrgUnit",
       "definition": "集中进行食材初步加工或半成品制作的枢纽节点。",
       "definition_en": "A centralized hub for preliminary processing of ingredients or semi-finished products."
     },
@@ -25,7 +25,7 @@
       "id": "DistributionCenter",
       "label_zh": "物流配送中心",
       "label_en": "Distribution Center",
-      "parent": "Location",
+      "parent": "OrgUnit",
       "definition": "餐饮物料及冷链分发的区域仓储中心。",
       "definition_en": "Regional storage center for the dispatch of catering materials and cold chain."
     },
@@ -33,7 +33,7 @@
       "id": "DiningArea",
       "label_zh": "就餐区",
       "label_en": "Dining Area",
-      "parent": "Location",
+      "parent": "OrgUnit",
       "definition": "前厅即供顾客用餐及休憩的划分空间。",
       "definition_en": "Front-of-house area demarcated for customer dining and rest."
     },
@@ -41,7 +41,7 @@
       "id": "KitchenArea",
       "label_zh": "后厨区",
       "label_en": "Kitchen Area",
-      "parent": "Location",
+      "parent": "OrgUnit",
       "definition": "后场专门进行备餐及烹饪的受控区域。",
       "definition_en": "Back-of-house controlled area dedicated to food preparation and cooking."
     },

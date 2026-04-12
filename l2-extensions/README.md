@@ -14,7 +14,6 @@ Each extension builds on the L1 universal core by adding industry-specific conce
 
 | Industry | Directory | Version | Classes | Relations | Instances | Description |
 |:---|:---|:---|:---:|:---:|:---:|:---|
-| Common Enterprise | [`common/`](common/) | v1.0.0 | 10 | 5 | 5 | Channel, Location, Project, Contract, Regulation |
 | Consulting | [`consulting/`](consulting/) | v1.1.0 | 54 | 45 | 39 | Engagements, methodologies, deliverables, client relationships |
 | Financial Services | [`financial-services/`](financial-services/) | v1.0.0 | 30 | 12 | 7 | Banking, insurance, asset management, KYC/AML, risk |
 | Food & Beverage | [`fnb/`](fnb/) | v1.0.0 | 19 | 7 | - | Restaurants, menus, central kitchens, franchisees |
@@ -23,7 +22,7 @@ Each extension builds on the L1 universal core by adding industry-specific conce
 | Manufacturing | [`manufacturing/`](manufacturing/) | v1.0.0 | 27 | 11 | 6 | Factory ops, production lines, BOM, MES/SCADA, OEE |
 | Technology | [`technology/`](technology/) | v1.0.0 | 29 | 12 | 7 | SaaS, microservices, CI/CD, DevOps, DORA metrics |
 
-**Total: 8 extensions, 236 classes, 116 relations**
+**Total: 7 extensions, 226 classes, 111 relations**
 
 ## Contributing a New Extension
 
