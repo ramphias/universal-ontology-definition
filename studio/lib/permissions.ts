@@ -23,9 +23,9 @@ export async function getUserRole(githubUsername: string): Promise<Role | null> 
     
     try {
         const store = getPermissionStore();
-        const role = await store.get(username);
+        const role = await store.get(username, { type: "text" });
         if (!role || !["admin", "editor", "viewer"].includes(role)) return null;
-        return (role as unknown) as Role;
+        return role as Role;
     } catch (err) {
         if (process.env.NODE_ENV === 'development') {
             return DEV_FALLBACK_ROLES[username] || null;
@@ -64,9 +64,9 @@ export async function getAllPermissions(): Promise<Record<string, Role>> {
         
         // Blobs don't return values in `list()`, so we must fetch them concurrently
         await Promise.all(list.blobs.map(async b => {
-            const role = await store.get(b.key);
+            const role = await store.get(b.key, { type: "text" });
             if (role && ["admin", "editor", "viewer"].includes(role)) {
-                result[b.key] = (role as unknown) as Role;
+                result[b.key] = role as Role;
             }
         }));
         
