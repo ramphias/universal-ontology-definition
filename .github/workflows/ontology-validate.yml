@@ -1,5 +1,8 @@
 name: Ontology Validation
 
+permissions:
+  contents: read
+
 on:
   push:
     paths:
