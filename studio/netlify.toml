@@ -1,9 +1,11 @@
 [build]
   command = "npm run build"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"
   NEXT_PRIVATE_STANDALONE = "true"
+  SECRETS_SCAN_OMIT_KEYS = "GITHUB_REPO_OWNER,GITHUB_REPO_NAME"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

@@ -8,8 +8,8 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
 
-const REPO_OWNER = process.env.GITHUB_REPO_OWNER || "ramphias";
-const REPO_NAME = process.env.GITHUB_REPO_NAME || "universal-ontology-definition";
+const REPO_OWNER = process.env.GITHUB_REPO_OWNER as string;
+const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
 
 function getLocalDirs(relativePath: string) {
     try {

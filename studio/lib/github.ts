@@ -8,8 +8,8 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN, // Required for high API limits and private actions
 });
 
-const REPO_OWNER = process.env.GITHUB_REPO_OWNER || "ramphias";
-const REPO_NAME = process.env.GITHUB_REPO_NAME || "universal-ontology-definition";
+const REPO_OWNER = process.env.GITHUB_REPO_OWNER as string;
+const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
 
 export async function getOntologyLayer(layerId: string) {
   // Mapping L0, L1, L2, L3 layers to their respective raw JSON files
