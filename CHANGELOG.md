@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-04-12 — Industry Extensions, Tooling Suite & Python SDK
+
+### Added
+- **4 New L2 Industry Extensions**:
+  - **Financial Services** (`l2-extensions/financial-services/`) — 30 classes, 12 relations. Banking, insurance, asset management, KYC/AML compliance, credit/market/operational risk.
+  - **Manufacturing** (`l2-extensions/manufacturing/`) — 27 classes, 11 relations. Factory ops, production lines, BOM, MES/SCADA, quality control, OEE/yield KPIs.
+  - **Healthcare** (`l2-extensions/healthcare/`) — 28 classes, 10 relations. Hospitals, pharma R&D, clinical trials, EHR, GMP/HIPAA compliance.
+  - **Technology** (`l2-extensions/technology/`) — 29 classes, 12 relations. SaaS/platform products, microservices, CI/CD, DevOps, DORA metrics, MRR/churn.
+- **L2/L3 Validator** (`scripts/validate_l3.py`) — 9-rule referential integrity checker for all L2/L3 files (parent refs, relation domain/range, alias consistency, naming, cycles).
+- **Ontology Diff Tool** (`scripts/diff_ontology.py`) — Structural diff between two ontology versions or git refs, with field-level change tracking.
+- **LLM Export Tool** (`scripts/export_for_llm.py`) — Generates compressed system prompt (~4K tokens), OpenAI function-calling tool definitions, and RAG-ready document chunks.
+- **Neo4j Exporter** (`scripts/export_neo4j.py`) — Generates Cypher import script for loading ontologies into Neo4j graph database.
+- **Python SDK** (`uod/` package) — `OntologyGraph` class with `load_ontology()`, `get_class()`, `path()`, `search()`, `instances_of()`, `ancestors()`, `descendants()`, `inherited_attributes()`.
+- **CI Validation Workflow** (`.github/workflows/ontology-validate.yml`) — GitHub Actions pipeline validating all L1/L2/L3 ontologies on every push/PR.
+- **`alias_of` pattern** — New class field for declaring enterprise-specific aliases (owl:equivalentClass), supported across JSON, OWL, and HTML visualization.
+
+### Changed
+- **Visualizer** (`scripts/visualize_ontology.py`) — Added: tree horizontal/vertical toggle, instance display in all 3 views, attribute display in detail panel, alias badge, root node label, `since` version badges.
+- **Merger** (`scripts/merge_layers.py`) — Now scans `private_enterprise/` directory; handles `alias_of` field.
+- **OWL Generator** (`scripts/json_to_owl.py`) — Emits `owl:equivalentClass` for classes with `alias_of`.
+- **.gitignore** — Added exclusions for `**/output/` generated artifacts and `studio/`.
+
 ## [2.3.0] - 2026-04-11 — Architecture Folder Renaming
 
 ### ⚠️ Breaking Changes

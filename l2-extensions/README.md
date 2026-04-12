@@ -1,40 +1,45 @@
-# L2 — 行业与领域 Extension
+# L2 — Industry & Domain Extensions
 
-本目录包含 Universal Ontology Definition 框架的 **第二层（L2）行业扩展包**。
+This directory contains **Layer 2 (L2) industry and domain extension packages** for the Universal Ontology Definition framework.
 
-## 什么是行业与业务领域扩展？
+## What are Industry & Domain Extensions?
 
-行业与业务领域扩展 是在 L1 通用层基础上，针对特定行业或业务领域的概念扩展。每个 Extension：
+Each extension builds on the L1 universal core by adding industry-specific concepts:
 
-- 🔗 **继承** L1 的所有核心类和关系
-- ➕ **新增** 行业特有的类、关系和实例
-- 📐 **遵循** 统一的 JSON 格式规范
+- **Inherits** all L1 core classes and relations
+- **Adds** industry-specific classes, relations, and instances
+- **Follows** the unified JSON schema specification
 
-## 已有 Extension
+## Available Extensions
 
-| 行业 | 目录 | 版本 | 类 | 关系 | 说明 |
-|:---|:---|:---|:---:|:---:|:---|
-| 咨询行业 | [`consulting/`](consulting/) | v1.0.0 | 40+ | 34 | 覆盖项目、方法论、交付物、客户关系等 |
-| 奢侈品行业 | [`luxury-goods/`](luxury-goods/) | v1.0.0 | 21 | 10 | 覆盖品牌、渠道、客户体验、溯源等 |
+| Industry | Directory | Version | Classes | Relations | Instances | Description |
+|:---|:---|:---|:---:|:---:|:---:|:---|
+| Common Enterprise | [`common/`](common/) | v1.0.0 | 10 | 5 | 5 | Channel, Location, Project, Contract, Regulation |
+| Consulting | [`consulting/`](consulting/) | v1.1.0 | 54 | 45 | 39 | Engagements, methodologies, deliverables, client relationships |
+| Financial Services | [`financial-services/`](financial-services/) | v1.0.0 | 30 | 12 | 7 | Banking, insurance, asset management, KYC/AML, risk |
+| Food & Beverage | [`fnb/`](fnb/) | v1.0.0 | 19 | 7 | - | Restaurants, menus, central kitchens, franchisees |
+| Healthcare | [`healthcare/`](healthcare/) | v1.0.0 | 28 | 10 | 6 | Hospitals, pharma R&D, clinical trials, EHR, GMP |
+| Luxury Goods | [`luxury-goods/`](luxury-goods/) | v2.0.0 | 39 | 14 | 22 | Brands, collections, ateliers, craftsmanship, authenticity |
+| Manufacturing | [`manufacturing/`](manufacturing/) | v1.0.0 | 27 | 11 | 6 | Factory ops, production lines, BOM, MES/SCADA, OEE |
+| Technology | [`technology/`](technology/) | v1.0.0 | 29 | 12 | 7 | SaaS, microservices, CI/CD, DevOps, DORA metrics |
 
-## 贡献新 Extension
+**Total: 8 extensions, 236 classes, 116 relations**
 
-1. 复制 [`_template/`](_template/) 目录
-2. 按照模板修改定义
-3. 阅读 [Extension 开发指南](../docs/extension-development-guide.md)
-4. 提交 Pull Request
+## Contributing a New Extension
 
-## 期待的行业与业务领域扩展
+1. Copy [`_template/`](_template/) as your starting point
+2. Follow the [Extension Development Guide](../docs-site/l2-extensions/create-extension.md)
+3. Validate with `python scripts/validate_l3.py your_extension.json`
+4. Submit a Pull Request
 
-以下行业尚未有 Extension，欢迎社区贡献：
+## Wanted Extensions
 
-- 💰 金融服务（Banking & Financial Services）
-- 🏭 制造业（Manufacturing）
-- 🛒 零售业（Retail）
-- 🏥 医疗健康（Healthcare）
-- 🎓 教育（Education）
-- 🏗️ 房地产（Real Estate）
-- 🚚 物流与供应链（Logistics & Supply Chain）
-- ⚡ 能源（Energy）
-- 📡 电信（Telecommunications）
-- 🎮 游戏与娱乐（Gaming & Entertainment）
+The following industries don't have extensions yet:
+
+- Retail
+- Education
+- Real Estate
+- Logistics & Supply Chain
+- Energy
+- Telecommunications
+- Gaming & Entertainment

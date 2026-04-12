@@ -79,12 +79,18 @@ Pick the binding that matches your technology stack:
 
 ## Step 4: Select Industry and Domain Extension (Optional)
 
-Browse the `extensions/` directory for industry-specific extensions:
+Browse the `l2-extensions/` directory for industry-specific extensions:
 
 | Industry | Classes | Relations | Status |
 |:---|:---:|:---:|:---|
-| [Consulting](../l2-extensions/consulting.md) | 40+ | 34 | ✅ v1.0.0 |
-| [Luxury Goods](../l2-extensions/luxury-goods.md) | 21 | 10 | ✅ v1.0.0 |
+| Common Enterprise | 10 | 5 | v1.0.0 |
+| [Consulting](../l2-extensions/consulting.md) | 54 | 45 | v1.1.0 |
+| [Financial Services](../l2-extensions/financial-services.md) | 30 | 12 | v1.0.0 |
+| Food & Beverage | 19 | 7 | v1.0.0 |
+| [Healthcare](../l2-extensions/healthcare.md) | 28 | 10 | v1.0.0 |
+| [Luxury Goods](../l2-extensions/luxury-goods.md) | 39 | 14 | v2.0.0 |
+| [Manufacturing](../l2-extensions/manufacturing.md) | 27 | 11 | v1.0.0 |
+| [Technology](../l2-extensions/technology.md) | 29 | 12 | v1.0.0 |
 
 Each extension extends L1 through the `extends` field:
 

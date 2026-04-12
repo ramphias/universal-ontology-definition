@@ -134,7 +134,11 @@ nav:
   - Industry and Domain Extension (L2):
     - l2-extensions/index.md
     - Consulting: l2-extensions/consulting.md
+    - Financial Services: l2-extensions/financial-services.md
+    - Healthcare: l2-extensions/healthcare.md
     - Luxury Goods: l2-extensions/luxury-goods.md
+    - Manufacturing: l2-extensions/manufacturing.md
+    - Technology: l2-extensions/technology.md
     - Create Your Own: l2-extensions/create-extension.md
   - Enterprise Layer (L3):
     - l3-enterprise/index.md

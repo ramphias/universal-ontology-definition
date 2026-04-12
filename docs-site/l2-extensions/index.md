@@ -1,25 +1,31 @@
 # Industry and Domain Extension (L2)
 
-Industry and Domain Extension extend the L1 Universal Core with domain-specific concepts, relations, and instances.
+Industry and Domain Extensions extend the L1 Universal Core with domain-specific concepts, relations, and instances.
 
 ## Available Extensions
 
 | Industry | Classes | Relations | Instances | Status |
 |:---|:---:|:---:|:---:|:---|
-| Common Enterprise | 10 | 5 | - | ✅ v1.0.0 |
-| [Consulting](consulting.md) | 40+ | 34 | 25+ | ✅ v1.0.0 |
-| [Luxury Goods](luxury-goods.md) | 21 | 10 | 8 | ✅ v1.0.0 |
+| Common Enterprise | 10 | 5 | 5 | v1.0.0 |
+| [Consulting](consulting.md) | 54 | 45 | 39 | v1.1.0 |
+| [Financial Services](financial-services.md) | 30 | 12 | 7 | v1.0.0 |
+| Food & Beverage | 19 | 7 | - | v1.0.0 |
+| [Healthcare](healthcare.md) | 28 | 10 | 6 | v1.0.0 |
+| [Luxury Goods](luxury-goods.md) | 39 | 14 | 22 | v2.0.0 |
+| [Manufacturing](manufacturing.md) | 27 | 11 | 6 | v1.0.0 |
+| [Technology](technology.md) | 29 | 12 | 7 | v1.0.0 |
+
+**Total: 8 extensions, 236 classes, 116 relations**
 
 ## Wanted Extensions
 
 We're looking for community contributions in these industries:
 
-- :bank: **Financial Services** — Banking, insurance, asset management
-- :factory: **Manufacturing** — Production, supply chain, quality control
 - :shopping_cart: **Retail** — E-commerce, merchandising, loyalty programs
-- :hospital: **Healthcare** — Clinical, pharmaceutical, health records
 - :mortar_board: **Education** — Academic, curriculum, learning management
 - :truck: **Logistics** — Shipping, warehousing, fleet management
+- :office: **Real Estate** — Property, leasing, facilities management
+- :zap: **Energy** — Power generation, grid, renewables, trading
 
 ## How to Contribute
 

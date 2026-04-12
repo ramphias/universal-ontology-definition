@@ -70,23 +70,37 @@ flowchart TD
 .
 ├── core/                       # L1 Universal Enterprise Ontology Core
 │   └── universal_ontology_v1.json
-├── extensions/                 # L2 Industry & Domain Extensions
-│   ├── consulting/             #   └── Consulting Industry Extension
-│   ├── luxury-goods/           #   └── Luxury Goods Industry Extension
+├── l2-extensions/              # L2 Industry & Domain Extensions
+│   ├── common/                 #   └── Common Enterprise Extension
+│   ├── consulting/             #   └── Consulting Industry
+│   ├── financial-services/     #   └── Financial Services (Banking, Insurance, Asset Mgmt)
+│   ├── fnb/                    #   └── Food & Beverage
+│   ├── healthcare/             #   └── Healthcare (Clinical, Pharma, Medical Devices)
+│   ├── luxury-goods/           #   └── Luxury Goods
+│   ├── manufacturing/          #   └── Manufacturing (Factory Ops, MES, Quality)
+│   ├── technology/             #   └── Technology (SaaS, DevOps, AI/ML)
 │   └── _template/              #   └── Extension Contribution Template
-├── enterprise/                 # L3 Enterprise Example
+├── l3-enterprise/              # L3 Enterprise Examples
 │   ├── acme-tech-solutions/    #   └── Sample Virtual Enterprise
-│   ├── _template/              #   └── Enterprise Layer Template
-│   └── README.md
-├── platform/                   # L0 Platform & Syntax Bindings
-│   ├── owl-rdf/                #   └── OWL 2 / RDF Turtle Serialization
-│   ├── json-ld/                #   └── JSON-LD Context Definition
-│   ├── graphql/                #   └── GraphQL Schema Definition
-│   ├── sql/                    #   └── PostgreSQL DDL Mapping
+│   └── _template/              #   └── Enterprise Layer Template
+├── l0-platform/                # L0 Platform & Syntax Bindings
+│   ├── owl-rdf/                #   └── OWL 2 / RDF Turtle
+│   ├── json-ld/                #   └── JSON-LD Context
+│   ├── graphql/                #   └── GraphQL Schema
+│   ├── sql/                    #   └── PostgreSQL DDL
 │   └── _template/              #   └── Platform Binding Template
-├── scripts/                    # CI & Governance Automation
-│   ├── validate_governance.py  #   └── L1 Governance Rule Validator
+├── scripts/                    # Tooling & Automation
+│   ├── validate_governance.py  #   └── L1 Governance Validator
+│   ├── validate_l3.py          #   └── L2/L3 Referential Integrity Validator
+│   ├── merge_layers.py         #   └── Multi-Layer Merger (L1+L2+L3 → 5 formats)
+│   ├── visualize_ontology.py   #   └── Interactive HTML Visualization Generator
+│   ├── diff_ontology.py        #   └── Structural Diff Between Versions
+│   ├── export_for_llm.py       #   └── LLM Export (System Prompt, Tools, RAG Chunks)
+│   ├── export_neo4j.py         #   └── Neo4j Cypher Import Generator
 │   └── json_to_owl.py          #   └── JSON → OWL/RDF Turtle Converter
+├── uod/                        # Python SDK
+│   ├── __init__.py             #   └── from uod import load_ontology
+│   └── graph.py                #   └── OntologyGraph: query, path, search, export
 ├── docs-site/                  # MkDocs Documentation Site Source
 └── schema/                     # JSON Schema Validation
     ├── core_schema.json
@@ -160,11 +174,16 @@ For a comprehensive, step-by-step guide on creating or updating ontologies at an
 
 | Industry | Directory | Classes | Relations | Status |
 |:---|:---|:---:|:---:|:---|
-| **Food & Beverage** | [`l2-extensions/fnb/`](l2-extensions/fnb/) | 14+ | 6+ | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
-| **Consulting** | [`l2-extensions/consulting/`](l2-extensions/consulting/) | 40+ | 34 | ![v1.1.0](https://img.shields.io/badge/v1.1.0-blue) |
-| **Luxury Goods** | [`l2-extensions/luxury-goods/`](l2-extensions/luxury-goods/) | 38 | 14 | ![v2.0.0](https://img.shields.io/badge/v2.0.0-blue) |
+| **Common Enterprise** | [`l2-extensions/common/`](l2-extensions/common/) | 10 | 5 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
+| **Consulting** | [`l2-extensions/consulting/`](l2-extensions/consulting/) | 54 | 45 | ![v1.1.0](https://img.shields.io/badge/v1.1.0-blue) |
+| **Financial Services** | [`l2-extensions/financial-services/`](l2-extensions/financial-services/) | 30 | 12 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
+| **Food & Beverage** | [`l2-extensions/fnb/`](l2-extensions/fnb/) | 19 | 7 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
+| **Healthcare** | [`l2-extensions/healthcare/`](l2-extensions/healthcare/) | 28 | 10 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
+| **Luxury Goods** | [`l2-extensions/luxury-goods/`](l2-extensions/luxury-goods/) | 39 | 14 | ![v2.0.0](https://img.shields.io/badge/v2.0.0-blue) |
+| **Manufacturing** | [`l2-extensions/manufacturing/`](l2-extensions/manufacturing/) | 27 | 11 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
+| **Technology** | [`l2-extensions/technology/`](l2-extensions/technology/) | 29 | 12 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
 
-*🌟 **We're looking for community contributions!** Finance, Manufacturing, Retail, Healthcare, Education, and more.*
+*🌟 **We're looking for community contributions!** Retail, Education, Real Estate, Logistics, Energy, and more.*
 
 ---
 
