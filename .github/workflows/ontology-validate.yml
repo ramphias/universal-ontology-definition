@@ -1,0 +1,49 @@
+name: Ontology Validation
+
+on:
+  push:
+    paths:
+      - 'core/**/*.json'
+      - 'extensions/**/*.json'
+      - 'enterprise/**/*.json'
+      - 'private_enterprise/**/*.json'
+      - 'scripts/**'
+  pull_request:
+    paths:
+      - 'core/**/*.json'
+      - 'extensions/**/*.json'
+      - 'enterprise/**/*.json'
+      - 'private_enterprise/**/*.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate & Merge
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate L1 Core governance
+        run: python scripts/validate_governance.py
+
+      - name: Validate all L2/L3 ontologies
+        run: python scripts/validate_l3.py --all
+
+      - name: Merge Acme Tech Solutions (L3 example)
+        run: python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
+
+      - name: Merge Deloitte China MC
+        run: python scripts/merge_layers.py private_enterprise/deloitte-china-consulting/deloitte_china_consulting_ontology_v1.json
+
+      - name: Verify merged outputs are valid JSON
+        run: |
+          python -c "
+          import json, glob
+          for f in glob.glob('**/output/merged_ontology.json', recursive=True):
+              with open(f, encoding='utf-8') as fh:
+                  d = json.load(fh)
+              print(f'{f}: {len(d[\"classes\"])} classes OK')
+          "

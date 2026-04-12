@@ -1,0 +1,367 @@
+{
+  "$schema": "../../schema/extension_schema.json",
+  "layer": "L2_technology_extension",
+  "version": "1.0.0",
+  "extends": "L1_universal_organization_ontology",
+  "compatible_core_version": "2.1.0",
+  "description": "科技行业扩展 ontology，覆盖 SaaS 产品、平台工程、DevOps、AI/ML、云基础设施和技术团队管理",
+  "description_en": "Technology industry extension covering SaaS products, platform engineering, DevOps, AI/ML, cloud infrastructure, and engineering team management",
+  "classes": [
+    {
+      "id": "TechCompany",
+      "label_zh": "科技公司",
+      "label_en": "Technology Company",
+      "parent": "Organization",
+      "definition": "以技术产品或平台为核心业务的企业",
+      "definition_en": "An enterprise with technology products or platforms as its core business"
+    },
+    {
+      "id": "EngineeringTeam",
+      "label_zh": "工程团队",
+      "label_en": "Engineering Team",
+      "parent": "OrgUnit",
+      "definition": "负责产品研发和技术交付的工程组织单元",
+      "definition_en": "An organizational unit responsible for product development and technical delivery"
+    },
+    {
+      "id": "SaaSProduct",
+      "label_zh": "SaaS 产品",
+      "label_en": "SaaS Product",
+      "parent": "ProductService",
+      "definition": "以订阅模式交付的云端软件即服务产品",
+      "definition_en": "Cloud-based software-as-a-service product delivered via subscription model"
+    },
+    {
+      "id": "PlatformService",
+      "label_zh": "平台服务",
+      "label_en": "Platform Service",
+      "parent": "ProductService",
+      "definition": "为开发者或企业提供基础能力的平台类产品，如 API 平台、数据平台、AI 平台",
+      "definition_en": "Platform products providing foundational capabilities, e.g., API platforms, data platforms, AI platforms"
+    },
+    {
+      "id": "APIEndpoint",
+      "label_zh": "API 接口",
+      "label_en": "API Endpoint",
+      "parent": "Resource",
+      "definition": "对外暴露的应用程序编程接口端点",
+      "definition_en": "An externally exposed application programming interface endpoint"
+    },
+    {
+      "id": "Microservice",
+      "label_zh": "微服务",
+      "label_en": "Microservice",
+      "parent": "SystemApplication",
+      "definition": "独立部署和扩展的细粒度服务单元",
+      "definition_en": "A fine-grained service unit that can be independently deployed and scaled"
+    },
+    {
+      "id": "CloudInfrastructure",
+      "label_zh": "云基础设施",
+      "label_en": "Cloud Infrastructure",
+      "parent": "Asset",
+      "definition": "在公有云或私有云上运行的计算、存储和网络资源",
+      "definition_en": "Compute, storage, and networking resources running on public or private cloud"
+    },
+    {
+      "id": "DataPipeline",
+      "label_zh": "数据管道",
+      "label_en": "Data Pipeline",
+      "parent": "Process",
+      "definition": "从数据源采集、转换和加载到目标系统的自动化数据流程",
+      "definition_en": "Automated data flow from ingestion, transformation, to loading into target systems"
+    },
+    {
+      "id": "MLModel",
+      "label_zh": "机器学习模型",
+      "label_en": "ML Model",
+      "parent": "Asset",
+      "definition": "训练后用于预测或分类的机器学习模型资产",
+      "definition_en": "A trained machine learning model asset used for prediction or classification"
+    },
+    {
+      "id": "Sprint",
+      "label_zh": "迭代",
+      "label_en": "Sprint",
+      "parent": "Event",
+      "definition": "敏捷开发中固定时间窗口的工作迭代，通常 1-4 周",
+      "definition_en": "A fixed time-box work iteration in agile development, typically 1-4 weeks"
+    },
+    {
+      "id": "FeatureRequest",
+      "label_zh": "需求工单",
+      "label_en": "Feature Request",
+      "parent": "Document",
+      "definition": "描述产品新功能或改进需求的结构化工单",
+      "definition_en": "A structured ticket describing a new product feature or enhancement request"
+    },
+    {
+      "id": "Incident",
+      "label_zh": "故障事件",
+      "label_en": "Incident",
+      "parent": "Event",
+      "definition": "影响服务可用性或性能的生产环境异常事件",
+      "definition_en": "An abnormal production event affecting service availability or performance"
+    },
+    {
+      "id": "Deployment",
+      "label_zh": "部署",
+      "label_en": "Deployment",
+      "parent": "Event",
+      "definition": "将代码变更发布到生产环境的操作事件",
+      "definition_en": "An operational event releasing code changes to the production environment"
+    },
+    {
+      "id": "TechDebt",
+      "label_zh": "技术债务",
+      "label_en": "Technical Debt",
+      "parent": "Risk",
+      "definition": "因短期妥协积累的代码质量问题，增加未来维护成本和系统故障风险",
+      "definition_en": "Code quality issues accumulated from short-term compromises, increasing future maintenance cost and failure risk"
+    },
+    {
+      "id": "SecurityVulnerability",
+      "label_zh": "安全漏洞",
+      "label_en": "Security Vulnerability",
+      "parent": "Risk",
+      "definition": "系统中可被利用的安全弱点，如代码漏洞、配置错误、依赖库漏洞",
+      "definition_en": "Exploitable weaknesses in systems, e.g., code vulnerabilities, misconfigurations, dependency CVEs"
+    },
+    {
+      "id": "ProductManager",
+      "label_zh": "产品经理",
+      "label_en": "Product Manager",
+      "parent": "Role",
+      "definition": "负责产品战略、路线图和需求优先级的角色",
+      "definition_en": "A role responsible for product strategy, roadmap, and requirement prioritization"
+    },
+    {
+      "id": "SoftwareEngineer",
+      "label_zh": "软件工程师",
+      "label_en": "Software Engineer",
+      "parent": "Role",
+      "definition": "设计、编写和维护软件代码的技术角色",
+      "definition_en": "A technical role designing, writing, and maintaining software code"
+    },
+    {
+      "id": "SREEngineer",
+      "label_zh": "SRE 工程师",
+      "label_en": "Site Reliability Engineer",
+      "parent": "Role",
+      "definition": "负责系统可靠性、可观测性和自动化运维的工程角色",
+      "definition_en": "An engineering role responsible for system reliability, observability, and operational automation"
+    },
+    {
+      "id": "DataEngineer",
+      "label_zh": "数据工程师",
+      "label_en": "Data Engineer",
+      "parent": "Role",
+      "definition": "构建和维护数据管道、数据仓库和数据湖的技术角色",
+      "definition_en": "A technical role building and maintaining data pipelines, warehouses, and data lakes"
+    },
+    {
+      "id": "SLAPolicy",
+      "label_zh": "SLA 策略",
+      "label_en": "Service Level Agreement Policy",
+      "parent": "Policy",
+      "definition": "定义服务可用性、响应时间和故障恢复承诺的策略",
+      "definition_en": "Policy defining service availability, response time, and recovery commitments"
+    },
+    {
+      "id": "CICDProcess",
+      "label_zh": "CI/CD 流程",
+      "label_en": "CI/CD Process",
+      "parent": "Process",
+      "definition": "从代码提交、自动构建、测试到自动部署的持续集成和交付流程",
+      "definition_en": "Continuous integration and delivery pipeline from commit, build, test to automated deployment"
+    },
+    {
+      "id": "IncidentResponseProcess",
+      "label_zh": "故障响应流程",
+      "label_en": "Incident Response Process",
+      "parent": "Process",
+      "definition": "从故障检测、分级、处置、恢复到事后复盘的应急响应流程",
+      "definition_en": "Emergency response from detection, triage, mitigation, recovery to post-mortem review"
+    },
+    {
+      "id": "ProductDevelopmentCapability",
+      "label_zh": "产品研发能力",
+      "label_en": "Product Development Capability",
+      "parent": "Capability",
+      "definition": "快速迭代和交付高质量软件产品的组织能力",
+      "definition_en": "Organizational capability to rapidly iterate and deliver high-quality software products"
+    },
+    {
+      "id": "ObservabilityPlatform",
+      "label_zh": "可观测性平台",
+      "label_en": "Observability Platform",
+      "parent": "SystemApplication",
+      "definition": "集成日志、指标和链路追踪的系统运维监控平台",
+      "definition_en": "Monitoring platform integrating logs, metrics, and distributed tracing"
+    },
+    {
+      "id": "ServiceUptime",
+      "label_zh": "服务可用率",
+      "label_en": "Service Uptime",
+      "parent": "KPI",
+      "definition": "服务在线正常运行时间占总时间的比率，通常以 99.9%+ 为目标",
+      "definition_en": "Ratio of service uptime to total time, typically targeting 99.9%+"
+    },
+    {
+      "id": "DeploymentFrequency",
+      "label_zh": "部署频率",
+      "label_en": "Deployment Frequency",
+      "parent": "KPI",
+      "definition": "单位时间内向生产环境发布代码的次数",
+      "definition_en": "Number of code releases to production per unit time"
+    },
+    {
+      "id": "MTTR",
+      "label_zh": "平均恢复时间",
+      "label_en": "Mean Time to Recovery",
+      "parent": "KPI",
+      "definition": "从故障发生到服务恢复的平均时长",
+      "definition_en": "Average duration from incident occurrence to service recovery"
+    },
+    {
+      "id": "MRR",
+      "label_zh": "月度经常性收入",
+      "label_en": "Monthly Recurring Revenue",
+      "parent": "KPI",
+      "definition": "SaaS 产品每月的订阅经常性收入",
+      "definition_en": "Monthly subscription recurring revenue for SaaS products"
+    },
+    {
+      "id": "CustomerChurnRate",
+      "label_zh": "客户流失率",
+      "label_en": "Customer Churn Rate",
+      "parent": "KPI",
+      "definition": "一定期间内停止使用产品或取消订阅的客户比率",
+      "definition_en": "Rate of customers who stop using the product or cancel subscriptions in a period"
+    }
+  ],
+  "attributes": [],
+  "relations": [
+    {
+      "id": "has_engineering_team",
+      "domain": "TechCompany",
+      "range": "EngineeringTeam",
+      "definition": "科技公司设有工程团队",
+      "definition_en": "A tech company has engineering teams"
+    },
+    {
+      "id": "develops_product",
+      "domain": "EngineeringTeam",
+      "range": "SaaSProduct",
+      "definition": "工程团队研发产品",
+      "definition_en": "An engineering team develops a product"
+    },
+    {
+      "id": "exposes_api",
+      "domain": "SaaSProduct",
+      "range": "APIEndpoint",
+      "definition": "产品暴露 API 接口",
+      "definition_en": "A product exposes API endpoints"
+    },
+    {
+      "id": "composed_of_microservices",
+      "domain": "PlatformService",
+      "range": "Microservice",
+      "definition": "平台由微服务组成",
+      "definition_en": "A platform is composed of microservices"
+    },
+    {
+      "id": "runs_on",
+      "domain": "Microservice",
+      "range": "CloudInfrastructure",
+      "definition": "微服务运行在云基础设施上",
+      "definition_en": "A microservice runs on cloud infrastructure"
+    },
+    {
+      "id": "trains_model",
+      "domain": "DataPipeline",
+      "range": "MLModel",
+      "definition": "数据管道训练 ML 模型",
+      "definition_en": "A data pipeline trains an ML model"
+    },
+    {
+      "id": "planned_in_sprint",
+      "domain": "FeatureRequest",
+      "range": "Sprint",
+      "definition": "需求在迭代中计划和交付",
+      "definition_en": "A feature request is planned and delivered in a sprint"
+    },
+    {
+      "id": "deployed_via",
+      "domain": "Microservice",
+      "range": "CICDProcess",
+      "definition": "微服务通过 CI/CD 流程部署",
+      "definition_en": "A microservice is deployed via the CI/CD process"
+    },
+    {
+      "id": "triggers_incident",
+      "domain": "Deployment",
+      "range": "Incident",
+      "definition": "部署可能触发故障事件",
+      "definition_en": "A deployment may trigger an incident"
+    },
+    {
+      "id": "resolved_by",
+      "domain": "Incident",
+      "range": "IncidentResponseProcess",
+      "definition": "故障由应急响应流程处理",
+      "definition_en": "An incident is resolved through the incident response process"
+    },
+    {
+      "id": "monitored_by",
+      "domain": "Microservice",
+      "range": "ObservabilityPlatform",
+      "definition": "微服务由可观测性平台监控",
+      "definition_en": "A microservice is monitored by the observability platform"
+    },
+    {
+      "id": "governed_by_sla",
+      "domain": "SaaSProduct",
+      "range": "SLAPolicy",
+      "definition": "SaaS 产品受 SLA 策略约束",
+      "definition_en": "A SaaS product is governed by an SLA policy"
+    }
+  ],
+  "sample_instances": [
+    {
+      "id": "inst_saas_startup",
+      "type": "TechCompany",
+      "label": "Example SaaS Startup"
+    },
+    {
+      "id": "inst_backend_team",
+      "type": "EngineeringTeam",
+      "label": "Backend Platform Team"
+    },
+    {
+      "id": "inst_crm_saas",
+      "type": "SaaSProduct",
+      "label": "Cloud CRM Platform"
+    },
+    {
+      "id": "inst_data_platform",
+      "type": "PlatformService",
+      "label": "Unified Data Platform"
+    },
+    {
+      "id": "inst_user_service",
+      "type": "Microservice",
+      "label": "User Authentication Service"
+    },
+    {
+      "id": "inst_uptime_kpi",
+      "type": "ServiceUptime",
+      "label": "Service Uptime (Target: 99.95%)"
+    },
+    {
+      "id": "inst_mrr_kpi",
+      "type": "MRR",
+      "label": "MRR (Target: $500K+)"
+    }
+  ]
+}

@@ -1,0 +1,375 @@
+{
+  "$schema": "../../schema/extension_schema.json",
+  "layer": "L2_financial_services_extension",
+  "version": "1.0.0",
+  "extends": "L1_universal_organization_ontology",
+  "compatible_core_version": "2.1.0",
+  "description": "金融服务行业扩展 ontology，覆盖银行、保险、资产管理、支付等金融业务领域的核心概念、产品、流程、风险与合规",
+  "description_en": "Financial Services industry extension covering banking, insurance, asset management, payments — core concepts, products, processes, risk and compliance",
+  "classes": [
+    {
+      "id": "FinancialInstitution",
+      "label_zh": "金融机构",
+      "label_en": "Financial Institution",
+      "parent": "Organization",
+      "definition": "持有牌照的金融服务提供主体，如银行、保险公司、券商、基金公司等",
+      "definition_en": "A licensed entity providing financial services, e.g., banks, insurers, brokerages, fund managers"
+    },
+    {
+      "id": "BankBranch",
+      "label_zh": "银行网点",
+      "label_en": "Bank Branch",
+      "parent": "OrgUnit",
+      "definition": "银行按地理区域设立的分支网点，提供线下金融服务",
+      "definition_en": "A geographically distributed branch providing in-person banking services"
+    },
+    {
+      "id": "BusinessLine",
+      "label_zh": "业务条线",
+      "label_en": "Business Line",
+      "parent": "OrgUnit",
+      "definition": "按业务类型划分的经营单元，如零售银行、公司银行、投资银行、财富管理等",
+      "definition_en": "An operational unit organized by business type, e.g., retail banking, corporate banking, investment banking, wealth management"
+    },
+    {
+      "id": "FinancialProduct",
+      "label_zh": "金融产品",
+      "label_en": "Financial Product",
+      "parent": "ProductService",
+      "definition": "金融机构设计和销售的标准化或定制化产品，如存款、贷款、基金、保单等",
+      "definition_en": "Standardized or customized products designed and sold by financial institutions, e.g., deposits, loans, funds, insurance policies"
+    },
+    {
+      "id": "LoanProduct",
+      "label_zh": "贷款产品",
+      "label_en": "Loan Product",
+      "parent": "FinancialProduct",
+      "definition": "向个人或企业发放信贷的产品，含住房贷款、消费贷、经营贷等",
+      "definition_en": "Credit products issued to individuals or corporations, including mortgages, consumer loans, and business loans"
+    },
+    {
+      "id": "InsurancePolicy",
+      "label_zh": "保险产品",
+      "label_en": "Insurance Policy",
+      "parent": "FinancialProduct",
+      "definition": "保险公司承保的风险转移产品，含寿险、财险、健康险、责任险等",
+      "definition_en": "Risk transfer products underwritten by insurers, including life, property, health, and liability insurance"
+    },
+    {
+      "id": "InvestmentFund",
+      "label_zh": "投资基金",
+      "label_en": "Investment Fund",
+      "parent": "FinancialProduct",
+      "definition": "集合投资者资金进行组合投资的产品，含公募基金、私募基金、ETF等",
+      "definition_en": "Pooled investment vehicles including mutual funds, private equity funds, and ETFs"
+    },
+    {
+      "id": "CustomerAccount",
+      "label_zh": "客户账户",
+      "label_en": "Customer Account",
+      "parent": "Resource",
+      "definition": "金融机构为客户开立的账户，记录资金、持仓和交易历史",
+      "definition_en": "An account opened for a customer, recording balances, holdings, and transaction history"
+    },
+    {
+      "id": "Transaction",
+      "label_zh": "交易",
+      "label_en": "Transaction",
+      "parent": "Event",
+      "definition": "资金或金融资产的转移事件，含存取款、转账、支付、证券买卖等",
+      "definition_en": "A transfer event of funds or financial assets, including deposits, transfers, payments, securities trades"
+    },
+    {
+      "id": "Claim",
+      "label_zh": "理赔",
+      "label_en": "Insurance Claim",
+      "parent": "Resource",
+      "definition": "投保人向保险公司提出的损失赔偿请求",
+      "definition_en": "A request for loss compensation filed by a policyholder to an insurer"
+    },
+    {
+      "id": "Portfolio",
+      "label_zh": "投资组合",
+      "label_en": "Investment Portfolio",
+      "parent": "Resource",
+      "definition": "由多种金融资产组成的投资组合，按风险偏好和投资策略配置",
+      "definition_en": "A collection of financial assets allocated according to risk appetite and investment strategy"
+    },
+    {
+      "id": "CreditScore",
+      "label_zh": "信用评分",
+      "label_en": "Credit Score",
+      "parent": "DataObject",
+      "definition": "基于客户信用历史计算的风险评估分值",
+      "definition_en": "A risk assessment score calculated from a customer's credit history"
+    },
+    {
+      "id": "RegulatoryReport",
+      "label_zh": "监管报告",
+      "label_en": "Regulatory Report",
+      "parent": "Document",
+      "definition": "金融机构按监管要求定期提交的合规报告，如资本充足率报告、反洗钱报告等",
+      "definition_en": "Compliance reports submitted periodically to regulators, e.g., capital adequacy, AML reports"
+    },
+    {
+      "id": "RelationshipManager",
+      "label_zh": "客户经理",
+      "label_en": "Relationship Manager",
+      "parent": "Role",
+      "definition": "负责维护客户关系和产品销售的一线业务角色",
+      "definition_en": "A front-line role responsible for customer relationship management and product sales"
+    },
+    {
+      "id": "RiskAnalyst",
+      "label_zh": "风险分析师",
+      "label_en": "Risk Analyst",
+      "parent": "Role",
+      "definition": "负责信用风险、市场风险和操作风险评估的专业角色",
+      "definition_en": "A professional role assessing credit, market, and operational risks"
+    },
+    {
+      "id": "ComplianceOfficer",
+      "label_zh": "合规官",
+      "label_en": "Compliance Officer",
+      "parent": "Role",
+      "definition": "负责确保机构运营符合法律法规和内部政策的治理角色",
+      "definition_en": "A governance role ensuring institutional operations comply with laws, regulations, and internal policies"
+    },
+    {
+      "id": "Underwriter",
+      "label_zh": "核保人",
+      "label_en": "Underwriter",
+      "parent": "Role",
+      "definition": "评估和审批保险投保申请或贷款申请的风控角色",
+      "definition_en": "A risk control role evaluating and approving insurance or loan applications"
+    },
+    {
+      "id": "CreditRisk",
+      "label_zh": "信用风险",
+      "label_en": "Credit Risk",
+      "parent": "Risk",
+      "definition": "借款人或交易对手无法履行合约义务导致的损失风险",
+      "definition_en": "Risk of loss due to a borrower's or counterparty's failure to meet contractual obligations"
+    },
+    {
+      "id": "MarketRisk",
+      "label_zh": "市场风险",
+      "label_en": "Market Risk",
+      "parent": "Risk",
+      "definition": "因利率、汇率、股价、商品价格等市场因素波动导致的损失风险",
+      "definition_en": "Risk of loss due to fluctuations in interest rates, exchange rates, equity prices, or commodity prices"
+    },
+    {
+      "id": "OperationalRisk",
+      "label_zh": "操作风险",
+      "label_en": "Operational Risk",
+      "parent": "Risk",
+      "definition": "因内部流程、人员、系统缺陷或外部事件导致的损失风险",
+      "definition_en": "Risk of loss due to inadequate internal processes, people, systems, or external events"
+    },
+    {
+      "id": "AMLPolicy",
+      "label_zh": "反洗钱政策",
+      "label_en": "Anti-Money Laundering Policy",
+      "parent": "Policy",
+      "definition": "防范洗钱和恐怖融资的合规政策体系",
+      "definition_en": "Compliance policy framework for preventing money laundering and terrorism financing"
+    },
+    {
+      "id": "KYCProcess",
+      "label_zh": "客户尽调流程",
+      "label_en": "Know Your Customer Process",
+      "parent": "Process",
+      "definition": "开户前和持续进行的客户身份验证和风险评估流程",
+      "definition_en": "Pre-onboarding and ongoing customer identity verification and risk assessment process"
+    },
+    {
+      "id": "UnderwritingProcess",
+      "label_zh": "核保流程",
+      "label_en": "Underwriting Process",
+      "parent": "Process",
+      "definition": "评估风险并决定是否承保或放贷的审批流程",
+      "definition_en": "Risk evaluation and approval process for insurance or lending decisions"
+    },
+    {
+      "id": "ClaimsProcess",
+      "label_zh": "理赔流程",
+      "label_en": "Claims Process",
+      "parent": "Process",
+      "definition": "从报案、查勘、定损到赔付的端到端理赔处理流程",
+      "definition_en": "End-to-end claims handling from filing, investigation, assessment to settlement"
+    },
+    {
+      "id": "RiskManagementCapability",
+      "label_zh": "风险管理能力",
+      "label_en": "Risk Management Capability",
+      "parent": "Capability",
+      "definition": "识别、评估、监控和缓释各类金融风险的组织能力",
+      "definition_en": "Organizational capability to identify, assess, monitor, and mitigate financial risks"
+    },
+    {
+      "id": "CoreBankingSystem",
+      "label_zh": "核心银行系统",
+      "label_en": "Core Banking System",
+      "parent": "SystemApplication",
+      "definition": "处理存贷款、账户管理和支付结算的核心业务系统",
+      "definition_en": "Core business system processing deposits, loans, account management, and payment settlements"
+    },
+    {
+      "id": "TradingPlatform",
+      "label_zh": "交易平台",
+      "label_en": "Trading Platform",
+      "parent": "SystemApplication",
+      "definition": "执行证券、外汇、衍生品等金融资产交易的电子平台",
+      "definition_en": "Electronic platform for executing trades in securities, FX, derivatives, and other financial assets"
+    },
+    {
+      "id": "NPLRatio",
+      "label_zh": "不良贷款率",
+      "label_en": "Non-Performing Loan Ratio",
+      "parent": "KPI",
+      "definition": "不良贷款余额占总贷款余额的比率",
+      "definition_en": "Ratio of non-performing loans to total loan balance"
+    },
+    {
+      "id": "CombinedRatio",
+      "label_zh": "综合成本率",
+      "label_en": "Combined Ratio",
+      "parent": "KPI",
+      "definition": "保险公司赔付率与费用率之和，衡量承保盈利能力",
+      "definition_en": "Sum of loss ratio and expense ratio, measuring underwriting profitability"
+    },
+    {
+      "id": "CapitalAdequacyRatio",
+      "label_zh": "资本充足率",
+      "label_en": "Capital Adequacy Ratio",
+      "parent": "KPI",
+      "definition": "银行资本与风险加权资产的比率，衡量抗风险能力",
+      "definition_en": "Ratio of bank capital to risk-weighted assets, measuring risk resilience"
+    }
+  ],
+  "attributes": [],
+  "relations": [
+    {
+      "id": "has_business_line",
+      "domain": "FinancialInstitution",
+      "range": "BusinessLine",
+      "definition": "金融机构设有业务条线",
+      "definition_en": "A financial institution has business lines"
+    },
+    {
+      "id": "has_branch",
+      "domain": "FinancialInstitution",
+      "range": "BankBranch",
+      "definition": "金融机构设有分支网点",
+      "definition_en": "A financial institution has branches"
+    },
+    {
+      "id": "offers_product",
+      "domain": "FinancialInstitution",
+      "range": "FinancialProduct",
+      "definition": "金融机构提供金融产品",
+      "definition_en": "A financial institution offers financial products"
+    },
+    {
+      "id": "holds_account",
+      "domain": "CustomerAccount",
+      "range": "FinancialProduct",
+      "definition": "客户账户持有金融产品",
+      "definition_en": "A customer account holds financial products"
+    },
+    {
+      "id": "scored_by",
+      "domain": "CustomerAccount",
+      "range": "CreditScore",
+      "definition": "客户账户通过信用评分评估",
+      "definition_en": "A customer account is assessed by a credit score"
+    },
+    {
+      "id": "underwritten_by",
+      "domain": "FinancialProduct",
+      "range": "UnderwritingProcess",
+      "definition": "金融产品经核保流程审批",
+      "definition_en": "A financial product is approved through the underwriting process"
+    },
+    {
+      "id": "triggers_claim",
+      "domain": "InsurancePolicy",
+      "range": "Claim",
+      "definition": "保险产品触发理赔",
+      "definition_en": "An insurance policy triggers a claim"
+    },
+    {
+      "id": "managed_in_portfolio",
+      "domain": "InvestmentFund",
+      "range": "Portfolio",
+      "definition": "投资基金在组合中管理",
+      "definition_en": "An investment fund is managed within a portfolio"
+    },
+    {
+      "id": "reported_to_regulator",
+      "domain": "FinancialInstitution",
+      "range": "RegulatoryReport",
+      "definition": "金融机构向监管机构提交报告",
+      "definition_en": "A financial institution submits reports to regulators"
+    },
+    {
+      "id": "complies_with_aml",
+      "domain": "KYCProcess",
+      "range": "AMLPolicy",
+      "definition": "客户尽调流程遵循反洗钱政策",
+      "definition_en": "KYC process complies with AML policy"
+    },
+    {
+      "id": "processed_on",
+      "domain": "Transaction",
+      "range": "CoreBankingSystem",
+      "definition": "交易在核心银行系统中处理",
+      "definition_en": "A transaction is processed on the core banking system"
+    },
+    {
+      "id": "traded_on",
+      "domain": "InvestmentFund",
+      "range": "TradingPlatform",
+      "definition": "投资产品在交易平台上交易",
+      "definition_en": "Investment products are traded on the trading platform"
+    }
+  ],
+  "sample_instances": [
+    {
+      "id": "inst_commercial_bank",
+      "type": "FinancialInstitution",
+      "label": "Example Commercial Bank"
+    },
+    {
+      "id": "inst_branch_cbd",
+      "type": "BankBranch",
+      "label": "CBD Flagship Branch"
+    },
+    {
+      "id": "inst_mortgage",
+      "type": "LoanProduct",
+      "label": "30-Year Fixed Mortgage"
+    },
+    {
+      "id": "inst_auto_insurance",
+      "type": "InsurancePolicy",
+      "label": "Comprehensive Auto Insurance"
+    },
+    {
+      "id": "inst_equity_fund",
+      "type": "InvestmentFund",
+      "label": "A-Share Growth Equity Fund"
+    },
+    {
+      "id": "inst_kyc",
+      "type": "KYCProcess",
+      "label": "Standard KYC Onboarding"
+    },
+    {
+      "id": "inst_npl_kpi",
+      "type": "NPLRatio",
+      "label": "NPL Ratio (Target: <1.5%)"
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+{
+  "$schema": "../../schema/extension_schema.json",
+  "layer": "L2_healthcare_extension",
+  "version": "1.0.0",
+  "extends": "L1_universal_organization_ontology",
+  "compatible_core_version": "2.1.0",
+  "description": "医疗健康行业扩展 ontology，覆盖医疗机构、临床业务、药品研发、医疗器械、合规监管和健康数据管理",
+  "description_en": "Healthcare industry extension covering medical institutions, clinical operations, pharmaceutical R&D, medical devices, regulatory compliance, and health data management",
+  "classes": [
+    {
+      "id": "HealthcareProvider",
+      "label_zh": "医疗服务提供者",
+      "label_en": "Healthcare Provider",
+      "parent": "Organization",
+      "definition": "提供医疗健康服务的机构，含医院、诊所、养老院、第三方检测机构等",
+      "definition_en": "An institution providing healthcare services, including hospitals, clinics, nursing homes, and third-party labs"
+    },
+    {
+      "id": "Hospital",
+      "label_zh": "医院",
+      "label_en": "Hospital",
+      "parent": "HealthcareProvider",
+      "definition": "具备住院能力的综合或专科医疗机构",
+      "definition_en": "A general or specialized medical institution with inpatient capabilities"
+    },
+    {
+      "id": "ClinicalDepartment",
+      "label_zh": "临床科室",
+      "label_en": "Clinical Department",
+      "parent": "OrgUnit",
+      "definition": "按医学专科划分的诊疗部门，如心内科、骨科、肿瘤科等",
+      "definition_en": "A department organized by medical specialty, e.g., cardiology, orthopedics, oncology"
+    },
+    {
+      "id": "PharmaceuticalCompany",
+      "label_zh": "制药企业",
+      "label_en": "Pharmaceutical Company",
+      "parent": "Organization",
+      "definition": "从事药品研发、生产和销售的企业",
+      "definition_en": "An enterprise engaged in drug R&D, manufacturing, and commercialization"
+    },
+    {
+      "id": "DrugProduct",
+      "label_zh": "药品",
+      "label_en": "Drug Product",
+      "parent": "ProductService",
+      "definition": "经注册审批的治疗性或预防性药物制品",
+      "definition_en": "A registered therapeutic or prophylactic pharmaceutical product"
+    },
+    {
+      "id": "MedicalDevice",
+      "label_zh": "医疗器械",
+      "label_en": "Medical Device",
+      "parent": "ProductService",
+      "definition": "用于诊断、治疗或监测的仪器、设备和耗材",
+      "definition_en": "Instruments, equipment, and consumables used for diagnosis, treatment, or monitoring"
+    },
+    {
+      "id": "ClinicalTrial",
+      "label_zh": "临床试验",
+      "label_en": "Clinical Trial",
+      "parent": "Resource",
+      "definition": "在人体上验证药物或医疗器械安全性和有效性的系统性研究",
+      "definition_en": "A systematic study to evaluate safety and efficacy of drugs or devices in human subjects"
+    },
+    {
+      "id": "Patient",
+      "label_zh": "患者",
+      "label_en": "Patient",
+      "parent": "Role",
+      "definition": "接受医疗服务的个人角色",
+      "definition_en": "An individual role receiving healthcare services"
+    },
+    {
+      "id": "Physician",
+      "label_zh": "医师",
+      "label_en": "Physician",
+      "parent": "Role",
+      "definition": "具有执业资格的诊疗医生",
+      "definition_en": "A licensed medical practitioner providing diagnosis and treatment"
+    },
+    {
+      "id": "Nurse",
+      "label_zh": "护士",
+      "label_en": "Nurse",
+      "parent": "Role",
+      "definition": "提供护理服务和患者照护的临床角色",
+      "definition_en": "A clinical role providing nursing care and patient support"
+    },
+    {
+      "id": "ClinicalResearcher",
+      "label_zh": "临床研究员",
+      "label_en": "Clinical Researcher",
+      "parent": "Role",
+      "definition": "设计和执行临床试验的研究角色",
+      "definition_en": "A research role designing and conducting clinical trials"
+    },
+    {
+      "id": "Diagnosis",
+      "label_zh": "诊断",
+      "label_en": "Diagnosis",
+      "parent": "DataObject",
+      "definition": "基于症状、检查和化验结果确定的疾病判定",
+      "definition_en": "Disease determination based on symptoms, examinations, and lab results"
+    },
+    {
+      "id": "Prescription",
+      "label_zh": "处方",
+      "label_en": "Prescription",
+      "parent": "Document",
+      "definition": "医师为患者开具的用药指示",
+      "definition_en": "Medication instructions issued by a physician for a patient"
+    },
+    {
+      "id": "ElectronicHealthRecord",
+      "label_zh": "电子健康档案",
+      "label_en": "Electronic Health Record",
+      "parent": "Document",
+      "definition": "患者诊疗信息的数字化系统性记录，含病历、检查、用药和手术记录",
+      "definition_en": "Digitized systematic record of patient care including history, exams, medications, and procedures"
+    },
+    {
+      "id": "ClinicalProtocol",
+      "label_zh": "临床方案",
+      "label_en": "Clinical Protocol",
+      "parent": "Document",
+      "definition": "规范临床试验设计、执行和数据收集的标准文件",
+      "definition_en": "Standard document defining clinical trial design, execution, and data collection"
+    },
+    {
+      "id": "RegulatorySubmission",
+      "label_zh": "注册申报",
+      "label_en": "Regulatory Submission",
+      "parent": "Document",
+      "definition": "向药品或医疗器械监管机构提交的审批申请材料",
+      "definition_en": "Application materials submitted to drug or device regulatory authorities for approval"
+    },
+    {
+      "id": "PatientSafetyRisk",
+      "label_zh": "患者安全风险",
+      "label_en": "Patient Safety Risk",
+      "parent": "Risk",
+      "definition": "因诊疗失误、感染控制不当或药物不良反应导致的患者伤害风险",
+      "definition_en": "Risk of patient harm due to medical errors, infection control failures, or adverse drug reactions"
+    },
+    {
+      "id": "DataPrivacyRisk",
+      "label_zh": "数据隐私风险",
+      "label_en": "Data Privacy Risk",
+      "parent": "Risk",
+      "definition": "患者健康数据泄露或不当使用的隐私合规风险",
+      "definition_en": "Privacy compliance risk from health data breaches or inappropriate use of patient data"
+    },
+    {
+      "id": "GMPPolicy",
+      "label_zh": "GMP 政策",
+      "label_en": "Good Manufacturing Practice Policy",
+      "parent": "Policy",
+      "definition": "药品生产质量管理规范，确保药品安全、有效和质量可控",
+      "definition_en": "Quality management standards for pharmaceutical manufacturing ensuring drug safety, efficacy, and quality"
+    },
+    {
+      "id": "HIPAAPolicy",
+      "label_zh": "健康数据保护政策",
+      "label_en": "Health Data Protection Policy",
+      "parent": "Policy",
+      "definition": "保护患者健康信息隐私和安全的合规政策（如 HIPAA、GDPR 健康条款）",
+      "definition_en": "Compliance policy protecting patient health information privacy and security (e.g., HIPAA, GDPR health provisions)"
+    },
+    {
+      "id": "ClinicalCareProcess",
+      "label_zh": "临床诊疗流程",
+      "label_en": "Clinical Care Process",
+      "parent": "Process",
+      "definition": "从挂号、问诊、检查、诊断到治疗的端到端诊疗流程",
+      "definition_en": "End-to-end care process from registration, consultation, examination, diagnosis to treatment"
+    },
+    {
+      "id": "DrugDevelopmentProcess",
+      "label_zh": "药物研发流程",
+      "label_en": "Drug Development Process",
+      "parent": "Process",
+      "definition": "从靶点发现、临床前研究、临床试验到上市申请的全链路研发流程",
+      "definition_en": "Full pipeline from target discovery, preclinical, clinical trials to NDA submission"
+    },
+    {
+      "id": "ClinicalInformaticsCapability",
+      "label_zh": "临床信息化能力",
+      "label_en": "Clinical Informatics Capability",
+      "parent": "Capability",
+      "definition": "利用信息技术优化临床决策、病历管理和患者沟通的能力",
+      "definition_en": "Capability to leverage IT for clinical decision support, medical records, and patient communication"
+    },
+    {
+      "id": "HISSystem",
+      "label_zh": "医院信息系统",
+      "label_en": "Hospital Information System",
+      "parent": "SystemApplication",
+      "definition": "管理医院行政、临床和财务业务的综合信息系统",
+      "definition_en": "Integrated information system managing hospital administrative, clinical, and financial operations"
+    },
+    {
+      "id": "LISSystem",
+      "label_zh": "实验室信息系统",
+      "label_en": "Laboratory Information System",
+      "parent": "SystemApplication",
+      "definition": "管理检验科样本处理、结果记录和报告的信息系统",
+      "definition_en": "Information system managing lab sample processing, result recording, and reporting"
+    },
+    {
+      "id": "BedOccupancyRate",
+      "label_zh": "床位使用率",
+      "label_en": "Bed Occupancy Rate",
+      "parent": "KPI",
+      "definition": "实际使用床位数占开放床位总数的比率",
+      "definition_en": "Ratio of occupied beds to total available beds"
+    },
+    {
+      "id": "ReadmissionRate",
+      "label_zh": "再入院率",
+      "label_en": "Readmission Rate",
+      "parent": "KPI",
+      "definition": "出院后一定期间内非计划再入院的患者比率",
+      "definition_en": "Rate of unplanned readmissions within a defined period after discharge"
+    },
+    {
+      "id": "ClinicalTrialSuccessRate",
+      "label_zh": "临床试验成功率",
+      "label_en": "Clinical Trial Success Rate",
+      "parent": "KPI",
+      "definition": "临床试验达到主要终点的成功比率，按阶段（I/II/III）统计",
+      "definition_en": "Rate of clinical trials meeting primary endpoints, tracked by phase (I/II/III)"
+    }
+  ],
+  "attributes": [],
+  "relations": [
+    {
+      "id": "has_department",
+      "domain": "Hospital",
+      "range": "ClinicalDepartment",
+      "definition": "医院设有临床科室",
+      "definition_en": "A hospital has clinical departments"
+    },
+    {
+      "id": "treats_patient",
+      "domain": "Physician",
+      "range": "Patient",
+      "definition": "医师诊治患者",
+      "definition_en": "A physician treats a patient"
+    },
+    {
+      "id": "prescribes",
+      "domain": "Physician",
+      "range": "Prescription",
+      "definition": "医师开具处方",
+      "definition_en": "A physician issues a prescription"
+    },
+    {
+      "id": "documents_in_ehr",
+      "domain": "Diagnosis",
+      "range": "ElectronicHealthRecord",
+      "definition": "诊断记录于电子健康档案",
+      "definition_en": "A diagnosis is documented in the electronic health record"
+    },
+    {
+      "id": "conducted_under_protocol",
+      "domain": "ClinicalTrial",
+      "range": "ClinicalProtocol",
+      "definition": "临床试验按方案执行",
+      "definition_en": "A clinical trial is conducted under a clinical protocol"
+    },
+    {
+      "id": "develops_drug",
+      "domain": "PharmaceuticalCompany",
+      "range": "DrugProduct",
+      "definition": "制药企业研发药品",
+      "definition_en": "A pharmaceutical company develops a drug product"
+    },
+    {
+      "id": "submitted_for_approval",
+      "domain": "DrugProduct",
+      "range": "RegulatorySubmission",
+      "definition": "药品提交注册申报",
+      "definition_en": "A drug product is submitted for regulatory approval"
+    },
+    {
+      "id": "managed_in_his",
+      "domain": "ElectronicHealthRecord",
+      "range": "HISSystem",
+      "definition": "电子病历在 HIS 系统中管理",
+      "definition_en": "Electronic health records are managed in the HIS"
+    },
+    {
+      "id": "tested_in_lis",
+      "domain": "Diagnosis",
+      "range": "LISSystem",
+      "definition": "检验结果在 LIS 系统中记录",
+      "definition_en": "Lab results are recorded in the LIS"
+    },
+    {
+      "id": "complies_with_gmp",
+      "domain": "DrugProduct",
+      "range": "GMPPolicy",
+      "definition": "药品生产遵循 GMP 规范",
+      "definition_en": "Drug manufacturing complies with GMP policy"
+    }
+  ],
+  "sample_instances": [
+    {
+      "id": "inst_general_hospital",
+      "type": "Hospital",
+      "label": "Example General Hospital"
+    },
+    {
+      "id": "inst_cardiology",
+      "type": "ClinicalDepartment",
+      "label": "Cardiology Department"
+    },
+    {
+      "id": "inst_pharma_co",
+      "type": "PharmaceuticalCompany",
+      "label": "Example Pharma Inc."
+    },
+    {
+      "id": "inst_vaccine",
+      "type": "DrugProduct",
+      "label": "mRNA Vaccine Product"
+    },
+    {
+      "id": "inst_phase3_trial",
+      "type": "ClinicalTrial",
+      "label": "Phase III Efficacy Trial"
+    },
+    {
+      "id": "inst_bed_occupancy",
+      "type": "BedOccupancyRate",
+      "label": "Bed Occupancy (Target: 85-90%)"
+    }
+  ]
+}

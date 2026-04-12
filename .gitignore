@@ -48,6 +48,12 @@ _mkdocs_site/
 site_local/
 site_test/
 
+# Ontology merge output (generated, always rebuildable)
+**/output/merged_ontology.*
+**/output/visualization.html
+**/output/neo4j_import.cypher
+**/output/llm_*
+
 # Local archive/legacy
 legacy/
 
@@ -57,6 +63,9 @@ private_enterprise/
 # Local Netlify folder
 .netlify
 .netlify-deploy/
+
+# Ontology Studio (in development, not ready for public)
+studio/
 
 # AI Assistants & Agents
 .agents/

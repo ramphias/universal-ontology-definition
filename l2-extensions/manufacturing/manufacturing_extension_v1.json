@@ -1,0 +1,339 @@
+{
+  "$schema": "../../schema/extension_schema.json",
+  "layer": "L2_manufacturing_extension",
+  "version": "1.0.0",
+  "extends": "L1_universal_organization_ontology",
+  "compatible_core_version": "2.1.0",
+  "description": "制造业行业扩展 ontology，覆盖工厂运营、生产管理、供应链、质量控制、设备维护和智能制造",
+  "description_en": "Manufacturing industry extension covering factory operations, production management, supply chain, quality control, equipment maintenance, and smart manufacturing",
+  "classes": [
+    {
+      "id": "Factory",
+      "label_zh": "工厂",
+      "label_en": "Factory",
+      "parent": "Organization",
+      "definition": "从事产品生产制造的实体单位，含一个或多个车间和产线",
+      "definition_en": "A physical entity engaged in product manufacturing, comprising one or more workshops and production lines"
+    },
+    {
+      "id": "Workshop",
+      "label_zh": "车间",
+      "label_en": "Workshop",
+      "parent": "OrgUnit",
+      "definition": "工厂内按工艺或产品划分的生产区域",
+      "definition_en": "A production area within a factory organized by process or product type"
+    },
+    {
+      "id": "ProductionLine",
+      "label_zh": "产线",
+      "label_en": "Production Line",
+      "parent": "OrgUnit",
+      "definition": "按工序连续排列的设备和工位组合，完成特定产品的批量生产",
+      "definition_en": "A sequence of equipment and workstations arranged for mass production of a specific product"
+    },
+    {
+      "id": "Warehouse",
+      "label_zh": "仓库",
+      "label_en": "Warehouse",
+      "parent": "OrgUnit",
+      "definition": "存储原材料、在制品和成品的物理空间",
+      "definition_en": "Physical storage for raw materials, work-in-progress, and finished goods"
+    },
+    {
+      "id": "ManufacturedProduct",
+      "label_zh": "制造产品",
+      "label_en": "Manufactured Product",
+      "parent": "ProductService",
+      "definition": "工厂生产的最终产品或半成品",
+      "definition_en": "Finished or semi-finished goods produced by a factory"
+    },
+    {
+      "id": "RawMaterial",
+      "label_zh": "原材料",
+      "label_en": "Raw Material",
+      "parent": "Asset",
+      "definition": "用于生产制造的输入物料，含金属、化工原料、电子元器件等",
+      "definition_en": "Input materials for manufacturing, including metals, chemicals, electronic components"
+    },
+    {
+      "id": "BillOfMaterials",
+      "label_zh": "物料清单",
+      "label_en": "Bill of Materials (BOM)",
+      "parent": "Document",
+      "definition": "产品所需全部零部件和原材料的结构化清单",
+      "definition_en": "Structured list of all components and raw materials required for a product"
+    },
+    {
+      "id": "WorkOrder",
+      "label_zh": "工单",
+      "label_en": "Work Order",
+      "parent": "Document",
+      "definition": "指示生产特定数量产品的制造指令",
+      "definition_en": "A manufacturing instruction to produce a specific quantity of a product"
+    },
+    {
+      "id": "QualityInspectionReport",
+      "label_zh": "质检报告",
+      "label_en": "Quality Inspection Report",
+      "parent": "Document",
+      "definition": "产品或工序的质量检验结果记录",
+      "definition_en": "Record of quality inspection results for a product or process"
+    },
+    {
+      "id": "Equipment",
+      "label_zh": "生产设备",
+      "label_en": "Equipment",
+      "parent": "Asset",
+      "definition": "用于加工、装配、检测的机械设备和工装夹具",
+      "definition_en": "Machinery, tooling, and fixtures used for processing, assembly, and inspection"
+    },
+    {
+      "id": "MaintenanceOrder",
+      "label_zh": "维保工单",
+      "label_en": "Maintenance Order",
+      "parent": "Document",
+      "definition": "设备预防性维护或故障维修的工作指令",
+      "definition_en": "Work instruction for preventive maintenance or corrective repair of equipment"
+    },
+    {
+      "id": "Supplier",
+      "label_zh": "供应商",
+      "label_en": "Supplier",
+      "parent": "Organization",
+      "definition": "向工厂提供原材料、零部件或服务的外部企业",
+      "definition_en": "External enterprise supplying raw materials, components, or services to a factory"
+    },
+    {
+      "id": "ProductionPlanner",
+      "label_zh": "生产计划员",
+      "label_en": "Production Planner",
+      "parent": "Role",
+      "definition": "负责编制和调整生产计划、排程排产的角色",
+      "definition_en": "A role responsible for creating and adjusting production plans and scheduling"
+    },
+    {
+      "id": "QualityInspector",
+      "label_zh": "质检员",
+      "label_en": "Quality Inspector",
+      "parent": "Role",
+      "definition": "执行来料检验、过程检验和成品检验的质量控制角色",
+      "definition_en": "A quality control role performing incoming, in-process, and final inspections"
+    },
+    {
+      "id": "MaintenanceTechnician",
+      "label_zh": "维修技师",
+      "label_en": "Maintenance Technician",
+      "parent": "Role",
+      "definition": "负责设备维护、故障排除和修复的技术角色",
+      "definition_en": "A technical role responsible for equipment maintenance, troubleshooting, and repair"
+    },
+    {
+      "id": "QualityPolicy",
+      "label_zh": "质量政策",
+      "label_en": "Quality Policy",
+      "parent": "Policy",
+      "definition": "企业质量管理体系的总纲政策，通常基于 ISO 9001",
+      "definition_en": "Top-level quality management system policy, typically based on ISO 9001"
+    },
+    {
+      "id": "DefectRisk",
+      "label_zh": "质量缺陷风险",
+      "label_en": "Defect Risk",
+      "parent": "Risk",
+      "definition": "产品质量缺陷导致返工、退货或召回的风险",
+      "definition_en": "Risk of product defects leading to rework, returns, or recalls"
+    },
+    {
+      "id": "SupplyDisruptionRisk",
+      "label_zh": "供应中断风险",
+      "label_en": "Supply Disruption Risk",
+      "parent": "Risk",
+      "definition": "因供应商、物流或地缘政治因素导致原材料供应中断的风险",
+      "definition_en": "Risk of raw material supply interruption due to supplier, logistics, or geopolitical factors"
+    },
+    {
+      "id": "ProductionPlanningProcess",
+      "label_zh": "生产计划流程",
+      "label_en": "Production Planning Process",
+      "parent": "Process",
+      "definition": "从需求预测、主生产计划到排程排产的端到端计划流程",
+      "definition_en": "End-to-end planning from demand forecast, master production schedule to detailed scheduling"
+    },
+    {
+      "id": "QualityControlProcess",
+      "label_zh": "质量控制流程",
+      "label_en": "Quality Control Process",
+      "parent": "Process",
+      "definition": "从来料检验、过程控制到出厂检验的全链路质量管控流程",
+      "definition_en": "Full-chain quality management from incoming inspection, in-process control to final inspection"
+    },
+    {
+      "id": "MaintenanceProcess",
+      "label_zh": "设备维护流程",
+      "label_en": "Maintenance Process",
+      "parent": "Process",
+      "definition": "预防性维护、预测性维护和故障维修的管理流程",
+      "definition_en": "Management process for preventive, predictive, and corrective maintenance"
+    },
+    {
+      "id": "LeanManufacturingCapability",
+      "label_zh": "精益制造能力",
+      "label_en": "Lean Manufacturing Capability",
+      "parent": "Capability",
+      "definition": "消除浪费、持续改善、实现高效生产的组织能力",
+      "definition_en": "Organizational capability to eliminate waste, continuously improve, and achieve efficient production"
+    },
+    {
+      "id": "MESSystem",
+      "label_zh": "制造执行系统",
+      "label_en": "Manufacturing Execution System",
+      "parent": "SystemApplication",
+      "definition": "管理和监控车间层面生产执行的信息系统",
+      "definition_en": "Information system managing and monitoring shop-floor production execution"
+    },
+    {
+      "id": "SCADASystem",
+      "label_zh": "数据采集与监控系统",
+      "label_en": "SCADA System",
+      "parent": "SystemApplication",
+      "definition": "实时采集设备数据并进行过程监控的工业控制系统",
+      "definition_en": "Industrial control system for real-time equipment data acquisition and process monitoring"
+    },
+    {
+      "id": "OEE",
+      "label_zh": "设备综合效率",
+      "label_en": "Overall Equipment Effectiveness",
+      "parent": "KPI",
+      "definition": "设备可用率 × 性能率 × 良品率，衡量设备产出效率",
+      "definition_en": "Availability × Performance × Quality — measures equipment output efficiency"
+    },
+    {
+      "id": "YieldRate",
+      "label_zh": "良品率",
+      "label_en": "Yield Rate",
+      "parent": "KPI",
+      "definition": "合格品数量占总产出数量的比率",
+      "definition_en": "Ratio of conforming units to total units produced"
+    },
+    {
+      "id": "InventoryTurnover",
+      "label_zh": "库存周转率",
+      "label_en": "Inventory Turnover",
+      "parent": "KPI",
+      "definition": "一定期间内库存被消耗和补充的次数，衡量库存管理效率",
+      "definition_en": "Number of times inventory is consumed and replenished in a period, measuring inventory management efficiency"
+    }
+  ],
+  "attributes": [],
+  "relations": [
+    {
+      "id": "has_workshop",
+      "domain": "Factory",
+      "range": "Workshop",
+      "definition": "工厂设有车间",
+      "definition_en": "A factory has workshops"
+    },
+    {
+      "id": "has_production_line",
+      "domain": "Workshop",
+      "range": "ProductionLine",
+      "definition": "车间包含产线",
+      "definition_en": "A workshop contains production lines"
+    },
+    {
+      "id": "produces_product",
+      "domain": "ProductionLine",
+      "range": "ManufacturedProduct",
+      "definition": "产线生产产品",
+      "definition_en": "A production line produces a manufactured product"
+    },
+    {
+      "id": "defined_by_bom",
+      "domain": "ManufacturedProduct",
+      "range": "BillOfMaterials",
+      "definition": "产品由物料清单定义",
+      "definition_en": "A product is defined by a bill of materials"
+    },
+    {
+      "id": "consumes_material",
+      "domain": "WorkOrder",
+      "range": "RawMaterial",
+      "definition": "工单消耗原材料",
+      "definition_en": "A work order consumes raw materials"
+    },
+    {
+      "id": "inspected_by",
+      "domain": "ManufacturedProduct",
+      "range": "QualityInspectionReport",
+      "definition": "产品经过质检",
+      "definition_en": "A product is inspected and documented in a quality inspection report"
+    },
+    {
+      "id": "maintained_by",
+      "domain": "Equipment",
+      "range": "MaintenanceOrder",
+      "definition": "设备通过维保工单维护",
+      "definition_en": "Equipment is maintained through maintenance orders"
+    },
+    {
+      "id": "supplies_to",
+      "domain": "Supplier",
+      "range": "Factory",
+      "definition": "供应商向工厂供货",
+      "definition_en": "A supplier provides materials to a factory"
+    },
+    {
+      "id": "scheduled_by",
+      "domain": "WorkOrder",
+      "range": "ProductionPlanningProcess",
+      "definition": "工单由生产计划流程排程",
+      "definition_en": "A work order is scheduled by the production planning process"
+    },
+    {
+      "id": "monitored_by_mes",
+      "domain": "ProductionLine",
+      "range": "MESSystem",
+      "definition": "产线由 MES 系统监控",
+      "definition_en": "A production line is monitored by the MES system"
+    },
+    {
+      "id": "controlled_by_scada",
+      "domain": "Equipment",
+      "range": "SCADASystem",
+      "definition": "设备由 SCADA 系统采集数据和监控",
+      "definition_en": "Equipment data is collected and monitored by the SCADA system"
+    }
+  ],
+  "sample_instances": [
+    {
+      "id": "inst_auto_factory",
+      "type": "Factory",
+      "label": "Example Automotive Assembly Plant"
+    },
+    {
+      "id": "inst_welding_workshop",
+      "type": "Workshop",
+      "label": "Body Welding Workshop"
+    },
+    {
+      "id": "inst_final_assembly",
+      "type": "ProductionLine",
+      "label": "Final Assembly Line A"
+    },
+    {
+      "id": "inst_steel_supplier",
+      "type": "Supplier",
+      "label": "Baosteel Supply Co."
+    },
+    {
+      "id": "inst_oee_kpi",
+      "type": "OEE",
+      "label": "OEE (Target: 85%+)"
+    },
+    {
+      "id": "inst_yield_kpi",
+      "type": "YieldRate",
+      "label": "First-Pass Yield (Target: 98%+)"
+    }
+  ]
+}
