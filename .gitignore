@@ -14,6 +14,10 @@ env/
 *.egg-info/
 dist/
 build/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
 
 # Node.js
 node_modules/
@@ -64,9 +68,7 @@ private_enterprise/
 .netlify
 .netlify-deploy/
 
-# Ontology Studio (in development, not ready for public)
-studio/
-
+# Ontology Studio (Now ready for deployment)
 # AI Assistants & Agents
-.agents/
+# .agents/   # Allowed: Committing AI Agent workflows for team SOPs (Prompt-as-Code)
 .claude/
