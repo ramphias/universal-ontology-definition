@@ -41,3 +41,7 @@ This extension covers:
 - Regulatory compliance automation (KYC/AML)
 - Credit risk scoring and portfolio analytics
 - Customer 360 data integration across business lines
+
+## Source File
+
+:material-file-code: [`financial_services_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/l2-extensions/financial-services/financial_services_extension_v1.json)

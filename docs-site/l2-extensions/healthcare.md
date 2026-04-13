@@ -41,3 +41,7 @@ This extension covers:
 - Drug development pipeline tracking (target to NDA)
 - Patient data governance and privacy compliance
 - Clinical trial management and regulatory submission automation
+
+## Source File
+
+:material-file-code: [`healthcare_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/l2-extensions/healthcare/healthcare_extension_v1.json)

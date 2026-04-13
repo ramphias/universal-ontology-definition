@@ -55,7 +55,7 @@ An L3 implementation follows this pattern:
 3. **Map**: Use L0 platform bindings to deploy the ontology to your internal knowledge graph or data layer
 
 !!! tip "Template Available"
-    Use the template at `enterprise/_template/enterprise_ontology_template.json` as your starting point.
+    Use the template at `l3-enterprise/_template/enterprise_ontology_template.json` as your starting point.
 
 ## Important Notes
 

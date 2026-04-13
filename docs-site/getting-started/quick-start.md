@@ -11,7 +11,7 @@ cd universal-ontology-definition
 
 ## Step 2: Explore the Core Ontology
 
-Open `core/universal_ontology_v1.json` to see all **24 core classes** and **12 standard relations**.
+Open `l1-core/universal_ontology_v1.json` to see all **24 core classes** and **12 standard relations**.
 
 The core ontology covers these universal enterprise domains:
 
@@ -40,13 +40,13 @@ Pick the binding that matches your technology stack:
         rdfs:label "组织"@zh .
     ```
 
-    File: `platform/owl-rdf/core_ontology.ttl`
+    File: `l0-platform/owl-rdf/core_ontology.ttl`
 
 === "JSON-LD"
 
     Best for **REST APIs**, **Linked Data**, and **Web standards**.
 
-    File: `platform/json-ld/context.jsonld`
+    File: `l0-platform/json-ld/context.jsonld`
 
 === "GraphQL"
 
@@ -61,7 +61,7 @@ Pick the binding that matches your technology stack:
     }
     ```
 
-    File: `platform/graphql/schema.graphql`
+    File: `l0-platform/graphql/schema.graphql`
 
 === "SQL DDL"
 
@@ -75,7 +75,7 @@ Pick the binding that matches your technology stack:
     );
     ```
 
-    File: `platform/sql/schema.sql`
+    File: `l0-platform/sql/schema.sql`
 
 ## Step 4: Select Industry and Domain Extension (Optional)
 
@@ -113,7 +113,7 @@ Each extension extends L1 through the `extends` field:
 
 If you need company-specific customizations, use the L3 template:
 
-1. Copy `enterprise/_template/` as your starting point
+1. Copy `l3-enterprise/_template/` as your starting point
 2. Define your custom classes that extend L1 or L2
 3. Deploy using your preferred L0 platform binding
 

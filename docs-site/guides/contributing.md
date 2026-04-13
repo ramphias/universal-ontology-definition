@@ -30,7 +30,7 @@ Core Ontology is the foundation of the entire framework. Changes require careful
 
 1. Submit an Issue to discuss your proposal
 2. After maintainer agreement, fork the repository
-3. Make changes in the `core/` directory
+3. Make changes in the `l1-core/` directory
 4. Validate against `schema/core_schema.json`
 5. Explain rationale and impact analysis in the PR description
 6. Wait for at least 2 maintainer approvals

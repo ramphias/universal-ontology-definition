@@ -40,3 +40,7 @@ This extension covers:
 - Supply chain visibility and supplier risk management
 - Quality traceability from raw material to finished goods
 - Predictive maintenance with equipment lifecycle data
+
+## Source File
+
+:material-file-code: [`manufacturing_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/l2-extensions/manufacturing/manufacturing_extension_v1.json)

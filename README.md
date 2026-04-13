@@ -73,7 +73,7 @@ A production-ready **Next.js web application** for visually browsing, searching,
 - **Role-Based Access Control** — GitHub OAuth with three roles (Admin / Editor / Viewer) backed by Netlify Blobs.
 - **Public Read-Only Access** — Anonymous users can browse the full ontology; only the admin panel requires login.
 
-> Source code in [`studio/`](studio/).
+> **Live Demo**: [ontologystudio.netlify.app](https://ontologystudio.netlify.app) | Source code in [`studio/`](studio/).
 
 ### Local Development
 

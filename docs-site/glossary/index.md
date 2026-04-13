@@ -728,6 +728,5 @@ For detailed reference of every class, relation, and axiom:
 | [L1 Classes](l1-classes.md) | All 28 L1 classes with hierarchy tree and bilingual definitions |
 | [L1 Relations](l1-relations.md) | All 12 L1 relations + 6 deprecated relations |
 | [L1 Axioms](l1-axioms.md) | All 18 L1 axioms + 12 axiom type explanations |
-| [L2 Common Extension](l2-common.md) | 10 classes + 5 relations from Common Enterprise Extension |
 | [L2 Consulting](l2-consulting.md) | ~54 classes + ~48 relations from Consulting Industry Extension |
 | [L2 Luxury Goods](l2-luxury-goods.md) | ~41 classes + ~14 relations from Luxury Goods Industry Extension |

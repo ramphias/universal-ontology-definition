@@ -42,3 +42,7 @@ This extension covers:
 - Incident root-cause analysis across microservice dependencies
 - DORA metrics dashboard (deployment frequency, lead time, MTTR, change failure rate)
 - SaaS business metrics (MRR, churn, LTV) linked to product and engineering data
+
+## Source File
+
+:material-file-code: [`technology_extension_v1.json`](https://github.com/ramphias/universal-ontology-definition/blob/main/l2-extensions/technology/technology_extension_v1.json)

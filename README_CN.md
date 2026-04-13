@@ -86,7 +86,7 @@ flowchart TD
 - **基于角色的访问控制** — GitHub OAuth 集成，三种角色（管理员 / 编辑者 / 查看者），权限数据存储在 Netlify Blobs。
 - **公开只读访问** — 匿名用户可浏览完整本体；仅管理面板需要登录。
 
-> 源代码位于 [`studio/`](studio/)。
+> **在线访问**：[ontologystudio.netlify.app](https://ontologystudio.netlify.app) | 源代码位于 [`studio/`](studio/)。
 
 ### 本地开发
 
