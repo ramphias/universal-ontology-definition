@@ -217,9 +217,39 @@ Browse the `l2-extensions/` directory and select the appropriate industry packag
 
 ## 📚 Full Ontology Creation & Update Guide
 
-For a comprehensive, step-by-step guide on creating or updating ontologies at any layer (L2/L3), including inheritance, validation, format conversion, and version management, see **[README_CN.md — Ontology 创建与更新完整指南](README_CN.md#-ontology-创建与更新完整指南)**.
+> For the full step-by-step walkthrough with detailed examples in Chinese, see **[README_CN.md — Ontology 创建与更新完整指南](README_CN.md#-ontology-创建与更新完整指南)**.
 
-> 💡 **Pro Tip**: A working L3 sample is available at [`enterprise/acme-tech-solutions/`](l3-enterprise/acme-tech-solutions/) — a fictional technology consulting company demonstrating the full workflow.
+### End-to-End Workflow
+
+```text
+1. Identify parent dependencies (L1 core, L2 extensions)
+2. Copy template → l2-extensions/_template/ or l3-enterprise/_template/
+3. Inherit parent classes via the "parent" field
+4. Define domain-specific classes (PascalCase IDs, bilingual labels)
+5. Define relations with "specializes" inheritance chain (snake_case IDs)
+6. Add sample instances (type must reference a concrete, non-abstract class)
+7. Validate: JSON Schema → Governance rules → Referential integrity
+8. Generate derived formats (OWL/RDF, Neo4j, LLM exports)
+9. Version management & release
+```
+
+### Validation & Export Commands
+
+```bash
+# L1 governance rules (class caps, naming, relation density, etc.)
+python scripts/validate_governance.py
+
+# L2/L3 referential integrity (9 rules: parent refs, domain/range, aliases, cycles)
+python scripts/validate_l3.py --all
+
+# Generate all derived formats
+python scripts/json_to_owl.py                                          # OWL/RDF Turtle
+python scripts/export_neo4j.py l1-core/universal_ontology_v1.json      # Neo4j Cypher
+python scripts/export_for_llm.py l1-core/universal_ontology_v1.json    # LLM (prompt, tools, RAG)
+python scripts/visualize_ontology.py                                   # Interactive HTML
+```
+
+> **Pro Tip**: A working L3 sample is available at [`l3-enterprise/acme-tech-solutions/`](l3-enterprise/acme-tech-solutions/) — a fictional technology consulting company demonstrating the full workflow.
 
 ---
 

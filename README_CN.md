@@ -384,35 +384,47 @@ cp -r l3-enterprise/_template/ private_enterprise/your-company/
 开发完成后，依次运行严格的校验机制，确保 ontology 的质量与反熵一致性：
 
 1. **JSON Schema 校验：**
-   文件必须遵守 `schema/extension_schema.json`的格式约束。
+   文件必须遵守 `schema/extension_schema.json` 的格式约束。
 2. **L1 治理规则检查：**
    ```bash
    python scripts/validate_governance.py
    ```
    检测硬指标：类数量上限、禁止野兽类（无根节点）、关系密度上限等。
-3. **引用完整性检查：**
-   确保所有的 `parent`, `domain`, `range`, `specializes`, `type` 的引用目标都切实存在且未被废弃。
+3. **L2/L3 引用完整性检查：**
+   ```bash
+   python scripts/validate_l3.py --all
+   ```
+   9 项规则自动校验：parent 引用、relation domain/range、alias 一致性、命名规范、循环检测等。
 
 <br/>
 
-### 步骤 10：生成 OWL/RDF Turtle 格式
+### 步骤 10：生成衍生格式与导出
 
-JSON 是 Ontology 的**源格式**，OWL/RDF Turtle (`.ttl`) 是用于语义网工具（Protégé、TopBraid、Stardog）的**发布格式**。
+JSON 是 Ontology 的**唯一源格式**，所有其他格式均由脚本自动生成。每次修改 `.json` 后，**必须重新运行**以下脚本：
 
 ```bash
-# 批量转换所有文件，或通过传参转换单个文件
-python scripts/json_to_owl.py l3-enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
+# OWL/RDF Turtle — 用于语义网工具（Protégé、TopBraid、Stardog）
+python scripts/json_to_owl.py
+
+# Neo4j Cypher — 用于导入 Neo4j 图数据库
+python scripts/export_neo4j.py l1-core/universal_ontology_v1.json
+
+# LLM 导出 — 生成系统提示词、OpenAI Tools 定义、RAG 分块
+python scripts/export_for_llm.py l1-core/universal_ontology_v1.json
+
+# 交互式 HTML 可视化（针对合并后的本体）
+python scripts/visualize_ontology.py
 ```
 
 > **🔥 重要说明：**
-> 脚本为纯 Python 3 实现，零外部依赖。`.ttl` 文件为机器自动生成，**切勿手动编辑 `.ttl` 文件**；每次修改 `.json` 后，**必须重新运行**转换脚本。
+> 所有脚本为纯 Python 3 实现，零外部依赖。生成的 `.ttl`、`.cypher`、`.md`、`.json` 衍生文件**切勿手动编辑**。
 
 <br/>
 
 ### 📖 完整示例：创建一个 L3 虚拟企业 Ontology
 
 > 以下以虚构公司"**极客方舟科技 (Acme Tech Solutions)**"为示例，完整演示 L3 层创建流程。
-> 完整源文件见 [`enterprise/acme-tech-solutions/`](l3-enterprise/acme-tech-solutions/)
+> 完整源文件见 [`l3-enterprise/acme-tech-solutions/`](l3-enterprise/acme-tech-solutions/)
 
 只需复制模板，通过 JSON 修改，并执行校验脚本即可快速构筑出具备：
 - 4个事业部、4个业务线、3个办公室
