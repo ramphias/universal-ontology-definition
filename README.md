@@ -73,7 +73,47 @@ A production-ready **Next.js web application** for visually browsing, searching,
 - **Role-Based Access Control** — GitHub OAuth with three roles (Admin / Editor / Viewer) backed by Netlify Blobs.
 - **Public Read-Only Access** — Anonymous users can browse the full ontology; only the admin panel requires login.
 
-> Deployed on Netlify. Source code in [`studio/`](studio/).
+> Source code in [`studio/`](studio/).
+
+### Local Development
+
+```bash
+cd studio
+npm install
+```
+
+Create `studio/.env.local` with the following variables:
+
+```env
+GITHUB_TOKEN=ghp_your_personal_access_token
+GITHUB_REPO_OWNER=your-github-username
+GITHUB_REPO_NAME=universal-ontology-definition
+GITHUB_ID=your_oauth_app_client_id
+GITHUB_SECRET=your_oauth_app_client_secret
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=any-random-secret-string
+SUPER_ADMIN=your-github-username
+```
+
+Then start the dev server:
+
+```bash
+npm run dev
+```
+
+> `GITHUB_ID` and `GITHUB_SECRET` come from a [GitHub OAuth App](https://github.com/settings/developers). Set the callback URL to `http://localhost:3000/api/auth/callback/github`.
+
+### Deploy to Netlify
+
+1. **Create a new site** on [Netlify](https://app.netlify.com/) linked to your GitHub repo.
+2. **Build settings** (auto-detected from `netlify.toml`):
+   - Base directory: `studio`
+   - Build command: `npm run build`
+   - Publish directory: `studio/.next`
+3. **Environment variables** — add the same variables as above in Netlify's site settings (Settings > Environment variables), but set `NEXTAUTH_URL` to your deployed URL (e.g. `https://your-site.netlify.app`).
+4. Deploy. The `@netlify/plugin-nextjs` plugin handles SSR and serverless functions automatically.
+
+> Permission data (user roles) is stored in [Netlify Blobs](https://docs.netlify.com/blobs/overview/) — no external database required.
 
 ---
 

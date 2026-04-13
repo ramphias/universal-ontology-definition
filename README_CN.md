@@ -86,7 +86,47 @@ flowchart TD
 - **基于角色的访问控制** — GitHub OAuth 集成，三种角色（管理员 / 编辑者 / 查看者），权限数据存储在 Netlify Blobs。
 - **公开只读访问** — 匿名用户可浏览完整本体；仅管理面板需要登录。
 
-> 部署在 Netlify 上。源代码位于 [`studio/`](studio/)。
+> 源代码位于 [`studio/`](studio/)。
+
+### 本地开发
+
+```bash
+cd studio
+npm install
+```
+
+创建 `studio/.env.local`，填入以下环境变量：
+
+```env
+GITHUB_TOKEN=ghp_你的个人访问令牌
+GITHUB_REPO_OWNER=你的GitHub用户名
+GITHUB_REPO_NAME=universal-ontology-definition
+GITHUB_ID=你的OAuth应用Client_ID
+GITHUB_SECRET=你的OAuth应用Client_Secret
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=任意随机字符串
+SUPER_ADMIN=你的GitHub用户名
+```
+
+启动开发服务器：
+
+```bash
+npm run dev
+```
+
+> `GITHUB_ID` 和 `GITHUB_SECRET` 来自 [GitHub OAuth App](https://github.com/settings/developers)。回调地址设为 `http://localhost:3000/api/auth/callback/github`。
+
+### 部署到 Netlify
+
+1. 在 [Netlify](https://app.netlify.com/) 上创建新站点，关联你的 GitHub 仓库。
+2. **构建设置**（会从 `netlify.toml` 自动读取）：
+   - Base directory: `studio`
+   - Build command: `npm run build`
+   - Publish directory: `studio/.next`
+3. **环境变量** — 在 Netlify 站点设置（Settings > Environment variables）中添加上述相同的变量，但将 `NEXTAUTH_URL` 改为你的部署地址（如 `https://your-site.netlify.app`）。
+4. 部署。`@netlify/plugin-nextjs` 插件会自动处理 SSR 和 Serverless Functions。
+
+> 权限数据（用户角色）存储在 [Netlify Blobs](https://docs.netlify.com/blobs/overview/) 中，无需额外数据库。
 
 ---
 
