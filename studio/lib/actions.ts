@@ -20,18 +20,25 @@ async function requireAuth() {
     }
 }
 
+const PROJECT_ROOT = path.resolve(process.cwd(), '..');
+
+function safePath(relativePath: string): string | null {
+    const resolved = path.resolve(PROJECT_ROOT, relativePath);
+    if (!resolved.startsWith(PROJECT_ROOT + path.sep)) return null;
+    return resolved;
+}
+
 function getLocalDirs(relativePath: string) {
     try {
-        const localDirPath = path.join(process.cwd(), '..', relativePath);
-        if (fs.existsSync(localDirPath)) {
-             const items = fs.readdirSync(localDirPath, { withFileTypes: true });
-             return items
-                .filter(item => item.isDirectory() && !item.name.startsWith("_"))
-                .map(dir => ({
-                    id: dir.name,
-                    name: dir.name.toUpperCase().replace("-", " "),
-                }));
-        }
+        const localDirPath = safePath(relativePath);
+        if (!localDirPath || !fs.existsSync(localDirPath)) return null;
+        const items = fs.readdirSync(localDirPath, { withFileTypes: true });
+        return items
+            .filter(item => item.isDirectory() && !item.name.startsWith("_"))
+            .map(dir => ({
+                id: dir.name,
+                name: dir.name.toUpperCase().replace("-", " "),
+            }));
     } catch (e) {
         // ignore
     }
@@ -40,14 +47,15 @@ function getLocalDirs(relativePath: string) {
 
 function getLocalJsonFromDir(relativePath: string) {
     try {
-        const localDirPath = path.join(process.cwd(), '..', relativePath);
-        if (fs.existsSync(localDirPath)) {
-             const items = fs.readdirSync(localDirPath, { withFileTypes: true });
-             const jsonFile = items.find(f => f.isFile() && f.name.endsWith('.json'));
-             if (jsonFile) {
-                 const fileContent = fs.readFileSync(path.join(localDirPath, jsonFile.name), 'utf8');
-                 return JSON.parse(fileContent);
-             }
+        const localDirPath = safePath(relativePath);
+        if (!localDirPath || !fs.existsSync(localDirPath)) return null;
+        const items = fs.readdirSync(localDirPath, { withFileTypes: true });
+        const jsonFile = items.find(f => f.isFile() && f.name.endsWith('.json'));
+        if (jsonFile) {
+            const filePath = path.join(localDirPath, jsonFile.name);
+            if (!filePath.startsWith(PROJECT_ROOT + path.sep)) return null;
+            const fileContent = fs.readFileSync(filePath, 'utf8');
+            return JSON.parse(fileContent);
         }
     } catch (e) {
         // ignore
