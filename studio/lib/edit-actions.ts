@@ -94,6 +94,17 @@ export async function fetchPendingEdits(): Promise<PendingEdit[]> {
 }
 
 /**
+ * Lightweight count of pending edits. Returns 0 for non-admins (no error)
+ * so the sidebar badge can safely render without surfacing auth errors.
+ */
+export async function getPendingEditCount(): Promise<number> {
+    const session = await getServerSession(authOptions);
+    if (session?.user?.role !== "admin") return 0;
+    const edits = await listPendingEdits({ status: "pending" });
+    return edits.length;
+}
+
+/**
  * Admin approves a pending edit. Uses the admin's own OAuth token to create a branch,
  * commit, and open a PR against the default branch.
  */
