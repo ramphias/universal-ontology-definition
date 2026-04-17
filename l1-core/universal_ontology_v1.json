@@ -10,7 +10,9 @@
     "description_en": "Universal organization ontology core applicable to all enterprises. v2.0 introduces abstract domain roots, generalized relations, and lifecycle management.",
     "created": "2026-03-29",
     "updated": "2026-04-11",
-    "contributors": ["Universal Ontology Definition Contributors"]
+    "contributors": [
+      "Universal Ontology Definition Contributors"
+    ]
   },
   "classes": [
     {
@@ -81,8 +83,8 @@
     },
     {
       "id": "ProductService",
-      "label_zh": "产品与服务",
-      "label_en": "Product & Service",
+      "label_zh": "产品",
+      "label_en": "Product",
       "parent": "Resource",
       "abstract": false,
       "status": "stable",
@@ -335,7 +337,12 @@
       "owner_class": "Risk",
       "datatype": "enum",
       "required": false,
-      "enum_values": ["low", "medium", "high", "critical"],
+      "enum_values": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
       "status": "stable",
       "since": "2.1.0",
       "definition": "风险的严重程度等级",
@@ -615,7 +622,10 @@
       "type": "disjoint",
       "label_zh": "人员与组织不相交",
       "label_en": "Person and Organization are disjoint",
-      "classes": ["Person", "Organization"],
+      "classes": [
+        "Person",
+        "Organization"
+      ],
       "status": "stable",
       "since": "2.0.0",
       "definition": "一个实例不能同时是人员和组织",
@@ -626,7 +636,10 @@
       "type": "disjoint",
       "label_zh": "实体域与治理域不相交",
       "label_en": "Entity and Governance domains are disjoint",
-      "classes": ["Entity", "Governance"],
+      "classes": [
+        "Entity",
+        "Governance"
+      ],
       "status": "stable",
       "since": "2.0.0",
       "definition": "实体域和治理域的实例互斥",
@@ -637,7 +650,10 @@
       "type": "disjoint",
       "label_zh": "实体域与运营域不相交",
       "label_en": "Entity and Operational domains are disjoint",
-      "classes": ["Entity", "Operational"],
+      "classes": [
+        "Entity",
+        "Operational"
+      ],
       "status": "stable",
       "since": "2.0.0",
       "definition": "实体域和运营域的实例互斥",
@@ -648,7 +664,10 @@
       "type": "disjoint",
       "label_zh": "实体域与度量域不相交",
       "label_en": "Entity and Measurement domains are disjoint",
-      "classes": ["Entity", "Measurement"],
+      "classes": [
+        "Entity",
+        "Measurement"
+      ],
       "status": "stable",
       "since": "2.0.0",
       "definition": "实体域和度量域的实例互斥",
@@ -659,7 +678,10 @@
       "type": "disjoint",
       "label_zh": "治理域与运营域不相交",
       "label_en": "Governance and Operational domains are disjoint",
-      "classes": ["Governance", "Operational"],
+      "classes": [
+        "Governance",
+        "Operational"
+      ],
       "status": "stable",
       "since": "2.0.0",
       "definition": "治理域和运营域的实例互斥",
@@ -670,7 +692,10 @@
       "type": "disjoint",
       "label_zh": "治理域与度量域不相交",
       "label_en": "Governance and Measurement domains are disjoint",
-      "classes": ["Governance", "Measurement"],
+      "classes": [
+        "Governance",
+        "Measurement"
+      ],
       "status": "stable",
       "since": "2.0.0",
       "definition": "治理域和度量域的实例互斥",
@@ -681,7 +706,10 @@
       "type": "disjoint",
       "label_zh": "运营域与度量域不相交",
       "label_en": "Operational and Measurement domains are disjoint",
-      "classes": ["Operational", "Measurement"],
+      "classes": [
+        "Operational",
+        "Measurement"
+      ],
       "status": "stable",
       "since": "2.0.0",
       "definition": "运营域和度量域的实例互斥",
@@ -692,7 +720,10 @@
       "type": "disjoint",
       "label_zh": "政策与规则不相交",
       "label_en": "Policy and Rule are disjoint",
-      "classes": ["Policy", "Rule"],
+      "classes": [
+        "Policy",
+        "Rule"
+      ],
       "status": "stable",
       "since": "2.0.0",
       "definition": "一个实例不能同时是政策和规则",
