@@ -6,7 +6,7 @@ import { CustomNode } from './CustomNode';
 import { PropertiesPanel } from './PropertiesPanel';
 import { SearchPanel } from './SearchPanel';
 import { OnboardingGuide } from './OnboardingGuide';
-import { fetchExtensionData } from '@/lib/actions';
+import { fetchExtensionData, resolveLayerFile } from '@/lib/actions';
 import { useOntologyLayout, LayoutMode } from '@/hooks/useOntologyLayout';
 import { CodeExportModal } from './CodeExportModal';
 import { computeBadgeCounts, buildRelationEdges, buildAxiomEdges } from './ontologyUtils';
@@ -21,8 +21,21 @@ export function L2FlowWorkspace({ initialData, availableExtensions }: { initialD
   // States specific to L2 Workspace handling
   const [activeExtensions, setActiveExtensions] = useState<string[]>([]);
   const [loadedExtensionsData, setLoadedExtensionsData] = useState<Record<string, any>>({});
+  const [extensionFiles, setExtensionFiles] = useState<Record<string, string>>({});
   const [isLoadingExtension, setIsLoadingExtension] = useState<boolean>(false);
   const [showRelations, setShowRelations] = useState(false);
+
+  // Look up the file path a class lives in (L1 core, or a loaded L2 extension)
+  const layerFileForClass = (classId: string): string | undefined => {
+    const l1Hit = (initialData.classes || []).some((c: any) => c.id === classId);
+    if (l1Hit) return "l1-core/universal_ontology_v1.json";
+    for (const [extId, data] of Object.entries(loadedExtensionsData)) {
+      if ((data as any)?.classes?.some((c: any) => c.id === classId)) {
+        return extensionFiles[extId];
+      }
+    }
+    return undefined;
+  };
 
   const [rawNodes, setRawNodes] = useState<Node[]>([]);
   const [rawEdges, setRawEdges] = useState<Edge[]>([]);
@@ -183,10 +196,14 @@ export function L2FlowWorkspace({ initialData, availableExtensions }: { initialD
     } else {
        if (!loadedExtensionsData[extId]) {
           setIsLoadingExtension(true);
-          const data = await fetchExtensionData(extId);
+          const [data, file] = await Promise.all([
+            fetchExtensionData(extId),
+            resolveLayerFile("L2", extId),
+          ]);
           setIsLoadingExtension(false);
           if (data) {
              setLoadedExtensionsData(prev => ({...prev, [extId]: data}));
+             if (file) setExtensionFiles(prev => ({...prev, [extId]: file}));
           }
        }
        setActiveExtensions(prev => [...prev, extId]);
@@ -359,6 +376,7 @@ export function L2FlowWorkspace({ initialData, availableExtensions }: { initialD
                 ],
               }}
               onClose={() => onPaneClick()}
+              layerFile={layerFileForClass(selectedNodeData.id)}
             />
           )}
 

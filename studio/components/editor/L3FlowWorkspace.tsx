@@ -6,7 +6,7 @@ import { CustomNode } from './CustomNode';
 import { PropertiesPanel } from './PropertiesPanel';
 import { SearchPanel } from './SearchPanel';
 import { OnboardingGuide } from './OnboardingGuide';
-import { fetchExtensionData, fetchL3EnterpriseData } from '@/lib/actions';
+import { fetchExtensionData, fetchL3EnterpriseData, resolveLayerFile } from '@/lib/actions';
 import { useOntologyLayout, LayoutMode } from '@/hooks/useOntologyLayout';
 import { CodeExportModal } from './CodeExportModal';
 import { computeBadgeCounts, buildRelationEdges, buildAxiomEdges } from './ontologyUtils';
@@ -35,6 +35,26 @@ export function L3FlowWorkspace({
   const [loadedEnterprisesData, setLoadedEnterprisesData] = useState<Record<string, any>>({});
   const [isLoadingEnterprise, setIsLoadingEnterprise] = useState<boolean>(false);
   const [showRelations, setShowRelations] = useState(false);
+
+  const [extensionFiles, setExtensionFiles] = useState<Record<string, string>>({});
+  const [enterpriseFiles, setEnterpriseFiles] = useState<Record<string, string>>({});
+
+  const layerFileForClass = (classId: string): string | undefined => {
+    if ((initialData.classes || []).some((c: any) => c.id === classId)) {
+      return "l1-core/universal_ontology_v1.json";
+    }
+    for (const [extId, data] of Object.entries(loadedExtensionsData)) {
+      if ((data as any)?.classes?.some((c: any) => c.id === classId)) {
+        return extensionFiles[extId];
+      }
+    }
+    for (const [entId, data] of Object.entries(loadedEnterprisesData)) {
+      if ((data as any)?.classes?.some((c: any) => c.id === classId)) {
+        return enterpriseFiles[entId];
+      }
+    }
+    return undefined;
+  };
 
   const [rawNodes, setRawNodes] = useState<Node[]>([]);
   const [rawEdges, setRawEdges] = useState<Edge[]>([]);
@@ -214,9 +234,13 @@ export function L3FlowWorkspace({
     } else {
        if (!loadedExtensionsData[extId]) {
           setIsLoadingExtension(true);
-          const data = await fetchExtensionData(extId);
+          const [data, file] = await Promise.all([
+            fetchExtensionData(extId),
+            resolveLayerFile("L2", extId),
+          ]);
           setIsLoadingExtension(false);
           if (data) setLoadedExtensionsData(prev => ({...prev, [extId]: data}));
+          if (file) setExtensionFiles(prev => ({...prev, [extId]: file}));
        }
        setActiveExtensions(prev => [...prev, extId]);
     }
@@ -229,8 +253,12 @@ export function L3FlowWorkspace({
     } else {
        if (!loadedEnterprisesData[entId]) {
           setIsLoadingEnterprise(true);
-          const data = await fetchL3EnterpriseData(entId);
+          const [data, file] = await Promise.all([
+            fetchL3EnterpriseData(entId),
+            resolveLayerFile("L3", entId),
+          ]);
           setIsLoadingEnterprise(false);
+          if (file) setEnterpriseFiles(prev => ({...prev, [entId]: file}));
           if (data) {
              setLoadedEnterprisesData(prev => ({...prev, [entId]: data}));
              
@@ -453,6 +481,7 @@ export function L3FlowWorkspace({
                 ],
               }}
               onClose={() => onPaneClick()}
+              layerFile={layerFileForClass(selectedNodeData.id)}
             />
           )}
 

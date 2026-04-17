@@ -17,8 +17,9 @@ export const authOptions: NextAuthOptions = {
         GithubProvider({
             clientId: process.env.GITHUB_ID!,
             clientSecret: process.env.GITHUB_SECRET!,
-            // Downgraded scope: we only need to verify identity, not read/write all their repos
-            authorization: { params: { scope: "read:user user:email" } }
+            // public_repo scope allows admins to commit approved edits as themselves.
+            // Editor/Viewer roles never trigger writes (stored in Blobs for admin review instead).
+            authorization: { params: { scope: "read:user user:email public_repo" } }
         }),
     ],
     secret: process.env.NEXTAUTH_SECRET,
@@ -39,11 +40,15 @@ export const authOptions: NextAuthOptions = {
             return true;
         },
         async jwt({ token, account, profile }) {
-            // We strictly DO NOT persist the OAuth access_token into our JWT to minimize risk
+            // Persist OAuth access_token in the JWT (server-side, encrypted) so admins
+            // can commit approved edits as themselves. It's NEVER forwarded to the client session.
+            if (account?.access_token) {
+                token.accessToken = account.access_token;
+            }
             if (profile) {
                 token.login = (profile as any).login;
             }
-            
+
             // Re-fetch role dynamically from blobs so it updates if Admin changes their role while logged in (optional cache hit)
             if (token.login) {
                 token.role = await getUserRole(token.login as string);
@@ -67,4 +72,21 @@ export const authOptions: NextAuthOptions = {
 function githubUsername(loginOrProfile: any): string {
     if (typeof loginOrProfile === 'string') return loginOrProfile;
     return loginOrProfile?.login || '';
+}
+
+/**
+ * Retrieve the current user's GitHub OAuth access token from the JWT.
+ * Only callable server-side. Returns null if the user is not authenticated
+ * or their token hasn't been captured (e.g. signed in before scope expansion).
+ */
+export async function getUserAccessToken(): Promise<string | null> {
+    const { getToken } = await import("next-auth/jwt");
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const req = {
+        cookies: Object.fromEntries(cookieStore.getAll().map(c => [c.name, c.value])),
+        headers: { cookie: cookieStore.getAll().map(c => `${c.name}=${c.value}`).join("; ") },
+    } as any;
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    return (token?.accessToken as string) || null;
 }

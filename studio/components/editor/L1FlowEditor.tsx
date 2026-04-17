@@ -261,6 +261,7 @@ export function L1FlowEditor({ initialData }: { initialData: any }) {
                 classes: initialData.classes,
               }}
               onClose={() => onPaneClick()}
+              layerFile="l1-core/universal_ontology_v1.json"
             />
           )}
           <CodeExportModal 

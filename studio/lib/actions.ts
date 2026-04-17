@@ -22,6 +22,50 @@ async function requireAuth() {
 
 const PROJECT_ROOT = path.resolve(process.cwd(), '..');
 
+/**
+ * Given a layer identifier (L1, or {layer: 'L2'|'L3', domain: 'fnb'}),
+ * return the repo-relative path to the canonical ontology JSON file.
+ * Needed by the editor so PropertiesPanel knows which file to patch when
+ * users submit edits.
+ */
+export async function resolveLayerFile(
+  layer: "L1" | "L2" | "L3",
+  domain?: string
+): Promise<string | null> {
+  if (layer === "L1") return "l1-core/universal_ontology_v1.json";
+  if (!domain || !/^[a-z0-9-]+$/.test(domain)) return null;
+
+  const dirName = layer === "L2" ? `l2-extensions/${domain}` : `l3-enterprise/${domain}`;
+  const safeDirPath = safePath(dirName);
+
+  // Local filesystem first
+  if (safeDirPath && fs.existsSync(safeDirPath)) {
+    try {
+      const items = fs.readdirSync(safeDirPath, { withFileTypes: true });
+      const jsonFile = items.find((f) => f.isFile() && f.name.endsWith(".json"));
+      if (jsonFile) return `${dirName}/${jsonFile.name}`;
+    } catch {
+      // fall through to GitHub API
+    }
+  }
+
+  // GitHub API fallback
+  try {
+    const dirResponse = await octokit.repos.getContent({
+      owner: REPO_OWNER,
+      repo: REPO_NAME,
+      path: dirName,
+    });
+    if (Array.isArray(dirResponse.data)) {
+      const jsonFile = dirResponse.data.find((f) => f.name.endsWith(".json"));
+      if (jsonFile) return `${dirName}/${jsonFile.name}`;
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
 function safePath(relativePath: string): string | null {
     const resolved = path.resolve(PROJECT_ROOT, relativePath);
     if (!resolved.startsWith(PROJECT_ROOT + path.sep)) return null;

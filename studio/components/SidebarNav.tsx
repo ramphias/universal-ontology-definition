@@ -52,6 +52,17 @@ export function SidebarNav() {
             Admin
             {pathname !== "/admin" && <span className="opacity-0 group-hover:opacity-100">&rarr;</span>}
           </Link>
+          <Link
+            href="/admin/review"
+            className={`block px-3 py-2 rounded-md transition-colors group flex items-center justify-between ${
+              pathname === "/admin/review"
+                ? "text-white bg-[#333] border-l-2 border-red-500 font-medium"
+                : "hover:bg-[#333] hover:text-white"
+            }`}
+          >
+            Review Queue
+            {pathname !== "/admin/review" && <span className="opacity-0 group-hover:opacity-100">&rarr;</span>}
+          </Link>
         </>
       )}
     </nav>
