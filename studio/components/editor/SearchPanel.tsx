@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Search, X } from 'lucide-react';
 import type { ReactFlowInstance, Node } from '@xyflow/react';
 
@@ -12,8 +13,11 @@ interface SearchPanelProps {
 export function SearchPanel({ nodes, rfInstance, onNodeSelect }: SearchPanelProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [mounted, setMounted] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setMounted(true); }, []);
 
   // Cmd+K / Ctrl+K to open
   useEffect(() => {
@@ -75,7 +79,9 @@ export function SearchPanel({ nodes, rfInstance, onNodeSelect }: SearchPanelProp
     );
   }
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]" onClick={() => setOpen(false)}>
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
@@ -146,6 +152,7 @@ export function SearchPanel({ nodes, rfInstance, onNodeSelect }: SearchPanelProp
           <span>ESC Close</span>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
