@@ -83,8 +83,8 @@
     },
     {
       "id": "ProductService",
-      "label_zh": "产品",
-      "label_en": "Product",
+      "label_zh": "产品和服务",
+      "label_en": "Product & Service",
       "parent": "Resource",
       "abstract": false,
       "status": "stable",
