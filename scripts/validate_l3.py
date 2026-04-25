@@ -34,14 +34,14 @@ except ImportError:
     def find_root(p):
         p = Path(p).resolve()
         for _ in range(10):
-            if (p / "core").is_dir() and (p / "extensions").is_dir():
+            if (p / "l1-core").is_dir() and (p / "l2-extensions").is_dir():
                 return p
             p = p.parent
         return Path(p).resolve()
     def discover_files(root):
         import glob
         files = []
-        for pattern in ["core/*.json", "extensions/*/*.json", "enterprise/*/*.json", "private_enterprise/*/*.json"]:
+        for pattern in ["l1-core/*.json", "l2-extensions/*/*.json", "l3-enterprise/*/*.json", "private_enterprise/*/*.json"]:
             files.extend(glob.glob(str(root / pattern)))
         return [f for f in files if not Path(f).name.startswith("_") and "schema" not in f and "template" not in f.lower()]
 
@@ -82,8 +82,20 @@ class ValidationResult:
         return self.ok()
 
 
+def match_layer_ref(ref, layer_keys):
+    """Resolve an `extends` reference (which may include version suffix) to a known layer id."""
+    if ref in layer_keys:
+        return ref
+    for key in layer_keys:
+        ref_base = ref.rsplit("_v", 1)[0] if "_v" in ref else ref
+        key_base = key.rsplit("_v", 1)[0] if "_v" in key else key
+        if ref_base == key_base or ref.startswith(key[:15]) or key.startswith(ref[:15]):
+            return key
+    return None
+
+
 def resolve_all_classes(target_path, project_root):
-    """Load target + dependencies, return (all_class_ids, all_abstract_ids, all_data_by_layer)."""
+    """Load target + dependencies, return (all_class_ids, all_abstract_ids, target_data, index)."""
     # Build layer index
     index = {}
     for fpath in discover_files(str(project_root)):
@@ -110,14 +122,7 @@ def resolve_all_classes(target_path, project_root):
 
     # Load dependencies
     for ref in extends:
-        # Try to match ref to index key
-        matched = None
-        for key in index:
-            ref_base = ref.rsplit("_v", 1)[0] if "_v" in ref else ref
-            key_base = key.rsplit("_v", 1)[0] if "_v" in key else key
-            if ref == key or ref_base == key_base or ref.startswith(key[:15]) or key.startswith(ref[:15]):
-                matched = key
-                break
+        matched = match_layer_ref(ref, index.keys())
         if matched:
             _, dep_data = index[matched]
             for c in dep_data.get("classes", []):
@@ -131,13 +136,45 @@ def resolve_all_classes(target_path, project_root):
         if c.get("abstract"):
             all_abstract.add(c["id"])
 
-    return all_classes, all_abstract, target_data
+    return all_classes, all_abstract, target_data, index
+
+
+def find_extends_cycle(start_layer, target_extends, index):
+    """DFS the extends graph starting from start_layer. Returns the cycle path
+    (list of layer ids ending where it started) if any, else None.
+
+    The graph is built from `index` (each layer's `extends` field) plus a
+    synthetic entry for `start_layer -> target_extends`, so we still detect
+    cycles even when the target file isn't yet on disk under its own layer id.
+    """
+    graph = {}
+    for layer_id, (_, dep_data) in index.items():
+        ext = dep_data.get("extends", [])
+        if isinstance(ext, str):
+            ext = [ext]
+        graph[layer_id] = ext
+    graph[start_layer] = list(target_extends)
+
+    # Iterative DFS tracking the current path
+    stack = [(start_layer, [start_layer])]
+    seen_complete = set()
+    while stack:
+        node, path = stack.pop()
+        if node in seen_complete:
+            continue
+        for ref in graph.get(node, []):
+            child = match_layer_ref(ref, graph.keys()) or ref
+            if child in path:
+                return path + [child]
+            stack.append((child, path + [child]))
+        seen_complete.add(node)
+    return None
 
 
 def validate(target_path, project_root):
     """Run all validation rules on a target ontology file."""
     r = ValidationResult()
-    all_classes, all_abstract, data = resolve_all_classes(target_path, project_root)
+    all_classes, all_abstract, data, index = resolve_all_classes(target_path, project_root)
     all_ids = set(all_classes.keys())
     target_classes = data.get("classes", [])
     target_relations = data.get("relations", [])
@@ -222,6 +259,16 @@ def validate(target_path, project_root):
                 break
             visited.add(cur)
             cur = parent_map.get(cur)
+
+    # ── R-10: Cyclic extends across layers ──
+    target_layer = data.get("layer") or data.get("metadata", {}).get("layer", "")
+    target_extends = data.get("extends", [])
+    if isinstance(target_extends, str):
+        target_extends = [target_extends]
+    if target_layer:
+        cycle = find_extends_cycle(target_layer, target_extends, index)
+        if cycle:
+            r.error("R-10", f"Cyclic extends: {' -> '.join(cycle)}")
 
     return r
 
