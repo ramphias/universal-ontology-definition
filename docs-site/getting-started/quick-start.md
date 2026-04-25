@@ -120,5 +120,6 @@ If you need company-specific customizations, use the L3 template:
 ## What's Next?
 
 - [Core Concepts](core-concepts.md) — Understand key UOD terminology
+- [Local Validation](local-validation.md) — Set up Python and run the validation scripts
 - [Architecture Deep Dive](../architecture/four-layer-model.md) — Learn the full four-layer design
 - [Create an Extension](../l2-extensions/create-extension.md) — Contribute your own industry package

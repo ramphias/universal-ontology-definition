@@ -115,6 +115,7 @@ nav:
     - getting-started/index.md
     - Quick Start: getting-started/quick-start.md
     - Core Concepts: getting-started/core-concepts.md
+    - Local Validation: getting-started/local-validation.md
   - Architecture:
     - architecture/index.md
     - Four-Layer Model: architecture/four-layer-model.md
