@@ -4,6 +4,18 @@ import type { EditableClassFields } from "./pending-edits";
 const REPO_OWNER = process.env.GITHUB_REPO_OWNER as string;
 const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
 
+const JSON_MAX_BYTES = 5 * 1024 * 1024;
+
+/**
+ * Escape backticks (and adjacent backslashes) so a malicious or accidental
+ * backtick in user-controlled text can't break out of an inline-code span
+ * in the PR body. Identifiers we currently emit are all regex-validated
+ * upstream, so this is defense in depth.
+ */
+function escapeMd(s: string): string {
+    return s.replace(/\\/g, "\\\\").replace(/`/g, "\\`");
+}
+
 /**
  * Apply metadata changes to a class entry in an ontology JSON file,
  * then push to a new branch and open a pull request.
@@ -11,7 +23,10 @@ const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
  * The caller (admin) supplies their own OAuth access token so the commit
  * is attributed to their GitHub identity.
  *
- * @param accessToken Admin's GitHub OAuth token (public_repo scope)
+ * @param accessToken GitHub token with `public_repo` (or repo) scope. Note: as of
+ *                    Phase 1 the user OAuth flow no longer requests `public_repo`,
+ *                    so this must come from a server-side GitHub App or fine-grained
+ *                    PAT, not the admin's session token.
  * @param layerFile Repo-relative path to the ontology JSON file
  * @param classId The class ID being edited
  * @param changes The new field values to apply
@@ -47,7 +62,13 @@ export async function commitMetadataEdit(
     if (Array.isArray(fileData) || fileData.type !== "file") {
         throw new Error(`Target is not a file: ${layerFile}`);
     }
+    if (typeof fileData.size === "number" && fileData.size > JSON_MAX_BYTES) {
+        throw new Error(`Refusing to edit ${layerFile}: ${fileData.size} bytes exceeds ${JSON_MAX_BYTES}`);
+    }
     const currentContent = Buffer.from(fileData.content, "base64").toString("utf-8");
+    if (Buffer.byteLength(currentContent, "utf-8") > JSON_MAX_BYTES) {
+        throw new Error(`Refusing to edit ${layerFile}: decoded content exceeds ${JSON_MAX_BYTES} bytes`);
+    }
     const currentBlobSha = fileData.sha;
 
     // 3. Apply the class metadata patch
@@ -65,6 +86,9 @@ export async function commitMetadataEdit(
     const newContent = JSON.stringify(json, null, 2) + "\n";
     if (newContent === currentContent) {
         throw new Error("No-op: content unchanged after applying edit");
+    }
+    if (Buffer.byteLength(newContent, "utf-8") > JSON_MAX_BYTES) {
+        throw new Error(`Refusing to write ${layerFile}: result would exceed ${JSON_MAX_BYTES} bytes`);
     }
 
     // 5. Create a branch and commit the updated file
@@ -95,10 +119,10 @@ export async function commitMetadataEdit(
         head: branchName,
         base: defaultBranch,
         body: [
-            `Submitted by **@${submitter}** via Ontology Studio.`,
+            `Submitted by **@${escapeMd(submitter)}** via Ontology Studio.`,
             "",
-            `**Target**: \`${layerFile}\` → class \`${classId}\``,
-            `**Fields changed**: ${fieldList.map((f) => `\`${f}\``).join(", ")}`,
+            `**Target**: \`${escapeMd(layerFile)}\` → class \`${escapeMd(classId)}\``,
+            `**Fields changed**: ${fieldList.map((f) => `\`${escapeMd(f)}\``).join(", ")}`,
             "",
             "Review and merge to apply.",
         ].join("\n"),
@@ -118,11 +142,12 @@ function applyFieldChanges(target: any, changes: EditableClassFields) {
 /**
  * Read the current metadata values for a class (used to capture "before" state
  * at submission time, so admin can see the diff even if source changes later).
+ * Also returns the class's `owner` array so callers can enforce ownership.
  */
 export async function readClassMetadata(
     layerFile: string,
     classId: string
-): Promise<EditableClassFields | null> {
+): Promise<(EditableClassFields & { owner?: string[] }) | null> {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     try {
         const { data } = await octokit.repos.getContent({
@@ -131,16 +156,23 @@ export async function readClassMetadata(
             path: layerFile,
         });
         if (Array.isArray(data) || data.type !== "file") return null;
+        if (typeof data.size === "number" && data.size > JSON_MAX_BYTES) return null;
         const content = Buffer.from(data.content, "base64").toString("utf-8");
+        if (Buffer.byteLength(content, "utf-8") > JSON_MAX_BYTES) return null;
         const json = JSON.parse(content);
         const target = (json.classes || []).find((c: any) => c.id === classId);
         if (!target) return null;
+        const ownerRaw = target.owner;
+        const owner = Array.isArray(ownerRaw)
+            ? ownerRaw.filter((s: unknown): s is string => typeof s === "string")
+            : typeof ownerRaw === "string" ? [ownerRaw] : undefined;
         return {
             label_en: target.label_en,
             label_zh: target.label_zh,
             definition_en: target.definition_en,
             definition_zh: target.definition_zh,
             abstract: target.abstract ?? false,
+            ...(owner !== undefined ? { owner } : {}),
         };
     } catch {
         return null;

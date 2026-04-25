@@ -3,6 +3,7 @@
   "layer": "L2_fnb_industry",
   "version": "1.0.1",
   "extends": "L1_universal_organization_ontology",
+  "compatible_core_version": "2.1.0",
   "description": "MECE Framework for Food & Beverage (F&B) Industry.",
   "classes": [
     {
@@ -202,6 +203,5 @@
       "range": "TakeawayPackaging",
       "definition": "外带/外卖订单需要使用配给的包材"
     }
-  ],
-  "sample_instances": []
+  ]
 }

@@ -7,7 +7,13 @@ on:
     paths:
       - 'docs-site/**'
       - 'docs/**'
-      - '.github/workflows/**'
+      - '.github/workflows/deploy-docs.yml'
+      - 'mkdocs.yml'
+  pull_request:
+    paths:
+      - 'docs-site/**'
+      - 'docs/**'
+      - '.github/workflows/deploy-docs.yml'
       - 'mkdocs.yml'
   workflow_dispatch:
 
@@ -16,13 +22,15 @@ permissions:
   pages: write
   id-token: write
 
+# Per-ref concurrency so PR builds don't block each other or the master deploy.
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Build documentation
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,28 +41,31 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: |
-          pip install mkdocs-material pymdown-extensions
+        run: pip install mkdocs-material pymdown-extensions mkdocs-include-markdown-plugin
 
-      - name: Build documentation
+      - name: Regenerate auto-glossary fragments
+        run: python scripts/generate_glossary.py
+
+      - name: Build documentation (strict — fail on broken links / missing nav)
         run: mkdocs build --strict
 
       - name: Assemble final site
         run: |
           mkdir -p site
-          # Copy mkdocs site directly to root
           cp -r _mkdocs_site/* site/
           touch site/.nojekyll
-          # Verify structure
           echo "--- Site Layout ---"
           find site -maxdepth 1
 
       - name: Upload artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
 
   deploy:
+    if: github.event_name != 'pull_request'
+    name: Deploy to GitHub Pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

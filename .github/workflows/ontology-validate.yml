@@ -13,6 +13,7 @@ on:
       - 'private_enterprise/**/*.json'
       - 'schema/**/*.json'
       - 'scripts/**'
+      - 'docs-site/**'
       - '.github/workflows/ontology-validate.yml'
   pull_request:
     paths:
@@ -22,12 +23,30 @@ on:
       - 'private_enterprise/**/*.json'
       - 'schema/**/*.json'
       - 'scripts/**'
+      - 'docs-site/**'
       - '.github/workflows/ontology-validate.yml'
 
 jobs:
+  schema-validate:
+    runs-on: ubuntu-latest
+    name: JSON Schema Validate
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install jsonschema
+        run: pip install jsonschema==4.23.0
+
+      - name: Validate ontology files against JSON Schema
+        run: python scripts/validate_schema.py
+
   validate:
     runs-on: ubuntu-latest
     name: Validate & Merge
+    needs: schema-validate
     steps:
       - uses: actions/checkout@v4
 
@@ -40,6 +59,9 @@ jobs:
 
       - name: Validate all L2/L3 ontologies
         run: python scripts/validate_l3.py --all
+
+      - name: Check docs-site is in sync with ontology JSON
+        run: python scripts/check_docs_sync.py
 
       - name: Merge Acme Tech Solutions (L3 example)
         run: python scripts/merge_layers.py l3-enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
@@ -57,3 +79,16 @@ jobs:
                   d = json.load(fh)
               print(f'{f}: {len(d[\"classes\"])} classes OK')
           "
+
+      # Phase 4.6 — every script the docs tell users to run must actually
+      # work in CI, otherwise local-validation.md drifts from reality.
+      - name: Run documented commands (docs-site/getting-started/local-validation.md)
+        run: |
+          python scripts/json_to_owl.py
+          python scripts/export_neo4j.py l1-core/universal_ontology_v1.json
+          python scripts/export_for_llm.py l1-core/universal_ontology_v1.json
+          python scripts/visualize_ontology.py
+
+      - name: Health report snapshot (informational)
+        run: python scripts/health_report.py > /tmp/health_report.json
+        shell: bash

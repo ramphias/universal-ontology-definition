@@ -59,6 +59,15 @@ plugins:
         - zh
       separator: '[\s\-\.]+'
   - tags
+  # Phase 4.3 — let human-authored glossary pages embed
+  # `{% include-markdown "_generated/<file>.md" %}` fragments produced by
+  # scripts/generate_glossary.py.
+  - include-markdown
+
+# Pages under glossary/_generated/ are embedded via include-markdown rather
+# than referenced directly in nav. Tell --strict not to warn about them.
+not_in_nav: |
+  /glossary/_generated/*.md
 
 markdown_extensions:
   - abbr
