@@ -321,9 +321,9 @@ Currently available: **Common Enterprise**, **Consulting**, **Luxury Goods**.
 
 ## Part 3: Semantic Domains in Detail / 四大语义域详解
 
-L1 organizes its 28 classes into 4 mutually exclusive semantic domains. Each domain answers a different fundamental question about the enterprise.
+L1 organizes its 24 classes into 4 mutually exclusive semantic domains. Each domain answers a different fundamental question about the enterprise.
 
-L1 将其 28 个类组织为 4 个互斥的语义域。每个语义域回答关于企业的不同根本问题。
+L1 将其 24 个类组织为 4 个互斥的语义域。每个语义域回答关于企业的不同根本问题。
 
 ---
 
