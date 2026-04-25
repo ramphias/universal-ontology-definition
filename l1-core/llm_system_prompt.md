@@ -14,7 +14,7 @@ Stats: 24 classes, 13 relations, 8 attributes, 8 instances
     - **Asset** 资产
     - **DataObject** 数据对象
       - **Document** 文档与记录
-    - **ProductService** 产品与服务
+    - **ProductService** 产品和服务
     - **SystemApplication** 系统应用
 - **Governance** 治理 (abstract)
   - **Control** 控制

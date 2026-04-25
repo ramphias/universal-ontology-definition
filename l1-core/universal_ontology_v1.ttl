@@ -7,7 +7,7 @@
 
 # ════════════════════════════════════════════════════════════════════════════
 # Universal Enterprise Ontology Core — OWL 2 / RDF Turtle
-# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
+# Auto-generated from JSON by json_to_owl.py on 2026-04-25 22:22
 # ════════════════════════════════════════════════════════════════════════════
 
 uod:Ontology a owl:Ontology ;
@@ -66,7 +66,7 @@ uod:Resource a owl:Class ;
 uod:ProductService a owl:Class ;
     rdfs:subClassOf uod:Resource ;
     rdfs:label "Product & Service"@en ;
-    rdfs:label "产品与服务"@zh ;
+    rdfs:label "产品和服务"@zh ;
     rdfs:comment "Products and services provided externally or used internally by an enterprise"@en ;
     rdfs:comment "企业对外提供或内部使用的产品和服务对象"@zh .
 
@@ -473,9 +473,6 @@ uod:Organization rdfs:subClassOf [
     owl:onProperty uod:plays_role ;
     owl:minCardinality "1"^^xsd:nonNegativeInteger
 ] .
-
-# ax_composed_of_sub_part_of: The composition relation is a specialization of the part-of relation
-uod:composed_of rdfs:subPropertyOf uod:part_of .
 
 # ax_plays_role_domain_party: Every Role is played by at least one Party
 uod:Role rdfs:subClassOf [
