@@ -6,17 +6,20 @@ permissions:
 on:
   push:
     paths:
-      - 'core/**/*.json'
-      - 'extensions/**/*.json'
-      - 'enterprise/**/*.json'
+      - 'l1-core/**/*.json'
+      - 'l2-extensions/**/*.json'
+      - 'l3-enterprise/**/*.json'
       - 'private_enterprise/**/*.json'
+      - 'schema/**/*.json'
       - 'scripts/**'
   pull_request:
     paths:
-      - 'core/**/*.json'
-      - 'extensions/**/*.json'
-      - 'enterprise/**/*.json'
+      - 'l1-core/**/*.json'
+      - 'l2-extensions/**/*.json'
+      - 'l3-enterprise/**/*.json'
       - 'private_enterprise/**/*.json'
+      - 'schema/**/*.json'
+      - 'scripts/**'
 
 jobs:
   validate:
@@ -36,9 +39,10 @@ jobs:
         run: python scripts/validate_l3.py --all
 
       - name: Merge Acme Tech Solutions (L3 example)
-        run: python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
+        run: python scripts/merge_layers.py l3-enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
 
       - name: Merge Deloitte China MC
+        if: ${{ hashFiles('private_enterprise/deloitte-china-consulting/deloitte_china_consulting_ontology_v1.json') != '' }}
         run: python scripts/merge_layers.py private_enterprise/deloitte-china-consulting/deloitte_china_consulting_ontology_v1.json
 
       - name: Verify merged outputs are valid JSON

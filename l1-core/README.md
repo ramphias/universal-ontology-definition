@@ -1,47 +1,63 @@
 # L1 — Universal Enterprise Ontology Core
 
-本目录包含 Universal Ontology Definition 框架的 **第一层（L1）通用企业 Ontology**。
+This directory contains the **L1 Universal Enterprise Ontology Core** for the Universal Ontology Definition framework.
 
-## 概述
+本目录包含 Universal Ontology Definition 框架的 **第一层（L1）通用企业本体核心**。
 
-L1 定义了适用于**所有企业**的通用组织概念模型，是整个三层架构的基础。所有行业与业务领域扩展（L2）和企业定制（L3）都必须继承此层定义。
+## Overview
 
-## 设计原则
+L1 defines the stable concepts that should apply across enterprises and industries. L2 industry/domain extensions and L3 enterprise customizations must inherit from this layer instead of redefining the same concepts.
 
-- **稳定优先**：只容纳跨行业、跨企业的长期稳定抽象
-- **最小可用核心**：保持精简，只定义真正通用的概念
-- **清晰分类**：每个类都有明确的父类关系和语义边界
+L1 定义跨企业、跨行业长期稳定的通用概念。所有 L2 行业/领域扩展和 L3 企业定制都应继承此层，而不是重复定义这些基础概念。
 
-## 包含内容
+## Current Contents
 
-### 25 个核心类
+Source of truth: [`universal_ontology_v1.json`](universal_ontology_v1.json)
 
-| 领域 | 类 |
-|:---|:---|
-| 主体与组织 | `Party`, `Person`, `Organization`, `OrgUnit`, `Role` |
-| 能力与流程 | `Capability`, `Process`, `Activity` |
-| 业务对象 | `BusinessObject`, `ProductService`, `Asset` |
-| 数据与系统 | `DataObject`, `DocumentRecord`, `SystemApplication` |
-| 治理与合规 | `Policy`, `Rule`, `Control`, `Risk` |
-| 决策与度量 | `Event`, `Decision`, `Goal`, `KPI` |
-| 市场与渠道 | `Location`, `Channel`, `MarketSegment` |
+Current metadata version: **v2.1.0**
 
-### 16 种标准关系
+| Item | Count |
+|:---|---:|
+| Classes | 24 |
+| Abstract classes | 6 |
+| Concrete leaf classes | 18 |
+| Attributes | 8 |
+| Relations | 13 |
+| Axioms | 18 |
+| Sample instances | 8 |
 
-如 `plays_role`, `belongs_to`, `owns`, `realized_by`, `composed_of`, `governed_by`, `mitigated_by`, `supports`, `measured_by` 等。
+## Class Domains
 
-### 8 个示例实例
+| Domain | Semantic Focus | Classes |
+|:---|:---|:---|
+| Entity | Physical and logical entities | `Party` *(abstract)*, `Person`, `Organization`, `OrgUnit`, `Resource` *(abstract)*, `ProductService`, `Asset`, `DataObject`, `Document`, `SystemApplication` |
+| Governance | Control, compliance, and risk | `Policy`, `Rule`, `Control`, `Risk` |
+| Operational | Execution and capabilities | `Role`, `Capability`, `Process`, `Event` |
+| Measurement | Goals and performance | `Goal`, `KPI` |
 
-提供一组跨行业的典型实例，帮助理解概念用法。
+The four domain roots are `Entity`, `Governance`, `Operational`, and `Measurement`. `Party` and `Resource` are intermediate abstract classes used in relation signatures such as `owns: Party -> Resource`.
 
-## 文件
+## Core Relations
 
-- [`universal_ontology_v1.json`](universal_ontology_v1.json) — L1 完整定义文件
+L1 defines 13 generalized relations:
 
-## 版本
+`plays_role`, `part_of`, `owns`, `accountable_for`, `realized_by`, `consumes`, `produces`, `recorded_in`, `governed_by`, `mitigated_by`, `triggered_by`, `measured_by`, `evaluates`.
 
-当前版本：**v1.0.0**
+## Design Principles
 
-## 修改流程
+- **Stability first**: L1 only accepts long-lived concepts that are broadly reusable across enterprises.
+- **Minimal core**: Domain-specific concepts belong in L2 or L3 unless they pass the L1 governance rules.
+- **Clear inheritance**: every class has an explicit parent, except the four abstract domain roots.
+- **JSON is authoritative**: derived formats and documentation must follow `universal_ontology_v1.json`.
 
-对 L1 的修改需要经过严格的社区审核流程，请参阅 [CONTRIBUTING.md](../CONTRIBUTING.md)。
+## Validation
+
+Run these checks after changing L1:
+
+```bash
+python scripts/validate_governance.py
+python scripts/validate_l3.py --all
+python scripts/json_to_owl.py
+```
+
+Changes to L1 should also update the corresponding docs under `docs-site/l1-core/` and `docs-site/glossary/`.
