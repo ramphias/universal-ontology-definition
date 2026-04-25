@@ -509,5 +509,5 @@ the source-of-truth JSON. Hand-editing this section has no effect — update
 the JSON instead.
 
 {%
-   include-markdown "_generated/l1-classes.md"
+   include-markdown "./_generated/l1-classes.md"
 %}
