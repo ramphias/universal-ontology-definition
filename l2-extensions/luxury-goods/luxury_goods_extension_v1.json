@@ -3,7 +3,7 @@
   "layer": "L2_luxury_goods_extension",
   "version": "2.0.0",
   "extends": "L1_universal_organization_ontology",
-  "compatible_core_version": "2.0.0",
+  "compatible_core_version": "2.1.0",
   "description": "奢侈品行业 extension ontology 数据，覆盖品牌管理、产品生命周期、全渠道零售、客户体验、供应链溯源与鉴真、稀缺性管控与行业合规",
   "description_en": "Luxury goods Industry and Domain Extension ontology covering brand management, product lifecycle, omni-channel retail, client experience, supply chain traceability & authentication, scarcity management, and industry compliance",
   "classes": [
