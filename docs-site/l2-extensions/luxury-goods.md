@@ -16,11 +16,11 @@ This extension covers:
 
 ## Statistics
 
-| Category | Count |
-|:---|:---:|
-| New Classes | 21 |
-| New Relations | 10 |
-| Sample Instances | 8 |
+| Category | Count | Version |
+|:---|:---:|:---:|
+| New Classes | 39 | v2.0.0 |
+| New Relations | 14 | — |
+| Sample Instances | 22 | — |
 
 ## Key Classes
 

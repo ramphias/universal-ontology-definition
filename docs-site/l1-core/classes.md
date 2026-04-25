@@ -1,6 +1,6 @@
 # Classes Reference
 
-All 24 core classes defined in L1 v2.0, organized by their 4 Abstract Domains (`Entity`, `Governance`, `Operational`, `Measurement`). Each class is available for inheritance by L2 Industry and Domain Extensions and L3 enterprise extensions.
+All 24 core classes defined in L1 v2.0, organized by their **4 abstract domains** (`Entity`, `Governance`, `Operational`, `Measurement`). Within the Entity domain, `Party` and `Resource` are intermediate abstract classes used as relation signatures (e.g. `owns: Party → Resource`). In total there are **6 abstract classes** (4 domain roots + Party + Resource) and **18 concrete leaf classes**. Every class is available for inheritance by L2 Industry and Domain Extensions and L3 enterprise extensions.
 
 ---
 
@@ -18,7 +18,7 @@ All 24 core classes defined in L1 v2.0, organized by their 4 Abstract Domains (`
 | **Definition** | Top-level abstraction for all identifiable and manageable things |
 | **定义** | 所有可被识别和管理的事物的顶层抽象 |
 
-### Party
+### Party (Abstract)
 
 | Field | Value |
 |:---|:---|

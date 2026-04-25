@@ -16,7 +16,7 @@ An Open, Standardized Four-Layer Enterprise Ontology Framework<br>
 
 <div class="hero-badges">
   <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"></a>
-  <a href="changelog/"><img src="https://img.shields.io/badge/Version-2.1.0-green.svg" alt="Version"></a>
+  <a href="changelog/"><img src="https://img.shields.io/badge/Version-2.4.0-green.svg" alt="Version"></a>
   <a href="guides/contributing/"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
 </div>
 

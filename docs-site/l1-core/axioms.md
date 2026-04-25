@@ -89,12 +89,6 @@ All axiom IDs use the `ax_` prefix with snake_case naming (e.g., `ax_part_of_tra
 |----|---------|----------|-----|-------------|
 | `ax_org_min_one_role` | Organization | `plays_role` | 1 | Every Organization plays at least one Role |
 
-### Subproperty Axioms
-
-| ID | Relation | Parent | Description |
-|----|----------|--------|-------------|
-| `ax_composed_of_sub_part_of` | `composed_of` | `part_of` | Composition is a specialization of part-of |
-
 ## OWL 2 Mapping Examples
 
 === "Disjoint"

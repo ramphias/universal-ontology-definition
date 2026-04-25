@@ -255,9 +255,9 @@ These terms describe UOD's four-layer architecture and the mechanisms for extend
 
 ### L1 — Universal Core / 通用核心层
 
-**EN**: The **mandatory foundation** of UOD. Defines 24 concrete classes + 4 abstract domain roots + 12 relations that are universally applicable to all enterprises across all industries. L1 is the most stable layer — changes are rare and strictly governed by rules G-01 through G-08. All L2 and L3 definitions **must** inherit from L1.
+**EN**: The **mandatory foundation** of UOD. Defines 24 classes (18 concrete + 6 abstract — the 4 domain roots Entity/Governance/Operational/Measurement plus the 2 intermediate abstractions Party/Resource) and 13 relations, universally applicable to all enterprises across all industries. L1 is the most stable layer — changes are rare and strictly governed by rules G-01 through G-08. All L2 and L3 definitions **must** inherit from L1.
 
-**ZH**: UOD 的**必选基础层**。定义了 24 个具体类 + 4 个抽象域根 + 12 个关系，适用于所有行业的所有企业。L1 是最稳定的层 — 变更罕见且受治理规则 G-01 至 G-08 严格约束。所有 L2 和 L3 定义**必须**继承自 L1。
+**ZH**: UOD 的**必选基础层**。定义了 24 个类（18 个具体类 + 6 个抽象类——4 个域根 Entity/Governance/Operational/Measurement 加 2 个中间抽象 Party/Resource）和 13 个关系，适用于所有行业的所有企业。L1 是最稳定的层 — 变更罕见且受治理规则 G-01 至 G-08 严格约束。所有 L2 和 L3 定义**必须**继承自 L1。
 
 ---
 

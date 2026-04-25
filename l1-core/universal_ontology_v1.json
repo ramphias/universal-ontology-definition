@@ -830,18 +830,6 @@
       "definition_en": "Every Organization plays at least one Role"
     },
     {
-      "id": "ax_composed_of_sub_part_of",
-      "type": "subproperty",
-      "label_zh": "composed_of 是 part_of 的子属性",
-      "label_en": "composed_of is a subproperty of part_of",
-      "relation": "composed_of",
-      "parent_relation": "part_of",
-      "status": "stable",
-      "since": "2.0.0",
-      "definition": "组成关系是部分关系的特化形式",
-      "definition_en": "The composition relation is a specialization of the part-of relation"
-    },
-    {
       "id": "ax_plays_role_domain_party",
       "type": "existential",
       "label_zh": "每个角色必须被某个主体扮演",

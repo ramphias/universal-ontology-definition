@@ -1,56 +1,89 @@
 # Core Ontology (L1)
 
-The Universal Enterprise Ontology Core defines **24 classes** and **12 relations** that form the mandatory foundation for all Industry and Domain Extension and enterprise customizations.
+The Universal Enterprise Ontology Core defines **24 classes** and **13 relations** that form the mandatory foundation for all Industry and Domain Extension and enterprise customizations.
 
-## Overview
+The 24 classes are organized under **4 abstract domains** (Entity, Governance, Operational, Measurement). Within the Entity domain, two intermediate abstractions — `Party` and `Resource` — group related concrete classes and serve as relation signatures (e.g. `owns: Party → Resource`). In total: **6 abstract classes** (4 domain roots + 2 intermediate) and **18 concrete leaf classes**.
+
+## High-Level Architecture
+
+The four abstract domains are mutually disjoint (enforced by axioms `ax_entity_governance_disjoint`, etc.). Cross-domain relations bind them into a coherent operating model:
+
+```mermaid
+graph LR
+    classDef domain fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    
+    Entity["🟦 <b>Entity</b><br/>实体<br/><i>Party · Resource</i>"]:::domain
+    Op["🟩 <b>Operational</b><br/>运营<br/><i>Role · Capability · Process · Event</i>"]:::domain
+    Gov["🟨 <b>Governance</b><br/>治理<br/><i>Policy · Rule · Control · Risk</i>"]:::domain
+    Meas["🟪 <b>Measurement</b><br/>度量<br/><i>Goal · KPI</i>"]:::domain
+    
+    Entity -->|plays_role / owns| Op
+    Op -->|consumes / produces| Entity
+    Op -->|governed_by| Gov
+    Op -->|measured_by| Meas
+```
+
+## Full Inheritance Tree
+
+All 24 L1 classes with parent–child relationships. Abstract classes are shown in italic / orange; concrete leaves in green.
 
 ```mermaid
 graph TD
-    Party["Party<br/>主体"]
-    Person["Person<br/>人员"]
-    Org["Organization<br/>组织"]
-    OrgUnit["OrgUnit<br/>组织单元"]
-    Role["Role<br/>角色"]
-    Cap["Capability<br/>能力"]
-    Proc["Process<br/>流程"]
-    Act["Activity<br/>活动"]
-    BO["BusinessObject<br/>业务对象"]
-    PS["ProductService<br/>产品与服务"]
-    Asset["Asset<br/>资产"]
-    DO["DataObject<br/>数据对象"]
-    Doc["DocumentRecord<br/>文档与记录"]
-    Sys["SystemApplication<br/>系统应用"]
+    classDef abstract fill:#fff3e0,stroke:#e65100,stroke-width:2px,font-style:italic
+    classDef concrete fill:#e8f5e9,stroke:#2e7d32
     
+    Entity["Entity<br/>实体"]:::abstract
+    Party["Party<br/>主体"]:::abstract
+    Resource["Resource<br/>资源"]:::abstract
+    Person["Person<br/>人员"]:::concrete
+    Org["Organization<br/>组织"]:::concrete
+    OrgUnit["OrgUnit<br/>组织单元"]:::concrete
+    PS["ProductService<br/>产品与服务"]:::concrete
+    Asset["Asset<br/>资产"]:::concrete
+    DO["DataObject<br/>数据对象"]:::concrete
+    Doc["Document<br/>文档"]:::concrete
+    Sys["SystemApplication<br/>系统应用"]:::concrete
+    Entity --> Party
+    Entity --> Resource
     Party --> Person
     Party --> Org
     Org --> OrgUnit
-    BO --> PS
-    BO --> Asset
+    Resource --> PS
+    Resource --> Asset
+    Resource --> DO
+    Resource --> Sys
     DO --> Doc
     
-    Party -.->|plays_role| Role
-    Role -.->|is_accountable_for| Cap
-    Cap -.->|realized_by| Proc
-    Proc -.->|composed_of| Act
+    Gov["Governance<br/>治理"]:::abstract
+    Policy["Policy<br/>政策"]:::concrete
+    Rule["Rule<br/>规则"]:::concrete
+    Control["Control<br/>控制"]:::concrete
+    Risk["Risk<br/>风险"]:::concrete
+    Gov --> Policy
+    Gov --> Rule
+    Gov --> Control
+    Gov --> Risk
     
-    style Party fill:#c8e6c9,stroke:#388e3c
-    style Person fill:#c8e6c9,stroke:#388e3c
-    style Org fill:#c8e6c9,stroke:#388e3c
-    style OrgUnit fill:#c8e6c9,stroke:#388e3c
-    style Role fill:#bbdefb,stroke:#1976d2
-    style Cap fill:#bbdefb,stroke:#1976d2
-    style Proc fill:#fff9c4,stroke:#f9a825
-    style Act fill:#fff9c4,stroke:#f9a825
-    style BO fill:#e1bee7,stroke:#9c27b0
-    style PS fill:#e1bee7,stroke:#9c27b0
-    style Asset fill:#e1bee7,stroke:#9c27b0
-    style DO fill:#ffccbc,stroke:#e64a19
-    style Doc fill:#ffccbc,stroke:#e64a19
-    style Sys fill:#ffccbc,stroke:#e64a19
+    Op["Operational<br/>运营"]:::abstract
+    Role["Role<br/>角色"]:::concrete
+    Cap["Capability<br/>能力"]:::concrete
+    Proc["Process<br/>流程"]:::concrete
+    Event["Event<br/>事件"]:::concrete
+    Op --> Role
+    Op --> Cap
+    Op --> Proc
+    Op --> Event
+    
+    Meas["Measurement<br/>度量"]:::abstract
+    Goal["Goal<br/>目标"]:::concrete
+    KPI["KPI<br/>关键指标"]:::concrete
+    Meas --> Goal
+    Meas --> KPI
 ```
 
 ## Sections
 
-- [Classes Reference](classes.md) — All 25 core classes with definitions
-- [Relations Reference](relations.md) — All 16 standard relations
+- [Classes Reference](classes.md) — All 24 core classes with definitions
+- [Relations Reference](relations.md) — All 13 standard relations
+- [Axioms Reference](axioms.md) — 18 OWL 2 semantic constraints
 - [Sample Instances](instances.md) — Example data to understand usage

@@ -166,11 +166,11 @@ npm run dev
 
 ### 1️⃣ Understanding Core Ontology
 
-L1 v2.0 defines **24 classes** (4 abstract domains + 20 concrete) and **12 generalized relations**, organized into 4 semantic domains:
+L1 v2.0 defines **24 classes** and **13 generalized relations**, organized into 4 abstract semantic domains. Within Entity, `Party` and `Resource` act as intermediate abstractions used as relation signatures (e.g. `owns: Party → Resource`). In total: **6 abstract classes** (4 domain roots + Party + Resource) and **18 concrete leaf classes**.
 
 | Domain | Semantic Focus | Classes |
 |:---|:---|:---|
-| 🟦 **Entity** | Physical & logical entities | `Party`, `Person`, `Organization`, `OrgUnit`, `Resource`, `ProductService`, `Asset`, `DataObject`, `Document`, `SystemApplication` |
+| 🟦 **Entity** | Physical & logical entities | `Party` *(abstract)*, `Person`, `Organization`, `OrgUnit`, `Resource` *(abstract)*, `ProductService`, `Asset`, `DataObject`, `Document`, `SystemApplication` |
 | 🟨 **Governance** | Control & compliance | `Policy`, `Rule`, `Control`, `Risk` |
 | 🟩 **Operational** | Execution & capabilities | `Role`, `Capability`, `Process`, `Event` |
 | 🟪 **Measurement** | Outcomes & metrics | `Goal`, `KPI` |
@@ -259,7 +259,7 @@ python scripts/visualize_ontology.py                                   # Interac
 |:---|:---|:---:|:---:|:---|
 | **Consulting** | [`l2-extensions/consulting/`](l2-extensions/consulting/) | 54 | 45 | ![v1.1.0](https://img.shields.io/badge/v1.1.0-blue) |
 | **Financial Services** | [`l2-extensions/financial-services/`](l2-extensions/financial-services/) | 30 | 12 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
-| **Food & Beverage** | [`l2-extensions/fnb/`](l2-extensions/fnb/) | 19 | 7 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
+| **Food & Beverage** | [`l2-extensions/fnb/`](l2-extensions/fnb/) | 19 | 7 | ![v1.0.1](https://img.shields.io/badge/v1.0.1-blue) |
 | **Healthcare** | [`l2-extensions/healthcare/`](l2-extensions/healthcare/) | 28 | 10 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
 | **Luxury Goods** | [`l2-extensions/luxury-goods/`](l2-extensions/luxury-goods/) | 39 | 14 | ![v2.0.0](https://img.shields.io/badge/v2.0.0-blue) |
 | **Manufacturing** | [`l2-extensions/manufacturing/`](l2-extensions/manufacturing/) | 27 | 11 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |

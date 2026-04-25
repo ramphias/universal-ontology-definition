@@ -20,7 +20,7 @@ L3 Acme Tech (26)     ─┘                       ├── merged_ontology.jso
 
 ```bash
 # Merge L3 enterprise (auto-resolves L2 + L1 dependencies)
-python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
+python scripts/merge_layers.py l3-enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
 
 # Merge L2 extension + L1 core only
 python scripts/merge_layers.py l2-extensions/consulting/consulting_extension_v1.json

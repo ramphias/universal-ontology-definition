@@ -179,11 +179,11 @@ npm run dev
 
 ### 1️⃣ 了解 Core Ontology
 
-L1 v2.0 定义了 **24 个类**（4 个抽象域 + 20 个具体类）和 **12 种泛化关系**，归入 4 大语义域：
+L1 v2.0 定义了 **24 个类** 和 **13 种泛化关系**，归入 4 大抽象语义域。其中 Entity 域内的 `Party` 与 `Resource` 是用作关系签名的中间抽象类（例如 `owns: Party → Resource`）。共计 **6 个抽象类**（4 个域根 + Party + Resource）和 **18 个具体叶子类**。
 
 | 域 | 语义焦点 | 具体类 |
 |:---|:---|:---|
-| 🟦 **实体 Entity** | 物理与逻辑实体 | `Party`, `Person`, `Organization`, `OrgUnit`, `Resource`, `ProductService`, `Asset`, `DataObject`, `Document`, `SystemApplication` |
+| 🟦 **实体 Entity** | 物理与逻辑实体 | `Party` *(抽象)*, `Person`, `Organization`, `OrgUnit`, `Resource` *(抽象)*, `ProductService`, `Asset`, `DataObject`, `Document`, `SystemApplication` |
 | 🟨 **治理 Governance** | 控制与合规避险 | `Policy`, `Rule`, `Control`, `Risk` |
 | 🟩 **运营 Operational** | 执行与支撑能力 | `Role`, `Capability`, `Process`, `Event` |
 | 🟪 **度量 Measurement** | 目标与结果导向 | `Goal`, `KPI` |
@@ -439,7 +439,7 @@ python scripts/visualize_ontology.py
 |:---|:---|:---:|:---:|:---|
 | **咨询行业** | [`l2-extensions/consulting/`](l2-extensions/consulting/) | 54 | 45 | ![v1.1.0](https://img.shields.io/badge/v1.1.0-blue) |
 | **金融服务** | [`l2-extensions/financial-services/`](l2-extensions/financial-services/) | 30 | 12 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
-| **餐饮行业** | [`l2-extensions/fnb/`](l2-extensions/fnb/) | 19 | 7 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
+| **餐饮行业** | [`l2-extensions/fnb/`](l2-extensions/fnb/) | 19 | 7 | ![v1.0.1](https://img.shields.io/badge/v1.0.1-blue) |
 | **医疗健康** | [`l2-extensions/healthcare/`](l2-extensions/healthcare/) | 28 | 10 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |
 | **奢侈品行业** | [`l2-extensions/luxury-goods/`](l2-extensions/luxury-goods/) | 39 | 14 | ![v2.0.0](https://img.shields.io/badge/v2.0.0-blue) |
 | **制造业** | [`l2-extensions/manufacturing/`](l2-extensions/manufacturing/) | 27 | 11 | ![v1.0.0](https://img.shields.io/badge/v1.0.0-blue) |

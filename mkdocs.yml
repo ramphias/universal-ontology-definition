@@ -143,13 +143,20 @@ nav:
     - Create Your Own: l2-extensions/create-extension.md
   - Enterprise Layer (L3):
     - l3-enterprise/index.md
+  - Ontology Studio:
+    - studio/index.md
   - Glossary:
     - glossary/index.md
     - L1 Classes: glossary/l1-classes.md
     - L1 Relations: glossary/l1-relations.md
     - L1 Axioms: glossary/l1-axioms.md
     - L2 Consulting: glossary/l2-consulting.md
+    - L2 Financial Services: glossary/l2-financial-services.md
+    - L2 Food & Beverage: glossary/l2-fnb.md
+    - L2 Healthcare: glossary/l2-healthcare.md
     - L2 Luxury Goods: glossary/l2-luxury-goods.md
+    - L2 Manufacturing: glossary/l2-manufacturing.md
+    - L2 Technology: glossary/l2-technology.md
   - Design Guide:
     - guides/index.md
     - Ontology Design Rules: guides/design-rules.md

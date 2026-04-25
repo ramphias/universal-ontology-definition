@@ -11,7 +11,7 @@ cd universal-ontology-definition
 
 ## Step 2: Explore the Core Ontology
 
-Open `l1-core/universal_ontology_v1.json` to see all **24 core classes** and **12 standard relations**.
+Open `l1-core/universal_ontology_v1.json` to see all **24 core classes** and **13 standard relations**.
 
 The core ontology covers these universal enterprise domains:
 
@@ -85,7 +85,7 @@ Browse the `l2-extensions/` directory for industry-specific extensions:
 |:---|:---:|:---:|:---|
 | [Consulting](../l2-extensions/consulting.md) | 54 | 45 | v1.1.0 |
 | [Financial Services](../l2-extensions/financial-services.md) | 30 | 12 | v1.0.0 |
-| Food & Beverage | 19 | 7 | v1.0.0 |
+| [Food & Beverage](../l2-extensions/fnb.md) | 19 | 7 | v1.0.1 |
 | [Healthcare](../l2-extensions/healthcare.md) | 28 | 10 | v1.0.0 |
 | [Luxury Goods](../l2-extensions/luxury-goods.md) | 39 | 14 | v2.0.0 |
 | [Manufacturing](../l2-extensions/manufacturing.md) | 27 | 11 | v1.0.0 |

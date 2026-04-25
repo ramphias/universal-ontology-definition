@@ -1,8 +1,8 @@
 # L1 Relations Reference / L1 关系参考
 
-All 12 standard relations defined in L1 Core v2.0, plus 6 deprecated relations with migration guidance.
+All 13 standard relations defined in L1 Core v2.0, plus 6 deprecated relations with migration guidance.
 
-L1 Core v2.0 中定义的全部 12 个标准关系，以及 6 个废弃关系及迁移指南。
+L1 Core v2.0 中定义的全部 13 个标准关系，以及 6 个废弃关系及迁移指南。
 
 ## Relation Map / 关系总图
 

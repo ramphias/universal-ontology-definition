@@ -1,6 +1,6 @@
 # Relations Reference
 
-All 12 standard relations defined in L1 v2.0. Each relation connects a **domain** class (source) to a **range** class (target) and includes cardinality definitions.
+All 13 standard relations defined in L1 v2.0. Each relation connects a **domain** class (source) to a **range** class (target) and includes cardinality definitions.
 
 ---
 

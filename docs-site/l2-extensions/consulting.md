@@ -17,11 +17,11 @@ This extension covers:
 
 ## Statistics
 
-| Category | Count |
-|:---|:---:|
-| New Classes | 40+ |
-| New Relations | 34 |
-| Sample Instances | 25+ |
+| Category | Count | Version |
+|:---|:---:|:---:|
+| New Classes | 54 | v1.1.0 |
+| New Relations | 45 | — |
+| Sample Instances | 39 | — |
 
 ## Key Classes
 
