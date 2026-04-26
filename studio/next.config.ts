@@ -9,6 +9,18 @@ if (!process.env.NEXTAUTH_URL) {
   process.env.NEXTAUTH_URL = "http://localhost:3000";
 }
 
+// Public repo coordinates — not secrets, just deploy configuration. Hardcode
+// here so the L1/L2/L3 viewer can fetch from GitHub when Netlify's deploy
+// preview runtime doesn't surface GITHUB_REPO_OWNER/NAME (e.g. dashboard
+// env scoped to production only). Override via real env vars to point a
+// fork or self-host at a different repo.
+if (!process.env.GITHUB_REPO_OWNER) {
+  process.env.GITHUB_REPO_OWNER = "ramphias";
+}
+if (!process.env.GITHUB_REPO_NAME) {
+  process.env.GITHUB_REPO_NAME = "universal-ontology-definition";
+}
+
 const nextConfig: NextConfig = {
   async headers() {
     return [
