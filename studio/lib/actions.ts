@@ -3,29 +3,21 @@
 import { Octokit } from "@octokit/rest";
 import fs from "fs";
 import path from "path";
-import { getServerSession } from "next-auth";
-import { authOptions, getUserAccessToken } from "./auth";
+import { pickGithubToken } from "./github-token";
 
-const REPO_OWNER = process.env.GITHUB_REPO_OWNER as string;
-const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
+// Public repo coordinates — see lib/github.ts for rationale.
+const REPO_OWNER = process.env.GITHUB_REPO_OWNER || "ramphias";
+const REPO_NAME = process.env.GITHUB_REPO_NAME || "universal-ontology-definition";
 
 const JSON_MAX_BYTES = 5 * 1024 * 1024;
 
-async function requireAuth() {
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user) {
-        throw new Error("Unauthorized");
-    }
-}
-
 async function getOctokit(): Promise<Octokit> {
-    const token = await getUserAccessToken();
-    return new Octokit({ auth: token ?? undefined });
+    return new Octokit({ auth: await pickGithubToken() });
 }
 
 async function githubAuthHeaders(): Promise<Record<string, string>> {
     const headers: Record<string, string> = { "User-Agent": "Ontology-Studio-App" };
-    const token = await getUserAccessToken();
+    const token = await pickGithubToken();
     if (token) headers["Authorization"] = `Bearer ${token}`;
     return headers;
 }
@@ -42,7 +34,6 @@ export async function resolveLayerFile(
   layer: "L1" | "L2" | "L3",
   domain?: string
 ): Promise<string | null> {
-  await requireAuth();
   if (layer === "L1") return "l1-core/universal_ontology_v1.json";
   if (!domain || !/^[a-z0-9-]+$/.test(domain)) return null;
 
@@ -133,7 +124,6 @@ function getLocalJsonFromDir(relativePath: string) {
  * 抓取 l2-extensions 下的所有合法子域目录
  */
 export async function getAvailableL2Extensions() {
-  await requireAuth();
   const localData = getLocalDirs("l2-extensions");
   if (localData) return localData;
 
@@ -164,7 +154,6 @@ export async function getAvailableL2Extensions() {
  * 动态读取指定 L2 目录下的 .json 文件内容
  */
 export async function fetchExtensionData(domainId: string) {
-  await requireAuth();
   if (!/^[a-z0-9-]+$/.test(domainId)) throw new Error("Invalid domain ID");
 
   const localData = getLocalJsonFromDir(`l2-extensions/${domainId}`);
@@ -210,7 +199,6 @@ export async function fetchExtensionData(domainId: string) {
  * 抓取 l3-enterprise 下的所有合法子域目录
  */
 export async function getAvailableL3Enterprises() {
-  await requireAuth();
   const localData = getLocalDirs("l3-enterprise");
   if (localData) return localData;
 
@@ -241,7 +229,6 @@ export async function getAvailableL3Enterprises() {
  * 动态读取指定 L3 目录下的 .json 文件内容
  */
 export async function fetchL3EnterpriseData(domainId: string) {
-  await requireAuth();
   if (!/^[a-z0-9-]+$/.test(domainId)) throw new Error("Invalid domain ID");
 
   const localData = getLocalJsonFromDir(`l3-enterprise/${domainId}`);
