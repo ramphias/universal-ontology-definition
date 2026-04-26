@@ -5,8 +5,9 @@ import fs from "fs";
 import path from "path";
 import { pickGithubToken } from "./github-token";
 
-const REPO_OWNER = process.env.GITHUB_REPO_OWNER as string;
-const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
+// Public repo coordinates — see lib/github.ts for rationale.
+const REPO_OWNER = process.env.GITHUB_REPO_OWNER || "ramphias";
+const REPO_NAME = process.env.GITHUB_REPO_NAME || "universal-ontology-definition";
 
 const JSON_MAX_BYTES = 5 * 1024 * 1024;
 

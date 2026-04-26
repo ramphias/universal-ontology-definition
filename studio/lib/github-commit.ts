@@ -1,8 +1,9 @@
 import { Octokit } from "@octokit/rest";
 import type { EditableClassFields } from "./pending-edits";
 
-const REPO_OWNER = process.env.GITHUB_REPO_OWNER as string;
-const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
+// Public repo coordinates — see lib/github.ts for rationale.
+const REPO_OWNER = process.env.GITHUB_REPO_OWNER || "ramphias";
+const REPO_NAME = process.env.GITHUB_REPO_NAME || "universal-ontology-definition";
 
 const JSON_MAX_BYTES = 5 * 1024 * 1024;
 

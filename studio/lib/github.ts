@@ -2,8 +2,13 @@ import fs from "fs";
 import path from "path";
 import { pickGithubToken } from "./github-token";
 
-const REPO_OWNER = process.env.GITHUB_REPO_OWNER as string;
-const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
+// Public repo coordinates — not secrets, just deploy configuration.
+// Hardcoded defaults so the L1/L2/L3 viewer works even when Netlify's
+// Functions runtime doesn't surface these env vars (e.g. dashboard env
+// scoped to production only). Override via real env vars to point a
+// fork or self-host at a different repo.
+const REPO_OWNER = process.env.GITHUB_REPO_OWNER || "ramphias";
+const REPO_NAME = process.env.GITHUB_REPO_NAME || "universal-ontology-definition";
 
 export async function getOntologyLayer(layerId: string) {
   // Mapping L0, L1, L2, L3 layers to their respective raw JSON files
