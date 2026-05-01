@@ -1,10 +1,11 @@
 {
   "$schema": "../../schema/extension_schema.json",
-  "layer": "L2_fnb_industry",
-  "version": "1.0.1",
+  "layer": "L2_fnb_industry_extension",
+  "version": "1.0.2",
   "extends": "L1_universal_organization_ontology",
   "compatible_core_version": "2.1.0",
-  "description": "MECE Framework for Food & Beverage (F&B) Industry.",
+  "description": "餐饮行业 extension ontology 数据，覆盖餐饮门店、菜品、供应链、订单与顾客关系等核心概念。",
+  "description_en": "Food & Beverage Industry extension ontology covering restaurant outlets, menus, supply chain, orders, and customer relationships.",
   "classes": [
     {
       "id": "Restaurant",

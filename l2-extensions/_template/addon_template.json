@@ -3,7 +3,9 @@
   "layer": "L2_your_industry_extension",
   "version": "1.0.0",
   "extends": "L1_universal_organization_ontology",
+  "compatible_core_version": "2.1.0",
   "description": "请替换为你的行业 extension 描述",
+  "description_en": "Replace with English description of your industry extension",
   "classes": [
     {
       "id": "YourIndustryEntity",

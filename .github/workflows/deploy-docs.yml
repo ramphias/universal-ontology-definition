@@ -49,13 +49,8 @@ jobs:
       - name: Build documentation (strict — fail on broken links / missing nav)
         run: mkdocs build --strict
 
-      - name: Assemble final site
-        run: |
-          mkdir -p site
-          cp -r _mkdocs_site/* site/
-          touch site/.nojekyll
-          echo "--- Site Layout ---"
-          find site -maxdepth 1
+      - name: Add .nojekyll
+        run: touch site/.nojekyll
 
       - name: Upload artifact
         if: github.event_name != 'pull_request'

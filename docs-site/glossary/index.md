@@ -321,9 +321,9 @@ Currently available: **Common Enterprise**, **Consulting**, **Luxury Goods**.
 
 ## Part 3: Semantic Domains in Detail / 四大语义域详解
 
-L1 organizes its 24 classes into 4 mutually exclusive semantic domains. Each domain answers a different fundamental question about the enterprise.
+L1 organizes its 24 classes (6 abstract domain roots + 18 concrete classes) into 4 mutually exclusive semantic domains. Each domain answers a different fundamental question about the enterprise.
 
-L1 将其 24 个类组织为 4 个互斥的语义域。每个语义域回答关于企业的不同根本问题。
+L1 将其 24 个类（6 个抽象域根类 + 18 个具体类）组织为 4 个互斥的语义域。每个语义域回答关于企业的不同根本问题。
 
 ---
 
@@ -448,7 +448,7 @@ Governance rules are hard constraints that protect L1 from entropy growth. They 
 
 | Rule | EN Description | ZH 描述 | Value |
 |:---|:---|:---|:---|
-| **G-01** | Maximum L1 class count | L1 类数上限（防止本体膨胀） | ≤ 25 |
+| **G-01** | Maximum L1 class count (abstract + concrete combined) | L1 类数上限（含抽象 + 具体，防止本体膨胀；当前 24/25） | ≤ 25 |
 | **G-02** | Maximum root classes (parent=null) | 根类上限（保持清晰的域划分） | ≤ 5 |
 | **G-03** | Maximum inheritance depth | 继承深度上限（避免过深的层次） | ≤ 4 |
 | **G-04** | Cross-industry validation | 跨行业验证（新 L1 类需适用于 ≥3 个行业） | ≥ 3 industries |

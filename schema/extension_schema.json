@@ -4,7 +4,7 @@
   "title": "Industry and Domain Extension Ontology Schema",
   "description": "JSON Schema for validating L2 Industry and Domain Extension Ontology definitions",
   "type": "object",
-  "required": ["layer", "version", "extends", "description", "classes", "relations", "attributes"],
+  "required": ["layer", "version", "extends", "compatible_core_version", "description", "description_en", "classes", "relations", "attributes"],
   "properties": {
     "$schema": {
       "type": "string",
@@ -12,13 +12,32 @@
     },
     "layer": {
       "type": "string",
-      "pattern": "^L[23]_",
-      "description": "Layer identifier, must start with L2_ (industry extensions) or L3_ (enterprise customizations)"
+      "anyOf": [
+        {
+          "pattern": "^L2_[a-z][a-z0-9_]*_extension$",
+          "description": "L2 layer ID — must end with _extension"
+        },
+        {
+          "pattern": "^L3_[a-z][a-z0-9_]+$",
+          "description": "L3 layer ID — domain or enterprise customization"
+        }
+      ],
+      "description": "Layer identifier (L2_*_extension or L3_*)"
     },
     "version": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
       "description": "Semantic version string"
+    },
+    "compatible_core_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Minimum L1 core version this layer is compatible with"
+    },
+    "compatible_extension_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Minimum L2 extension version this layer is compatible with (L3 only)"
     },
     "extends": {
       "oneOf": [
@@ -45,7 +64,12 @@
     "description": {
       "type": "string",
       "minLength": 10,
-      "description": "Description of the Industry and Domain Extension"
+      "description": "Chinese description of the Industry and Domain Extension"
+    },
+    "description_en": {
+      "type": "string",
+      "minLength": 10,
+      "description": "English description of the Industry and Domain Extension"
     },
     "classes": {
       "type": "array",

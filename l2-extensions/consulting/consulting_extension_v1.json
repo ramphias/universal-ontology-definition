@@ -1,7 +1,7 @@
 {
   "$schema": "../../schema/extension_schema.json",
   "layer": "L2_consulting_industry_extension",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "extends": "L1_universal_organization_ontology",
   "compatible_core_version": "2.1.0",
   "description": "咨询行业 extension ontology 数据，覆盖咨询项目、业务实践、方法论、交付物、客户关系、知识管理与人才配置",

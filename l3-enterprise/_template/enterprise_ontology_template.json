@@ -6,9 +6,11 @@
   },
   "version": "1.0.0",
   "extends": [
-    "L1_universal_enterprise_ontology_v1"
+    "L1_universal_organization_ontology"
   ],
+  "compatible_core_version": "2.1.0",
   "description": "Template for enterprise-specific ontology extensions. Replace placeholders with actual enterprise data.",
+  "description_en": "Template for enterprise-specific ontology extensions. Replace placeholders with actual enterprise data.",
   "classes": [
     {
       "id": "EnterpriseSpecificEntity",
