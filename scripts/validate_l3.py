@@ -34,14 +34,14 @@ except ImportError:
     def find_root(p):
         p = Path(p).resolve()
         for _ in range(10):
-            if (p / "core").is_dir() and (p / "extensions").is_dir():
+            if (p / "l1-core").is_dir() and (p / "l2-extensions").is_dir():
                 return p
             p = p.parent
         return Path(p).resolve()
     def discover_files(root):
         import glob
         files = []
-        for pattern in ["core/*.json", "extensions/*/*.json", "enterprise/*/*.json", "private_enterprise/*/*.json"]:
+        for pattern in ["l1-core/*.json", "l2-extensions/*/*.json", "l3-enterprise/*/*.json"]:
             files.extend(glob.glob(str(root / pattern)))
         return [f for f in files if not Path(f).name.startswith("_") and "schema" not in f and "template" not in f.lower()]
 

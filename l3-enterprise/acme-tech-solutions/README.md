@@ -20,8 +20,8 @@
 ## 📐 继承链
 
 ```
-L1 Universal Core v2.0 (24 类 / 12 关系)
-    └── L2 Consulting Industry and Domain Extension v1.1 (40+ 类 / 34 关系)
+L1 Universal Core v2.1 (24 类 / 13 关系)
+    └── L2 Consulting Industry and Domain Extension v1.1 (54 类 / 45 关系)
         └── L3 Acme Tech Solutions v1.0 (26 类 / 10 关系 / 34 实例)
 ```
 

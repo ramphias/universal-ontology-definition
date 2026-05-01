@@ -7,7 +7,7 @@ repo_name: ramphias/universal-ontology-definition
 edit_uri: edit/main/docs-site/
 
 docs_dir: docs-site
-site_dir: _mkdocs_site
+site_dir: site
 
 copyright: Copyright &copy; 2026 Universal Ontology Definition Contributors
 
@@ -119,6 +119,7 @@ nav:
     - architecture/index.md
     - Four-Layer Model: architecture/four-layer-model.md
     - Inheritance & Extension: architecture/inheritance.md
+    - Versioning Model: architecture/versioning.md
   - Platform Bindings (L0):
     - l0/index.md
     - SQL DDL: l0/sql-ddl.md

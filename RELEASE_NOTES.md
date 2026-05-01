@@ -4,7 +4,7 @@
 
 ## ⚠️ Breaking Changes
 
-- **L1 Core restructured**: 25 classes → 24 classes (4 abstract domains + 20 concrete)
+- **L1 Core restructured**: 25 classes → 24 classes (6 abstract: 4 domain roots + Party + Resource; 18 concrete leaves)
 - **`BusinessObject` → `Resource`** — all L2 extensions must update parent references
 - **`DocumentRecord` → `Document`** — all L2 extensions must update parent references
 - **`Activity` demoted to L2** — now in `extensions/common/` as a subtype of `Process`

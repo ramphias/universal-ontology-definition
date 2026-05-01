@@ -11,12 +11,12 @@
     "description": "A fictional mid-size technology consulting firm specializing in cloud migration, AI solutions, and enterprise digital transformation in the Greater China market.",
     "description_zh": "一家虚构的中型科技咨询公司，专注于大中华区的云迁移、AI 解决方案和企业数字化转型"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "extends": [
-    "L1_universal_organization_ontology_v2",
-    "L2_consulting_industry_extension_v1"
+    "L1_universal_organization_ontology",
+    "L2_consulting_industry_extension"
   ],
-  "compatible_core_version": "2.0.0",
+  "compatible_core_version": "2.1.0",
   "compatible_extension_version": "1.1.0",
   "description": "极客方舟科技 L3 企业定制 ontology — 示例虚拟企业，演示 L3 层的完整创建流程",
   "description_en": "Acme Tech Solutions L3 enterprise ontology — sample virtual enterprise demonstrating the full L3 creation workflow",

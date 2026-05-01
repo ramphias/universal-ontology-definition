@@ -1,8 +1,8 @@
 # L1 Classes Reference / L1 类参考
 
-All 28 classes defined in L1 Core v2.0, organized by their 4 semantic domains. Each class includes bilingual definitions, hierarchy position, and lifecycle metadata.
+All 24 classes defined in L1 Core v2.1 (6 abstract domain roots + 18 concrete classes), organized by their 4 semantic domains. Each class includes bilingual definitions, hierarchy position, and lifecycle metadata.
 
-L1 Core v2.0 中定义的全部 28 个类，按 4 个语义域组织。每个类包含中英文定义、层次位置和生命周期元数据。
+L1 Core v2.1 中定义的全部 24 个类（6 个抽象域根类 + 18 个具体类），按 4 个语义域组织。每个类包含中英文定义、层次位置和生命周期元数据。
 
 ## Full Inheritance Tree / 完整继承树
 

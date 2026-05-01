@@ -59,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - 2026-04-03 — Anti-Entropy Refactoring
 
 ### ⚠️ Breaking Changes
-- **L1 Core restructured**: 25 classes → 24 classes (4 abstract domains + 20 concrete)
+- **L1 Core restructured**: 25 classes → 24 classes (6 abstract: 4 domain roots + Party + Resource; 18 concrete leaves)
 - **`BusinessObject` replaced by `Resource`** — all L2 extensions using `"parent": "BusinessObject"` must change to `"parent": "Resource"`
 - **`DocumentRecord` renamed to `Document`** — all L2 extensions using `"parent": "DocumentRecord"` must change to `"parent": "Document"`
 - **`Activity` class removed from L1** — now available in `extensions/common/` as a subtype of `Process`

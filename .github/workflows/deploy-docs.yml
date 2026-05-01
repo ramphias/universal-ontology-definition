@@ -39,15 +39,8 @@ jobs:
       - name: Build documentation
         run: mkdocs build --strict
 
-      - name: Assemble final site
-        run: |
-          mkdir -p site
-          # Copy mkdocs site directly to root
-          cp -r _mkdocs_site/* site/
-          touch site/.nojekyll
-          # Verify structure
-          echo "--- Site Layout ---"
-          find site -maxdepth 1
+      - name: Add .nojekyll
+        run: touch site/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
