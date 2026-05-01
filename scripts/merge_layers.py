@@ -6,9 +6,9 @@ Merges L1 Core + L2 Addons + L3 Enterprise into a single, flattened ontology
 and generates output in all 5 platform formats (JSON, OWL/RDF, JSON-LD, GraphQL, SQL).
 
 Usage:
-    python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
-    python scripts/merge_layers.py enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json -o output/
-    python scripts/merge_layers.py extensions/consulting/consulting_extension_v1.json  # merge L2+L1 only
+    python scripts/merge_layers.py l3-enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json
+    python scripts/merge_layers.py l3-enterprise/acme-tech-solutions/acme_tech_solutions_ontology_v1.json -o output/
+    python scripts/merge_layers.py l2-extensions/consulting/consulting_extension_v1.json  # merge L2+L1 only
 """
 
 import json
@@ -36,7 +36,7 @@ import uod_core
 # ─── Project Root Detection ─────────────────────────────────────────────────
 
 def detect_project_root(start_path):
-    """Find project root by looking for core/ and extensions/ directories."""
+    """Find project root by looking for l1-core/ and l2-extensions/ directories."""
     return Path(uod_core.find_project_root(start_path))
 
 
@@ -108,7 +108,7 @@ def resolve_dependencies(target_path, project_root):
 
         matched_key = normalize_layer_ref(ref, index)
         if not matched_key:
-            print(f"  [WARN] Cannot resolve dependency: {ref}")
+            print(f"  [WARN] Cannot resolve dependency: {ref}", file=sys.stderr)
             continue
 
         fpath = index[matched_key]
@@ -181,7 +181,7 @@ def merge_layers(layers):
         # Merge classes
         for cls in data.get("classes", []):
             if cls["id"] in class_ids:
-                print(f"  [ERROR] Duplicate class ID '{cls['id']}' in layer {layer_short}")
+                print(f"  [ERROR] Duplicate class ID '{cls['id']}' in layer {layer_short}", file=sys.stderr)
                 sys.exit(1)
             class_ids.add(cls["id"])
             cls_copy = dict(cls)
@@ -191,7 +191,7 @@ def merge_layers(layers):
         # Merge relations
         for rel in data.get("relations", []):
             if rel["id"] in relation_ids:
-                print(f"  [WARN] Duplicate relation ID '{rel['id']}' in {layer_short}, skipping")
+                print(f"  [WARN] Duplicate relation ID '{rel['id']}' in {layer_short}, skipping", file=sys.stderr)
                 continue
             relation_ids.add(rel["id"])
             rel_copy = dict(rel)
@@ -560,7 +560,7 @@ def main():
     target_path = target_path.resolve()
 
     if not target_path.exists():
-        print(f"[ERROR] File not found: {target_path}")
+        print(f"[ERROR] File not found: {target_path}", file=sys.stderr)
         sys.exit(1)
 
     project_root = detect_project_root(target_path)
@@ -603,9 +603,9 @@ def main():
     print(f"\nValidating merged ontology...")
     errors = validate_merged(merged)
     if errors:
-        print(f"\n  [ERROR] Validation failed:")
+        print(f"\n  [ERROR] Validation failed:", file=sys.stderr)
         for e in errors:
-            print(f"    - {e}")
+            print(f"    - {e}", file=sys.stderr)
         sys.exit(1)
     else:
         print(f"  All references valid.")
@@ -624,7 +624,7 @@ def main():
         merged_json_path = Path(output_dir) / "merged_ontology.json"
         generate_visualization(str(merged_json_path))
     except Exception as e:
-        print(f"  [WARN] Visualization skipped: {e}")
+        print(f"  [WARN] Visualization skipped: {e}", file=sys.stderr)
 
     print(f"\n{'='*60}")
     print(f"  Merge complete! {total_cls} classes across {len(layers)} layers.")

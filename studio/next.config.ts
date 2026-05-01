@@ -1,5 +1,14 @@
 import type { NextConfig } from "next";
 
+// Build-time fallback for NEXTAUTH_URL. next-auth/utils/parse-url.js calls
+// `new URL("")` if NEXTAUTH_URL is an empty string (Netlify declares the env
+// in netlify.toml so the build sees `""` rather than `undefined`), which
+// crashes prerender of `/_not-found`. Runtime env (Netlify per-deploy URL)
+// takes precedence — this only kicks in when the var is unset/empty.
+if (!process.env.NEXTAUTH_URL) {
+  process.env.NEXTAUTH_URL = "http://localhost:3000";
+}
+
 const nextConfig: NextConfig = {
   async headers() {
     return [

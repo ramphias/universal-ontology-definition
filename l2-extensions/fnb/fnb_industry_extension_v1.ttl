@@ -8,7 +8,7 @@
 
 # ════════════════════════════════════════════════════════════════════════════
 # MECE Framework for Food & Beverage (F&B) Industry. — OWL 2 / RDF Turtle
-# Auto-generated from JSON by json_to_owl.py on 2026-04-13 07:35
+# Auto-generated from JSON by json_to_owl.py on 2026-04-25 22:22
 # ════════════════════════════════════════════════════════════════════════════
 
 uod-fnb:Ontology a owl:Ontology ;

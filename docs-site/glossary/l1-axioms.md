@@ -287,19 +287,3 @@ These axioms ensure that instances cannot belong to multiple conflicting classes
 **EN**: Every Organization plays at least one Role.
 
 **ZH**: 每个组织至少扮演一个角色。
-
----
-
-## Subproperty Axioms / 子属性公理
-
-### ax_composed_of_sub_part_of
-
-| Field | Value |
-|:---|:---|
-| **Type** | `subproperty` |
-| **Relation** | `composed_of` |
-| **Parent Relation** | `part_of` |
-
-**EN**: The composition relation is a specialization of the part-of relation. This preserves backward compatibility for systems still using `composed_of`.
-
-**ZH**: 组成关系是部分关系的特化形式。这为仍在使用 `composed_of` 的系统保留向后兼容。

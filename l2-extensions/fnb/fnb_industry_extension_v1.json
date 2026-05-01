@@ -204,6 +204,5 @@
       "range": "TakeawayPackaging",
       "definition": "外带/外卖订单需要使用配给的包材"
     }
-  ],
-  "sample_instances": []
+  ]
 }

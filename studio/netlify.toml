@@ -5,7 +5,14 @@
 [build.environment]
   NODE_VERSION = "20"
   NEXT_PRIVATE_STANDALONE = "true"
-  SECRETS_SCAN_OMIT_KEYS = "GITHUB_REPO_OWNER,GITHUB_REPO_NAME"
+  # SUPER_ADMIN happens to be a public GitHub username (`ramphias`), which
+  # collides with the same string hardcoded as a fallback for
+  # GITHUB_REPO_OWNER in lib/{actions,github,github-commit}.ts. Netlify's
+  # secrets scan can't tell the two values apart and aborts the build, so
+  # we explicitly mark SUPER_ADMIN as not-a-secret. The actual
+  # access-control logic remains: only the user whose login matches
+  # SUPER_ADMIN gets the bootstrap admin role at first sign-in.
+  SECRETS_SCAN_OMIT_KEYS = "GITHUB_REPO_OWNER,GITHUB_REPO_NAME,SUPER_ADMIN"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

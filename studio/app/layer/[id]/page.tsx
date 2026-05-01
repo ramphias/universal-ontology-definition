@@ -118,15 +118,22 @@ async function OntologyContent({ layerId }: { layerId: string }) {
        </div>
      );
   } catch (error: any) {
+     // Server-side log so Netlify Functions / Vercel logs capture the trace.
+     console.error(`[layer/${layerId}] OntologyContent failed:`, error);
+     const detail =
+       typeof error?.message === "string" ? error.message : String(error);
      return (
        <div className="p-8 bg-[#1E0505] border border-red-900 rounded-lg text-red-200 text-sm shadow-xl">
          <h3 className="text-base text-red-400 mb-2 font-medium flex gap-2 items-center">
             <span className="bg-red-500/20 px-2 py-0.5 rounded">Error</span> Fetch failed
          </h3>
          <p className="mb-4 text-red-300 font-mono">Failed to load layer details from repository.</p>
+         <pre className="mb-4 bg-black/60 p-3 rounded text-xs text-red-200 whitespace-pre-wrap break-words max-w-2xl">
+           {detail}
+         </pre>
          <div className="bg-black/40 p-4 rounded text-xs text-red-300 leading-relaxed max-w-2xl">
-           If it says "file mapping is not yet fully configured", it means we haven't linked this layer to a specific JSON file in <code className="text-white px-1">lib/github.ts</code> yet.<br/><br/>
-           If it says "API Rate Limit" or "Not Found", ensure your <code className="text-white px-1">GITHUB_TOKEN</code> is set correctly in <code className="text-white px-1">.env.local</code>.
+           If it says &quot;file mapping is not yet fully configured&quot;, it means we haven&apos;t linked this layer to a specific JSON file in <code className="text-white px-1">lib/github.ts</code> yet.<br/><br/>
+           If it says &quot;API Rate Limit&quot; or &quot;Not Found&quot;, ensure your <code className="text-white px-1">GITHUB_TOKEN</code> is set correctly in <code className="text-white px-1">.env.local</code> (or Netlify env).
          </div>
        </div>
      );

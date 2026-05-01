@@ -97,6 +97,20 @@
             "minLength": 1,
             "description": "Parent class ID — must reference an L1 class or another extension class"
           },
+          "abstract": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether this class is abstract (cannot be directly instantiated)"
+          },
+          "owner": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9-]{1,39}$"
+            },
+            "uniqueItems": true,
+            "description": "Optional list of GitHub logins authorized to submit edits to this class via Studio. If absent or empty, role-based defaults apply (any editor can submit, admin reviews)."
+          },
           "definition": {
             "type": "string",
             "minLength": 5,

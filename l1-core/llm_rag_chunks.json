@@ -68,7 +68,7 @@
   {
     "id": "class_ProductService",
     "type": "class",
-    "text": "Class: ProductService\nChinese: 产品与服务\nEnglish: Product & Service\nLayer: \nParent: Resource\nDefinition: Products and services provided externally or used internally by an enterprise\nDefinition (ZH): 企业对外提供或内部使用的产品和服务对象",
+    "text": "Class: ProductService\nChinese: 产品和服务\nEnglish: Product & Service\nLayer: \nParent: Resource\nDefinition: Products and services provided externally or used internally by an enterprise\nDefinition (ZH): 企业对外提供或内部使用的产品和服务对象",
     "metadata": {
       "class_id": "ProductService",
       "layer": "",

@@ -1,9 +1,16 @@
 "use server";
 
+import { Octokit } from "@octokit/rest";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions, getUserAccessToken } from "@/lib/auth";
 import { setUserRole, revokeUserAccess, getAllPermissions, type Role } from "@/lib/permissions";
+import { appendAuditEntry } from "@/lib/audit-log";
+import { enforceRateLimit } from "@/lib/rate-limit";
 import { revalidatePath } from "next/cache";
+
+// GitHub username rules: 1-39 chars, alphanumerics + single hyphens, no leading
+// or trailing hyphen, no consecutive hyphens. Source: https://github.com/join
+const GH_USERNAME_RE = /^(?!-)(?!.*--)[A-Za-z0-9-]{1,39}(?<!-)$/;
 
 /**
  * Validates that the current caller is a Super Admin
@@ -16,29 +23,53 @@ async function requireAdmin() {
     return session;
 }
 
+async function assertGithubUserExists(username: string) {
+    const token = await getUserAccessToken();
+    const octokit = new Octokit({ auth: token ?? undefined });
+    try {
+        await octokit.users.getByUsername({ username });
+    } catch (err: any) {
+        if (err?.status === 404) {
+            throw new Error(`GitHub user '${username}' does not exist.`);
+        }
+        throw new Error("Could not verify GitHub user. Try again later.");
+    }
+}
+
 export async function fetchAllUsers() {
-    await requireAdmin();
+    const session = await requireAdmin();
+    await enforceRateLimit("admin.fetchAllUsers", session.user.login);
     return await getAllPermissions();
 }
 
 export async function addUserRole(githubUsername: string, role: Role) {
     const session = await requireAdmin();
-    if (!githubUsername || !/^[a-zA-Z0-9-]+$/.test(githubUsername)) {
+    await enforceRateLimit("admin.addUserRole", session.user.login);
+
+    if (!githubUsername || !GH_USERNAME_RE.test(githubUsername)) {
         throw new Error("Invalid GitHub username format.");
     }
-    
+    await assertGithubUserExists(githubUsername);
+
     try {
-        await setUserRole(githubUsername, role);
-        console.log(`[AUDIT] User '${session.user.login}' granted '${role}' role to '@${githubUsername}'.`);
+        await setUserRole(githubUsername, role, session.user.login);
     } catch {
         throw new Error("Failed to modify user access.");
     }
+    await appendAuditEntry({
+        actor: session.user.login,
+        action: "user.grant",
+        target: `@${githubUsername}`,
+        details: { role },
+    });
     revalidatePath("/admin");
 }
 
 export async function removeUserAccess(githubUsername: string) {
     const session = await requireAdmin();
-    if (!githubUsername || !/^[a-zA-Z0-9-]+$/.test(githubUsername)) {
+    await enforceRateLimit("admin.removeUserAccess", session.user.login);
+
+    if (!githubUsername || !GH_USERNAME_RE.test(githubUsername)) {
         throw new Error("Invalid GitHub username format.");
     }
     const superAdmin = process.env.SUPER_ADMIN?.toLowerCase();
@@ -48,9 +79,13 @@ export async function removeUserAccess(githubUsername: string) {
 
     try {
         await revokeUserAccess(githubUsername);
-        console.log(`[AUDIT] User '${session.user.login}' revoked access from '@${githubUsername}'.`);
     } catch {
         throw new Error("Failed to modify user access.");
     }
+    await appendAuditEntry({
+        actor: session.user.login,
+        action: "user.revoke",
+        target: `@${githubUsername}`,
+    });
     revalidatePath("/admin");
 }

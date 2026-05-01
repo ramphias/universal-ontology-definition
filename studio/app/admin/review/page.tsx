@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { fetchPendingEdits, approveEdit, rejectEdit } from "@/lib/edit-actions";
 import type { PendingEdit, EditableClassFields } from "@/lib/pending-edits";
 import { Check, X, ExternalLink, Loader } from "lucide-react";
+import JsonDiffViewer from "@/components/admin/JsonDiffViewer";
 
 const FIELD_ORDER: (keyof EditableClassFields)[] = [
     "label_en",
@@ -183,8 +184,24 @@ function ReviewCard({
                     />
                 ))}
             </div>
+
+            <details className="mt-3">
+                <summary className="text-xs text-[#666] cursor-pointer hover:text-[#aaa]">
+                    Structural JSON diff
+                </summary>
+                <div className="mt-2">
+                    <JsonDiffViewer
+                        before={edit.before}
+                        after={mergedAfter(edit.before, edit.after)}
+                    />
+                </div>
+            </details>
         </div>
     );
+}
+
+function mergedAfter(before: EditableClassFields, after: EditableClassFields): EditableClassFields {
+    return { ...before, ...after };
 }
 
 function DiffRow({ field, before, after }: { field: string; before: any; after: any }) {

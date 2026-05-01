@@ -3,21 +3,23 @@
 import { Octokit } from "@octokit/rest";
 import fs from "fs";
 import path from "path";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./auth";
+import { pickGithubToken } from "./github-token";
 
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN,
-});
+// Public repo coordinates — see lib/github.ts for rationale.
+const REPO_OWNER = process.env.GITHUB_REPO_OWNER || "ramphias";
+const REPO_NAME = process.env.GITHUB_REPO_NAME || "universal-ontology-definition";
 
-const REPO_OWNER = process.env.GITHUB_REPO_OWNER as string;
-const REPO_NAME = process.env.GITHUB_REPO_NAME as string;
+const JSON_MAX_BYTES = 5 * 1024 * 1024;
 
-async function requireAuth() {
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user) {
-        throw new Error("Unauthorized");
-    }
+async function getOctokit(): Promise<Octokit> {
+    return new Octokit({ auth: await pickGithubToken() });
+}
+
+async function githubAuthHeaders(): Promise<Record<string, string>> {
+    const headers: Record<string, string> = { "User-Agent": "Ontology-Studio-App" };
+    const token = await pickGithubToken();
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    return headers;
 }
 
 const PROJECT_ROOT = path.resolve(process.cwd(), '..');
@@ -51,6 +53,7 @@ export async function resolveLayerFile(
 
   // GitHub API fallback
   try {
+    const octokit = await getOctokit();
     const dirResponse = await octokit.repos.getContent({
       owner: REPO_OWNER,
       repo: REPO_NAME,
@@ -67,8 +70,13 @@ export async function resolveLayerFile(
 }
 
 function safePath(relativePath: string): string | null {
-    const resolved = path.resolve(PROJECT_ROOT, relativePath);
-    if (!resolved.startsWith(PROJECT_ROOT + path.sep)) return null;
+    if (typeof relativePath !== "string" || relativePath.length === 0) return null;
+    if (path.isAbsolute(relativePath)) return null;
+    const normalized = path.normalize(relativePath);
+    const segments = normalized.split(/[\\/]/);
+    if (segments.includes("..")) return null;
+    const resolved = path.resolve(PROJECT_ROOT, normalized);
+    if (resolved !== PROJECT_ROOT && !resolved.startsWith(PROJECT_ROOT + path.sep)) return null;
     return resolved;
 }
 
@@ -98,6 +106,11 @@ function getLocalJsonFromDir(relativePath: string) {
         if (jsonFile) {
             const filePath = path.join(localDirPath, jsonFile.name);
             if (!filePath.startsWith(PROJECT_ROOT + path.sep)) return null;
+            const stat = fs.statSync(filePath);
+            if (stat.size > JSON_MAX_BYTES) {
+                console.warn(`Skipping ${filePath}: ${stat.size} bytes exceeds ${JSON_MAX_BYTES}`);
+                return null;
+            }
             const fileContent = fs.readFileSync(filePath, 'utf8');
             return JSON.parse(fileContent);
         }
@@ -116,8 +129,7 @@ export async function getAvailableL2Extensions() {
 
   try {
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/l2-extensions`;
-    const headers: Record<string, string> = { "User-Agent": "Ontology-Studio-App" };
-    if (process.env.GITHUB_TOKEN) headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
+    const headers = await githubAuthHeaders();
 
     const response = await fetch(url, { headers, cache: "no-store" });
     if (!response.ok) return [];
@@ -148,6 +160,7 @@ export async function fetchExtensionData(domainId: string) {
   if (localData) return localData;
 
   try {
+    const octokit = await getOctokit();
     const dirResponse = await octokit.repos.getContent({
       owner: REPO_OWNER,
       repo: REPO_NAME,
@@ -157,6 +170,9 @@ export async function fetchExtensionData(domainId: string) {
     if (Array.isArray(dirResponse.data)) {
       const jsonFile = dirResponse.data.find(f => f.name.endsWith('.json'));
       if (jsonFile) {
+        if (typeof jsonFile.size === "number" && jsonFile.size > JSON_MAX_BYTES) {
+          throw new Error(`Extension JSON ${jsonFile.path} (${jsonFile.size} bytes) exceeds ${JSON_MAX_BYTES}`);
+        }
         const fileResponse = await octokit.repos.getContent({
           owner: REPO_OWNER,
           repo: REPO_NAME,
@@ -165,6 +181,9 @@ export async function fetchExtensionData(domainId: string) {
 
         if ("content" in fileResponse.data) {
           const decodedContent = Buffer.from((fileResponse.data as any).content, "base64").toString("utf-8");
+          if (Buffer.byteLength(decodedContent, "utf-8") > JSON_MAX_BYTES) {
+            throw new Error(`Extension JSON ${jsonFile.path} exceeds ${JSON_MAX_BYTES} bytes after decode`);
+          }
           return JSON.parse(decodedContent);
         }
       }
@@ -185,8 +204,7 @@ export async function getAvailableL3Enterprises() {
 
   try {
     const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/l3-enterprise`;
-    const headers: Record<string, string> = { "User-Agent": "Ontology-Studio-App" };
-    if (process.env.GITHUB_TOKEN) headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
+    const headers = await githubAuthHeaders();
 
     const response = await fetch(url, { headers, cache: "no-store" });
     if (!response.ok) return [];
@@ -212,11 +230,12 @@ export async function getAvailableL3Enterprises() {
  */
 export async function fetchL3EnterpriseData(domainId: string) {
   if (!/^[a-z0-9-]+$/.test(domainId)) throw new Error("Invalid domain ID");
-  
+
   const localData = getLocalJsonFromDir(`l3-enterprise/${domainId}`);
   if (localData) return localData;
 
   try {
+    const octokit = await getOctokit();
     const dirResponse = await octokit.repos.getContent({
       owner: REPO_OWNER,
       repo: REPO_NAME,
@@ -226,6 +245,9 @@ export async function fetchL3EnterpriseData(domainId: string) {
     if (Array.isArray(dirResponse.data)) {
       const jsonFile = dirResponse.data.find(f => f.name.endsWith('.json'));
       if (jsonFile) {
+        if (typeof jsonFile.size === "number" && jsonFile.size > JSON_MAX_BYTES) {
+          throw new Error(`L3 JSON ${jsonFile.path} (${jsonFile.size} bytes) exceeds ${JSON_MAX_BYTES}`);
+        }
         const fileResponse = await octokit.repos.getContent({
           owner: REPO_OWNER,
           repo: REPO_NAME,
@@ -234,6 +256,9 @@ export async function fetchL3EnterpriseData(domainId: string) {
 
         if ("content" in fileResponse.data) {
           const decodedContent = Buffer.from((fileResponse.data as any).content, "base64").toString("utf-8");
+          if (Buffer.byteLength(decodedContent, "utf-8") > JSON_MAX_BYTES) {
+            throw new Error(`L3 JSON ${jsonFile.path} exceeds ${JSON_MAX_BYTES} bytes after decode`);
+          }
           return JSON.parse(decodedContent);
         }
       }

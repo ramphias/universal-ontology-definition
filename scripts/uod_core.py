@@ -13,7 +13,7 @@ from pathlib import Path
 BASE_URI = "https://w3id.org/uod"
 
 def find_project_root(start_path):
-    """Find project root by looking for core/ and extensions/ directories."""
+    """Find project root by looking for l1-core/ and l2-extensions/ directories."""
     p = Path(start_path).resolve()
     for _ in range(10):
         if (p / "l1-core").is_dir() and (p / "l2-extensions").is_dir():
