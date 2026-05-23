@@ -69,15 +69,33 @@ export async function resolveLayerFile(
   return null;
 }
 
+const DOMAIN_SEGMENT = /^[a-z0-9-]+$/;
+
+function allowedTopDirRoot(top: string): string | null {
+    switch (top) {
+        case "l2-extensions":
+            return path.join(PROJECT_ROOT, "l2-extensions");
+        case "l3-enterprise":
+            return path.join(PROJECT_ROOT, "l3-enterprise");
+        default:
+            return null;
+    }
+}
+
 function safePath(relativePath: string): string | null {
     if (typeof relativePath !== "string" || relativePath.length === 0) return null;
     if (path.isAbsolute(relativePath)) return null;
-    const normalized = path.normalize(relativePath);
-    const segments = normalized.split(/[\\/]/);
-    if (segments.includes("..")) return null;
-    const resolved = path.resolve(PROJECT_ROOT, normalized);
-    if (resolved !== PROJECT_ROOT && !resolved.startsWith(PROJECT_ROOT + path.sep)) return null;
-    return resolved;
+
+    const segments = relativePath.split("/");
+    if (segments.length < 1 || segments.length > 2) return null;
+
+    const root = allowedTopDirRoot(segments[0]);
+    if (!root) return null;
+    if (segments.length === 1) return root;
+
+    const subDir = segments[1];
+    if (!DOMAIN_SEGMENT.test(subDir) || subDir !== path.basename(subDir)) return null;
+    return path.join(root, subDir);
 }
 
 function getLocalDirs(relativePath: string) {
