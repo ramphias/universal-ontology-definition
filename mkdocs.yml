@@ -130,6 +130,7 @@ nav:
     - Four-Layer Model: architecture/four-layer-model.md
     - Inheritance & Extension: architecture/inheritance.md
     - Versioning Model: architecture/versioning.md
+    - Data Architecture: architecture/data-architecture.md
   - Platform Bindings (L0):
     - l0/index.md
     - SQL DDL: l0/sql-ddl.md

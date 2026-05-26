@@ -11,6 +11,7 @@ on:
       - 'l2-extensions/**/*.json'
       - 'l3-enterprise/**/*.json'
       - 'private_enterprise/**/*.json'
+      - 'instances/**/*.json'
       - 'schema/**/*.json'
       - 'scripts/**'
       - 'docs-site/**'
@@ -21,6 +22,7 @@ on:
       - 'l2-extensions/**/*.json'
       - 'l3-enterprise/**/*.json'
       - 'private_enterprise/**/*.json'
+      - 'instances/**/*.json'
       - 'schema/**/*.json'
       - 'scripts/**'
       - 'docs-site/**'
@@ -42,6 +44,9 @@ jobs:
 
       - name: Validate ontology files against JSON Schema
         run: python scripts/validate_schema.py
+
+      - name: Validate demo instance files (instances/demo/**)
+        run: python scripts/validate_instances.py
 
   validate:
     runs-on: ubuntu-latest

@@ -1,0 +1,79 @@
+{
+  "$schema": "../../../schema/instance_schema.json",
+  "layer": "L2_healthcare_extension",
+  "source_file": "l2-extensions/healthcare/healthcare_extension_v1.json",
+  "instances": [
+    {
+      "id": "inst_general_hospital",
+      "type": "Hospital",
+      "label_en": "Example General Hospital",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/healthcare/healthcare_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_cardiology",
+      "type": "ClinicalDepartment",
+      "label_en": "Cardiology Department",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/healthcare/healthcare_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_pharma_co",
+      "type": "PharmaceuticalCompany",
+      "label_en": "Example Pharma Inc.",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/healthcare/healthcare_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_vaccine",
+      "type": "DrugProduct",
+      "label_en": "mRNA Vaccine Product",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/healthcare/healthcare_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_phase3_trial",
+      "type": "ClinicalTrial",
+      "label_en": "Phase III Efficacy Trial",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/healthcare/healthcare_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_bed_occupancy",
+      "type": "BedOccupancyRate",
+      "label_en": "Bed Occupancy (Target: 85-90%)",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/healthcare/healthcare_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    }
+  ]
+}

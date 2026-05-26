@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../schema/instance_schema.json",
+  "layer": "L2_financial_services_extension",
+  "source_file": "l2-extensions/financial-services/financial_services_extension_v1.json",
+  "instances": [
+    {
+      "id": "inst_commercial_bank",
+      "type": "FinancialInstitution",
+      "label_en": "Example Commercial Bank",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/financial-services/financial_services_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_branch_cbd",
+      "type": "BankBranch",
+      "label_en": "CBD Flagship Branch",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/financial-services/financial_services_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_mortgage",
+      "type": "LoanProduct",
+      "label_en": "30-Year Fixed Mortgage",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/financial-services/financial_services_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_auto_insurance",
+      "type": "InsurancePolicy",
+      "label_en": "Comprehensive Auto Insurance",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/financial-services/financial_services_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_equity_fund",
+      "type": "InvestmentFund",
+      "label_en": "A-Share Growth Equity Fund",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/financial-services/financial_services_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_kyc",
+      "type": "KYCProcess",
+      "label_en": "Standard KYC Onboarding",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/financial-services/financial_services_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_npl_kpi",
+      "type": "NPLRatio",
+      "label_en": "NPL Ratio (Target: <1.5%)",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/financial-services/financial_services_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    }
+  ]
+}

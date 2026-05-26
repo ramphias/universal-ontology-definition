@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../schema/instance_schema.json",
+  "layer": "L2_technology_extension",
+  "source_file": "l2-extensions/technology/technology_extension_v1.json",
+  "instances": [
+    {
+      "id": "inst_saas_startup",
+      "type": "TechCompany",
+      "label_en": "Example SaaS Startup",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/technology/technology_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_backend_team",
+      "type": "EngineeringTeam",
+      "label_en": "Backend Platform Team",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/technology/technology_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_crm_saas",
+      "type": "SaaSProduct",
+      "label_en": "Cloud CRM Platform",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/technology/technology_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_data_platform",
+      "type": "PlatformService",
+      "label_en": "Unified Data Platform",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/technology/technology_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_user_service",
+      "type": "Microservice",
+      "label_en": "User Authentication Service",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/technology/technology_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_uptime_kpi",
+      "type": "ServiceUptime",
+      "label_en": "Service Uptime (Target: 99.95%)",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/technology/technology_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_mrr_kpi",
+      "type": "MRR",
+      "label_en": "MRR (Target: $500K+)",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/technology/technology_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    }
+  ]
+}

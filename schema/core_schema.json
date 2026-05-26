@@ -377,6 +377,8 @@
     },
     "sample_instances": {
       "type": "array",
+      "deprecated": true,
+      "description": "DEPRECATED — L1 demo instances now live in instances/demo/l1.json (governed by schema/instance_schema.json) and, for real harvested data, in the uod-backend Postgres database. This field will be removed in v3.0.0. The current entries are retained for backward compatibility with downstream tooling.",
       "items": {
         "type": "object",
         "required": ["id", "type", "label"],

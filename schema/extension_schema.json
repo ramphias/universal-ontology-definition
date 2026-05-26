@@ -191,7 +191,8 @@
     },
     "sample_instances": {
       "type": "array",
-      "minItems": 5,
+      "deprecated": true,
+      "description": "DEPRECATED — instances now live in instances/demo/<layer>/*.json (governed by schema/instance_schema.json) and, for real harvested data, in the uod-backend Postgres database. This field will be removed in v3.0.0. New layers MUST NOT use it; existing entries are tolerated until the next major version.",
       "items": {
         "type": "object",
         "required": ["id", "type", "label"],
