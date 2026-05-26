@@ -1,0 +1,111 @@
+{
+  "$schema": "../../../schema/instance_schema.json",
+  "layer": "L1_universal_organization_ontology",
+  "source_file": "l1-core/universal_ontology_v1.json",
+  "instances": [
+    {
+      "id": "org_acme_corp",
+      "type": "Organization",
+      "label_en": "Acme Corporation",
+      "label_zh": "示例公司",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l1-core/universal_ontology_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "ou_operations_dept",
+      "type": "OrgUnit",
+      "label_en": "Operations Department",
+      "label_zh": "运营部",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l1-core/universal_ontology_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "role_ceo",
+      "type": "Role",
+      "label_en": "Chief Executive Officer",
+      "label_zh": "首席执行官",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l1-core/universal_ontology_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "cap_supply_chain",
+      "type": "Capability",
+      "label_en": "Supply Chain Management",
+      "label_zh": "供应链管理",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l1-core/universal_ontology_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "proc_order_to_cash",
+      "type": "Process",
+      "label_en": "Order to Cash",
+      "label_zh": "订单到回款",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l1-core/universal_ontology_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "sys_erp",
+      "type": "SystemApplication",
+      "label_en": "Enterprise Resource Planning System",
+      "label_zh": "企业资源计划系统",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l1-core/universal_ontology_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "goal_revenue_growth",
+      "type": "Goal",
+      "label_en": "Revenue Growth",
+      "label_zh": "营收增长",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l1-core/universal_ontology_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "kpi_customer_satisfaction",
+      "type": "KPI",
+      "label_en": "Customer Satisfaction Score",
+      "label_zh": "客户满意度评分",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l1-core/universal_ontology_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    }
+  ]
+}

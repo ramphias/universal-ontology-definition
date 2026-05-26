@@ -1,0 +1,79 @@
+{
+  "$schema": "../../../schema/instance_schema.json",
+  "layer": "L2_manufacturing_extension",
+  "source_file": "l2-extensions/manufacturing/manufacturing_extension_v1.json",
+  "instances": [
+    {
+      "id": "inst_auto_factory",
+      "type": "Factory",
+      "label_en": "Example Automotive Assembly Plant",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/manufacturing/manufacturing_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_welding_workshop",
+      "type": "Workshop",
+      "label_en": "Body Welding Workshop",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/manufacturing/manufacturing_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_final_assembly",
+      "type": "ProductionLine",
+      "label_en": "Final Assembly Line A",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/manufacturing/manufacturing_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_steel_supplier",
+      "type": "Supplier",
+      "label_en": "Baosteel Supply Co.",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/manufacturing/manufacturing_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_oee_kpi",
+      "type": "OEE",
+      "label_en": "OEE (Target: 85%+)",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/manufacturing/manufacturing_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    },
+    {
+      "id": "inst_yield_kpi",
+      "type": "YieldRate",
+      "label_en": "First-Pass Yield (Target: 98%+)",
+      "source": "manual",
+      "source_url": "https://github.com/ramphias/universal-ontology-definition/blob/master/l2-extensions/manufacturing/manufacturing_extension_v1.json",
+      "confidence": 1.0,
+      "status": "accepted",
+      "harvested_at": "2026-05-26T00:00:00Z",
+      "verified_by": "curated",
+      "verified_at": "2026-05-26T00:00:00Z"
+    }
+  ]
+}

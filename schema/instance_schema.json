@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/ramphias/universal-ontology-definition/schema/instance_schema.json",
+  "title": "UOD Instance Demo File Schema",
+  "description": "JSON Schema for files under instances/demo/. Each file is a curated, frozen set of example instances for one layer (L1 or one L2 industry extension or one L3 enterprise). Real (harvested) instance data lives in the uod-backend Postgres database, NOT in Git — this schema only governs the public demo subset.",
+  "type": "object",
+  "required": ["layer", "instances"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this schema file"
+    },
+    "layer": {
+      "type": "string",
+      "anyOf": [
+        { "pattern": "^L1_[a-z][a-z0-9_]+$" },
+        { "pattern": "^L2_[a-z][a-z0-9_]*_extension$" },
+        { "pattern": "^L3_[a-z][a-z0-9_]+$" }
+      ],
+      "description": "Layer this demo set belongs to (must match the canonical class-definition file's layer id)"
+    },
+    "source_file": {
+      "type": "string",
+      "description": "Repo-relative path to the class-definition JSON these instances illustrate"
+    },
+    "instances": {
+      "type": "array",
+      "minItems": 0,
+      "items": { "$ref": "#/definitions/instance" },
+      "description": "Curated demo instances. Real production data goes in the backend DB, not here."
+    }
+  },
+  "definitions": {
+    "instance": {
+      "type": "object",
+      "required": ["id", "type", "source", "harvested_at", "verified_by", "status", "confidence"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "snake_case identifier, unique within instances/demo/ tree"
+        },
+        "type": {
+          "type": "string",
+          "pattern": "^[A-Z][a-zA-Z0-9]*$",
+          "description": "PascalCase class id; MUST be non-abstract (validated by scripts/validate_instances.py against the class-definition JSON)"
+        },
+        "label_en": {
+          "type": "string",
+          "minLength": 1,
+          "description": "English label"
+        },
+        "label_zh": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Chinese label"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Free-form attribute payload. Each key SHOULD correspond to an attribute defined for `type` (or one of its ancestors) in the class-definition layer."
+        },
+        "source": {
+          "type": "string",
+          "enum": ["manual", "wikidata", "dbpedia", "sec_edgar", "openalex", "llm_extracted", "other"],
+          "description": "Provenance: where did this instance come from?"
+        },
+        "source_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Citation URL — required for any source other than 'manual'"
+        },
+        "source_id": {
+          "type": "string",
+          "description": "External identifier in the source system (e.g., Wikidata Q-id, SEC CIK)"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Mapping confidence: 1.0 for human-curated, lower for auto-extracted"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["candidate", "accepted", "rejected", "archived"],
+          "description": "Lifecycle. All instances in instances/demo/ MUST be 'accepted' (curated). Candidates / rejections live in the backend DB."
+        },
+        "harvested_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this instance entered the system (ISO 8601, e.g. 2026-05-26T00:00:00Z)"
+        },
+        "verified_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "GitHub login of the curator, or 'curated' for legacy migrated entries"
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the instance was verified (ISO 8601)"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "description": "Must have at least one of label_en or label_zh",
+          "anyOf": [
+            { "required": ["label_en"] },
+            { "required": ["label_zh"] }
+          ]
+        },
+        {
+          "description": "Non-'manual' sources MUST provide source_url",
+          "if": {
+            "properties": { "source": { "not": { "const": "manual" } } }
+          },
+          "then": {
+            "required": ["source_url"]
+          }
+        }
+      ]
+    }
+  }
+}
