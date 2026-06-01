@@ -36,6 +36,7 @@ export function SidebarNav() {
     { name: "L1 - Core", href: "/layer/L1" },
     { name: "L2 - Extensions", href: "/layer/L2" },
     { name: "L3 - Enterprise", href: "/layer/L3" },
+    { name: "Instances", href: "/instances" },
   ];
 
   return (
