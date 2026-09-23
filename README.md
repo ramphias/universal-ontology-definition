@@ -73,8 +73,9 @@ A production-ready **Next.js web application** for visually browsing, searching,
 - **Role-Based Access Control** — GitHub OAuth with three roles (Admin / Editor / Viewer) backed by Netlify Blobs.
 - **Public Read-Only Access** — Anonymous users can browse the full ontology; only the admin panel requires login.
 
-> **Live Demo**: [ontologystudio.netlify.app](https://ontologystudio.netlify.app) | Source code in [`studio/`](studio/).
-> **In Production**: [ROES 络识](https://roes.pro) — an evolution platform for enterprise AI, built on UOD
+> **Live Demo** (UOD Ontology Studio — browse the ontology in this repo): [ontologystudio.netlify.app](https://ontologystudio.netlify.app) | Source code in [`studio/`](studio/).
+>
+> **In Production**: [ROES 络识](https://roes.pro) — an evidence-gated ontology evolution platform for enterprise AI, built on UOD L1/L2 and the AI Security extension.
 
 ### Local Development
 
