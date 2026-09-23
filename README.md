@@ -74,6 +74,7 @@ A production-ready **Next.js web application** for visually browsing, searching,
 - **Public Read-Only Access** — Anonymous users can browse the full ontology; only the admin panel requires login.
 
 > **Live Demo**: [ontologystudio.netlify.app](https://ontologystudio.netlify.app) | Source code in [`studio/`](studio/).
+> **In Production**: [ROES 络识](https://roes.pro) — an evolution platform for enterprise AI, built on UOD
 
 ### Local Development
 
